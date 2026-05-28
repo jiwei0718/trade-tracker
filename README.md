@@ -9,7 +9,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  GitHub Actions  (每日 06:00 UTC，免費 tier)                    │
+│  GitHub Actions  (每日 13:00 UTC，免費 tier)                    │
 │  ─────────────────────────────────────────────                  │
 │  1. 跑 backend/run.py                                            │
 │     ├─ WTO RTA-IS 爬蟲   (≈600 個已通報協定)                    │
@@ -61,7 +61,7 @@
 │   └── seed/
 │       └── agreements.seed.json ← 歷史 89 個協定作為起點
 └── .github/workflows/
-    └── update-data.yml        ← 每日定時更新的 cron job
+    └── update-data.yml        ← 每日定時更新的 cron job（台灣 21:00）
 ```
 
 ---

@@ -2,8 +2,8 @@ name: update-data
 
 on:
   schedule:
-    # Daily at 06:00 UTC = 14:00 Taipei time
-    - cron: "0 6 * * *"
+    # Daily at 13:00 UTC = 21:00 Taipei time (台灣晚上 9 點)
+    - cron: "0 13 * * *"
   workflow_dispatch:  # also allow manual trigger from Actions tab
     inputs:
       reason:
