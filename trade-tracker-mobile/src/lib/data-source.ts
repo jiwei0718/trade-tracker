@@ -13,14 +13,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { TradeAgreement } from '@/data/types';
 import { agreements as bundledAgreements } from '@/data/agreements';
 
-// ⚠️ Replace `<USERNAME>` and `<REPO>` after pushing this project to GitHub.
-//    Until then the fetch will fail silently and the app falls back to seed.
+// Live data published by the GitHub Actions pipeline (jiwei0718/trade-tracker).
 const REMOTE_AGREEMENTS_URL =
-  'https://raw.githubusercontent.com/<USERNAME>/<REPO>/main/data/agreements.json';
+  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/agreements.json';
 const REMOTE_EVENTS_URL =
-  'https://raw.githubusercontent.com/<USERNAME>/<REPO>/main/data/events.json';
+  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/events.json';
 const REMOTE_META_URL =
-  'https://raw.githubusercontent.com/<USERNAME>/<REPO>/main/data/meta.json';
+  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/meta.json';
 
 const CACHE_KEY_AGREEMENTS = 'tt:agreements-v1';
 const CACHE_KEY_EVENTS = 'tt:events-v1';
