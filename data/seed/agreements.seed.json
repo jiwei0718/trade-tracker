@@ -1,0 +1,3150 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-27T09:46:26.895Z",
+  "generator": "seed-export",
+  "count": 89,
+  "agreements": [
+    {
+      "id": "cobden-chevalier",
+      "name": "Cobden–Chevalier Treaty",
+      "nameZh": "英法商務條約 (Cobden–Chevalier Treaty)",
+      "shortName": "Cobden–Chevalier",
+      "type": "bilateral",
+      "status": "expired",
+      "era": "pre_gatt",
+      "parties": [
+        "GB",
+        "FR"
+      ],
+      "partyNames": [
+        "United Kingdom",
+        "France"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "法國"
+      ],
+      "keyDates": {
+        "signed": "1860-01",
+        "in_force": "1860-10",
+        "expired": "1892-01"
+      },
+      "tradeVolume": 0.4,
+      "description": "Landmark Anglo-French treaty that established the most-favoured-nation (MFN) principle and triggered a network of European bilateral trade treaties.",
+      "descriptionZh": "英法之間里程碑式的貿易條約，確立了最惠國（MFN）原則，並引發19世紀歐洲一連串的雙邊貿易條約網絡。",
+      "keyProvisions": [
+        "MFN clause",
+        "Wine tariff reduction",
+        "Industrial goods tariff cuts",
+        "10-year duration"
+      ],
+      "tags": [
+        "historical",
+        "mfn-origin",
+        "mile-stone"
+      ],
+      "significance": "現代貿易協定MFN原則的起點，被視為自由貿易主義的歷史標誌。"
+    },
+    {
+      "id": "mckinley-tariff",
+      "name": "McKinley Tariff Act",
+      "nameZh": "麥金利關稅法 (McKinley Tariff Act)",
+      "shortName": "McKinley Tariff",
+      "type": "bilateral",
+      "status": "expired",
+      "era": "pre_gatt",
+      "parties": [
+        "US"
+      ],
+      "partyNames": [
+        "United States"
+      ],
+      "partyNamesZh": [
+        "美國"
+      ],
+      "keyDates": {
+        "signed": "1890-10",
+        "in_force": "1890-10",
+        "expired": "1894-08"
+      },
+      "description": "US protectionist legislation raising tariffs ~50%. Triggered retaliatory measures from European powers.",
+      "descriptionZh": "美國保護主義立法，將關稅提高約50%，引發歐洲列強的報復措施。",
+      "tags": [
+        "historical",
+        "protectionism"
+      ],
+      "significance": "19世紀末美國保護主義代表作，象徵自由貿易黃金時期的結束。"
+    },
+    {
+      "id": "imperial-preference",
+      "name": "Imperial Preference (Ottawa Agreements)",
+      "nameZh": "帝國優惠制 (Imperial Preference) — 渥太華協定 (Ottawa Agreements)",
+      "shortName": "Imperial Preference",
+      "type": "regional",
+      "status": "superseded",
+      "era": "pre_gatt",
+      "parties": [
+        "GB",
+        "CA",
+        "AU",
+        "NZ",
+        "IN",
+        "ZA"
+      ],
+      "partyNames": [
+        "UK",
+        "Canada",
+        "Australia",
+        "New Zealand",
+        "India",
+        "South Africa"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "加拿大",
+        "澳洲",
+        "紐西蘭",
+        "印度",
+        "南非"
+      ],
+      "keyDates": {
+        "signed": "1932-08",
+        "in_force": "1932-11",
+        "superseded": "1973-01"
+      },
+      "tradeVolume": 5,
+      "description": "British Empire preferential tariff system created during the Great Depression. Provided lower tariffs among Commonwealth countries; rendered obsolete by GATT and UK joining EEC.",
+      "descriptionZh": "大蕭條時期英國建立的帝國優惠關稅制度，大英國協內部享受較低關稅。隨GATT建立及英國加入EEC而逐漸失效。",
+      "keyProvisions": [
+        "Preferential tariffs within Empire",
+        "Common external tariff",
+        "Agricultural quotas"
+      ],
+      "tags": [
+        "historical",
+        "protectionism",
+        "colonial"
+      ],
+      "supersededBy": "gatt-1947"
+    },
+    {
+      "id": "hawley-smoot",
+      "name": "Hawley–Smoot Tariff Act",
+      "nameZh": "霍利–斯姆特關稅法 (Hawley–Smoot Tariff Act)",
+      "shortName": "Hawley–Smoot",
+      "type": "bilateral",
+      "status": "expired",
+      "era": "pre_gatt",
+      "parties": [
+        "US"
+      ],
+      "partyNames": [
+        "United States"
+      ],
+      "partyNamesZh": [
+        "美國"
+      ],
+      "keyDates": {
+        "signed": "1930-06",
+        "in_force": "1930-06",
+        "expired": "1934-06"
+      },
+      "description": "US tariff act raising duties on over 20,000 imported goods to historically high levels. Widely blamed for deepening the Great Depression by triggering global retaliation.",
+      "descriptionZh": "美國關稅法，對超過2萬種進口商品課徵歷史高位關稅。被廣泛認為是引發全球報復、加深大蕭條的關鍵立法。",
+      "tags": [
+        "historical",
+        "protectionism",
+        "great-depression"
+      ],
+      "significance": "經濟史上保護主義反面教材，催生戰後《互惠貿易協定法》與後來的GATT體系。"
+    },
+    {
+      "id": "rtaa-1934",
+      "name": "Reciprocal Trade Agreements Act",
+      "nameZh": "美國互惠貿易協定法 (Reciprocal Trade Agreements Act, RTAA)",
+      "shortName": "RTAA",
+      "type": "bilateral",
+      "status": "superseded",
+      "era": "pre_gatt",
+      "parties": [
+        "US"
+      ],
+      "partyNames": [
+        "United States"
+      ],
+      "partyNamesZh": [
+        "美國"
+      ],
+      "keyDates": {
+        "signed": "1934-06",
+        "in_force": "1934-06",
+        "superseded": "1962-10"
+      },
+      "description": "Authorized US President to negotiate bilateral tariff reductions. Foundation of modern US trade negotiating authority and predecessor to GATT.",
+      "descriptionZh": "授權美國總統與他國談判削減關稅，是現代美國貿易談判授權制度的基礎，也是GATT的前身性立法。",
+      "tags": [
+        "historical",
+        "us-trade-policy"
+      ],
+      "significance": "從Hawley-Smoot保護主義轉向自由化的政策轉折，為戰後多邊貿易體制奠基。"
+    },
+    {
+      "id": "us-uk-1938",
+      "name": "US–UK Trade Agreement (1938)",
+      "nameZh": "1938年美英貿易協定 (US–UK Trade Agreement 1938)",
+      "shortName": "US–UK 1938",
+      "type": "bilateral",
+      "status": "superseded",
+      "era": "pre_gatt",
+      "parties": [
+        "US",
+        "GB"
+      ],
+      "partyNames": [
+        "United States",
+        "United Kingdom"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "英國"
+      ],
+      "keyDates": {
+        "signed": "1938-11",
+        "in_force": "1939-01",
+        "superseded": "1948-01"
+      },
+      "description": "Major bilateral deal under RTAA, signed just before WWII. Reduced tariffs between two largest economies of the era.",
+      "descriptionZh": "依《互惠貿易協定法》簽署的重大雙邊協定，於二戰前夕完成，削減當時兩大經濟體之間的關稅。",
+      "tags": [
+        "historical",
+        "pre-war"
+      ],
+      "supersededBy": "gatt-1947"
+    },
+    {
+      "id": "gatt-1947",
+      "name": "General Agreement on Tariffs and Trade",
+      "nameZh": "關稅暨貿易總協定 (General Agreement on Tariffs and Trade, GATT)",
+      "shortName": "GATT 1947",
+      "type": "multilateral",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "23 contracting parties (initial)"
+      ],
+      "partyNamesZh": [
+        "23個原始締約方"
+      ],
+      "keyDates": {
+        "signed": "1947-10",
+        "in_force": "1948-01",
+        "superseded": "1995-01"
+      },
+      "tradeVolume": 60,
+      "description": "Foundational multilateral trade agreement signed in Geneva. Governed world trade for 47 years through 8 negotiating rounds before being absorbed into the WTO.",
+      "descriptionZh": "日內瓦簽署的多邊貿易基礎協定，主導世界貿易47年，經歷8輪多邊談判，後併入WTO體系。",
+      "keyProvisions": [
+        "MFN principle",
+        "National treatment",
+        "Tariff bindings",
+        "Anti-dumping rules",
+        "Customs valuation"
+      ],
+      "tags": [
+        "historical",
+        "multilateral-cornerstone"
+      ],
+      "supersededBy": "wto",
+      "significance": "戰後國際經濟秩序三大支柱之一（與IMF、World Bank並列），主導全球貿易自由化近半世紀。"
+    },
+    {
+      "id": "kennedy-round",
+      "name": "GATT Kennedy Round",
+      "nameZh": "GATT甘迺迪回合",
+      "shortName": "Kennedy Round",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "62 GATT contracting parties"
+      ],
+      "partyNamesZh": [
+        "62個GATT締約方"
+      ],
+      "keyDates": {
+        "started": "1964-05",
+        "concluded": "1967-06",
+        "signed": "1967-06",
+        "in_force": "1968-01"
+      },
+      "description": "Sixth GATT round, first to negotiate across-the-board tariff cuts (~35% reduction). Introduced anti-dumping code.",
+      "descriptionZh": "GATT第六輪談判，首次採用一刀切式的全面關稅削減（約35%），並引入反傾銷規則。",
+      "tags": [
+        "historical",
+        "gatt-round"
+      ]
+    },
+    {
+      "id": "tokyo-round",
+      "name": "GATT Tokyo Round",
+      "nameZh": "GATT東京回合",
+      "shortName": "Tokyo Round",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "102 GATT contracting parties"
+      ],
+      "partyNamesZh": [
+        "102個GATT締約方"
+      ],
+      "keyDates": {
+        "started": "1973-09",
+        "concluded": "1979-04",
+        "signed": "1979-04",
+        "in_force": "1980-01"
+      },
+      "description": "Seventh GATT round. Tariffs cut by another ~33% and introduced \"codes\" on non-tariff barriers (subsidies, technical standards, customs valuation).",
+      "descriptionZh": "GATT第七輪談判，關稅再削減約33%，並引入針對非關稅壁壘（補貼、技術標準、海關估價）的「規則準則」。",
+      "tags": [
+        "historical",
+        "gatt-round"
+      ]
+    },
+    {
+      "id": "uruguay-round",
+      "name": "GATT Uruguay Round",
+      "nameZh": "GATT烏拉圭回合",
+      "shortName": "Uruguay Round",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "123 GATT contracting parties"
+      ],
+      "partyNamesZh": [
+        "123個GATT締約方"
+      ],
+      "keyDates": {
+        "started": "1986-09",
+        "concluded": "1993-12",
+        "signed": "1994-04",
+        "in_force": "1995-01"
+      },
+      "description": "Eighth and most ambitious GATT round. Created the WTO, GATS (services), TRIPS (IP). Extended trade rules to services, agriculture, textiles.",
+      "descriptionZh": "GATT最後也最雄心的一輪談判，催生WTO、GATS（服務貿易）、TRIPS（智財權），把貿易規則延伸到服務、農業、紡織品。",
+      "keyProvisions": [
+        "WTO creation",
+        "GATS",
+        "TRIPS",
+        "DSU",
+        "Agriculture Agreement"
+      ],
+      "tags": [
+        "historical",
+        "wto-genesis",
+        "mile-stone"
+      ],
+      "significance": "從GATT到WTO的歷史轉折，將「關稅外交」全面升級為「規則外交」。"
+    },
+    {
+      "id": "eec-rome",
+      "name": "Treaty of Rome (EEC)",
+      "nameZh": "羅馬條約 (Treaty of Rome) — 歐洲經濟共同體 (EEC)",
+      "shortName": "EEC",
+      "type": "regional",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "FR",
+        "DE",
+        "IT",
+        "BE",
+        "NL",
+        "LU"
+      ],
+      "partyNames": [
+        "France",
+        "West Germany",
+        "Italy",
+        "Belgium",
+        "Netherlands",
+        "Luxembourg"
+      ],
+      "partyNamesZh": [
+        "法國",
+        "西德",
+        "義大利",
+        "比利時",
+        "荷蘭",
+        "盧森堡"
+      ],
+      "keyDates": {
+        "signed": "1957-03",
+        "in_force": "1958-01",
+        "superseded": "1993-11"
+      },
+      "tradeVolume": 300,
+      "description": "Founding treaty of the European Economic Community establishing a customs union among six founding members. Foundation of today's European Union.",
+      "descriptionZh": "建立歐洲經濟共同體的條約，六個創始會員國組成關稅同盟，是今日歐盟的起源。",
+      "keyProvisions": [
+        "Customs union",
+        "Common agricultural policy",
+        "Four freedoms (foundations)",
+        "Common external tariff"
+      ],
+      "tags": [
+        "historical",
+        "regional-integration",
+        "mile-stone"
+      ],
+      "supersededBy": "maastricht",
+      "significance": "歐洲統合工程的起點，戰後最成功的區域整合典範。"
+    },
+    {
+      "id": "efta-1960",
+      "name": "European Free Trade Association",
+      "nameZh": "歐洲自由貿易聯盟 (European Free Trade Association, EFTA)",
+      "shortName": "EFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "CH",
+        "NO",
+        "IS",
+        "LI"
+      ],
+      "partyNames": [
+        "Switzerland",
+        "Norway",
+        "Iceland",
+        "Liechtenstein"
+      ],
+      "partyNamesZh": [
+        "瑞士",
+        "挪威",
+        "冰島",
+        "列支敦斯登"
+      ],
+      "keyDates": {
+        "signed": "1960-01",
+        "in_force": "1960-05"
+      },
+      "tradeVolume": 80,
+      "description": "Alternative to EEC founded by UK, Austria, Denmark, Norway, Portugal, Sweden, Switzerland. Most members later joined EU; remaining four maintain EFTA today.",
+      "descriptionZh": "由英國、奧地利、丹麥、挪威、葡萄牙、瑞典、瑞士創立，作為EEC的另類選項。多數會員後來加入歐盟，目前剩瑞士、挪威、冰島、列支敦斯登四國。",
+      "tags": [
+        "historical",
+        "regional-integration"
+      ],
+      "significance": "EU之外歐洲第二大貿易圈，至今活躍且持續對外簽訂協定。"
+    },
+    {
+      "id": "lafta",
+      "name": "Latin American Free Trade Association",
+      "nameZh": "拉丁美洲自由貿易聯盟 (Latin American Free Trade Association, LAFTA)",
+      "shortName": "LAFTA",
+      "type": "regional",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "AR",
+        "BR",
+        "CL",
+        "MX",
+        "PY",
+        "PE",
+        "UY"
+      ],
+      "partyNames": [
+        "Argentina",
+        "Brazil",
+        "Chile",
+        "Mexico",
+        "Paraguay",
+        "Peru",
+        "Uruguay"
+      ],
+      "partyNamesZh": [
+        "阿根廷",
+        "巴西",
+        "智利",
+        "墨西哥",
+        "巴拉圭",
+        "秘魯",
+        "烏拉圭"
+      ],
+      "keyDates": {
+        "signed": "1960-02",
+        "in_force": "1961-06",
+        "superseded": "1980-08"
+      },
+      "description": "First major Latin American economic integration effort. Failed to achieve goals and was replaced by ALADI in 1980.",
+      "descriptionZh": "拉美第一個重大經濟整合嘗試，未達成既定目標，1980年被ALADI取代。",
+      "tags": [
+        "historical",
+        "regional-integration"
+      ],
+      "supersededBy": "aladi"
+    },
+    {
+      "id": "aladi",
+      "name": "Latin American Integration Association",
+      "nameZh": "拉丁美洲整合聯盟 (Latin American Integration Association, ALADI)",
+      "shortName": "ALADI",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "AR",
+        "BO",
+        "BR",
+        "CL",
+        "CO",
+        "CU",
+        "EC",
+        "MX",
+        "PA",
+        "PY",
+        "PE",
+        "UY",
+        "VE"
+      ],
+      "partyNames": [
+        "Argentina",
+        "Bolivia",
+        "Brazil",
+        "Chile",
+        "Colombia",
+        "Cuba",
+        "Ecuador",
+        "Mexico",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Uruguay",
+        "Venezuela"
+      ],
+      "partyNamesZh": [
+        "阿根廷",
+        "玻利維亞",
+        "巴西",
+        "智利",
+        "哥倫比亞",
+        "古巴",
+        "厄瓜多",
+        "墨西哥",
+        "巴拿馬",
+        "巴拉圭",
+        "秘魯",
+        "烏拉圭",
+        "委內瑞拉"
+      ],
+      "keyDates": {
+        "signed": "1980-08",
+        "in_force": "1981-03"
+      },
+      "description": "Replaced LAFTA. Framework for bilateral and partial trade agreements among Latin American states. Mercosur and Andean Community emerged within it.",
+      "descriptionZh": "取代LAFTA，作為拉美國家間雙邊與部分協定的框架，南共市與安第斯共同體均在此框架下發展。",
+      "tags": [
+        "regional-integration",
+        "framework"
+      ]
+    },
+    {
+      "id": "asean-founding",
+      "name": "ASEAN Declaration (Bangkok Declaration)",
+      "nameZh": "東協宣言 (ASEAN Declaration) — 曼谷宣言 (Bangkok Declaration)",
+      "shortName": "ASEAN",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "ID",
+        "MY",
+        "PH",
+        "SG",
+        "TH",
+        "BN",
+        "VN",
+        "LA",
+        "MM",
+        "KH"
+      ],
+      "partyNames": [
+        "Indonesia",
+        "Malaysia",
+        "Philippines",
+        "Singapore",
+        "Thailand",
+        "Brunei",
+        "Vietnam",
+        "Laos",
+        "Myanmar",
+        "Cambodia"
+      ],
+      "partyNamesZh": [
+        "印尼",
+        "馬來西亞",
+        "菲律賓",
+        "新加坡",
+        "泰國",
+        "汶萊",
+        "越南",
+        "寮國",
+        "緬甸",
+        "柬埔寨"
+      ],
+      "keyDates": {
+        "signed": "1967-08",
+        "in_force": "1967-08"
+      },
+      "tradeVolume": 3800,
+      "description": "Founding declaration of the Association of Southeast Asian Nations. Started as political body; became major economic integration platform.",
+      "descriptionZh": "東南亞國家協會的創立宣言，最初為政治組織，後發展為區域最重要的經濟整合平台。",
+      "keyProvisions": [
+        "Political cooperation",
+        "Economic cooperation",
+        "Cultural exchange"
+      ],
+      "tags": [
+        "regional-integration",
+        "mile-stone"
+      ],
+      "significance": "亞洲最成功的區域整合組織，旗下衍生AFTA、東協加一系列FTA、RCEP等。"
+    },
+    {
+      "id": "caricom-1973",
+      "name": "Caribbean Community",
+      "nameZh": "加勒比共同體 (Caribbean Community, CARICOM)",
+      "shortName": "CARICOM",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "JM",
+        "TT",
+        "BB",
+        "GY"
+      ],
+      "partyNames": [
+        "Jamaica",
+        "Trinidad and Tobago",
+        "Barbados",
+        "Guyana",
+        "+11 others"
+      ],
+      "partyNamesZh": [
+        "牙買加",
+        "千里達及托巴哥",
+        "巴貝多",
+        "蓋亞那",
+        "及另11國"
+      ],
+      "keyDates": {
+        "signed": "1973-07",
+        "in_force": "1973-08"
+      },
+      "description": "Established by Treaty of Chaguaramas. Customs union of 15 Caribbean nations covering trade, foreign policy, single market.",
+      "descriptionZh": "查瓜拉馬斯條約所建立，15個加勒比海國家組成的關稅同盟，涵蓋貿易、外交政策與單一市場。",
+      "tags": [
+        "regional-integration"
+      ]
+    },
+    {
+      "id": "andean-community",
+      "name": "Andean Community",
+      "nameZh": "安第斯共同體 (Andean Community, CAN)",
+      "shortName": "CAN",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "BO",
+        "CO",
+        "EC",
+        "PE"
+      ],
+      "partyNames": [
+        "Bolivia",
+        "Colombia",
+        "Ecuador",
+        "Peru"
+      ],
+      "partyNamesZh": [
+        "玻利維亞",
+        "哥倫比亞",
+        "厄瓜多",
+        "秘魯"
+      ],
+      "keyDates": {
+        "signed": "1969-05",
+        "in_force": "1969-10"
+      },
+      "tradeVolume": 11,
+      "description": "Originally Cartagena Agreement. Customs union among Andean states. Chile and Venezuela left in 1976 and 2006 respectively.",
+      "descriptionZh": "原名《卡塔赫納協定》，安第斯國家組成的關稅同盟。智利於1976年、委內瑞拉於2006年退出。",
+      "tags": [
+        "regional-integration"
+      ]
+    },
+    {
+      "id": "auto-pact-1965",
+      "name": "Canada–US Automotive Products Agreement",
+      "nameZh": "加美汽車產品協定 (Canada–US Auto Pact)",
+      "shortName": "Auto Pact",
+      "type": "sectoral",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "US",
+        "CA"
+      ],
+      "partyNames": [
+        "United States",
+        "Canada"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "加拿大"
+      ],
+      "keyDates": {
+        "signed": "1965-01",
+        "in_force": "1966-04",
+        "superseded": "2001-02"
+      },
+      "tradeVolume": 100,
+      "description": "Sectoral free-trade agreement covering automotive products. Foundation of integrated North American auto industry. Replaced by NAFTA and later USMCA.",
+      "descriptionZh": "汽車產業的部門性自由貿易協定，是北美汽車工業整合的基礎。後被NAFTA及USMCA取代。",
+      "tags": [
+        "historical",
+        "automotive",
+        "sectoral"
+      ],
+      "supersededBy": "nafta"
+    },
+    {
+      "id": "lome-convention",
+      "name": "Lomé Convention",
+      "nameZh": "洛美協定 (Lomé Convention)",
+      "shortName": "Lomé",
+      "type": "multilateral",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "EU",
+        "ACP"
+      ],
+      "partyNames": [
+        "EEC",
+        "ACP states (46 African, Caribbean, Pacific)"
+      ],
+      "partyNamesZh": [
+        "歐洲共同體",
+        "46個非洲/加勒比海/太平洋國家"
+      ],
+      "keyDates": {
+        "signed": "1975-02",
+        "in_force": "1976-04",
+        "superseded": "2000-06"
+      },
+      "description": "Preferential trade and aid agreement between EEC and ACP (African, Caribbean, Pacific) countries. Allowed non-reciprocal market access. Replaced by Cotonou Agreement.",
+      "descriptionZh": "歐洲共同體與ACP（非洲、加勒比海、太平洋）國家的優惠貿易與援助協定，允許單向市場准入，後被《科托努協定》取代。",
+      "tags": [
+        "historical",
+        "development",
+        "preferential"
+      ],
+      "supersededBy": "cotonou"
+    },
+    {
+      "id": "cotonou",
+      "name": "Cotonou Agreement",
+      "nameZh": "科托努協定 (Cotonou Agreement)",
+      "shortName": "Cotonou",
+      "type": "multilateral",
+      "status": "superseded",
+      "era": "wto_birth",
+      "parties": [
+        "EU",
+        "ACP"
+      ],
+      "partyNames": [
+        "EU",
+        "79 ACP states"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "79個ACP國家"
+      ],
+      "keyDates": {
+        "signed": "2000-06",
+        "in_force": "2003-04",
+        "superseded": "2023-11"
+      },
+      "description": "Replaced Lomé. Combined trade, aid, and political dialogue between EU and 79 ACP countries. Replaced by Samoa Agreement in 2023.",
+      "descriptionZh": "取代《洛美協定》，結合貿易、援助與政治對話。2023年被《薩摩亞協定》取代。",
+      "tags": [
+        "development",
+        "preferential"
+      ],
+      "supersededBy": "samoa-agreement"
+    },
+    {
+      "id": "us-israel-1985",
+      "name": "US–Israel Free Trade Agreement",
+      "nameZh": "美國–以色列自由貿易協定",
+      "shortName": "US–Israel FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "US",
+        "IL"
+      ],
+      "partyNames": [
+        "United States",
+        "Israel"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "以色列"
+      ],
+      "keyDates": {
+        "signed": "1985-04",
+        "in_force": "1985-09"
+      },
+      "tradeVolume": 50,
+      "description": "First US bilateral free trade agreement. Foundation of US FTA strategy that exploded post-NAFTA.",
+      "descriptionZh": "美國第一個雙邊自由貿易協定，是後來NAFTA以後美國全面推動FTA戰略的起點。",
+      "tags": [
+        "historical",
+        "us-fta",
+        "first-of-kind"
+      ]
+    },
+    {
+      "id": "cer-anzcerta",
+      "name": "Australia–NZ Closer Economic Relations",
+      "nameZh": "澳紐更緊密經濟關係協定 (Australia–NZ Closer Economic Relations, ANZCERTA)",
+      "shortName": "ANZCERTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "AU",
+        "NZ"
+      ],
+      "partyNames": [
+        "Australia",
+        "New Zealand"
+      ],
+      "partyNamesZh": [
+        "澳洲",
+        "紐西蘭"
+      ],
+      "keyDates": {
+        "signed": "1983-03",
+        "in_force": "1983-01"
+      },
+      "tradeVolume": 18,
+      "description": "Comprehensive economic integration covering goods, services, movement of people. Among the world's most complete bilateral economic relationships.",
+      "descriptionZh": "涵蓋商品、服務及人員流動的全面經濟整合，是全球最完整的雙邊經濟關係之一。",
+      "keyProvisions": [
+        "100% goods tariff elimination",
+        "Services",
+        "Free movement of people"
+      ],
+      "tags": [
+        "bilateral-flagship"
+      ]
+    },
+    {
+      "id": "mercosur-1991",
+      "name": "Mercosur (Treaty of Asunción)",
+      "nameZh": "南方共同市場 (Mercosur) — 亞松森條約 (Treaty of Asunción)",
+      "shortName": "Mercosur",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "BR",
+        "AR",
+        "UY",
+        "PY"
+      ],
+      "partyNames": [
+        "Brazil",
+        "Argentina",
+        "Uruguay",
+        "Paraguay"
+      ],
+      "partyNamesZh": [
+        "巴西",
+        "阿根廷",
+        "烏拉圭",
+        "巴拉圭"
+      ],
+      "keyDates": {
+        "signed": "1991-03",
+        "in_force": "1991-11"
+      },
+      "tradeVolume": 300,
+      "description": "South American Common Market. Customs union with common external tariff. Venezuela was a member 2012-2016; Bolivia in accession process.",
+      "descriptionZh": "南美共同市場，關稅同盟，採共同對外關稅。委內瑞拉曾為會員（2012-2016），玻利維亞加盟中。",
+      "tags": [
+        "regional-integration",
+        "mile-stone"
+      ]
+    },
+    {
+      "id": "apec-1989",
+      "name": "Asia-Pacific Economic Cooperation",
+      "nameZh": "亞太經濟合作 (Asia-Pacific Economic Cooperation, APEC)",
+      "shortName": "APEC",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "AU",
+        "BN",
+        "CA",
+        "CL",
+        "CN",
+        "HK",
+        "ID",
+        "JP",
+        "KR",
+        "MX",
+        "MY",
+        "NZ",
+        "PG",
+        "PE",
+        "PH",
+        "RU",
+        "SG",
+        "TW",
+        "TH",
+        "US",
+        "VN"
+      ],
+      "partyNames": [
+        "21 Pacific Rim economies"
+      ],
+      "partyNamesZh": [
+        "21個太平洋沿岸經濟體"
+      ],
+      "keyDates": {
+        "signed": "1989-11",
+        "in_force": "1989-11"
+      },
+      "description": "Inter-governmental forum for 21 Pacific Rim economies. Not a treaty-based organization. Promotes free trade through voluntary, non-binding commitments.",
+      "descriptionZh": "21個太平洋沿岸經濟體的政府間論壇，非條約組織，透過自願性、非拘束力的承諾推動自由貿易。",
+      "tags": [
+        "forum",
+        "non-binding"
+      ]
+    },
+    {
+      "id": "afta-1992",
+      "name": "ASEAN Free Trade Area",
+      "nameZh": "東協自由貿易區 (ASEAN Free Trade Area, AFTA)",
+      "shortName": "AFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "ASEAN"
+      ],
+      "partyNames": [
+        "ASEAN (10)"
+      ],
+      "partyNamesZh": [
+        "東協（10國）"
+      ],
+      "keyDates": {
+        "signed": "1992-01",
+        "in_force": "1993-01"
+      },
+      "tradeVolume": 700,
+      "description": "Established at ASEAN summit in Singapore. Common Effective Preferential Tariff scheme. Foundation for ASEAN Economic Community.",
+      "descriptionZh": "新加坡東協峰會所建立，採共同有效優惠關稅方案，是東協經濟共同體的基礎。",
+      "tags": [
+        "regional-integration"
+      ]
+    },
+    {
+      "id": "nafta",
+      "name": "North American Free Trade Agreement",
+      "nameZh": "北美自由貿易協定 (NAFTA)",
+      "shortName": "NAFTA",
+      "type": "regional",
+      "status": "superseded",
+      "era": "gatt_era",
+      "parties": [
+        "US",
+        "CA",
+        "MX"
+      ],
+      "partyNames": [
+        "United States",
+        "Canada",
+        "Mexico"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "加拿大",
+        "墨西哥"
+      ],
+      "keyDates": {
+        "signed": "1992-12",
+        "in_force": "1994-01",
+        "superseded": "2020-07"
+      },
+      "tradeVolume": 1300,
+      "description": "Most consequential FTA of its era. Created world's largest free trade area. Renegotiated and replaced by USMCA in 2020.",
+      "descriptionZh": "當時最具影響力的FTA，建立全球最大自由貿易區，2020年被USMCA重新談判取代。",
+      "keyProvisions": [
+        "Goods tariff elimination (15 years)",
+        "Services",
+        "Investment (ISDS)",
+        "IP"
+      ],
+      "tags": [
+        "historical",
+        "mile-stone"
+      ],
+      "supersededBy": "usmca",
+      "significance": "把FTA推向「全面+深度」模式的歷史性協定，深刻影響北美經濟整合與全球化辯論。"
+    },
+    {
+      "id": "eea",
+      "name": "European Economic Area",
+      "nameZh": "歐洲經濟區 (European Economic Area, EEA)",
+      "shortName": "EEA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "EU",
+        "NO",
+        "IS",
+        "LI"
+      ],
+      "partyNames": [
+        "EU",
+        "Norway",
+        "Iceland",
+        "Liechtenstein"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "挪威",
+        "冰島",
+        "列支敦斯登"
+      ],
+      "keyDates": {
+        "signed": "1992-05",
+        "in_force": "1994-01"
+      },
+      "tradeVolume": 500,
+      "description": "Extends EU single market to three EFTA states. Allows free movement of goods, services, capital, people without EU membership.",
+      "descriptionZh": "將歐盟單一市場延伸至三個EFTA國家，允許貨物、服務、資本、人員自由流動，但不具歐盟會員身分。",
+      "tags": [
+        "regional-integration",
+        "flagship"
+      ]
+    },
+    {
+      "id": "maastricht",
+      "name": "Treaty of Maastricht (EU founding)",
+      "nameZh": "馬斯垂克條約 (Treaty of Maastricht) — 歐盟成立",
+      "shortName": "Maastricht",
+      "type": "regional",
+      "status": "in_force",
+      "era": "gatt_era",
+      "parties": [
+        "EU"
+      ],
+      "partyNames": [
+        "12 EEC member states"
+      ],
+      "partyNamesZh": [
+        "12個EEC會員國"
+      ],
+      "keyDates": {
+        "signed": "1992-02",
+        "in_force": "1993-11"
+      },
+      "description": "Transformed European Communities into European Union. Established three pillars: economic, foreign policy, justice. Foundation for euro and EU citizenship.",
+      "descriptionZh": "把歐洲共同體轉變為歐盟，建立三大支柱：經濟、外交、司法，並為歐元及歐盟公民身分奠基。",
+      "tags": [
+        "historical",
+        "mile-stone"
+      ],
+      "significance": "今日歐盟的法律基礎，超越單純貿易協定，含政治整合。"
+    },
+    {
+      "id": "wto",
+      "name": "World Trade Organization",
+      "nameZh": "世界貿易組織 (World Trade Organization, WTO)",
+      "shortName": "WTO",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "wto_birth",
+      "parties": [
+        "WORLD"
+      ],
+      "partyNames": [
+        "164 WTO Members"
+      ],
+      "partyNamesZh": [
+        "164個成員國"
+      ],
+      "keyDates": {
+        "started": "1986-09",
+        "concluded": "1993-12",
+        "signed": "1994-04",
+        "in_force": "1995-01"
+      },
+      "tradeVolume": 24000,
+      "description": "Replaced GATT 1947. Permanent organization governing multilateral trade rules, dispute settlement, services, IP, agriculture. Currently faces enforcement crisis.",
+      "descriptionZh": "取代GATT 1947，常設多邊貿易規則組織，涵蓋爭端解決、服務、智財、農業。目前面臨執法機制危機（上訴機構癱瘓）。",
+      "keyProvisions": [
+        "GATT 1994",
+        "GATS",
+        "TRIPS",
+        "Dispute Settlement Understanding (DSU)",
+        "Appellate Body (paralyzed since 2019)"
+      ],
+      "tags": [
+        "multilateral-cornerstone",
+        "crisis"
+      ],
+      "significance": "戰後第二代多邊貿易體系的支柱，2019年後因美國杯葛上訴機構而陷入危機。"
+    },
+    {
+      "id": "ita-1996",
+      "name": "WTO Information Technology Agreement",
+      "nameZh": "WTO資訊科技協定",
+      "shortName": "ITA",
+      "type": "plurilateral",
+      "status": "in_force",
+      "era": "wto_birth",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "82 WTO members"
+      ],
+      "partyNamesZh": [
+        "82個WTO成員"
+      ],
+      "keyDates": {
+        "signed": "1996-12",
+        "in_force": "1997-07"
+      },
+      "tradeVolume": 1700,
+      "description": "Eliminated tariffs on IT products. Expanded in 2015 (ITA-II) to cover semiconductors, medical devices, GPS, etc. 97% of global IT trade.",
+      "descriptionZh": "消除資訊科技產品關稅，2015年擴大（ITA-II）涵蓋半導體、醫療設備、GPS等，覆蓋全球IT貿易的97%。",
+      "tags": [
+        "sectoral",
+        "IT"
+      ]
+    },
+    {
+      "id": "wto-fin-services",
+      "name": "WTO Financial Services Agreement",
+      "nameZh": "WTO金融服務協定",
+      "shortName": "GATS Fin. Services",
+      "type": "plurilateral",
+      "status": "in_force",
+      "era": "wto_birth",
+      "parties": [
+        "MULTI"
+      ],
+      "partyNames": [
+        "70 WTO members"
+      ],
+      "partyNamesZh": [
+        "70個WTO成員"
+      ],
+      "keyDates": {
+        "signed": "1997-12",
+        "in_force": "1999-03"
+      },
+      "description": "GATS protocol opening banking, insurance, securities markets. Covered 95% of global trade in financial services.",
+      "descriptionZh": "GATS下的協定，開放銀行、保險、證券市場，覆蓋全球金融服務貿易的95%。",
+      "tags": [
+        "sectoral",
+        "financial-services"
+      ]
+    },
+    {
+      "id": "eu-turkey-customs",
+      "name": "EU–Turkey Customs Union",
+      "nameZh": "歐盟–土耳其關稅同盟",
+      "shortName": "EU–Turkey Customs",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "wto_birth",
+      "parties": [
+        "EU",
+        "TR"
+      ],
+      "partyNames": [
+        "European Union",
+        "Turkey"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "土耳其"
+      ],
+      "keyDates": {
+        "signed": "1995-03",
+        "in_force": "1995-12"
+      },
+      "tradeVolume": 200,
+      "description": "Customs union covering industrial goods (not agriculture or services). Turkey applies EU common external tariff.",
+      "descriptionZh": "涵蓋工業品的關稅同盟（不含農業與服務），土耳其採用歐盟對外共同關稅。",
+      "tags": [
+        "customs-union",
+        "pre-accession"
+      ]
+    },
+    {
+      "id": "china-wto",
+      "name": "China WTO Accession",
+      "nameZh": "中國加入WTO (China WTO Accession)",
+      "shortName": "China WTO",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "CN",
+        "WTO"
+      ],
+      "partyNames": [
+        "China",
+        "WTO Members"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "WTO各成員"
+      ],
+      "keyDates": {
+        "started": "1986-07",
+        "concluded": "2001-09",
+        "signed": "2001-11",
+        "in_force": "2001-12"
+      },
+      "tradeVolume": 6000,
+      "description": "After 15 years of negotiations, China joined WTO. Transformed global trade landscape, accelerated globalization, supply chain shifts.",
+      "descriptionZh": "歷時15年談判，中國加入WTO，徹底改變全球貿易格局，加速全球化與供應鏈轉移。",
+      "tags": [
+        "historical",
+        "mile-stone",
+        "china"
+      ],
+      "significance": "近代貿易史上最重要事件之一，引發「中國衝擊」、全球工廠轉移、後續美中貿易摩擦的根源。"
+    },
+    {
+      "id": "doha-round",
+      "name": "WTO Doha Development Round",
+      "nameZh": "WTO杜哈發展回合",
+      "shortName": "Doha Round",
+      "type": "multilateral",
+      "status": "suspended",
+      "era": "fta_boom",
+      "parties": [
+        "WTO"
+      ],
+      "partyNames": [
+        "WTO Members"
+      ],
+      "partyNamesZh": [
+        "WTO各成員"
+      ],
+      "keyDates": {
+        "proposed": "2001-11",
+        "started": "2001-11",
+        "suspended": "2008-07"
+      },
+      "description": "Ninth WTO round focused on development. Repeatedly stalled over agriculture, NAMA, services. Effectively dead since 2008 Geneva collapse.",
+      "descriptionZh": "WTO第九輪談判，主題為發展。因農業、非農市場准入、服務等議題反覆停滯，2008年日內瓦會議崩盤後實質名存實亡。",
+      "tags": [
+        "historical",
+        "wto-crisis"
+      ],
+      "significance": "WTO多邊談判功能式微的標誌，迫使各國轉向雙邊與區域FTA。"
+    },
+    {
+      "id": "us-singapore",
+      "name": "US–Singapore Free Trade Agreement",
+      "nameZh": "美國–新加坡自由貿易協定",
+      "shortName": "USSFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "SG"
+      ],
+      "partyNames": [
+        "United States",
+        "Singapore"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "新加坡"
+      ],
+      "keyDates": {
+        "signed": "2003-05",
+        "in_force": "2004-01"
+      },
+      "tradeVolume": 80,
+      "description": "US first FTA in Asia. Eliminated all goods tariffs, liberalised financial services, services, investment.",
+      "descriptionZh": "美國在亞洲的首個FTA，消除所有商品關稅，開放金融服務、服務業及投資。",
+      "keyProvisions": [
+        "100% tariff elimination",
+        "Financial services",
+        "IP protection",
+        "E-commerce"
+      ],
+      "tags": [
+        "us-fta",
+        "first-asia"
+      ]
+    },
+    {
+      "id": "us-chile",
+      "name": "US–Chile Free Trade Agreement",
+      "nameZh": "美國–智利自由貿易協定",
+      "shortName": "US–Chile FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "CL"
+      ],
+      "partyNames": [
+        "United States",
+        "Chile"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "智利"
+      ],
+      "keyDates": {
+        "signed": "2003-06",
+        "in_force": "2004-01"
+      },
+      "tradeVolume": 25,
+      "description": "First US FTA with South American country. Pioneered modern provisions on labour, environment, e-commerce.",
+      "descriptionZh": "美國第一個與南美國家的FTA，開創了現代協定中勞工、環境、電子商務等條款。",
+      "tags": [
+        "us-fta"
+      ]
+    },
+    {
+      "id": "us-australia",
+      "name": "US–Australia Free Trade Agreement",
+      "nameZh": "美國–澳洲自由貿易協定",
+      "shortName": "AUSFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "AU"
+      ],
+      "partyNames": [
+        "United States",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "澳洲"
+      ],
+      "keyDates": {
+        "signed": "2004-05",
+        "in_force": "2005-01"
+      },
+      "tradeVolume": 75,
+      "description": "Comprehensive FTA covering 99% of US goods trade with Australia.",
+      "descriptionZh": "全面性FTA，涵蓋美澳間99%的商品貿易。",
+      "tags": [
+        "us-fta"
+      ]
+    },
+    {
+      "id": "cafta-dr",
+      "name": "CAFTA–DR",
+      "nameZh": "中美洲–多明尼加自由貿易協定",
+      "shortName": "CAFTA–DR",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "CR",
+        "SV",
+        "GT",
+        "HN",
+        "NI",
+        "DO"
+      ],
+      "partyNames": [
+        "US",
+        "Costa Rica",
+        "El Salvador",
+        "Guatemala",
+        "Honduras",
+        "Nicaragua",
+        "Dominican Rep."
+      ],
+      "partyNamesZh": [
+        "美國",
+        "哥斯大黎加",
+        "薩爾瓦多",
+        "瓜地馬拉",
+        "宏都拉斯",
+        "尼加拉瓜",
+        "多明尼加"
+      ],
+      "keyDates": {
+        "signed": "2004-05",
+        "in_force": "2006-03"
+      },
+      "tradeVolume": 60,
+      "description": "US trade deal with five Central American countries and Dominican Republic.",
+      "descriptionZh": "美國與五個中美洲國家及多明尼加的自由貿易協定。",
+      "tags": [
+        "us-fta",
+        "regional"
+      ]
+    },
+    {
+      "id": "us-korea",
+      "name": "US–South Korea FTA (KORUS)",
+      "nameZh": "美國–韓國自由貿易協定（KORUS）",
+      "shortName": "KORUS FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "KR"
+      ],
+      "partyNames": [
+        "United States",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "韓國"
+      ],
+      "keyDates": {
+        "started": "2006-02",
+        "concluded": "2007-06",
+        "signed": "2007-06",
+        "in_force": "2012-03"
+      },
+      "tradeVolume": 190,
+      "description": "US largest FTA outside North America. Renegotiated in 2018 to update auto rules under Trump pressure.",
+      "descriptionZh": "美國在北美以外最大的FTA，2018年因川普壓力重新談判更新汽車條款。",
+      "tags": [
+        "us-fta",
+        "flagship"
+      ]
+    },
+    {
+      "id": "eu-korea",
+      "name": "EU–South Korea FTA",
+      "nameZh": "歐盟–韓國自由貿易協定",
+      "shortName": "EU–Korea FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "EU",
+        "KR"
+      ],
+      "partyNames": [
+        "European Union",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "韓國"
+      ],
+      "keyDates": {
+        "started": "2007-05",
+        "concluded": "2010-10",
+        "signed": "2010-10",
+        "in_force": "2011-07"
+      },
+      "tradeVolume": 170,
+      "description": "EU first FTA with an Asian partner. Strong enforcement mechanisms.",
+      "descriptionZh": "歐盟與亞洲夥伴的首個FTA，具備完善執法機制。",
+      "tags": [
+        "eu-fta",
+        "first-asia-eu"
+      ]
+    },
+    {
+      "id": "china-asean",
+      "name": "China–ASEAN Free Trade Area",
+      "nameZh": "中國–東協自由貿易區",
+      "shortName": "CAFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "CN",
+        "ASEAN"
+      ],
+      "partyNames": [
+        "China",
+        "ASEAN"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "東協"
+      ],
+      "keyDates": {
+        "started": "2002-11",
+        "concluded": "2004-11",
+        "signed": "2004-11",
+        "in_force": "2010-01"
+      },
+      "tradeVolume": 780,
+      "description": "Largest FTA by population (1.9bn). Upgraded version (3.0) in force 2025.",
+      "descriptionZh": "按人口計算全球最大自貿區（19億人），3.0升級版2025年生效。",
+      "tags": [
+        "china-fta",
+        "flagship"
+      ]
+    },
+    {
+      "id": "china-chile",
+      "name": "China–Chile Free Trade Agreement",
+      "nameZh": "中國–智利自由貿易協定",
+      "shortName": "China–Chile",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "CN",
+        "CL"
+      ],
+      "partyNames": [
+        "China",
+        "Chile"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "智利"
+      ],
+      "keyDates": {
+        "signed": "2005-11",
+        "in_force": "2006-10"
+      },
+      "tradeVolume": 50,
+      "description": "China first FTA in Latin America.",
+      "descriptionZh": "中國在拉美的首個FTA。",
+      "tags": [
+        "china-fta"
+      ]
+    },
+    {
+      "id": "china-pakistan",
+      "name": "China–Pakistan Free Trade Agreement",
+      "nameZh": "中國–巴基斯坦自由貿易協定",
+      "shortName": "China–Pakistan",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "CN",
+        "PK"
+      ],
+      "partyNames": [
+        "China",
+        "Pakistan"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "巴基斯坦"
+      ],
+      "keyDates": {
+        "signed": "2006-11",
+        "in_force": "2007-07"
+      },
+      "tradeVolume": 28,
+      "description": "Strategic ally FTA, expanded in 2019 second phase.",
+      "descriptionZh": "戰略盟友間的FTA，2019年第二階段擴大。",
+      "tags": [
+        "china-fta"
+      ]
+    },
+    {
+      "id": "china-nz",
+      "name": "China–New Zealand Free Trade Agreement",
+      "nameZh": "中國–紐西蘭自由貿易協定",
+      "shortName": "China–NZ FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "CN",
+        "NZ"
+      ],
+      "partyNames": [
+        "China",
+        "New Zealand"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "紐西蘭"
+      ],
+      "keyDates": {
+        "signed": "2008-04",
+        "in_force": "2008-10"
+      },
+      "tradeVolume": 22,
+      "description": "China first FTA with a developed country. Upgraded 2022.",
+      "descriptionZh": "中國與已開發國家的首個FTA，2022年升級。",
+      "tags": [
+        "china-fta"
+      ]
+    },
+    {
+      "id": "asean-india",
+      "name": "ASEAN–India Free Trade Area",
+      "nameZh": "東協–印度自由貿易區",
+      "shortName": "AIFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "ASEAN",
+        "IN"
+      ],
+      "partyNames": [
+        "ASEAN",
+        "India"
+      ],
+      "partyNamesZh": [
+        "東協",
+        "印度"
+      ],
+      "keyDates": {
+        "signed": "2009-08",
+        "in_force": "2010-01"
+      },
+      "tradeVolume": 120,
+      "description": "Goods FTA. Services and investment agreements followed separately.",
+      "descriptionZh": "商品FTA，服務與投資協定另行談判。",
+      "tags": [
+        "regional"
+      ]
+    },
+    {
+      "id": "asean-aus-nz",
+      "name": "ASEAN–Australia–NZ Free Trade Area",
+      "nameZh": "東協–澳紐自由貿易區",
+      "shortName": "AANZFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "ASEAN",
+        "AU",
+        "NZ"
+      ],
+      "partyNames": [
+        "ASEAN",
+        "Australia",
+        "New Zealand"
+      ],
+      "partyNamesZh": [
+        "東協",
+        "澳洲",
+        "紐西蘭"
+      ],
+      "keyDates": {
+        "signed": "2009-02",
+        "in_force": "2010-01"
+      },
+      "tradeVolume": 190,
+      "description": "Comprehensive FTA. Second Protocol (2023) added digital chapter.",
+      "descriptionZh": "全面性FTA，2023年第二議定書納入數位章節。",
+      "tags": [
+        "regional"
+      ]
+    },
+    {
+      "id": "asean-korea",
+      "name": "ASEAN–Korea FTA",
+      "nameZh": "東協–韓國自由貿易協定",
+      "shortName": "AKFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "ASEAN",
+        "KR"
+      ],
+      "partyNames": [
+        "ASEAN",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "東協",
+        "韓國"
+      ],
+      "keyDates": {
+        "signed": "2006-08",
+        "in_force": "2007-06"
+      },
+      "tradeVolume": 160,
+      "description": "Phased tariff elimination on 90% of goods.",
+      "descriptionZh": "分階段消除90%商品關稅。",
+      "tags": [
+        "regional"
+      ]
+    },
+    {
+      "id": "asean-japan",
+      "name": "ASEAN–Japan Comprehensive Economic Partnership",
+      "nameZh": "東協–日本全面經濟夥伴協定",
+      "shortName": "AJCEP",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "ASEAN",
+        "JP"
+      ],
+      "partyNames": [
+        "ASEAN",
+        "Japan"
+      ],
+      "partyNamesZh": [
+        "東協",
+        "日本"
+      ],
+      "keyDates": {
+        "signed": "2008-04",
+        "in_force": "2008-12"
+      },
+      "tradeVolume": 220,
+      "description": "Japan first regional EPA. Services protocol added 2020.",
+      "descriptionZh": "日本第一個區域EPA，2020年新增服務議定書。",
+      "tags": [
+        "regional"
+      ]
+    },
+    {
+      "id": "india-korea",
+      "name": "India–South Korea CEPA",
+      "nameZh": "印度–韓國全面經濟夥伴協定",
+      "shortName": "India–Korea CEPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "IN",
+        "KR"
+      ],
+      "partyNames": [
+        "India",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "韓國"
+      ],
+      "keyDates": {
+        "signed": "2009-08",
+        "in_force": "2010-01"
+      },
+      "tradeVolume": 28,
+      "description": "Tariff cuts on 80%+ of items. Upgrade negotiations ongoing.",
+      "descriptionZh": "削減80%以上品項關稅，升級談判進行中。",
+      "tags": [
+        "bilateral"
+      ]
+    },
+    {
+      "id": "india-japan",
+      "name": "India–Japan CEPA",
+      "nameZh": "印度–日本全面經濟夥伴協定",
+      "shortName": "India–Japan CEPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "IN",
+        "JP"
+      ],
+      "partyNames": [
+        "India",
+        "Japan"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "日本"
+      ],
+      "keyDates": {
+        "signed": "2011-02",
+        "in_force": "2011-08"
+      },
+      "tradeVolume": 22,
+      "description": "Tariff elimination on 94% of goods trade.",
+      "descriptionZh": "消除94%商品貿易關稅。",
+      "tags": [
+        "bilateral"
+      ]
+    },
+    {
+      "id": "eu-canada-ceta",
+      "name": "EU–Canada CETA",
+      "nameZh": "歐盟–加拿大全面經濟貿易協定",
+      "shortName": "CETA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "EU",
+        "CA"
+      ],
+      "partyNames": [
+        "European Union",
+        "Canada"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "加拿大"
+      ],
+      "keyDates": {
+        "started": "2009-05",
+        "concluded": "2014-09",
+        "signed": "2016-10",
+        "in_force": "2017-09"
+      },
+      "tradeVolume": 120,
+      "description": "Removes 98% of tariffs. First EU deal with a major developed country.",
+      "descriptionZh": "消除98%關稅，歐盟首個與主要已開發國家的協定。",
+      "tags": [
+        "eu-fta",
+        "flagship"
+      ]
+    },
+    {
+      "id": "eu-singapore",
+      "name": "EU–Singapore Free Trade Agreement",
+      "nameZh": "歐盟–新加坡自由貿易協定",
+      "shortName": "EUSFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "EU",
+        "SG"
+      ],
+      "partyNames": [
+        "European Union",
+        "Singapore"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "新加坡"
+      ],
+      "keyDates": {
+        "started": "2010-03",
+        "concluded": "2014-10",
+        "signed": "2018-10",
+        "in_force": "2019-11"
+      },
+      "tradeVolume": 85,
+      "description": "Gateway agreement for EU access to ASEAN.",
+      "descriptionZh": "歐盟進入東協的門戶協定。",
+      "tags": [
+        "eu-fta"
+      ]
+    },
+    {
+      "id": "tpp-original",
+      "name": "Trans-Pacific Partnership (original)",
+      "nameZh": "跨太平洋夥伴協定（原版TPP）",
+      "shortName": "TPP",
+      "type": "regional",
+      "status": "cancelled",
+      "era": "fta_boom",
+      "parties": [
+        "US",
+        "JP",
+        "AU",
+        "CA",
+        "NZ",
+        "SG",
+        "MX",
+        "CL",
+        "PE",
+        "MY",
+        "VN",
+        "BN"
+      ],
+      "partyNames": [
+        "12 Pacific Rim countries incl. US, Japan"
+      ],
+      "partyNamesZh": [
+        "美國、日本等12個太平洋國家"
+      ],
+      "keyDates": {
+        "started": "2008-09",
+        "concluded": "2015-10",
+        "signed": "2016-02",
+        "cancelled": "2017-01"
+      },
+      "description": "Obama-era flagship trade pact. Trump withdrew US on day 3 of his first term. Remaining 11 reformed it as CPTPP.",
+      "descriptionZh": "歐巴馬時期的旗艦貿易協定，川普就任第三天即退出，剩餘11國重組為CPTPP。",
+      "tags": [
+        "historical",
+        "mile-stone",
+        "trump"
+      ],
+      "significance": "美國貿易政策大轉彎的象徵，全球反全球化政治情緒的歷史節點。"
+    },
+    {
+      "id": "china-korea",
+      "name": "China–South Korea Free Trade Agreement",
+      "nameZh": "中國–韓國自由貿易協定",
+      "shortName": "China–Korea FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "CN",
+        "KR"
+      ],
+      "partyNames": [
+        "China",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "韓國"
+      ],
+      "keyDates": {
+        "started": "2012-05",
+        "concluded": "2015-02",
+        "signed": "2015-06",
+        "in_force": "2015-12"
+      },
+      "tradeVolume": 360,
+      "description": "Covers 90% goods trade. Major deal between top trading partners.",
+      "descriptionZh": "涵蓋90%貨物貿易，兩大互為最大貿易夥伴。",
+      "tags": [
+        "china-fta",
+        "flagship"
+      ]
+    },
+    {
+      "id": "china-australia",
+      "name": "China–Australia Free Trade Agreement",
+      "nameZh": "中國–澳洲自由貿易協定",
+      "shortName": "ChAFTA",
+      "type": "bilateral",
+      "status": "suspended",
+      "era": "fragmentation",
+      "parties": [
+        "CN",
+        "AU"
+      ],
+      "partyNames": [
+        "China",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "澳洲"
+      ],
+      "keyDates": {
+        "started": "2005-05",
+        "concluded": "2015-11",
+        "signed": "2015-06",
+        "in_force": "2015-12",
+        "suspended": "2020-11"
+      },
+      "tradeVolume": 200,
+      "description": "Effectively suspended via Chinese trade restrictions on Australian wine, barley, coal, beef. Partial lifting from 2023.",
+      "descriptionZh": "中方對澳洲葡萄酒、大麥、煤炭、牛肉貿易限制使協定實質暫停，2023年起部分解除。",
+      "tags": [
+        "china-fta",
+        "geopolitics"
+      ],
+      "significance": "貿易協定被地緣政治綁架的典型案例。"
+    },
+    {
+      "id": "aec-2015",
+      "name": "ASEAN Economic Community",
+      "nameZh": "東協經濟共同體",
+      "shortName": "AEC",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "ASEAN"
+      ],
+      "partyNames": [
+        "ASEAN (10)"
+      ],
+      "partyNamesZh": [
+        "東協（10國）"
+      ],
+      "keyDates": {
+        "signed": "2015-11",
+        "in_force": "2015-12"
+      },
+      "tradeVolume": 3000,
+      "description": "Deeper ASEAN integration with vision for single market and production base.",
+      "descriptionZh": "東協更深度整合，朝向單一市場與生產基地的願景。",
+      "tags": [
+        "regional"
+      ]
+    },
+    {
+      "id": "usmca",
+      "name": "United States–Mexico–Canada Agreement",
+      "nameZh": "美國–墨西哥–加拿大協定",
+      "shortName": "USMCA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "US",
+        "MX",
+        "CA"
+      ],
+      "partyNames": [
+        "United States",
+        "Mexico",
+        "Canada"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "墨西哥",
+        "加拿大"
+      ],
+      "keyDates": {
+        "started": "2017-08",
+        "concluded": "2018-09",
+        "signed": "2018-11",
+        "in_force": "2020-07"
+      },
+      "tradeVolume": 1800,
+      "description": "Replaced NAFTA. Updated auto rules (75% RVC), digital trade, labour. Sunset clause: 6-year review.",
+      "descriptionZh": "取代NAFTA，更新汽車規則（75%區域價值含量）、數位貿易、勞工，含日落條款（每6年檢討）。",
+      "tags": [
+        "regional",
+        "flagship"
+      ]
+    },
+    {
+      "id": "cptpp",
+      "name": "Comprehensive and Progressive Trans-Pacific Partnership",
+      "nameZh": "跨太平洋夥伴全面進步協定",
+      "shortName": "CPTPP",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "AU",
+        "CA",
+        "JP",
+        "MX",
+        "NZ",
+        "PE",
+        "SG",
+        "VN",
+        "MY",
+        "CL",
+        "BN",
+        "GB"
+      ],
+      "partyNames": [
+        "12 Pacific Rim economies (UK joined 2024)"
+      ],
+      "partyNamesZh": [
+        "12個太平洋國家（英國2024年加入）"
+      ],
+      "keyDates": {
+        "started": "2017-05",
+        "concluded": "2018-01",
+        "signed": "2018-03",
+        "in_force": "2018-12"
+      },
+      "tradeVolume": 5200,
+      "description": "Restructured TPP after US withdrawal. UK acceded 2024. China, Taiwan, Ukraine applications pending.",
+      "descriptionZh": "TPP美國退出後重組，英國2024年加入。中國、台灣、烏克蘭申請中。",
+      "tags": [
+        "regional",
+        "flagship"
+      ]
+    },
+    {
+      "id": "eu-japan-epa",
+      "name": "EU–Japan Economic Partnership Agreement",
+      "nameZh": "歐盟–日本經濟夥伴關係協定",
+      "shortName": "EU–Japan EPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "JP"
+      ],
+      "partyNames": [
+        "European Union",
+        "Japan"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "日本"
+      ],
+      "keyDates": {
+        "started": "2013-04",
+        "concluded": "2017-12",
+        "signed": "2018-07",
+        "in_force": "2019-02"
+      },
+      "tradeVolume": 650,
+      "description": "Among largest bilateral deals. Covers 635mn people, ~1/3 global GDP.",
+      "descriptionZh": "最大雙邊協定之一，涵蓋6.35億人口、約全球GDP的三分之一。",
+      "tags": [
+        "eu-fta",
+        "flagship"
+      ]
+    },
+    {
+      "id": "eu-vietnam",
+      "name": "EU–Vietnam Free Trade Agreement",
+      "nameZh": "歐盟–越南自由貿易協定",
+      "shortName": "EVFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "VN"
+      ],
+      "partyNames": [
+        "European Union",
+        "Vietnam"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "越南"
+      ],
+      "keyDates": {
+        "started": "2012-06",
+        "concluded": "2015-12",
+        "signed": "2019-06",
+        "in_force": "2020-08"
+      },
+      "tradeVolume": 60,
+      "description": "EU first FTA with developing Asian economy.",
+      "descriptionZh": "歐盟首個與亞洲發展中經濟體的FTA。",
+      "tags": [
+        "eu-fta"
+      ]
+    },
+    {
+      "id": "us-japan-phase1",
+      "name": "US–Japan Phase 1 Trade Agreement",
+      "nameZh": "美國–日本第一階段貿易協定",
+      "shortName": "US–Japan Phase 1",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "US",
+        "JP"
+      ],
+      "partyNames": [
+        "United States",
+        "Japan"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "日本"
+      ],
+      "keyDates": {
+        "signed": "2019-10",
+        "in_force": "2020-01"
+      },
+      "tradeVolume": 280,
+      "description": "Limited sectoral deal: agriculture + digital trade. Broader phase 2 never materialised.",
+      "descriptionZh": "有限的部門協定：農業+數位貿易，第二階段未能展開。",
+      "tags": [
+        "bilateral",
+        "sectoral"
+      ]
+    },
+    {
+      "id": "rcep",
+      "name": "Regional Comprehensive Economic Partnership",
+      "nameZh": "區域全面經濟夥伴關係協定",
+      "shortName": "RCEP",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "CN",
+        "JP",
+        "KR",
+        "AU",
+        "NZ",
+        "ASEAN"
+      ],
+      "partyNames": [
+        "China",
+        "Japan",
+        "South Korea",
+        "Australia",
+        "NZ",
+        "ASEAN"
+      ],
+      "partyNamesZh": [
+        "中國",
+        "日本",
+        "韓國",
+        "澳洲",
+        "紐西蘭",
+        "東協"
+      ],
+      "keyDates": {
+        "started": "2013-05",
+        "concluded": "2020-11",
+        "signed": "2020-11",
+        "in_force": "2022-01"
+      },
+      "tradeVolume": 5800,
+      "description": "World largest FTA by GDP. 15 Asia-Pacific nations, ~30% of global trade.",
+      "descriptionZh": "按GDP計全球最大FTA，15個亞太國家，約佔全球貿易30%。",
+      "tags": [
+        "regional",
+        "flagship",
+        "mile-stone"
+      ]
+    },
+    {
+      "id": "eu-uk-tca",
+      "name": "EU–UK Trade and Cooperation Agreement",
+      "nameZh": "歐盟–英國貿易與合作協定",
+      "shortName": "EU–UK TCA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "GB"
+      ],
+      "partyNames": [
+        "European Union",
+        "United Kingdom"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "英國"
+      ],
+      "keyDates": {
+        "started": "2020-03",
+        "concluded": "2020-12",
+        "signed": "2020-12",
+        "in_force": "2021-05"
+      },
+      "tradeVolume": 890,
+      "description": "Post-Brexit agreement. Goods zero-tariff, services partial, fisheries, security.",
+      "descriptionZh": "脫歐後協定：商品零關稅、服務部分覆蓋、漁業、安全合作。",
+      "tags": [
+        "bilateral",
+        "mile-stone",
+        "brexit"
+      ],
+      "significance": "英國脫歐後與最大貿易夥伴的新關係基礎。"
+    },
+    {
+      "id": "eu-china-cai",
+      "name": "EU–China Comprehensive Agreement on Investment",
+      "nameZh": "歐盟–中國全面投資協定",
+      "shortName": "EU–China CAI",
+      "type": "bilateral",
+      "status": "suspended",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "CN"
+      ],
+      "partyNames": [
+        "European Union",
+        "China"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "中國"
+      ],
+      "keyDates": {
+        "started": "2014-01",
+        "concluded": "2020-12",
+        "suspended": "2021-05"
+      },
+      "tradeVolume": 800,
+      "description": "Concluded Dec 2020 after 7 years of talks. European Parliament suspended ratification over Xinjiang sanctions. Still frozen.",
+      "descriptionZh": "2020年12月經7年談判完成，但歐洲議會因新疆制裁問題暫停批准，至今凍結中。",
+      "tags": [
+        "suspended",
+        "geopolitics",
+        "china"
+      ],
+      "significance": "人權議題否決經貿協定的標誌性案例。"
+    },
+    {
+      "id": "uk-australia",
+      "name": "UK–Australia Free Trade Agreement",
+      "nameZh": "英國–澳洲自由貿易協定",
+      "shortName": "UK–Australia FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "GB",
+        "AU"
+      ],
+      "partyNames": [
+        "United Kingdom",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "澳洲"
+      ],
+      "keyDates": {
+        "started": "2021-06",
+        "concluded": "2021-12",
+        "signed": "2021-12",
+        "in_force": "2023-05"
+      },
+      "tradeVolume": 28,
+      "description": "UK first bespoke post-Brexit FTA.",
+      "descriptionZh": "英國脫歐後第一個專屬FTA。",
+      "tags": [
+        "uk-fta",
+        "brexit"
+      ]
+    },
+    {
+      "id": "uk-nz",
+      "name": "UK–New Zealand FTA",
+      "nameZh": "英國–紐西蘭自由貿易協定",
+      "shortName": "UK–NZ FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "GB",
+        "NZ"
+      ],
+      "partyNames": [
+        "United Kingdom",
+        "New Zealand"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "紐西蘭"
+      ],
+      "keyDates": {
+        "signed": "2022-02",
+        "in_force": "2023-05"
+      },
+      "tradeVolume": 12,
+      "description": "Comprehensive FTA. Zero tariffs on goods.",
+      "descriptionZh": "全面FTA，商品零關稅。",
+      "tags": [
+        "uk-fta",
+        "brexit"
+      ]
+    },
+    {
+      "id": "uk-japan",
+      "name": "UK–Japan CEPA",
+      "nameZh": "英國–日本全面經濟夥伴協定",
+      "shortName": "UKCJEPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "GB",
+        "JP"
+      ],
+      "partyNames": [
+        "United Kingdom",
+        "Japan"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "日本"
+      ],
+      "keyDates": {
+        "signed": "2020-10",
+        "in_force": "2021-01"
+      },
+      "tradeVolume": 24,
+      "description": "UK first major post-Brexit FTA.",
+      "descriptionZh": "英國脫歐後首個重大FTA。",
+      "tags": [
+        "uk-fta",
+        "brexit"
+      ]
+    },
+    {
+      "id": "india-uae",
+      "name": "India–UAE CEPA",
+      "nameZh": "印度–阿聯酋全面經濟夥伴協定",
+      "shortName": "India–UAE CEPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "IN",
+        "AE"
+      ],
+      "partyNames": [
+        "India",
+        "United Arab Emirates"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "阿聯酋"
+      ],
+      "keyDates": {
+        "started": "2022-01",
+        "concluded": "2022-02",
+        "signed": "2022-02",
+        "in_force": "2022-05"
+      },
+      "tradeVolume": 85,
+      "description": "Record 88-day negotiation. Fastest FTA India ever signed.",
+      "descriptionZh": "創紀錄88天完成談判，是印度最快的FTA。",
+      "tags": [
+        "india-fta"
+      ]
+    },
+    {
+      "id": "india-australia",
+      "name": "India–Australia ECTA",
+      "nameZh": "印度–澳洲經濟合作貿易協定",
+      "shortName": "India–Australia ECTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "IN",
+        "AU"
+      ],
+      "partyNames": [
+        "India",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "澳洲"
+      ],
+      "keyDates": {
+        "signed": "2022-04",
+        "in_force": "2022-12"
+      },
+      "tradeVolume": 28,
+      "description": "Interim ECTA covering 98% of Australian goods. Full CEPA under negotiation.",
+      "descriptionZh": "臨時ECTA涵蓋澳洲98%商品，全面CEPA談判中。",
+      "tags": [
+        "india-fta"
+      ]
+    },
+    {
+      "id": "afcfta",
+      "name": "African Continental Free Trade Area",
+      "nameZh": "非洲大陸自由貿易區 (African Continental Free Trade Area, AfCFTA)",
+      "shortName": "AfCFTA",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "AU-CONT"
+      ],
+      "partyNames": [
+        "54 African Union states"
+      ],
+      "partyNamesZh": [
+        "54個非洲聯盟國家"
+      ],
+      "keyDates": {
+        "signed": "2018-03",
+        "in_force": "2021-01"
+      },
+      "tradeVolume": 1300,
+      "description": "Largest FTA by number of members (54). Covers 1.3bn people. Implementation ongoing.",
+      "descriptionZh": "按成員數計算最大的FTA（54國），涵蓋13億人口，仍在實施中。",
+      "tags": [
+        "regional",
+        "mile-stone"
+      ],
+      "significance": "非洲經濟整合的歷史性嘗試，潛在影響可比歐盟早期。"
+    },
+    {
+      "id": "uk-cptpp",
+      "name": "UK CPTPP Accession",
+      "nameZh": "英國加入CPTPP",
+      "shortName": "UK–CPTPP",
+      "type": "regional",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "GB",
+        "CPTPP"
+      ],
+      "partyNames": [
+        "UK",
+        "CPTPP members"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "CPTPP成員"
+      ],
+      "keyDates": {
+        "started": "2021-02",
+        "concluded": "2023-03",
+        "signed": "2023-07",
+        "in_force": "2024-12"
+      },
+      "tradeVolume": 120,
+      "description": "UK formally joined CPTPP Dec 2024. First non-original member.",
+      "descriptionZh": "英國2024年12月正式加入CPTPP，是第一個非原始成員。",
+      "tags": [
+        "regional",
+        "brexit"
+      ]
+    },
+    {
+      "id": "india-canada-suspended",
+      "name": "India–Canada CEPA (suspended)",
+      "nameZh": "印度–加拿大CEPA（已暫停）",
+      "shortName": "India–Canada CEPA",
+      "type": "bilateral",
+      "status": "suspended",
+      "era": "fragmentation",
+      "parties": [
+        "IN",
+        "CA"
+      ],
+      "partyNames": [
+        "India",
+        "Canada"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "加拿大"
+      ],
+      "keyDates": {
+        "started": "2010-11",
+        "suspended": "2023-09"
+      },
+      "tradeVolume": 12,
+      "description": "Suspended Sept 2023 over Canadian allegations of Indian involvement in Sikh activist killing.",
+      "descriptionZh": "2023年9月因加拿大指控印度涉錫克族活動人士遭殺事件而暫停。",
+      "tags": [
+        "geopolitics",
+        "suspended"
+      ]
+    },
+    {
+      "id": "us-taiwan-21st",
+      "name": "US–Taiwan Initiative on 21st-Century Trade",
+      "nameZh": "美國–台灣21世紀貿易倡議 (US–Taiwan Initiative on 21st-Century Trade)",
+      "shortName": "US–Taiwan Trade",
+      "type": "bilateral",
+      "status": "negotiating",
+      "era": "fragmentation",
+      "parties": [
+        "US",
+        "TW"
+      ],
+      "partyNames": [
+        "United States",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "台灣"
+      ],
+      "keyDates": {
+        "started": "2022-06"
+      },
+      "tradeVolume": 110,
+      "description": "Customs, digital, labour, environment. Not full FTA due to political sensitivities.",
+      "descriptionZh": "海關、數位、勞工、環境。因政治敏感未採全面FTA形式。",
+      "tags": [
+        "bilateral",
+        "taiwan"
+      ]
+    },
+    {
+      "id": "eu-chile-modern",
+      "name": "EU–Chile Advanced Framework Agreement",
+      "nameZh": "歐盟–智利進階框架協定",
+      "shortName": "EU–Chile AFA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "CL"
+      ],
+      "partyNames": [
+        "European Union",
+        "Chile"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "智利"
+      ],
+      "keyDates": {
+        "started": "2017-11",
+        "concluded": "2022-12",
+        "signed": "2023-12",
+        "in_force": "2024-09"
+      },
+      "tradeVolume": 20,
+      "description": "Updates 2003 deal with digital, hydrogen, critical raw materials chapters.",
+      "descriptionZh": "升級2003年協定，新增數位、綠氫、關鍵原材料章節。",
+      "tags": [
+        "eu-fta",
+        "minerals"
+      ]
+    },
+    {
+      "id": "eu-mexico-modern",
+      "name": "EU–Mexico Global Agreement (modernized)",
+      "nameZh": "歐盟–墨西哥全球協定（升級版）",
+      "shortName": "EU–Mexico GA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "MX"
+      ],
+      "partyNames": [
+        "European Union",
+        "Mexico"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "墨西哥"
+      ],
+      "keyDates": {
+        "started": "2016-05",
+        "concluded": "2023-06",
+        "signed": "2024-02"
+      },
+      "tradeVolume": 85,
+      "description": "Modernised 2000 deal with updated digital, SOE, procurement chapters.",
+      "descriptionZh": "升級2000年協定，更新數位、國企、政府採購條款。",
+      "tags": [
+        "eu-fta"
+      ]
+    },
+    {
+      "id": "samoa-agreement",
+      "name": "Samoa Agreement (EU–OACPS)",
+      "nameZh": "薩摩亞協定 (Samoa Agreement) — 歐盟–OACPS",
+      "shortName": "Samoa Agreement",
+      "type": "multilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "EU",
+        "OACPS"
+      ],
+      "partyNames": [
+        "EU",
+        "79 OACPS states"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "79個OACPS國家"
+      ],
+      "keyDates": {
+        "signed": "2023-11",
+        "in_force": "2024-01"
+      },
+      "description": "Successor to Cotonou. Modernised framework for EU-Africa/Caribbean/Pacific partnership.",
+      "descriptionZh": "取代《科托努協定》，歐盟與非洲/加勒比海/太平洋夥伴的現代化框架。",
+      "tags": [
+        "development"
+      ]
+    },
+    {
+      "id": "eu-mercosur",
+      "name": "EU–Mercosur Association Agreement",
+      "nameZh": "歐盟–南方共同市場聯繫協定",
+      "shortName": "EU–Mercosur",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "BR",
+        "AR",
+        "UY",
+        "PY"
+      ],
+      "partyNames": [
+        "European Union",
+        "Brazil",
+        "Argentina",
+        "Uruguay",
+        "Paraguay"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "巴西",
+        "阿根廷",
+        "烏拉圭",
+        "巴拉圭"
+      ],
+      "keyDates": {
+        "started": "1999-04",
+        "concluded": "2024-12",
+        "signed": "2025-07"
+      },
+      "tradeVolume": 130,
+      "description": "After 25 years, concluded in response to Liberation Day tariffs. 780mn people.",
+      "descriptionZh": "歷25年談判終因解放日關稅而達成，涵蓋7.8億人口。",
+      "tags": [
+        "post-liberation-day",
+        "mile-stone"
+      ],
+      "significance": "川普關稅戰意外催生的世界級協定。"
+    },
+    {
+      "id": "eu-australia-fta",
+      "name": "EU–Australia Free Trade Agreement",
+      "nameZh": "歐盟–澳洲自由貿易協定",
+      "shortName": "EU–Australia FTA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "AU"
+      ],
+      "partyNames": [
+        "European Union",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "澳洲"
+      ],
+      "keyDates": {
+        "started": "2018-06",
+        "concluded": "2025-05"
+      },
+      "tradeVolume": 95,
+      "description": "Concluded May 2025 after Liberation Day. Critical minerals chapter.",
+      "descriptionZh": "解放日後2025年5月達成，含關鍵礦產章節。",
+      "tags": [
+        "post-liberation-day"
+      ]
+    },
+    {
+      "id": "eu-india-fta",
+      "name": "EU–India Free Trade Agreement",
+      "nameZh": "歐盟–印度自由貿易協定",
+      "shortName": "EU–India FTA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "IN"
+      ],
+      "partyNames": [
+        "European Union",
+        "India"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "印度"
+      ],
+      "keyDates": {
+        "started": "2007-06",
+        "concluded": "2025-09"
+      },
+      "tradeVolume": 131,
+      "description": "Concluded after nearly two decades. Accelerated by Liberation Day.",
+      "descriptionZh": "近20年談判，因解放日加速達成。",
+      "tags": [
+        "post-liberation-day",
+        "mile-stone"
+      ]
+    },
+    {
+      "id": "eu-indonesia",
+      "name": "EU–Indonesia CEPA",
+      "nameZh": "歐盟–印尼全面經濟夥伴協定",
+      "shortName": "EU–Indonesia CEPA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "ID"
+      ],
+      "partyNames": [
+        "European Union",
+        "Indonesia"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "印尼"
+      ],
+      "keyDates": {
+        "started": "2016-07",
+        "concluded": "2025-10"
+      },
+      "tradeVolume": 40,
+      "description": "Late 2025 conclusion. Critical raw materials, palm oil safeguards.",
+      "descriptionZh": "2025年底達成，含關鍵原材料、棕櫚油保障條款。",
+      "tags": [
+        "post-liberation-day"
+      ]
+    },
+    {
+      "id": "uk-india",
+      "name": "UK–India Free Trade Agreement",
+      "nameZh": "英國–印度自由貿易協定",
+      "shortName": "UK–India FTA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "GB",
+        "IN"
+      ],
+      "partyNames": [
+        "United Kingdom",
+        "India"
+      ],
+      "partyNamesZh": [
+        "英國",
+        "印度"
+      ],
+      "keyDates": {
+        "started": "2022-01",
+        "concluded": "2025-05"
+      },
+      "tradeVolume": 54,
+      "description": "UK most significant post-Brexit deal. Whisky, autos, textiles.",
+      "descriptionZh": "英國脫歐後最重要協定，含威士忌、汽車、紡織。",
+      "tags": [
+        "post-liberation-day",
+        "uk-fta",
+        "brexit"
+      ]
+    },
+    {
+      "id": "india-oman",
+      "name": "India–Oman FTA",
+      "nameZh": "印度–阿曼自由貿易協定",
+      "shortName": "India–Oman FTA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "IN",
+        "OM"
+      ],
+      "partyNames": [
+        "India",
+        "Oman"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "阿曼"
+      ],
+      "keyDates": {
+        "started": "2024-02",
+        "concluded": "2025-06"
+      },
+      "tradeVolume": 12,
+      "description": "June 2025 conclusion. Part of India's post-Liberation Day push.",
+      "descriptionZh": "2025年6月達成，印度解放日後加速簽約的一部分。",
+      "tags": [
+        "post-liberation-day",
+        "india-fta"
+      ]
+    },
+    {
+      "id": "india-nz",
+      "name": "India–New Zealand FTA",
+      "nameZh": "印度–紐西蘭自由貿易協定",
+      "shortName": "India–NZ FTA",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "IN",
+        "NZ"
+      ],
+      "partyNames": [
+        "India",
+        "New Zealand"
+      ],
+      "partyNamesZh": [
+        "印度",
+        "紐西蘭"
+      ],
+      "keyDates": {
+        "started": "2010-04",
+        "concluded": "2025-08"
+      },
+      "tradeVolume": 8,
+      "description": "Long-stalled talks concluded Aug 2025.",
+      "descriptionZh": "長期停滯的談判於2025年8月達成。",
+      "tags": [
+        "post-liberation-day",
+        "india-fta"
+      ]
+    },
+    {
+      "id": "efta-mercosur",
+      "name": "EFTA–Mercosur FTA",
+      "nameZh": "EFTA–南共市自由貿易協定",
+      "shortName": "EFTA–Mercosur",
+      "type": "bilateral",
+      "status": "concluded",
+      "era": "post_liberation",
+      "parties": [
+        "CH",
+        "NO",
+        "IS",
+        "LI",
+        "BR",
+        "AR",
+        "UY",
+        "PY"
+      ],
+      "partyNames": [
+        "EFTA (4)",
+        "Mercosur (4)"
+      ],
+      "partyNamesZh": [
+        "EFTA四國",
+        "南共市四國"
+      ],
+      "keyDates": {
+        "started": "2000-09",
+        "concluded": "2025-06"
+      },
+      "tradeVolume": 30,
+      "description": "EFTA first South America deal. June 2025 conclusion.",
+      "descriptionZh": "EFTA首個南美協定，2025年6月達成。",
+      "tags": [
+        "post-liberation-day"
+      ]
+    },
+    {
+      "id": "digital-66",
+      "name": "Digital Trade Agreement (66 countries)",
+      "nameZh": "數位貿易協定 (Digital Trade Agreement) — 66國",
+      "shortName": "Digital 66",
+      "type": "multilateral",
+      "status": "signed",
+      "era": "post_liberation",
+      "parties": [
+        "AU",
+        "GB",
+        "SG",
+        "NZ",
+        "CA",
+        "JP",
+        "KR",
+        "CH",
+        "NO"
+      ],
+      "partyNames": [
+        "66 countries incl. AU, UK, SG, JP"
+      ],
+      "partyNamesZh": [
+        "66國含澳英新日等"
+      ],
+      "keyDates": {
+        "signed": "2026-03"
+      },
+      "tradeVolume": 4500,
+      "description": "March 2026 signing. Common standards for data flows, e-commerce, digital identity.",
+      "descriptionZh": "2026年3月簽署，建立資料流通、電子商務、數位身份的共同標準。",
+      "tags": [
+        "post-liberation-day",
+        "digital"
+      ]
+    },
+    {
+      "id": "eu-us-talks",
+      "name": "EU–US Trade Framework Talks",
+      "nameZh": "歐盟–美國貿易框架談判",
+      "shortName": "EU–US Talks",
+      "type": "bilateral",
+      "status": "negotiating",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "US"
+      ],
+      "partyNames": [
+        "European Union",
+        "United States"
+      ],
+      "partyNamesZh": [
+        "歐盟",
+        "美國"
+      ],
+      "keyDates": {
+        "started": "2025-06"
+      },
+      "tradeVolume": 1500,
+      "description": "Re-launched after Liberation Day. Limited scope expected.",
+      "descriptionZh": "解放日後重啟，預期範圍有限。",
+      "tags": [
+        "post-liberation-day",
+        "negotiating"
+      ]
+    },
+    {
+      "id": "us-uk-fta",
+      "name": "US–UK Free Trade Agreement",
+      "nameZh": "美國–英國自由貿易協定",
+      "shortName": "US–UK FTA",
+      "type": "bilateral",
+      "status": "negotiating",
+      "era": "post_liberation",
+      "parties": [
+        "US",
+        "GB"
+      ],
+      "partyNames": [
+        "United States",
+        "United Kingdom"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "英國"
+      ],
+      "keyDates": {
+        "started": "2020-05"
+      },
+      "tradeVolume": 310,
+      "description": "Stalled over agricultural standards, NHS access, digital tax.",
+      "descriptionZh": "因農業標準、NHS、數位稅問題陷僵局。",
+      "tags": [
+        "negotiating"
+      ]
+    },
+    {
+      "id": "cptpp-expansion",
+      "name": "CPTPP Expansion Applications",
+      "nameZh": "CPTPP擴員申請",
+      "shortName": "CPTPP Expansion",
+      "type": "regional",
+      "status": "negotiating",
+      "era": "post_liberation",
+      "parties": [
+        "CPTPP",
+        "CN",
+        "TW",
+        "UA",
+        "CO",
+        "EC"
+      ],
+      "partyNames": [
+        "China, Taiwan, Ukraine, Colombia, Ecuador (applicants)"
+      ],
+      "partyNamesZh": [
+        "中國、台灣、烏克蘭、哥倫比亞、厄瓜多（申請中）"
+      ],
+      "keyDates": {
+        "proposed": "2021-09"
+      },
+      "tradeVolume": 6500,
+      "description": "Multiple economies applied; China since Sep 2021, stalled.",
+      "descriptionZh": "多國申請；中國自2021年9月起停滯。",
+      "tags": [
+        "negotiating",
+        "geopolitics"
+      ]
+    },
+    {
+      "id": "mercosur-singapore",
+      "name": "Mercosur–Singapore FTA",
+      "nameZh": "南共市–新加坡自由貿易協定",
+      "shortName": "Mercosur–Singapore",
+      "type": "bilateral",
+      "status": "negotiating",
+      "era": "post_liberation",
+      "parties": [
+        "BR",
+        "AR",
+        "UY",
+        "PY",
+        "SG"
+      ],
+      "partyNames": [
+        "Mercosur (4)",
+        "Singapore"
+      ],
+      "partyNamesZh": [
+        "南共市四國",
+        "新加坡"
+      ],
+      "keyDates": {
+        "started": "2024-04"
+      },
+      "tradeVolume": 10,
+      "description": "Apr 2024 launch as part of Mercosur diversification.",
+      "descriptionZh": "2024年4月啟動，南共市多元化戰略一部分。",
+      "tags": [
+        "post-liberation-day",
+        "negotiating"
+      ]
+    }
+  ]
+}

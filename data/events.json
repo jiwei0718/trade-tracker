@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-27T09:55:33.699300+00:00",
+  "events": [
+    {
+      "id": "wto-jsi-ecommerce:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-ecommerce",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "concluded",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/ecom_e/joint_statement_e.htm",
+          "fetched_at": "2026-05-27T09:54:54.867414+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-ifd:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-ifd",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/invfac_public_e/invfac_e.htm",
+          "fetched_at": "2026-05-27T09:54:55.284614+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-sdr:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-sdr",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-27T09:54:55.696204+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-msme:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-msme",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "signed",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/msmes_e/msmes_e.htm",
+          "fetched_at": "2026-05-27T09:54:56.187898+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-plastics:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-plastics",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/ppesp_e/ppesp_e.htm",
+          "fetched_at": "2026-05-27T09:54:56.659773+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-tessd:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-tessd",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/envir_e/tessd_e.htm",
+          "fetched_at": "2026-05-27T09:54:57.376008+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-ffsr:new:2026-05-27T09:55:33.699181+00:00",
+      "agreement_id": "wto-jsi-ffsr",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-05-27T09:55:33.699181+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/envir_e/fossil_fuel_e.htm",
+          "fetched_at": "2026-05-27T09:54:57.807557+00:00"
+        }
+      ]
+    }
+  ]
+}

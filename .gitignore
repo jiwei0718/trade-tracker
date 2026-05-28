@@ -1,0 +1,23 @@
+node_modules/
+.expo/
+dist/
+build/
+.tsbuildinfo
+*.tsbuildinfo
+.DS_Store
+*.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Editor
+.vscode/
+.idea/
+
+# Local backend artifacts (we DO commit data/agreements.json etc. as that's the data product)
+backend/output/
+backend/.cache/
