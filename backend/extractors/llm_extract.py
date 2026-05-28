@@ -68,13 +68,13 @@ def extract_updates(
         return []
 
     try:
-        import google.generativeai as genai
+        from google import genai
+        from google.genai import types
     except ImportError:
-        log.warning("google-generativeai not installed; skipping LLM extraction")
+        log.warning("google-genai not installed; skipping LLM extraction")
         return []
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL, system_instruction=SYSTEM_PROMPT)
+    client = genai.Client(api_key=api_key)
 
     all_findings: list[dict[str, Any]] = []
     id_list_str = ", ".join(known_agreement_ids[:200])
@@ -87,12 +87,18 @@ def extract_updates(
             f"Articles:\n{articles_block}"
         )
         try:
-            resp = model.generate_content(
-                prompt,
-                generation_config={"response_mime_type": "application/json", "temperature": 0.1},
+            resp = client.models.generate_content(
+                model=MODEL,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    response_mime_type="application/json",
+                    temperature=0.1,
+                ),
             )
-            text = resp.text
+            text = resp.text or ""
             findings = _parse_json(text)
+            log.info("LLM batch %d: %d findings", i // BATCH_SIZE, len(findings))
         except Exception as e:
             log.warning("LLM batch %d failed: %s", i // BATCH_SIZE, e)
             findings = []
