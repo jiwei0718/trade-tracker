@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-27T09:55:33.699300+00:00",
+  "generated_at": "2026-05-28T09:55:25.676663+00:00",
   "generator": "pipeline-run",
   "count": 96,
   "agreements": [
@@ -3176,9 +3176,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/ecom_e/joint_statement_e.htm",
           "fetched_at": "2026-05-27T09:54:54.867414+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/ecom_e/joint_statement_e.htm",
+          "fetched_at": "2026-05-28T09:54:10.952780+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:54.867414+00:00"
+      "last_updated": "2026-05-28T09:54:10.952780+00:00"
     },
     {
       "id": "wto-jsi-ifd",
@@ -3210,9 +3215,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/invfac_public_e/invfac_e.htm",
           "fetched_at": "2026-05-27T09:54:55.284614+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/invfac_public_e/invfac_e.htm",
+          "fetched_at": "2026-05-28T09:54:11.173924+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:55.284614+00:00"
+      "last_updated": "2026-05-28T09:54:11.173924+00:00"
     },
     {
       "id": "wto-jsi-sdr",
@@ -3244,9 +3254,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
           "fetched_at": "2026-05-27T09:54:55.696204+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-28T09:54:11.402817+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:55.696204+00:00"
+      "last_updated": "2026-05-28T09:54:11.402817+00:00"
     },
     {
       "id": "wto-jsi-msme",
@@ -3278,9 +3293,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/msmes_e/msmes_e.htm",
           "fetched_at": "2026-05-27T09:54:56.187898+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/msmes_e/msmes_e.htm",
+          "fetched_at": "2026-05-28T09:54:11.702190+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:56.187898+00:00"
+      "last_updated": "2026-05-28T09:54:11.702190+00:00"
     },
     {
       "id": "wto-jsi-plastics",
@@ -3312,9 +3332,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/ppesp_e/ppesp_e.htm",
           "fetched_at": "2026-05-27T09:54:56.659773+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/ppesp_e/ppesp_e.htm",
+          "fetched_at": "2026-05-28T09:54:11.967856+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:56.659773+00:00"
+      "last_updated": "2026-05-28T09:54:11.967856+00:00"
     },
     {
       "id": "wto-jsi-tessd",
@@ -3346,9 +3371,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/envir_e/tessd_e.htm",
           "fetched_at": "2026-05-27T09:54:57.376008+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/envir_e/tessd_e.htm",
+          "fetched_at": "2026-05-28T09:54:12.371819+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:57.376008+00:00"
+      "last_updated": "2026-05-28T09:54:12.371819+00:00"
     },
     {
       "id": "wto-jsi-ffsr",
@@ -3380,9 +3410,14 @@
           "name": "WTO JSI page",
           "url": "https://www.wto.org/english/tratop_e/envir_e/fossil_fuel_e.htm",
           "fetched_at": "2026-05-27T09:54:57.807557+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/envir_e/fossil_fuel_e.htm",
+          "fetched_at": "2026-05-28T09:54:12.618008+00:00"
         }
       ],
-      "last_updated": "2026-05-27T09:54:57.807557+00:00"
+      "last_updated": "2026-05-28T09:54:12.618008+00:00"
     }
   ]
 }
