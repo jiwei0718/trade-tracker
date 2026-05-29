@@ -85,7 +85,19 @@
       "Bash(python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); ids=[a['id'] for a in d['agreements']]; print\\('總數:', d['count']\\); [print\\('  ✓', i\\) for i in ['us-japan-dta','singapore-australia-dea','uk-singapore-dea','korea-singapore-dpa'] if i in ids]\")",
       "Bash(PYTHONIOENCODING=utf-8 python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); ids=set\\(a['id'] for a in d['agreements']\\); print\\('total:', d['count']\\); [print\\('  found:', i\\) for i in ['us-japan-dta','singapore-australia-dea','uk-singapore-dea','korea-singapore-dpa']]\")",
       "Bash(PYTHONIOENCODING=utf-8 python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); ids=set\\(a['id'] for a in d['agreements']\\); miss=[i for i in ['us-japan-dta','singapore-australia-dea','uk-singapore-dea','korea-singapore-dpa'] if i not in ids]; print\\('MISSING:', miss if miss else 'none - all 4 present'\\)\")",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: article structures, sorting, map year-range slider; +4 digital trade agreements\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: article structures, sorting, map year-range slider; +4 digital trade agreements\")",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" pull --no-rebase -q origin main)",
+      "Bash(git checkout *)",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q --no-edit)",
+      "Bash(PYTHONIOENCODING=utf-8 python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); print\\('committed agreements:', d['count']\\)\")",
+      "Bash(tee /tmp/expo_final.log)",
+      "WebSearch",
+      "WebFetch(domain:data.wto.org)",
+      "Bash(curl -s -L -A \"Mozilla/5.0\" -o wto_export.bin -w \"HTTP:%{http_code} type:%{content_type} size:%{size_download}\\\\n\" \"https://rtais.wto.org/UI/ExportAllRTAList.aspx\")",
+      "Bash(python -m pip install openpyxl -q)",
+      "Bash(PYTHONIOENCODING=utf-8 python -c ' *)",
+      "Bash(cp wto_export.bin wto_export.xlsx)",
+      "Bash(PYTHONIOENCODING=utf-8 python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); print\\('GRAND TOTAL agreements:', d['count']\\)\")"
     ]
   }
 }

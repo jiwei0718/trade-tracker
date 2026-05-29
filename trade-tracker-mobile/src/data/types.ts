@@ -36,10 +36,62 @@ export interface KeyDates {
   superseded?: string;
 }
 
+export type TranslationSource = 'official' | 'tool' | 'unknown';
+
+export interface ArticleFullText {
+  original?: string;        // text in the agreement's original language
+  originalLang?: string;    // 'en' | 'ja' | 'ko' | 'zh' ...
+  en?: string;              // English text
+  zh?: string;              // Chinese text
+  zhSource?: TranslationSource;  // is the Chinese official or tool-translated?
+  zhSourceNote?: string;    // e.g. "經濟部國貿署公布版" or "本工具翻譯"
+  sourceUrl?: string;       // link to the official document for this clause
+}
+
 export interface Article {
   num: string;   // e.g. "Art.11", "Art.8.61-F"
   zh: string;    // Chinese name
   en: string;    // English name
+  fullText?: ArticleFullText;   // optional full clause text
+}
+
+export interface IndigoDomain {
+  code: string;   // 'A'..'E'
+  name: string;
+  raw: number;    // raw points
+  max: number;    // max points for this domain
+  score: number;  // 0-1
+  note?: string;
+}
+
+export interface IndigoScore {
+  total: number;        // 0-1
+  raw: number;          // raw points
+  max: number;          // max points (28 for INDIGO-t)
+  official: boolean;    // true = OECD official; false = tool estimate
+  sourceNote: string;   // attribution, e.g. "本工具依 OECD INDIGO-t 方法論試算"
+  domains?: IndigoDomain[];
+  asOf?: string;
+}
+
+export interface LatestStatus {
+  summary: string;      // 2-3 sentence quick status
+  detail?: string;      // long-form full detail
+  asOf?: string;        // YYYY-MM-DD
+  byTool?: boolean;     // true = AI-written summary (not official)
+}
+
+export interface SourceDoc {
+  label: string;
+  url: string;
+  lang?: string;
+}
+
+/** Rich, curated extras keyed by agreement id (bundled in-app). */
+export interface AgreementDetail {
+  latestStatus?: LatestStatus;
+  indigo?: IndigoScore;
+  sourceDocs?: SourceDoc[];
 }
 
 export interface ArticleGroup {
