@@ -26,6 +26,10 @@ export default function RootLayout() {
                 options={{ presentation: 'card', headerShown: true, title: '國家檔案' }}
               />
               <Stack.Screen
+                name="org/[code]"
+                options={{ presentation: 'card', headerShown: true, title: '國際組織' }}
+              />
+              <Stack.Screen
                 name="era/[key]"
                 options={{ presentation: 'card', headerShown: true, title: '歷史背景' }}
               />

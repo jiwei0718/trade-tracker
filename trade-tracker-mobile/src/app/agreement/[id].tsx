@@ -10,6 +10,7 @@ import type { ArticleGroup, Article, IndigoScore, AgreementDetail } from '@/data
 import { ARTICLE_STRUCTURES } from '@/data/article-structures';
 import { AGREEMENT_DETAILS } from '@/data/agreement-details';
 import { countryDisplay } from '@/data/countries';
+import { isOrgCode, orgByCode } from '@/data/organizations';
 import { tagLabel } from '@/data/tags';
 import { Colors } from '@/constants/theme';
 import StatusBadge from '@/components/status-badge';
@@ -199,17 +200,18 @@ export default function AgreementDetail() {
         <View>
           <Text style={[styles.sectionTitle, { color: c.text }]}>締約方</Text>
           <View style={styles.partiesWrap}>
-            {a.parties.map((partyCode, i) => {
-              const display = countryDisplay(partyCode, a.partyNamesZh[i] ?? partyCode);
-              return (
-                <Pressable
-                  key={i}
-                  onPress={() => partyCode && router.push(`/country/${partyCode}`)}
-                  style={[styles.party, { backgroundColor: c.backgroundElement }]}>
-                  <Text style={{ color: c.text, fontSize: 13 }}>{display}</Text>
-                </Pressable>
-              );
-            })}
+            {a.parties.map((partyCode, i) =>
+              isOrgCode(partyCode)
+                ? <OrgParty key={i} code={partyCode} c={c} />
+                : (
+                  <Pressable
+                    key={i}
+                    onPress={() => partyCode && router.push(`/country/${partyCode}`)}
+                    style={[styles.party, { backgroundColor: c.backgroundElement }]}>
+                    <Text style={{ color: c.text, fontSize: 13 }}>{countryDisplay(partyCode, a.partyNamesZh[i] ?? partyCode)}</Text>
+                  </Pressable>
+                ),
+            )}
           </View>
         </View>
 
@@ -503,6 +505,45 @@ function IndigoCard({ indigo, c }: { indigo: IndigoScore; c: any }) {
       <Pressable onPress={() => router.push('/indigo-methodology')} style={{ marginTop: 8 }}>
         <Text style={{ color: '#2563eb', fontSize: 12, fontWeight: '700' }}>了解 INDIGO 方法論 →</Text>
       </Pressable>
+    </View>
+  );
+}
+
+/** An organisation party chip with a collapsible list of its member countries. */
+function OrgParty({ code, c }: { code: string; c: any }) {
+  const org = orgByCode(code);
+  const [open, setOpen] = useState(false);
+  if (!org) return null;
+  return (
+    <View style={{ width: '100%', gap: 6 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 6 }}>
+        <Pressable
+          onPress={() => router.push(`/org/${org.code}`)}
+          style={[styles.party, { backgroundColor: '#0ea5e920', borderColor: '#0ea5e9', borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 4 }]}>
+          <Ionicons name="business" size={12} color="#0369a1" />
+          <Text style={{ color: '#0369a1', fontSize: 13, fontWeight: '700' }}>{org.abbrZh ?? org.nameZh} ({org.abbr})</Text>
+        </Pressable>
+        {org.members.length > 0 && (
+          <Pressable onPress={() => setOpen(o => !o)} hitSlop={6} style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+            <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+              {open ? '收合' : `展開 ${org.members.length} 個會員國`}
+            </Text>
+            <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={13} color={c.textSecondary} />
+          </Pressable>
+        )}
+      </View>
+      {open && (
+        <View style={[styles.partiesWrap, { paddingLeft: 4 }]}>
+          {org.members.map(m => (
+            <Pressable
+              key={m}
+              onPress={() => router.push(`/country/${m}`)}
+              style={[styles.party, { backgroundColor: c.backgroundElement }]}>
+              <Text style={{ color: c.text, fontSize: 12 }}>{countryDisplay(m, m)}</Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
     </View>
   );
 }

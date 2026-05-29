@@ -3739,42 +3739,6 @@
       "significance": "東協數位整合的旗艦，全球第一個區域級數位經濟協議。"
     },
     {
-      "id": "oecd",
-      "name": "Organisation for Economic Co-operation and Development",
-      "nameZh": "經濟合作暨發展組織",
-      "fullNameZh": "經濟合作暨發展組織 (OECD)",
-      "shortName": "OECD",
-      "type": "multilateral",
-      "status": "in_force",
-      "era": "gatt_era",
-      "parties": [
-        "MULTI"
-      ],
-      "partyNames": [
-        "38 member countries"
-      ],
-      "partyNamesZh": [
-        "38個會員國"
-      ],
-      "keyDates": {
-        "signed": "1960-12",
-        "in_force": "1961-09"
-      },
-      "description": "Intergovernmental organisation of 38 mostly high-income countries. Sets influential standards and analysis on trade, the digital economy (e.g. the INDIGO index), taxation and investment — though not a trade agreement itself.",
-      "descriptionZh": "由 38 個主要為高所得國家組成的政府間組織。在貿易、數位經濟（如 INDIGO 指數）、稅務、投資領域制定具影響力的標準與分析，本身並非貿易協定。",
-      "keyProvisions": [
-        "Standard-setting",
-        "Policy analysis",
-        "INDIGO digital trade index",
-        "BEPS tax framework"
-      ],
-      "tags": [
-        "multilateral-cornerstone",
-        "forum"
-      ],
-      "significance": "全球經濟政策的重要智庫與標準制定者，本應用的 INDIGO 數位貿易指數即出自 OECD。"
-    },
-    {
       "id": "taiwan-japan-dta",
       "name": "Taiwan–Japan Digital Trade Mutual Cooperation Agreement",
       "nameZh": "臺日數位貿易協議",

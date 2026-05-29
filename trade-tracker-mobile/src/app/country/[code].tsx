@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
-import { ScrollView, Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Pressable, useColorScheme } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 
-import { getAgreementsForParty, getEffectiveDate } from '@/lib/selectors';
+import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+
+import { getAgreementsForParty, getEffectiveDate, getOrgsForParty } from '@/lib/selectors';
 import { STATUS_COLORS, STATUS_LABELS } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
@@ -16,6 +19,7 @@ export default function CountryProfile() {
 
   const { agreements } = useData();
   const list = useMemo(() => getAgreementsForParty(code ?? '', agreements), [code, agreements]);
+  const orgs = useMemo(() => getOrgsForParty(code ?? ''), [code]);
 
   // Canonical Chinese name from the registry (falls back to stored / code)
   const countryName = useMemo(() => {
@@ -69,6 +73,24 @@ export default function CountryProfile() {
             })}
         </View>
 
+        {/* International organisations this country belongs to */}
+        {orgs.length > 0 && (
+          <View>
+            <Text style={[styles.sectionTitle, { color: c.text }]}>所屬國際組織</Text>
+            <View style={styles.chipsWrap}>
+              {orgs.map(o => (
+                <Pressable
+                  key={o.code}
+                  onPress={() => router.push(`/org/${o.code}`)}
+                  style={[styles.orgChip, { backgroundColor: '#0ea5e920', borderColor: '#0ea5e9' }]}>
+                  <Ionicons name="business" size={12} color="#0369a1" />
+                  <Text style={{ color: '#0369a1', fontSize: 12, fontWeight: '700' }}>{o.abbrZh ?? o.nameZh} ({o.abbr})</Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        )}
+
         {/* Timeline: agreements grouped by year */}
         <Text style={[styles.sectionTitle, { color: c.text }]}>時間軸</Text>
 
@@ -97,6 +119,7 @@ const styles = StyleSheet.create({
   countryName: { fontSize: 26, fontWeight: '800' },
   meta: { fontSize: 13, marginTop: 4 },
   chipsWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  orgChip: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, borderWidth: 1 },
   chip: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999, borderWidth: 1 },
   chipText: { fontSize: 12, fontWeight: '600' },
   sectionTitle: { fontSize: 16, fontWeight: '800', marginTop: 4 },

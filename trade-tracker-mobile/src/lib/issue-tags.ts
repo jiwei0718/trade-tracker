@@ -1,5 +1,6 @@
 import { ARTICLE_STRUCTURES } from '@/data/article-structures';
 import type { TradeAgreement } from '@/data/types';
+import { orgByCode } from '@/data/organizations';
 
 /**
  * Derive granular issue/topic tags for an agreement by combining its base
@@ -42,6 +43,12 @@ const cache = new Map<string, string[]>();
 export function getAgreementTags(a: TradeAgreement): string[] {
   if (cache.has(a.id)) return cache.get(a.id)!;
   const set = new Set<string>(a.tags ?? []);
+  // Auto-derive an org tag when an international organisation is a party
+  // (e.g. ASEAN → 'asean', EU → 'eu'), so users can filter by organisation.
+  for (const p of a.parties) {
+    const org = orgByCode(p);
+    if (org) set.add(org.abbr.toLowerCase());
+  }
   const struct = a.articleStructure ?? ARTICLE_STRUCTURES[a.id];
   if (struct) {
     for (const g of struct) {

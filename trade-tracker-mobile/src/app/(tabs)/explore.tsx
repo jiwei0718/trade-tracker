@@ -10,10 +10,12 @@ import { Colors } from '@/constants/theme';
 import { getAllParties, search, getEffectiveDate, filterPartiesByQuery } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
-import { tagLabel } from '@/data/tags';
+import { tagLabel, tagCategory, TAG_CATEGORY_LABELS, TAG_CATEGORY_ORDER } from '@/data/tags';
+import type { TagCategory } from '@/data/tags';
 import { getAgreementTags } from '@/lib/issue-tags';
+import { ORGANIZATIONS, ORG_CATEGORY_LABELS } from '@/data/organizations';
 
-type Mode = 'agreements' | 'countries' | 'tags';
+type Mode = 'agreements' | 'orgs' | 'countries' | 'tags';
 type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
@@ -25,6 +27,13 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
 
 const STATUSES: AgreementStatus[] = ['in_force', 'concluded', 'signed', 'negotiating', 'suspended', 'cancelled', 'superseded'];
 
+const MODE_TABS: { key: Mode; label: string }[] = [
+  { key: 'agreements', label: '協定' },
+  { key: 'orgs', label: '組織' },
+  { key: 'countries', label: '國家' },
+  { key: 'tags', label: '議題' },
+];
+
 export default function Explore() {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
@@ -34,10 +43,23 @@ export default function Explore() {
   const [query, setQuery] = useState('');
   const [statusFilters, setStatusFilters] = useState<Set<AgreementStatus>>(new Set());
   const [eraFilter, setEraFilter] = useState<EraKey | null>(null);
-  const [tagFilter, setTagFilter] = useState<string | null>(null);
+  const [tagFilters, setTagFilters] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>('newest');
 
   const parties = useMemo(() => getAllParties(agreements), [agreements]);
+
+  const toggleTag = (t: string) =>
+    setTagFilters(prev => {
+      const n = new Set(prev);
+      n.has(t) ? n.delete(t) : n.add(t);
+      return n;
+    });
+  const addTag = (t: string) =>
+    setTagFilters(prev => {
+      const n = new Set(prev);
+      n.add(t);
+      return n;
+    });
 
   // Most common tags across the dataset, for the tag filter row.
   const topTags = useMemo(() => {
@@ -50,7 +72,10 @@ export default function Explore() {
     let list = query ? search(query, agreements) : agreements.filter(a => !a.parentId);
     if (statusFilters.size) list = list.filter(a => statusFilters.has(a.status));
     if (eraFilter) list = list.filter(a => a.era === eraFilter);
-    if (tagFilter) list = list.filter(a => getAgreementTags(a).includes(tagFilter));
+    if (tagFilters.size) {
+      const wanted = [...tagFilters];
+      list = list.filter(a => { const t = getAgreementTags(a); return wanted.every(w => t.includes(w)); });
+    }
     // Sort
     list = [...list].sort((a, b) => {
       switch (sortKey) {
@@ -62,17 +87,29 @@ export default function Explore() {
       }
     });
     return list;
-  }, [query, statusFilters, eraFilter, tagFilter, sortKey, agreements]);
+  }, [query, statusFilters, eraFilter, tagFilters, sortKey, agreements]);
 
   const partyResults = useMemo(() => filterPartiesByQuery(parties, query), [query, parties]);
 
-  // All tags with counts, for the 議題 (topics) mode.
-  const tagResults = useMemo(() => {
+  const orgResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return ORGANIZATIONS.filter(o =>
+      !q || o.nameZh.includes(query) || (o.abbrZh ?? '').includes(query) ||
+      o.name.toLowerCase().includes(q) || o.abbr.toLowerCase().includes(q) || o.code.toLowerCase().includes(q),
+    );
+  }, [query]);
+
+  // All tags with counts, grouped by category, for the 議題 (topics) mode.
+  const tagsByCat = useMemo(() => {
     const counts: Record<string, number> = {};
     agreements.forEach(a => getAgreementTags(a).forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
-    let entries = Object.entries(counts).map(([tag, count]) => ({ tag, count, label: tagLabel(tag) }));
+    let entries = Object.entries(counts).map(([tag, count]) => ({ tag, count, label: tagLabel(tag), cat: tagCategory(tag) }));
     if (query) entries = entries.filter(e => e.label.includes(query) || e.tag.includes(query.toLowerCase()));
-    return entries.sort((a, b) => b.count - a.count);
+    entries.sort((a, b) => b.count - a.count);
+    const groups = {} as Record<TagCategory, { tag: string; count: number; label: string }[]>;
+    entries.forEach(e => { (groups[e.cat] ??= []).push(e); });
+    const total = entries.length;
+    return { groups, total };
   }, [agreements, query]);
 
   return (
@@ -81,27 +118,24 @@ export default function Explore() {
         <Text style={[styles.title, { color: c.text }]}>瀏覽</Text>
 
         <View style={[styles.tabs, { backgroundColor: c.backgroundElement }]}>
-          <Pressable
-            onPress={() => setMode('agreements')}
-            style={[styles.tab, mode === 'agreements' && { backgroundColor: c.background }]}>
-            <Text style={[styles.tabText, { color: mode === 'agreements' ? c.text : c.textSecondary }]}>協定</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => setMode('countries')}
-            style={[styles.tab, mode === 'countries' && { backgroundColor: c.background }]}>
-            <Text style={[styles.tabText, { color: mode === 'countries' ? c.text : c.textSecondary }]}>國家</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => setMode('tags')}
-            style={[styles.tab, mode === 'tags' && { backgroundColor: c.background }]}>
-            <Text style={[styles.tabText, { color: mode === 'tags' ? c.text : c.textSecondary }]}>議題</Text>
-          </Pressable>
+          {MODE_TABS.map(t => (
+            <Pressable
+              key={t.key}
+              onPress={() => setMode(t.key)}
+              style={[styles.tab, mode === t.key && { backgroundColor: c.background }]}>
+              <Text style={[styles.tabText, { color: mode === t.key ? c.text : c.textSecondary }]}>{t.label}</Text>
+            </Pressable>
+          ))}
         </View>
 
         <View style={[styles.searchBox, { backgroundColor: c.backgroundElement }]}>
           <Ionicons name="search" size={16} color={c.textSecondary} />
           <TextInput
-            placeholder={mode === 'agreements' ? '搜尋協定名稱、國家…' : mode === 'tags' ? '搜尋議題…' : '搜尋國家…'}
+            placeholder={
+              mode === 'agreements' ? '搜尋協定名稱、國家…'
+              : mode === 'tags' ? '搜尋議題…'
+              : mode === 'orgs' ? '搜尋國際組織…'
+              : '搜尋國家…'}
             placeholderTextColor={c.textSecondary}
             value={query}
             onChangeText={setQuery}
@@ -150,12 +184,12 @@ export default function Explore() {
               {topTags.map(t => (
                 <Pressable
                   key={t}
-                  onPress={() => setTagFilter(tagFilter === t ? null : t)}
+                  onPress={() => toggleTag(t)}
                   style={[
                     styles.chip,
-                    tagFilter === t ? { backgroundColor: '#7c3aed' } : { backgroundColor: c.backgroundElement },
+                    tagFilters.has(t) ? { backgroundColor: '#7c3aed' } : { backgroundColor: c.backgroundElement },
                   ]}>
-                  <Text style={{ color: tagFilter === t ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>
+                  <Text style={{ color: tagFilters.has(t) ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>
                     {tagLabel(t)}
                   </Text>
                 </Pressable>
@@ -193,39 +227,94 @@ export default function Explore() {
           contentContainerStyle={{ padding: 16, gap: 10 }}
           renderItem={({ item }) => <AgreementCard agreement={item} />}
           ListHeaderComponent={
-            <Text style={{ color: c.textSecondary, fontSize: 12, marginBottom: 4 }}>
-              共 {filtered.length} 個協定{tagFilter ? `（議題：${tagLabel(tagFilter)}）` : ''}
-            </Text>
+            <View style={{ marginBottom: 4, gap: 8 }}>
+              {tagFilters.size > 0 && (
+                <View style={styles.activeBar}>
+                  <Text style={{ color: c.textSecondary, fontSize: 12 }}>篩選中：</Text>
+                  {[...tagFilters].map(t => (
+                    <Pressable key={t} onPress={() => toggleTag(t)} style={styles.activePill}>
+                      <Text style={{ color: '#fff', fontSize: 12, fontWeight: '600' }}>{tagLabel(t)}</Text>
+                      <Ionicons name="close" size={13} color="#fff" />
+                    </Pressable>
+                  ))}
+                  <Pressable onPress={() => setTagFilters(new Set())} hitSlop={6}>
+                    <Text style={{ color: '#ef4444', fontSize: 12, fontWeight: '700' }}>清除全部</Text>
+                  </Pressable>
+                </View>
+              )}
+              <Text style={{ color: c.textSecondary, fontSize: 12 }}>共 {filtered.length} 個協定</Text>
+            </View>
           }
           ListEmptyComponent={
             <Text style={{ color: c.textSecondary, textAlign: 'center', marginTop: 40 }}>沒有符合條件的協定</Text>
           }
         />
-      ) : mode === 'tags' ? (
+      ) : mode === 'orgs' ? (
         <FlatList
-          key="list-tags-2col"
-          data={tagResults}
-          keyExtractor={t => t.tag}
-          numColumns={2}
-          columnWrapperStyle={{ gap: 8 }}
+          key="list-orgs"
+          data={orgResults}
+          keyExtractor={o => o.code}
           contentContainerStyle={{ padding: 16, gap: 8 }}
           renderItem={({ item }) => (
             <Pressable
-              onPress={() => { setTagFilter(item.tag); setQuery(''); setMode('agreements'); }}
+              onPress={() => router.push(`/org/${item.code}`)}
               style={({ pressed }) => [
-                styles.tagCard,
-                { backgroundColor: '#7c3aed15', borderColor: '#7c3aed40', opacity: pressed ? 0.7 : 1 },
+                styles.countryRow,
+                { backgroundColor: c.backgroundElement, opacity: pressed ? 0.7 : 1 },
               ]}>
-              <Text style={[styles.tagCardLabel, { color: c.text }]} numberOfLines={2}>{item.label}</Text>
-              <Text style={{ color: '#7c3aed', fontSize: 12, fontWeight: '700', marginTop: 2 }}>{item.count} 個協定</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.countryName, { color: c.text }]}>{item.nameZh}（{item.abbr}）</Text>
+                <Text style={[styles.countryMeta, { color: c.textSecondary }]}>
+                  {ORG_CATEGORY_LABELS[item.category]} · {item.members.length > 0 ? `${item.members.length} 會員國` : '近乎全球'}
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color={c.textSecondary} />
             </Pressable>
           )}
           ListHeaderComponent={
             <Text style={{ color: c.textSecondary, fontSize: 12, marginBottom: 4 }}>
-              依議題瀏覽 · 共 {tagResults.length} 個議題（點選即篩選協定）
+              國際組織 · 共 {orgResults.length} 個（點選查看會員國與相關協定）
             </Text>
           }
         />
+      ) : mode === 'tags' ? (
+        <ScrollView key="list-tags-cat" contentContainerStyle={{ padding: 16, gap: 16 }}>
+          <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+            依議題瀏覽 · 共 {tagsByCat.total} 個議題（點選即加入篩選；可多選）
+          </Text>
+          {TAG_CATEGORY_ORDER.map(cat => {
+            const items = tagsByCat.groups[cat];
+            if (!items || items.length === 0) return null;
+            return (
+              <View key={cat} style={{ gap: 8 }}>
+                <Text style={[styles.catTitle, { color: c.text }]}>{TAG_CATEGORY_LABELS[cat]}</Text>
+                <View style={styles.tagFlow}>
+                  {items.map(item => (
+                    <Pressable
+                      key={item.tag}
+                      onPress={() => { addTag(item.tag); setQuery(''); setMode('agreements'); }}
+                      style={({ pressed }) => [
+                        styles.tagFlowCard,
+                        {
+                          backgroundColor: tagFilters.has(item.tag) ? '#7c3aed' : '#7c3aed15',
+                          borderColor: '#7c3aed40',
+                          opacity: pressed ? 0.7 : 1,
+                        },
+                      ]}>
+                      <Text style={{ color: tagFilters.has(item.tag) ? '#fff' : c.text, fontSize: 13, fontWeight: '600' }}>
+                        {item.label}
+                      </Text>
+                      <Text style={{ color: tagFilters.has(item.tag) ? '#e9d5ff' : '#7c3aed', fontSize: 12, fontWeight: '700' }}>
+                        {item.count}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
+            );
+          })}
+          <View style={{ height: 24 }} />
+        </ScrollView>
       ) : (
         <FlatList
           key="list-countries"
@@ -301,9 +390,12 @@ const styles = StyleSheet.create({
   sortChip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999 },
   chip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999 },
   chipText: { fontSize: 12, fontWeight: '600' },
+  activeBar: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
+  activePill: { flexDirection: 'row', alignItems: 'center', gap: 3, backgroundColor: '#7c3aed', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999 },
   countryRow: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 10 },
   countryName: { fontSize: 15, fontWeight: '700' },
   countryMeta: { fontSize: 12, marginTop: 2 },
-  tagCard: { flex: 1, padding: 14, borderRadius: 12, borderWidth: 1, minHeight: 64, justifyContent: 'center' },
-  tagCardLabel: { fontSize: 14, fontWeight: '700', lineHeight: 18 },
+  catTitle: { fontSize: 15, fontWeight: '800' },
+  tagFlow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  tagFlowCard: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 9, borderRadius: 10, borderWidth: 1 },
 });

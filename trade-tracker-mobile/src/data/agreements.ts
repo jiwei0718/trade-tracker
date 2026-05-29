@@ -1,5 +1,13 @@
 import type { TradeAgreement } from './types';
 
+/**
+ * 中文翻譯優先序（適用於所有 nameZh / fullNameZh / 內文）：
+ *   1. 台灣官方（外交部、經濟部國際貿易署、條約協定查詢系統）
+ *   2. 研究／學術機構（如中經院 WTO 及 RTA 中心）
+ *   3. 媒體
+ *   4. 以上皆無 → 由本工具翻譯（並於原文後以半形括號標註原文）
+ * 國家名稱一律中文；臺灣為「中華民國(臺灣)」，使用正體「臺」。
+ */
 export const agreements: TradeAgreement[] = [
   // ═══════════════════════════════════════════════════════════════════
   //  PRE-GATT ERA (1860–1947)
@@ -374,7 +382,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 50.0,
     description: 'First US bilateral free trade agreement. Foundation of US FTA strategy that exploded post-NAFTA.',
     descriptionZh: '美國第一個雙邊自由貿易協定，是後來NAFTA以後美國全面推動FTA戰略的起點。',
-    tags: ['historical', 'us-fta', 'first-of-kind'],
+    tags: ['historical', 'fta', 'first-of-kind'],
   },
   {
     id: 'cer-anzcerta',
@@ -392,7 +400,7 @@ export const agreements: TradeAgreement[] = [
     description: 'Comprehensive economic integration covering goods, services, movement of people. Among the world\'s most complete bilateral economic relationships.',
     descriptionZh: '涵蓋商品、服務及人員流動的全面經濟整合，是全球最完整的雙邊經濟關係之一。',
     keyProvisions: ['100% goods tariff elimination', 'Services', 'Free movement of people'],
-    tags: ['bilateral-flagship'],
+    tags: ['flagship'],
   },
   {
     id: 'mercosur-1991',
@@ -590,7 +598,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 6000.0,
     description: 'After 15 years of negotiations, China joined WTO. Transformed global trade landscape, accelerated globalization, supply chain shifts.',
     descriptionZh: '歷時15年談判，中國加入WTO，徹底改變全球貿易格局，加速全球化與供應鏈轉移。',
-    tags: ['historical', 'mile-stone', 'china'],
+    tags: ['historical', 'mile-stone'],
     significance: '近代貿易史上最重要事件之一，引發「中國衝擊」、全球工廠轉移、後續美中貿易摩擦的根源。',
   },
   {
@@ -626,7 +634,7 @@ export const agreements: TradeAgreement[] = [
     description: 'US first FTA in Asia. Eliminated all goods tariffs, liberalised financial services, services, investment.',
     descriptionZh: '美國在亞洲的首個FTA，消除所有商品關稅，開放金融服務、服務業及投資。',
     keyProvisions: ['100% tariff elimination', 'Financial services', 'IP protection', 'E-commerce'],
-    tags: ['us-fta', 'first-asia'],
+    tags: ['fta', 'first-asia'],
   },
   {
     id: 'us-chile',
@@ -643,7 +651,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 25.0,
     description: 'First US FTA with South American country. Pioneered modern provisions on labour, environment, e-commerce.',
     descriptionZh: '美國第一個與南美國家的FTA，開創了現代協定中勞工、環境、電子商務等條款。',
-    tags: ['us-fta'],
+    tags: ['fta'],
   },
   {
     id: 'us-australia',
@@ -660,7 +668,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 75.0,
     description: 'Comprehensive FTA covering 99% of US goods trade with Australia.',
     descriptionZh: '全面性FTA，涵蓋美澳間99%的商品貿易。',
-    tags: ['us-fta'],
+    tags: ['fta'],
   },
   {
     id: 'cafta-dr',
@@ -677,7 +685,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 60.0,
     description: 'US trade deal with five Central American countries and Dominican Republic.',
     descriptionZh: '美國與五個中美洲國家及多明尼加的自由貿易協定。',
-    tags: ['us-fta', 'regional'],
+    tags: ['fta', 'regional'],
   },
   {
     id: 'us-korea',
@@ -694,7 +702,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 190.0,
     description: 'US largest FTA outside North America. Renegotiated in 2018 to update auto rules under Trump pressure.',
     descriptionZh: '美國在北美以外最大的FTA，2018年因川普壓力重新談判更新汽車條款。',
-    tags: ['us-fta', 'flagship'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'eu-korea',
@@ -711,7 +719,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 170.0,
     description: 'EU first FTA with an Asian partner. Strong enforcement mechanisms.',
     descriptionZh: '歐盟與亞洲夥伴的首個FTA，具備完善執法機制。',
-    tags: ['eu-fta', 'first-asia-eu'],
+    tags: ['fta', 'first-asia-eu'],
   },
   {
     id: 'china-asean',
@@ -728,7 +736,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 780.0,
     description: 'Largest FTA by population (1.9bn). Upgraded version (3.0) in force 2025.',
     descriptionZh: '按人口計算全球最大自貿區（19億人），3.0升級版2025年生效。',
-    tags: ['china-fta', 'flagship'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'china-chile',
@@ -745,7 +753,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 50.0,
     description: 'China first FTA in Latin America.',
     descriptionZh: '中國在拉美的首個FTA。',
-    tags: ['china-fta'],
+    tags: ['fta'],
   },
   {
     id: 'china-pakistan',
@@ -762,7 +770,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 28.0,
     description: 'Strategic ally FTA, expanded in 2019 second phase.',
     descriptionZh: '戰略盟友間的FTA，2019年第二階段擴大。',
-    tags: ['china-fta'],
+    tags: ['fta'],
   },
   {
     id: 'china-nz',
@@ -779,7 +787,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 22.0,
     description: 'China first FTA with a developed country. Upgraded 2022.',
     descriptionZh: '中國與已開發國家的首個FTA，2022年升級。',
-    tags: ['china-fta'],
+    tags: ['fta'],
   },
   {
     id: 'asean-india',
@@ -898,7 +906,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 120.0,
     description: 'Removes 98% of tariffs. First EU deal with a major developed country.',
     descriptionZh: '消除98%關稅，歐盟首個與主要已開發國家的協定。',
-    tags: ['eu-fta', 'flagship'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'eu-singapore',
@@ -915,7 +923,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 85.0,
     description: 'Gateway agreement for EU access to ASEAN.',
     descriptionZh: '歐盟進入東協的門戶協定。',
-    tags: ['eu-fta'],
+    tags: ['fta'],
   },
   {
     id: 'tpp-original',
@@ -953,7 +961,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 360.0,
     description: 'Covers 90% goods trade. Major deal between top trading partners.',
     descriptionZh: '涵蓋90%貨物貿易，兩大互為最大貿易夥伴。',
-    tags: ['china-fta', 'flagship'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'china-australia',
@@ -970,7 +978,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 200.0,
     description: 'Effectively suspended via Chinese trade restrictions on Australian wine, barley, coal, beef. Partial lifting from 2023.',
     descriptionZh: '中方對澳洲葡萄酒、大麥、煤炭、牛肉貿易限制使協定實質暫停，2023年起部分解除。',
-    tags: ['china-fta', 'geopolitics'],
+    tags: ['fta', 'geopolitics'],
     significance: '貿易協定被地緣政治綁架的典型案例。',
   },
   {
@@ -1024,12 +1032,13 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 5200.0,
     description: 'Restructured TPP after US withdrawal. UK acceded Dec 2024 as the first non-original member. China, Taiwan, Ukraine, Costa Rica applications pending.',
     descriptionZh: 'TPP 美國退出後重組。英國於 2024 年 12 月成為首個非原始成員。中國、臺灣、烏克蘭、哥斯大黎加等申請中。',
-    tags: ['regional', 'flagship'],
+    relatedIds: ['cptpp-expansion'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'eu-japan-epa',
     name: 'EU–Japan Economic Partnership Agreement',
-    nameZh: '歐盟–日本經濟夥伴關係協定',
+    nameZh: '歐盟–日本經濟夥伴協定',
     shortName: 'EU–Japan EPA',
     type: 'bilateral',
     status: 'in_force',
@@ -1041,7 +1050,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 650.0,
     description: 'Among largest bilateral deals. Covers 635mn people, ~1/3 global GDP.',
     descriptionZh: '最大雙邊協定之一，涵蓋6.35億人口、約全球GDP的三分之一。',
-    tags: ['eu-fta', 'flagship'],
+    tags: ['fta', 'flagship'],
   },
   {
     id: 'eu-vietnam',
@@ -1058,7 +1067,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 60.0,
     description: 'EU first FTA with developing Asian economy.',
     descriptionZh: '歐盟首個與亞洲發展中經濟體的FTA。',
-    tags: ['eu-fta'],
+    tags: ['fta'],
   },
   {
     id: 'us-japan-phase1',
@@ -1080,7 +1089,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'rcep',
     name: 'Regional Comprehensive Economic Partnership',
-    nameZh: '區域全面經濟夥伴關係協定',
+    nameZh: '區域全面經濟夥伴協定 (RCEP)',
     shortName: 'RCEP',
     type: 'regional',
     status: 'in_force',
@@ -1127,7 +1136,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 800.0,
     description: 'Concluded Dec 2020 after 7 years of talks. European Parliament suspended ratification over Xinjiang sanctions. Still frozen.',
     descriptionZh: '2020年12月經7年談判完成，但歐洲議會因新疆制裁問題暫停批准，至今凍結中。',
-    tags: ['suspended', 'geopolitics', 'china'],
+    tags: ['suspended', 'geopolitics'],
     significance: '人權議題否決經貿協定的標誌性案例。',
   },
   {
@@ -1145,7 +1154,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 28.0,
     description: 'UK first bespoke post-Brexit FTA.',
     descriptionZh: '英國脫歐後第一個專屬FTA。',
-    tags: ['uk-fta', 'brexit'],
+    tags: ['fta', 'brexit'],
   },
   {
     id: 'uk-nz',
@@ -1162,7 +1171,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 12.0,
     description: 'Comprehensive FTA. Zero tariffs on goods.',
     descriptionZh: '全面FTA，商品零關稅。',
-    tags: ['uk-fta', 'brexit'],
+    tags: ['fta', 'brexit'],
   },
   {
     id: 'uk-japan',
@@ -1179,7 +1188,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 24.0,
     description: 'UK first major post-Brexit FTA.',
     descriptionZh: '英國脫歐後首個重大FTA。',
-    tags: ['uk-fta', 'brexit'],
+    tags: ['fta', 'brexit'],
   },
   {
     id: 'india-uae',
@@ -1196,7 +1205,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 85.0,
     description: 'Record 88-day negotiation. Fastest FTA India ever signed.',
     descriptionZh: '創紀錄88天完成談判，是印度最快的FTA。',
-    tags: ['india-fta'],
+    tags: ['fta'],
   },
   {
     id: 'india-australia',
@@ -1213,7 +1222,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 28.0,
     description: 'Interim ECTA covering 98% of Australian goods. Full CEPA under negotiation.',
     descriptionZh: '臨時ECTA涵蓋澳洲98%商品，全面CEPA談判中。',
-    tags: ['india-fta'],
+    tags: ['fta'],
   },
   {
     id: 'afcfta',
@@ -1282,7 +1291,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 20.0,
     description: 'Updates 2003 deal with digital, hydrogen, critical raw materials chapters.',
     descriptionZh: '升級2003年協定，新增數位、綠氫、關鍵原材料章節。',
-    tags: ['eu-fta', 'minerals'],
+    tags: ['fta', 'minerals'],
   },
   {
     id: 'eu-mexico-modern',
@@ -1299,7 +1308,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 85.0,
     description: 'Modernised 2000 deal with updated digital, SOE, procurement chapters.',
     descriptionZh: '升級2000年協定，更新數位、國企、政府採購條款。',
-    tags: ['eu-fta'],
+    tags: ['fta'],
   },
   {
     id: 'samoa-agreement',
@@ -1405,7 +1414,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 54.0,
     description: 'UK most significant post-Brexit deal. Whisky, autos, textiles.',
     descriptionZh: '英國脫歐後最重要協定，含威士忌、汽車、紡織。',
-    tags: ['post-liberation-day', 'uk-fta', 'brexit'],
+    tags: ['post-liberation-day', 'fta', 'brexit'],
   },
   {
     id: 'india-oman',
@@ -1422,7 +1431,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 12.0,
     description: 'June 2025 conclusion. Part of India\'s post-Liberation Day push.',
     descriptionZh: '2025年6月達成，印度解放日後加速簽約的一部分。',
-    tags: ['post-liberation-day', 'india-fta'],
+    tags: ['post-liberation-day', 'fta'],
   },
   {
     id: 'india-nz',
@@ -1439,7 +1448,7 @@ export const agreements: TradeAgreement[] = [
     tradeVolume: 8.0,
     description: 'Long-stalled talks concluded Aug 2025.',
     descriptionZh: '長期停滯的談判於2025年8月達成。',
-    tags: ['post-liberation-day', 'india-fta'],
+    tags: ['post-liberation-day', 'fta'],
   },
   {
     id: 'efta-mercosur',
@@ -1541,19 +1550,21 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'cptpp-expansion',
     name: 'CPTPP Expansion Applications',
-    nameZh: 'CPTPP擴員申請',
+    nameZh: 'CPTPP 擴員申請',
     shortName: 'CPTPP Expansion',
     type: 'regional',
     status: 'negotiating',
     era: 'post_liberation',
-    parties: ['CPTPP', 'CN', 'TW', 'UA', 'CO', 'EC'],
-    partyNames: ['China, Taiwan, Ukraine, Colombia, Ecuador (applicants)'],
-    partyNamesZh: ['中國、臺灣、烏克蘭、哥倫比亞、厄瓜多（申請中）'],
+    parentId: 'cptpp',
+    parties: ['CN', 'TW', 'UA', 'CO', 'EC', 'CR'],
+    partyNames: ['China', 'Taiwan', 'Ukraine', 'Colombia', 'Ecuador', 'Costa Rica'],
+    partyNamesZh: ['中國', '中華民國(臺灣)', '烏克蘭', '哥倫比亞', '厄瓜多', '哥斯大黎加'],
     keyDates: { proposed: '2021-09' },
     tradeVolume: 6500.0,
-    description: 'Multiple economies applied; China since Sep 2021, stalled.',
-    descriptionZh: '多國申請；中國自2021年9月起停滯。',
+    description: 'Pending applications to accede to the CPTPP: China and Chinese Taipei (Sep 2021), Ukraine, Uruguay, Ecuador, Colombia and Costa Rica. The Costa Rica accession working group was established in 2024; China\'s bid remains stalled.',
+    descriptionZh: '申請加入 CPTPP 的經濟體：中國與中華民國（臺灣）（2021 年 9 月）、烏克蘭、烏拉圭、厄瓜多、哥倫比亞、哥斯大黎加。哥斯大黎加加入工作小組已於 2024 年成立；中國的申請案仍處停滯。新成員須經全體現有締約方共識決。',
     tags: ['negotiating', 'geopolitics'],
+    significance: 'CPTPP 是少數仍在擴員的大型自由貿易協定，申請名單反映地緣政治角力（如中國與臺灣同時申請）。',
   },
   // ─── 臺灣對外自由貿易協定 (Taiwan's bilateral FTAs) ─────────────────
   {
@@ -1715,7 +1726,8 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'asean-defa',
     name: 'ASEAN Digital Economy Framework Agreement',
-    nameZh: '東協數位經濟框架協議',
+    nameZh: '東協數位經濟架構協定 (DEFA)',
+    fullNameZh: '東南亞國家協會數位經濟架構協定 (DEFA)',
     shortName: 'DEFA',
     type: 'regional',
     status: 'negotiating',
@@ -1730,25 +1742,6 @@ export const agreements: TradeAgreement[] = [
     keyProvisions: ['Cross-border data flows', 'Digital payments', 'Digital ID', 'AI governance', 'Cybersecurity', 'MSME'],
     tags: ['digital', 'data flows', 'regional', 'AI', 'post-liberation-day', 'flagship'],
     significance: '東協數位整合的旗艦，全球第一個區域級數位經濟協議。',
-  },
-  {
-    id: 'oecd',
-    name: 'Organisation for Economic Co-operation and Development',
-    nameZh: '經濟合作暨發展組織',
-    fullNameZh: '經濟合作暨發展組織 (OECD)',
-    shortName: 'OECD',
-    type: 'multilateral',
-    status: 'in_force',
-    era: 'gatt_era',
-    parties: ['MULTI'],
-    partyNames: ['38 member countries'],
-    partyNamesZh: ['38個會員國'],
-    keyDates: { signed: '1960-12', in_force: '1961-09' },
-    description: 'Intergovernmental organisation of 38 mostly high-income countries. Sets influential standards and analysis on trade, the digital economy (e.g. the INDIGO index), taxation and investment — though not a trade agreement itself.',
-    descriptionZh: '由 38 個主要為高所得國家組成的政府間組織。在貿易、數位經濟（如 INDIGO 指數）、稅務、投資領域制定具影響力的標準與分析，本身並非貿易協定。',
-    keyProvisions: ['Standard-setting', 'Policy analysis', 'INDIGO digital trade index', 'BEPS tax framework'],
-    tags: ['multilateral-cornerstone', 'forum'],
-    significance: '全球經濟政策的重要智庫與標準制定者，本應用的 INDIGO 數位貿易指數即出自 OECD。',
   },
   {
     id: 'taiwan-japan-dta',

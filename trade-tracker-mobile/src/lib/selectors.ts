@@ -1,6 +1,8 @@
 import { agreements as bundledAgreements } from '@/data/agreements';
 import type { TradeAgreement, AgreementStatus, EraKey } from '@/data/types';
 import { countryDisplay, countryMatchesQuery } from '@/data/countries';
+import { ORGANIZATIONS, orgByCode, isOrgCode } from '@/data/organizations';
+import type { Organization } from '@/data/organizations';
 
 /**
  * Most selectors now take an explicit `list` argument so we can pass either
@@ -75,14 +77,41 @@ export function filterPartiesByQuery(
   return parties.filter(p => countryMatchesQuery(p.code, query) || p.nameZh.includes(query));
 }
 
+/**
+ * Agreements where this party participates — either directly (party code in
+ * `parties`), or indirectly because an organisation it belongs to is a party
+ * (e.g. Thailand → ASEAN → DEFA). Org parties themselves match directly too.
+ */
 export function getAgreementsForParty(code: string, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
+  // Organisations whose membership includes this country code.
+  const viaOrgs = isOrgCode(code) ? [] : ORGANIZATIONS.filter(o => o.members.includes(code)).map(o => o.code);
   return topLevel(list)
-    .filter(a => a.parties.includes(code))
+    .filter(a =>
+      a.parties.includes(code) ||
+      a.parties.some(p => viaOrgs.includes(p)) ||
+      // also match alias codes used in data (e.g. ACP) → org primary code
+      a.parties.some(p => { const o = orgByCode(p); return !!o && viaOrgs.includes(o.code); }),
+    )
     .sort((x, y) => {
       const dx = getEffectiveDate(x) ?? '';
       const dy = getEffectiveDate(y) ?? '';
       return dy.localeCompare(dx);
     });
+}
+
+/** Agreements where the given organisation is directly a party. */
+export function getAgreementsForOrg(orgCode: string, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
+  const org = orgByCode(orgCode);
+  const codes = new Set<string>([orgCode, org?.code ?? orgCode, ...(org?.aliasCodes ?? [])]);
+  return topLevel(list)
+    .filter(a => a.parties.some(p => codes.has(p)))
+    .sort((x, y) => (getEffectiveDate(y) ?? '').localeCompare(getEffectiveDate(x) ?? ''));
+}
+
+/** International organisations that this country belongs to. */
+export function getOrgsForParty(code: string): Organization[] {
+  if (isOrgCode(code)) return [];
+  return ORGANIZATIONS.filter(o => o.members.includes(code));
 }
 
 export function getAgreementsByEra(era: EraKey, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
