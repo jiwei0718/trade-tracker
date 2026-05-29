@@ -575,4 +575,116 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       { label: 'USTR — US-Japan Trade Agreement', url: 'https://ustr.gov/countries-regions/japan-korea-apec/japan/us-japan-trade-agreement-negotiations', lang: 'en' },
     ],
   },
+
+  // ── 歐盟系 FTA（最新狀態為 AI 整理，byTool）──
+  'eu-korea': {
+    latestStatus: {
+      summary:
+        '歐盟—韓國自由貿易協定 2011 年起暫時適用、2015 年 12 月全面生效，是歐盟與亞洲國家的首個 FTA，幾乎消除雙邊全部工業品關稅，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-South Korea', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/south-korea/eu-south-korea-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-canada-ceta': {
+    latestStatus: {
+      summary:
+        '歐盟—加拿大《全面經濟貿易協定》（CETA）自 2017 年 9 月起暫時適用，已消除約 98% 關稅。惟涉及投資法院（ICS）等章節須經全體歐盟成員國批准方能完全生效；部分成員國國會尚未完成批准，故目前仍屬「暫時適用」狀態。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — CETA', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/canada/eu-canada-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-singapore': {
+    latestStatus: {
+      summary:
+        '歐盟—新加坡自由貿易協定（EUSFTA）2019 年 11 月生效，是歐盟與東協國家的首個 FTA。與其並行的投資保護協定（EUSIPA）仍待歐盟成員國完成批准。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Singapore', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/singapore/eu-singapore-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-vietnam': {
+    latestStatus: {
+      summary:
+        '歐盟—越南自由貿易協定（EVFTA）2020 年 8 月生效，將在 10 年內消除雙邊逾 99% 關稅。與其並行的投資保護協定（EVIPA）仍待歐盟成員國完成批准。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Vietnam', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/vietnam/eu-vietnam-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-chile-modern': {
+    latestStatus: {
+      summary:
+        '歐盟—智利現代化協定包含《先進框架協定》（AFA）與《臨時貿易協定》（ITA）。雙方於 2023 年 12 月簽署，臨時貿易協定已於 2025 年 2 月 1 日生效，更新原 2003 年協定並強化關鍵礦產、數位貿易與永續發展條款。',
+      asOf: '2025-02', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Chile', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/chile/eu-chile-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-mexico-modern': {
+    latestStatus: {
+      summary:
+        '歐盟—墨西哥《全球協定》現代化版於 2020 年完成主要談判，並於 2025 年 1 月達成最終共識（agreement in principle），更新貿易、投資、政府採購與永續條款，後續待法律整理與雙方批准後簽署生效。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Mexico', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/mexico/eu-mexico-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-australia-fta': {
+    latestStatus: {
+      summary:
+        '歐盟—澳洲自由貿易協定談判於 2023 年 10 月因農產品市場開放（牛肉、羊肉、糖等）及地理標示（GI）爭議破裂而中止。雙方雖未正式終止，但短期內重啟談判前景不明。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Australia', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/australia/eu-australia-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-india-fta': {
+    latestStatus: {
+      summary:
+        '歐盟—印度自由貿易協定談判於 2022 年重啟，雙方設定 2025 年底前完成的政治目標，涵蓋貨品、服務、投資與永續發展。關稅（汽車、酒類、農產品）與資料保護、永續條款仍為主要分歧。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-India', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/india/eu-india-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-indonesia': {
+    latestStatus: {
+      summary:
+        '歐盟—印尼《全面經濟夥伴協定》（CEPA）歷經多年談判，雙方於 2025 年宣布完成政治性談判，將開啟歐盟與東南亞最大經濟體間的市場開放，後續待法律整理與批准。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Indonesia', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/indonesia/eu-indonesia-agreement_en', lang: 'en' },
+    ],
+  },
+  'eu-turkey-customs': {
+    latestStatus: {
+      summary:
+        '歐盟—土耳其關稅同盟自 1995 年運作，使工業品在雙方間免關稅流通，但不涵蓋農業、服務與政府採購。關稅同盟現代化談判長期因雙邊政治關係而停滯。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Türkiye', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/turkiye_en', lang: 'en' },
+    ],
+  },
+  'eea': {
+    latestStatus: {
+      summary:
+        '《歐洲經濟區協定》（EEA）1994 年生效，將歐盟單一市場延伸至冰島、列支敦斯登、挪威，使其在貨品、服務、人員與資本「四大自由」上幾近全面參與歐盟內部市場，協定持續運作並隨歐盟法規動態更新。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'EFTA — The EEA Agreement', url: 'https://www.efta.int/eea/eea-agreement', lang: 'en' },
+    ],
+  },
 };
