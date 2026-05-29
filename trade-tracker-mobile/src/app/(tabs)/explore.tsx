@@ -7,11 +7,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ERA_INFO, STATUS_LABELS, STATUS_COLORS } from '@/data/types';
 import type { AgreementStatus, EraKey } from '@/data/types';
 import { Colors } from '@/constants/theme';
-import { getAllParties, search } from '@/lib/selectors';
+import { getAllParties, search, getEffectiveDate } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 
 type Mode = 'agreements' | 'countries';
+type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'newest', label: '最新→最舊' },
+  { key: 'oldest', label: '最舊→最新' },
+  { key: 'volume', label: '貿易量' },
+  { key: 'name', label: '名稱' },
+];
 
 const STATUSES: AgreementStatus[] = ['in_force', 'concluded', 'signed', 'negotiating', 'suspended', 'cancelled', 'superseded'];
 
@@ -24,6 +32,7 @@ export default function Explore() {
   const [query, setQuery] = useState('');
   const [statusFilters, setStatusFilters] = useState<Set<AgreementStatus>>(new Set());
   const [eraFilter, setEraFilter] = useState<EraKey | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey>('newest');
 
   const parties = useMemo(() => getAllParties(agreements), [agreements]);
 
@@ -31,8 +40,18 @@ export default function Explore() {
     let list = query ? search(query, agreements) : [...agreements];
     if (statusFilters.size) list = list.filter(a => statusFilters.has(a.status));
     if (eraFilter) list = list.filter(a => a.era === eraFilter);
+    // Sort
+    list = [...list].sort((a, b) => {
+      switch (sortKey) {
+        case 'newest': return (getEffectiveDate(b) ?? '').localeCompare(getEffectiveDate(a) ?? '');
+        case 'oldest': return (getEffectiveDate(a) ?? '').localeCompare(getEffectiveDate(b) ?? '');
+        case 'volume': return (b.tradeVolume ?? 0) - (a.tradeVolume ?? 0);
+        case 'name': return a.nameZh.localeCompare(b.nameZh, 'zh-Hant');
+        default: return 0;
+      }
+    });
     return list;
-  }, [query, statusFilters, eraFilter, agreements]);
+  }, [query, statusFilters, eraFilter, sortKey, agreements]);
 
   const partyResults = useMemo(() => {
     if (!query) return parties;
@@ -101,6 +120,26 @@ export default function Explore() {
                 />
               ))}
             </ScrollView>
+
+            <View style={styles.sortRow}>
+              <Ionicons name="swap-vertical" size={14} color={c.textSecondary} />
+              <Text style={{ color: c.textSecondary, fontSize: 12 }}>排序：</Text>
+              {SORT_OPTIONS.map(opt => (
+                <Pressable
+                  key={opt.key}
+                  onPress={() => setSortKey(opt.key)}
+                  style={[
+                    styles.sortChip,
+                    sortKey === opt.key
+                      ? { backgroundColor: '#1e3a5f' }
+                      : { backgroundColor: c.backgroundElement },
+                  ]}>
+                  <Text style={{ color: sortKey === opt.key ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>
+                    {opt.label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
           </>
         )}
       </View>
@@ -190,6 +229,8 @@ const styles = StyleSheet.create({
   tabText: { fontWeight: '600', fontSize: 14 },
   searchBox: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10 },
   chipsRow: { gap: 6, paddingVertical: 2 },
+  sortRow: { flexDirection: 'row', alignItems: 'center', gap: 5, flexWrap: 'wrap' },
+  sortChip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 999 },
   chip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999 },
   chipText: { fontSize: 12, fontWeight: '600' },
   countryRow: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 10 },

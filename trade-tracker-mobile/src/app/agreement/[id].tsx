@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, Text, View, StyleSheet, Pressable, useColorScheme } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAgreementById } from '@/lib/selectors';
 import { useData } from '@/lib/data-context';
 import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS, ERA_INFO } from '@/data/types';
+import type { ArticleGroup } from '@/data/types';
+import { ARTICLE_STRUCTURES } from '@/data/article-structures';
 import { Colors } from '@/constants/theme';
 import StatusBadge from '@/components/status-badge';
 import { useWatchlist } from '@/lib/watchlist';
@@ -47,6 +49,8 @@ export default function AgreementDetail() {
 
   const color = STATUS_COLORS[a.status];
   const eraInfo = ERA_INFO[a.era];
+  const structure = a.articleStructure ?? ARTICLE_STRUCTURES[a.id];
+  const totalArticles = structure?.reduce((s, g) => s + g.articles.length, 0) ?? 0;
 
   return (
     <>
@@ -168,6 +172,23 @@ export default function AgreementDetail() {
           </View>
         )}
 
+        {/* Article structure (條文架構) */}
+        {structure && structure.length > 0 && (
+          <View>
+            <Text style={[styles.sectionTitle, { color: c.text }]}>
+              條文架構（{totalArticles} 條）
+            </Text>
+            <Text style={{ color: c.textSecondary, fontSize: 11, marginBottom: 8, marginTop: -4 }}>
+              依主題分組 · 點主題展開／收合
+            </Text>
+            <View style={{ gap: 8 }}>
+              {structure.map((g, i) => (
+                <ArticleGroupBlock key={i} group={g} c={c} />
+              ))}
+            </View>
+          </View>
+        )}
+
         {/* Tags */}
         {a.tags && a.tags.length > 0 && (
           <View>
@@ -196,6 +217,39 @@ export default function AgreementDetail() {
   );
 }
 
+function ArticleGroupBlock({ group, c }: { group: ArticleGroup; c: any }) {
+  const [open, setOpen] = useState(true);
+  return (
+    <View style={[styles.groupCard, { borderColor: c.backgroundElement }]}>
+      <Pressable
+        onPress={() => setOpen(o => !o)}
+        style={[styles.groupHeader, { backgroundColor: '#1e3a5f' }]}>
+        <Text style={styles.groupTitle}>{group.theme}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+          <Text style={styles.groupCount}>{group.articles.length}</Text>
+          <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={16} color="#fff" />
+        </View>
+      </Pressable>
+      {group.themeEn && open && (
+        <Text style={[styles.groupEn, { color: c.textSecondary }]}>{group.themeEn}</Text>
+      )}
+      {open && (
+        <View style={{ padding: 10, gap: 8 }}>
+          {group.articles.map((art, i) => (
+            <View key={i} style={styles.articleRow}>
+              <Text style={styles.artNum}>{art.num}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.artZh, { color: c.text }]}>{art.zh}</Text>
+                <Text style={[styles.artEn, { color: c.textSecondary }]}>{art.en}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: '800', lineHeight: 28 },
   subtitle: { fontSize: 13, marginTop: 4 },
@@ -218,4 +272,13 @@ const styles = StyleSheet.create({
   provision: { flexDirection: 'row', gap: 6 },
   tag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
   cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, padding: 14, borderRadius: 12 },
+  groupCard: { borderWidth: 1, borderRadius: 10, overflow: 'hidden' },
+  groupHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 9 },
+  groupTitle: { color: '#fff', fontWeight: '800', fontSize: 14 },
+  groupCount: { color: '#cbd5e1', fontSize: 12, fontWeight: '700' },
+  groupEn: { fontSize: 10, fontStyle: 'italic', paddingHorizontal: 12, paddingTop: 6 },
+  articleRow: { flexDirection: 'row', gap: 8, alignItems: 'flex-start' },
+  artNum: { color: '#2563eb', fontWeight: '800', fontSize: 12, minWidth: 56 },
+  artZh: { fontSize: 13, fontWeight: '600', lineHeight: 17 },
+  artEn: { fontSize: 10, fontStyle: 'italic', lineHeight: 14 },
 });

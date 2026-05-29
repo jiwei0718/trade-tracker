@@ -74,6 +74,13 @@ def main() -> int:
         previous.get("agreements", []) if isinstance(previous, dict) else seed_agreements
     )
 
+    # Union seed into the base so newly-added seed agreements always appear,
+    # while preserving any live updates from previous runs (previous wins).
+    base_by_id = {a["id"]: a for a in seed_agreements}
+    for a in previous_agreements:
+        base_by_id[a["id"]] = a
+    previous_agreements = list(base_by_id.values())
+
     # ── 2. Run scrapers ────────────────────────────────────────────────
     scraper_results: dict[str, list[dict]] = {}
     structured_updates: list[dict] = []

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ScrollView, Text, View, StyleSheet, Pressable, useColorScheme, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,8 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { G, Rect, Text as SvgText } from 'react-native-svg';
 
 import { Colors } from '@/constants/theme';
-import { getAllParties } from '@/lib/selectors';
+import { getAllParties, getEffectiveDate } from '@/lib/selectors';
 import { useData } from '@/lib/data-context';
+import YearRangeSlider from '@/components/year-range-slider';
 
 const REGIONS: Record<string, { name: string; codes: string[]; color: string }> = {
   Europe:      { name: '歐洲',     codes: ['EU', 'GB', 'CH', 'NO', 'IS', 'LI', 'TR', 'FR', 'DE', 'IT', 'BE', 'NL', 'LU'], color: '#3b82f6' },
@@ -25,30 +26,52 @@ export default function MapTab() {
   const screenW = Dimensions.get('window').width;
   const { agreements } = useData();
 
-  const parties = useMemo(() => getAllParties(agreements), [agreements]);
+  const MIN_YEAR = 1947;
+  const MAX_YEAR = 2026;
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
 
-  // Group parties by region & compute aggregate trade volume per country
+  // Agreements whose effective date falls within the selected year range
+  const inRange = useMemo(() => {
+    return agreements.filter(a => {
+      const d = getEffectiveDate(a);
+      if (!d) return false;
+      const yr = parseInt(d.split('-')[0], 10);
+      return yr >= yearFrom && yr <= yearTo;
+    });
+  }, [agreements, yearFrom, yearTo]);
+
+  const parties = useMemo(() => getAllParties(inRange), [inRange]);
+
+  // Count agreements per party within range
+  const partyCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    inRange.forEach(a => a.parties.forEach(code => m.set(code, (m.get(code) ?? 0) + 1)));
+    return m;
+  }, [inRange]);
+
+  // Group parties by region & compute aggregate trade volume per country (within range)
   const partyVolumes = useMemo(() => {
     const map = new Map<string, number>();
-    agreements.forEach(a => {
+    inRange.forEach(a => {
       const vol = a.tradeVolume ?? 0;
       a.parties.forEach(code => {
         map.set(code, (map.get(code) ?? 0) + vol);
       });
     });
     return map;
-  }, [agreements]);
+  }, [inRange]);
 
   const regionGroups = useMemo(() => {
     return Object.entries(REGIONS).map(([key, info]) => {
       const items = parties
         .filter(p => info.codes.includes(p.code))
-        .map(p => ({ ...p, volume: partyVolumes.get(p.code) ?? 0 }))
+        .map(p => ({ ...p, volume: partyVolumes.get(p.code) ?? 0, count: partyCounts.get(p.code) ?? 0 }))
         .sort((a, b) => b.volume - a.volume);
       const totalVol = items.reduce((s, x) => s + x.volume, 0);
       return { key, ...info, items, totalVol };
     });
-  }, [parties, partyVolumes]);
+  }, [parties, partyVolumes, partyCounts]);
 
   const maxVol = Math.max(...regionGroups.map(r => r.totalVol));
 
@@ -60,6 +83,28 @@ export default function MapTab() {
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
+        {/* Year range slider */}
+        <View style={[styles.sliderCard, { backgroundColor: c.backgroundElement }]}>
+          <Text style={[styles.sliderTitle, { color: c.text }]}>時間區間</Text>
+          <YearRangeSlider
+            min={MIN_YEAR}
+            max={MAX_YEAR}
+            from={yearFrom}
+            to={yearTo}
+            onChange={(f, t) => { setYearFrom(f); setYearTo(t); }}
+          />
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+              此區間內 <Text style={{ color: c.text, fontWeight: '800' }}>{inRange.length}</Text> 個協定
+            </Text>
+            {(yearFrom !== MIN_YEAR || yearTo !== MAX_YEAR) && (
+              <Pressable onPress={() => { setYearFrom(MIN_YEAR); setYearTo(MAX_YEAR); }}>
+                <Text style={{ color: '#2563eb', fontSize: 12, fontWeight: '600' }}>重置</Text>
+              </Pressable>
+            )}
+          </View>
+        </View>
+
         {/* Region volume bars */}
         <View>
           <Text style={[styles.sectionTitle, { color: c.text }]}>各區域協定貿易總量</Text>
@@ -126,6 +171,8 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: '800' },
   subtitle: { fontSize: 12, marginTop: 2 },
   sectionTitle: { fontSize: 14, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.5 },
+  sliderCard: { padding: 14, borderRadius: 12, gap: 6 },
+  sliderTitle: { fontSize: 14, fontWeight: '800' },
   regionCard: { borderRadius: 12, overflow: 'hidden' },
   regionHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12, borderBottomWidth: 1 },
   regionName: { fontSize: 15, fontWeight: '700' },

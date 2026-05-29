@@ -53,6 +53,34 @@ export interface DataSnapshot {
   fetchedAt: string;
 }
 
+/**
+ * Merge remote agreements with bundled ones. Remote wins on conflicts (by id);
+ * bundled-only agreements (e.g. newly added digital trade agreements not yet in
+ * the pipeline output) are appended so they always appear. Article structures
+ * and other bundled-only fields are backfilled onto matching remote records.
+ */
+function mergeWithBundled(remote: TradeAgreement[]): TradeAgreement[] {
+  const bundledById = new Map(bundledAgreements.map(a => [a.id, a]));
+  const remoteIds = new Set(remote.map(a => a.id));
+  const merged = remote.map(a => {
+    const b = bundledById.get(a.id);
+    // Backfill article structure / significance from bundled if remote lacks them
+    if (b) {
+      return {
+        ...a,
+        articleStructure: a.articleStructure ?? b.articleStructure,
+        significance: a.significance ?? b.significance,
+      };
+    }
+    return a;
+  });
+  // Append bundled-only agreements
+  for (const b of bundledAgreements) {
+    if (!remoteIds.has(b.id)) merged.push(b);
+  }
+  return merged;
+}
+
 async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T | null> {
   if (url.includes('<USERNAME>')) return null;     // not configured yet
   try {
@@ -122,14 +150,15 @@ async function fetchRemoteOrFallback(staleAgreements?: TradeAgreement[]): Promis
   ]);
 
   if (agreementsResp?.agreements) {
+    const merged = mergeWithBundled(agreementsResp.agreements);
     // Cache, then return
     await Promise.all([
-      writeCache(CACHE_KEY_AGREEMENTS, { agreements: agreementsResp.agreements }),
+      writeCache(CACHE_KEY_AGREEMENTS, { agreements: merged }),
       writeCache(CACHE_KEY_EVENTS, { events: eventsResp?.events ?? [] }),
       writeCache(CACHE_KEY_META, metaResp ?? null),
     ]);
     return {
-      agreements: agreementsResp.agreements,
+      agreements: merged,
       events: eventsResp?.events ?? [],
       meta: metaResp ?? null,
       source: 'remote',

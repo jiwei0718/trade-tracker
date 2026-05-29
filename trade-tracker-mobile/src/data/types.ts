@@ -36,6 +36,18 @@ export interface KeyDates {
   superseded?: string;
 }
 
+export interface Article {
+  num: string;   // e.g. "Art.11", "Art.8.61-F"
+  zh: string;    // Chinese name
+  en: string;    // English name
+}
+
+export interface ArticleGroup {
+  theme: string;     // e.g. "資料流動"
+  themeEn?: string;  // e.g. "Data Flows"
+  articles: Article[];
+}
+
 export interface TradeAgreement {
   id: string;
   name: string;
@@ -55,6 +67,7 @@ export interface TradeAgreement {
   tags?: string[];
   supersededBy?: string;    // id of replacement agreement
   significance?: string;    // brief Chinese-language "why it matters"
+  articleStructure?: ArticleGroup[];  // detailed clause breakdown
 }
 
 export const STATUS_LABELS: Record<AgreementStatus, string> = {

@@ -1,11 +1,11 @@
-import { Tabs } from 'expo-router/js-tabs';
+import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'react-native';
 import { Colors } from '@/constants/theme';
 
 export default function AppTabs() {
   const scheme = useColorScheme();
-  const c = Colors[scheme === 'unspecified' || !scheme ? 'light' : scheme];
+  const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
 
   return (
     <Tabs
