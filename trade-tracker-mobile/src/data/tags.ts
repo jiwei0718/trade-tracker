@@ -76,6 +76,25 @@ const TAG_LABELS: Record<string, { zh: string; en: string }> = {
   'msme': { zh: '中小微企業', en: 'MSME' },
   'investment-facilitation': { zh: '投資便利化', en: 'Investment Facilitation' },
   'joint-statement': { zh: '聯合聲明', en: 'Joint Statement' },
+  // ── 自條文衍生之細項議題 (derived issue topics) ──
+  'e-signature': { zh: '電子簽章', en: 'E-Signature' },
+  'cross-border-data': { zh: '跨境資料傳輸', en: 'Cross-Border Data' },
+  'data-privacy': { zh: '個人資料保護', en: 'Data Privacy' },
+  'e-payment': { zh: '電子支付', en: 'E-Payment' },
+  'e-invoicing': { zh: '電子發票', en: 'E-Invoicing' },
+  'ai': { zh: '人工智慧', en: 'Artificial Intelligence' },
+  'open-data': { zh: '開放政府資料', en: 'Open Government Data' },
+  'customs-moratorium': { zh: '電子傳輸關稅', en: 'Customs on E-Transmissions' },
+  'algorithm': { zh: '演算法', en: 'Algorithm' },
+  'spam': { zh: '未經請求電子訊息', en: 'Unsolicited Messages' },
+  'isp': { zh: '網路服務提供者', en: 'Internet Service Providers' },
+  'e-contract': { zh: '電子契約', en: 'Electronic Contracts' },
+  'digital-products': { zh: '數位產品', en: 'Digital Products' },
+  'data-localisation': { zh: '資料在地化／算力設施', en: 'Data Localisation' },
+  'internet-access': { zh: '網際網路接取', en: 'Internet Access' },
+  'e-transactions': { zh: '電子交易框架', en: 'Electronic Transactions' },
+  'single-window': { zh: '單一窗口', en: 'Single Window' },
+  'standards': { zh: '標準與符合性評鑑', en: 'Standards & Conformity' },
 };
 
 export function tagLabel(tag: string): string {

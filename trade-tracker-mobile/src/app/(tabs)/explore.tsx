@@ -11,6 +11,7 @@ import { getAllParties, search, getEffectiveDate, filterPartiesByQuery } from '@
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { tagLabel } from '@/data/tags';
+import { getAgreementTags } from '@/lib/issue-tags';
 
 type Mode = 'agreements' | 'countries' | 'tags';
 type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
@@ -41,15 +42,15 @@ export default function Explore() {
   // Most common tags across the dataset, for the tag filter row.
   const topTags = useMemo(() => {
     const counts: Record<string, number> = {};
-    agreements.forEach(a => a.tags?.forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([t]) => t).slice(0, 24);
+    agreements.forEach(a => getAgreementTags(a).forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([t]) => t).slice(0, 30);
   }, [agreements]);
 
   const filtered = useMemo(() => {
     let list = query ? search(query, agreements) : agreements.filter(a => !a.parentId);
     if (statusFilters.size) list = list.filter(a => statusFilters.has(a.status));
     if (eraFilter) list = list.filter(a => a.era === eraFilter);
-    if (tagFilter) list = list.filter(a => a.tags?.includes(tagFilter));
+    if (tagFilter) list = list.filter(a => getAgreementTags(a).includes(tagFilter));
     // Sort
     list = [...list].sort((a, b) => {
       switch (sortKey) {
@@ -68,7 +69,7 @@ export default function Explore() {
   // All tags with counts, for the 議題 (topics) mode.
   const tagResults = useMemo(() => {
     const counts: Record<string, number> = {};
-    agreements.forEach(a => a.tags?.forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
+    agreements.forEach(a => getAgreementTags(a).forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
     let entries = Object.entries(counts).map(([tag, count]) => ({ tag, count, label: tagLabel(tag) }));
     if (query) entries = entries.filter(e => e.label.includes(query) || e.tag.includes(query.toLowerCase()));
     return entries.sort((a, b) => b.count - a.count);
