@@ -2,10 +2,11 @@ import { useMemo, useState } from 'react';
 import { ScrollView, Text, View, StyleSheet, Pressable, useColorScheme, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Text as SvgText, G } from 'react-native-svg';
 
-import { STATUS_COLORS, STATUS_LABELS } from '@/data/types';
-import type { AgreementStatus } from '@/data/types';
+import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS } from '@/data/types';
+import type { AgreementStatus, AgreementType } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import { useData } from '@/lib/data-context';
 import { getEffectiveDate } from '@/lib/selectors';
@@ -48,13 +49,25 @@ const EVENT_OPTIONS: { key: EventBasis; label: string }[] = [
   { key: 'started',   label: '新啟動談判' },
 ];
 
+const TYPE_OPTIONS: { key: 'all' | AgreementType; label: string }[] = [
+  { key: 'all',          label: '全部類型' },
+  { key: 'bilateral',    label: '雙邊' },
+  { key: 'regional',     label: '區域' },
+  { key: 'multilateral', label: '多邊' },
+  { key: 'plurilateral', label: '複邊' },
+  { key: 'sectoral',     label: '特定領域' },
+  { key: 'jsi',          label: 'JSI' },
+];
+
 export default function ArcDiagram() {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const screenW = Dimensions.get('window').width;
+  const insets = useSafeAreaInsets();
   const { agreements } = useData();
   const [eventBasis, setEventBasis] = useState<EventBasis>('any');
   const [topicTag, setTopicTag] = useState<string | null>(null);
+  const [typeFilter, setTypeFilter] = useState<'all' | AgreementType>('all');
   const [selected, setSelected] = useState<string | null>(null);
   const MIN_YEAR = 1947;
   const MAX_YEAR = 2026;
@@ -69,6 +82,7 @@ export default function ArcDiagram() {
 
   const filtered = useMemo(() => {
     return agreements.filter(a => {
+      if (typeFilter !== 'all' && a.type !== typeFilter) return false;
       if (topicTag && !getAgreementTags(a).includes(topicTag)) return false;
       const d = basisDate(a);
       // When a specific milestone is required, the agreement must have it.
@@ -79,7 +93,7 @@ export default function ArcDiagram() {
       }
       return true;
     });
-  }, [eventBasis, topicTag, yearFrom, yearTo, agreements]);
+  }, [eventBasis, topicTag, typeFilter, yearFrom, yearTo, agreements]);
 
   // Topic chips: issue tags present among the parties shown in the arc.
   const topicTags = useMemo(() => {
@@ -124,8 +138,21 @@ export default function ArcDiagram() {
 
   return (
     <View style={{ flex: 1, backgroundColor: c.background }}>
+      {/* Type chips: agreement type (filters out e.g. multilateral WTO noise) */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
+        <Text style={{ color: c.textSecondary, fontSize: 11 }}>類型</Text>
+        {TYPE_OPTIONS.map(opt => (
+          <Pressable
+            key={opt.key}
+            onPress={() => setTypeFilter(opt.key)}
+            style={[styles.filterChip, typeFilter === opt.key ? { backgroundColor: '#0e7490' } : { backgroundColor: c.background }]}>
+            <Text style={{ color: typeFilter === opt.key ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>{opt.label}</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
+
       {/* Event-basis chips: which milestone the year range applies to */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center' }}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
         <Text style={{ color: c.textSecondary, fontSize: 11 }}>區間內</Text>
         {EVENT_OPTIONS.map(opt => (
           <Pressable
@@ -154,7 +181,7 @@ export default function ArcDiagram() {
       </View>
 
       {/* Topic chips */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center' }}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
         <Ionicons name="pricetag" size={12} color={c.textSecondary} />
         <Pressable
           onPress={() => setTopicTag(null)}
@@ -202,16 +229,26 @@ export default function ArcDiagram() {
             const color = STATUS_COLORS[p.status];
             const sw = Math.max(0.8, Math.min(4, Math.log10(p.vol + 1) * 1.1));
             const isSelected = selected === p.agreementId;
+            const d = `M ${arcsX} ${y1} C ${arcsX + curve} ${y1}, ${arcsX + curve} ${y2}, ${arcsX} ${y2}`;
             return (
-              <Path
-                key={i}
-                d={`M ${arcsX} ${y1} C ${arcsX + curve} ${y1}, ${arcsX + curve} ${y2}, ${arcsX} ${y2}`}
-                fill="none"
-                stroke={color}
-                strokeWidth={isSelected ? sw + 1.5 : sw}
-                strokeOpacity={selected ? (isSelected ? 0.95 : 0.12) : 0.5}
-                onPress={() => setSelected(p.agreementId)}
-              />
+              <G key={i}>
+                {/* wide transparent hit area so even thin arcs are tappable */}
+                <Path
+                  d={d}
+                  fill="none"
+                  stroke="transparent"
+                  strokeWidth={14}
+                  onPress={() => setSelected(p.agreementId)}
+                />
+                <Path
+                  d={d}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={isSelected ? sw + 1.5 : sw}
+                  strokeOpacity={selected ? (isSelected ? 0.95 : 0.12) : 0.5}
+                  onPress={() => setSelected(p.agreementId)}
+                />
+              </G>
             );
           })}
 
@@ -230,28 +267,35 @@ export default function ArcDiagram() {
         </Svg>
       </ScrollView>
 
-      {/* Detail bar at bottom when selected */}
+      {/* Detail bar at bottom when selected (respects phone nav bar safe area) */}
       {selected && (() => {
         const a = agreements.find(x => x.id === selected);
         if (!a) return null;
         return (
-          <Pressable
-            onPress={() => router.push(`/agreement/${a.id}`)}
-            style={[styles.detailBar, { backgroundColor: c.backgroundElement }]}>
-            <View style={[styles.dot, { backgroundColor: STATUS_COLORS[a.status] }]} />
-            <View style={{ flex: 1 }}>
-              <Text style={{ color: c.text, fontWeight: '700', fontSize: 13 }} numberOfLines={1}>
-                {a.nameZh}
-              </Text>
-              <Text style={{ color: c.textSecondary, fontSize: 11 }} numberOfLines={1}>
-                {a.partyNamesZh.slice(0, 3).join(' · ')} · {STATUS_LABELS[a.status]}
-                {a.tradeVolume ? ` · $${a.tradeVolume.toLocaleString()}億` : ''}
-              </Text>
+          <View style={[styles.detailBar, { backgroundColor: c.backgroundElement, paddingBottom: 10 + insets.bottom }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <View style={[styles.dot, { backgroundColor: STATUS_COLORS[a.status] }]} />
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: c.text, fontWeight: '700', fontSize: 14 }} numberOfLines={2}>
+                  {a.nameZh}
+                </Text>
+                <Text style={{ color: c.textSecondary, fontSize: 11 }} numberOfLines={1}>
+                  {a.partyNamesZh.slice(0, 3).join(' · ')}
+                  {a.partyNamesZh.length > 3 ? ` +${a.partyNamesZh.length - 3}` : ''} · {STATUS_LABELS[a.status]}
+                  {a.tradeVolume ? ` · $${a.tradeVolume.toLocaleString()}億` : ''}
+                </Text>
+              </View>
+              <Pressable onPress={() => setSelected(null)} hitSlop={10} style={{ padding: 4 }}>
+                <Ionicons name="close" size={22} color={c.textSecondary} />
+              </Pressable>
             </View>
-            <Pressable onPress={() => setSelected(null)} hitSlop={10} style={{ padding: 4 }}>
-              <Text style={{ color: c.textSecondary, fontSize: 18 }}>✕</Text>
+            <Pressable
+              onPress={() => router.push(`/agreement/${a.id}`)}
+              style={styles.detailCta}>
+              <Ionicons name="arrow-forward-circle" size={16} color="#fff" />
+              <Text style={{ color: '#fff', fontWeight: '700', fontSize: 13 }}>查看協定詳情</Text>
             </Pressable>
-          </Pressable>
+          </View>
         );
       })()}
     </View>
@@ -264,6 +308,7 @@ const styles = StyleSheet.create({
   filterChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: 12, paddingBottom: 6, borderBottomWidth: 1 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
-  detailBar: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderTopWidth: 1, borderTopColor: '#e5e7eb' },
+  detailBar: { gap: 8, paddingHorizontal: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: '#e5e7eb' },
+  detailCta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: '#2563eb', paddingVertical: 10, borderRadius: 10 },
   dot: { width: 8, height: 8, borderRadius: 4 },
 });
