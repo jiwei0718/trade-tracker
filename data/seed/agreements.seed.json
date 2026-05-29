@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-29T12:10:16.672Z",
+  "generated_at": "2026-05-29T12:57:05.286Z",
   "generator": "seed-export",
   "count": 94,
   "agreements": [
@@ -13,7 +13,7 @@
       "status": "expired",
       "era": "pre_gatt",
       "parties": [
-        "GB",
+        "UK",
         "FR"
       ],
       "partyNames": [
@@ -84,7 +84,7 @@
       "status": "superseded",
       "era": "pre_gatt",
       "parties": [
-        "GB",
+        "UK",
         "CA",
         "AU",
         "NZ",
@@ -198,7 +198,7 @@
       "era": "pre_gatt",
       "parties": [
         "US",
-        "GB"
+        "UK"
       ],
       "partyNames": [
         "United States",
@@ -2087,7 +2087,7 @@
         "MY",
         "CL",
         "BN",
-        "GB"
+        "UK"
       ],
       "partyNames": [
         "12 Pacific Rim economies (UK joined 2024)"
@@ -2103,7 +2103,7 @@
       },
       "tradeVolume": 5200,
       "description": "Restructured TPP after US withdrawal. UK acceded 2024. China, Taiwan, Ukraine applications pending.",
-      "descriptionZh": "TPP美國退出後重組，英國2024年加入。中國、台灣、烏克蘭申請中。",
+      "descriptionZh": "TPP美國退出後重組，英國2024年加入。中國、臺灣、烏克蘭申請中。",
       "tags": [
         "regional",
         "flagship"
@@ -2265,7 +2265,7 @@
       "era": "fragmentation",
       "parties": [
         "EU",
-        "GB"
+        "UK"
       ],
       "partyNames": [
         "European Union",
@@ -2335,7 +2335,7 @@
       "status": "in_force",
       "era": "fragmentation",
       "parties": [
-        "GB",
+        "UK",
         "AU"
       ],
       "partyNames": [
@@ -2369,7 +2369,7 @@
       "status": "in_force",
       "era": "fragmentation",
       "parties": [
-        "GB",
+        "UK",
         "NZ"
       ],
       "partyNames": [
@@ -2401,7 +2401,7 @@
       "status": "in_force",
       "era": "fragmentation",
       "parties": [
-        "GB",
+        "UK",
         "JP"
       ],
       "partyNames": [
@@ -2527,7 +2527,7 @@
       "status": "in_force",
       "era": "fragmentation",
       "parties": [
-        "GB",
+        "UK",
         "CPTPP"
       ],
       "partyNames": [
@@ -2587,7 +2587,7 @@
     {
       "id": "us-taiwan-21st",
       "name": "US–Taiwan Initiative on 21st-Century Trade",
-      "nameZh": "美國–台灣21世紀貿易倡議 (US–Taiwan Initiative on 21st-Century Trade)",
+      "nameZh": "美國–臺灣21世紀貿易倡議 (US–Taiwan Initiative on 21st-Century Trade)",
       "shortName": "US–Taiwan Trade",
       "type": "bilateral",
       "status": "negotiating",
@@ -2602,7 +2602,7 @@
       ],
       "partyNamesZh": [
         "美國",
-        "台灣"
+        "臺灣"
       ],
       "keyDates": {
         "started": "2022-06"
@@ -2857,7 +2857,7 @@
       "status": "concluded",
       "era": "post_liberation",
       "parties": [
-        "GB",
+        "UK",
         "IN"
       ],
       "partyNames": [
@@ -2992,7 +2992,7 @@
       "era": "post_liberation",
       "parties": [
         "AU",
-        "GB",
+        "UK",
         "SG",
         "NZ",
         "CA",
@@ -3059,7 +3059,7 @@
       "era": "post_liberation",
       "parties": [
         "US",
-        "GB"
+        "UK"
       ],
       "partyNames": [
         "United States",
@@ -3099,7 +3099,7 @@
         "China, Taiwan, Ukraine, Colombia, Ecuador (applicants)"
       ],
       "partyNamesZh": [
-        "中國、台灣、烏克蘭、哥倫比亞、厄瓜多（申請中）"
+        "中國、臺灣、烏克蘭、哥倫比亞、厄瓜多（申請中）"
       ],
       "keyDates": {
         "proposed": "2021-09"
@@ -3149,8 +3149,9 @@
     {
       "id": "taiwan-japan-dta",
       "name": "Taiwan–Japan Digital Trade Mutual Cooperation Agreement",
-      "nameZh": "台日數位貿易相互合作協議 (臺灣日本關係協會與日本台灣交流協會數位貿易相互合作協議)",
-      "shortName": "台日數位貿易協議",
+      "nameZh": "臺日數位貿易協議",
+      "fullNameZh": "臺灣日本關係協會與日本臺灣交流協會數位貿易相互合作協議",
+      "shortName": "臺日數位貿易協議",
       "type": "sectoral",
       "status": "signed",
       "era": "post_liberation",
@@ -3163,7 +3164,7 @@
         "Japan"
       ],
       "partyNamesZh": [
-        "台灣",
+        "中華民國(臺灣)",
         "日本"
       ],
       "keyDates": {
@@ -3171,14 +3172,14 @@
       },
       "tradeVolume": 70,
       "description": "Digital trade agreement signed Dec 4, 2025 by the Taiwan-Japan Relations Association and the Japan-Taiwan Exchange Association. Modeled on the US-Japan Digital Trade Agreement, covering data flows, source code, e-commerce facilitation and digital trust.",
-      "descriptionZh": "由臺灣日本關係協會與日本台灣交流協會於 2025 年 12 月 4 日簽署的數位貿易協議，架構參照美日數位貿易協定，涵蓋資料流動、原始碼、電子商務便捷化與數位信任。",
+      "descriptionZh": "由臺灣日本關係協會與日本臺灣交流協會於 2025 年 12 月 4 日簽署的數位貿易協議，架構參照美日數位貿易協定，涵蓋資料流動、原始碼、電子商務便捷化與數位信任。",
       "tags": [
         "digital",
         "data flows",
         "taiwan",
         "post-liberation-day"
       ],
-      "significance": "我國少數以官方文本對外簽署的數位貿易協議，是台灣數位通商布局的重要進展。"
+      "significance": "我國少數以官方文本對外簽署的數位貿易協議，是臺灣數位通商布局的重要進展。"
     },
     {
       "id": "singapore-australia-dea",
@@ -3224,7 +3225,7 @@
       "status": "in_force",
       "era": "fragmentation",
       "parties": [
-        "GB",
+        "UK",
         "SG"
       ],
       "partyNames": [

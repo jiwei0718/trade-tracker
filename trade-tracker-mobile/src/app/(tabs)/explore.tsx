@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ERA_INFO, STATUS_LABELS, STATUS_COLORS } from '@/data/types';
 import type { AgreementStatus, EraKey } from '@/data/types';
 import { Colors } from '@/constants/theme';
-import { getAllParties, search, getEffectiveDate } from '@/lib/selectors';
+import { getAllParties, search, getEffectiveDate, filterPartiesByQuery } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 
@@ -53,11 +53,7 @@ export default function Explore() {
     return list;
   }, [query, statusFilters, eraFilter, sortKey, agreements]);
 
-  const partyResults = useMemo(() => {
-    if (!query) return parties;
-    const q = query.toLowerCase();
-    return parties.filter(p => p.nameZh.includes(query) || p.code.toLowerCase().includes(q));
-  }, [query, parties]);
+  const partyResults = useMemo(() => filterPartiesByQuery(parties, query), [query, parties]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>

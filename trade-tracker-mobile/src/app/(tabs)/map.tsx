@@ -11,7 +11,7 @@ import { useData } from '@/lib/data-context';
 import YearRangeSlider from '@/components/year-range-slider';
 
 const REGIONS: Record<string, { name: string; codes: string[]; color: string }> = {
-  Europe:      { name: '歐洲',     codes: ['EU', 'GB', 'CH', 'NO', 'IS', 'LI', 'TR', 'FR', 'DE', 'IT', 'BE', 'NL', 'LU'], color: '#3b82f6' },
+  Europe:      { name: '歐洲',     codes: ['EU', 'UK', 'CH', 'NO', 'IS', 'LI', 'TR', 'FR', 'DE', 'IT', 'BE', 'NL', 'LU'], color: '#3b82f6' },
   N_America:   { name: '北美',     codes: ['US', 'CA', 'MX'], color: '#f59e0b' },
   S_America:   { name: '南美',     codes: ['BR', 'AR', 'CL', 'CO', 'PE', 'UY', 'PY', 'EC', 'BO', 'VE', 'CR', 'SV', 'GT', 'HN', 'NI', 'DO', 'PA'], color: '#10b981' },
   Asia:        { name: '亞洲',     codes: ['CN', 'JP', 'KR', 'IN', 'SG', 'VN', 'MY', 'TH', 'PH', 'ID', 'BN', 'HK', 'TW', 'PK', 'LA', 'KH', 'MM', 'ASEAN'], color: '#8b5cf6' },

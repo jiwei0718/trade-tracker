@@ -7,6 +7,7 @@ import { STATUS_COLORS, STATUS_LABELS } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
+import { countryDisplay } from '@/data/countries';
 
 export default function CountryProfile() {
   const { code } = useLocalSearchParams<{ code: string }>();
@@ -16,13 +17,14 @@ export default function CountryProfile() {
   const { agreements } = useData();
   const list = useMemo(() => getAgreementsForParty(code ?? '', agreements), [code, agreements]);
 
-  // Get country name from first agreement
+  // Canonical Chinese name from the registry (falls back to stored / code)
   const countryName = useMemo(() => {
+    let fallback = code;
     for (const a of list) {
       const i = a.parties.indexOf(code ?? '');
-      if (i !== -1) return a.partyNamesZh[i] ?? code;
+      if (i !== -1) { fallback = a.partyNamesZh[i] ?? code; break; }
     }
-    return code;
+    return countryDisplay(code ?? '', fallback);
   }, [list, code]);
 
   // Status breakdown

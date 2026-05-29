@@ -13,7 +13,7 @@ import YearRangeSlider from '@/components/year-range-slider';
 // Key parties shown in arc diagram (left column)
 const PARTIES = [
   { code: 'EU',    label: '歐盟 (EU)' },
-  { code: 'GB',    label: '英國 (UK)' },
+  { code: 'UK',    label: '英國 (UK)' },
   { code: 'US',    label: '美國 (US)' },
   { code: 'CA',    label: '加拿大 (CA)' },
   { code: 'MX',    label: '墨西哥 (MX)' },
@@ -30,7 +30,7 @@ const PARTIES = [
   { code: 'CH',    label: '瑞士 (CH)' },
   { code: 'SA',    label: '沙烏地 (SA)' },
   { code: 'AE',    label: '阿聯酋 (AE)' },
-  { code: 'TW',    label: '台灣 (TW)' },
+  { code: 'TW',    label: '臺灣 (TW)' },
   { code: 'VN',    label: '越南 (VN)' },
   { code: 'ID',    label: '印尼 (ID)' },
 ];

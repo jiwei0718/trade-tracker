@@ -104,7 +104,12 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('遠端協定數:', d['agreement_count']\\); print\\('來源:', d['source_counts']\\)\")",
       "Bash(npx -y tsx -e \"import { agreements } from './trade-tracker-mobile/src/data/agreements.ts'; import { writeFileSync } from 'fs'; const out = { schema_version: 1, generated_at: new Date\\(\\).toISOString\\(\\), generator: 'seed-export', count: agreements.length, agreements }; writeFileSync\\('data/seed/agreements.seed.json', JSON.stringify\\(out, null, 2\\), 'utf-8'\\); console.log\\('seed:', agreements.length\\);\")",
       "Bash(PYTHONIOENCODING=utf-8 python -c \"import json; d=json.load\\(open\\('data/agreements.json',encoding='utf-8'\\)\\); print\\('total:', d['count']\\); tw=[a for a in d['agreements'] if 'TW' in a.get\\('parties',[]\\)]; print\\('TW agreements:', len\\(tw\\)\\)\")",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"fix: WTO party parsing \\(real countries+ZH\\), add Taiwan-Japan DTA, arc year-slider\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"fix: WTO party parsing \\(real countries+ZH\\), add Taiwan-Japan DTA, arc year-slider\")",
+      "Bash(git config *)",
+      "Bash(tee /tmp/expo_v3.log)",
+      "Bash(curl -s -o /dev/null -w \"warm:%{http_code}\\\\n\" \"http://localhost:8081/node_modules/expo-router/entry.bundle?platform=android&dev=true\")",
+      "Bash(powershell.exe -c '\\(Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -like '\\\\''192.168.*'\\\\'' -and \\(Get-NetAdapter -InterfaceIndex $_.InterfaceIndex\\).Status -eq '\\\\''Up'\\\\'' } | Select-Object -First 1\\).IPAddress')",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: country registry \\(UK/中華民國臺灣, multi-field search\\), Taiwan-Japan article structure, ZH+EN tags, concise card names\")"
     ]
   }
 }

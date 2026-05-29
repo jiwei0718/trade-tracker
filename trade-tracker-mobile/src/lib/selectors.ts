@@ -1,5 +1,6 @@
 import { agreements as bundledAgreements } from '@/data/agreements';
 import type { TradeAgreement, AgreementStatus, EraKey } from '@/data/types';
+import { countryDisplay, countryMatchesQuery } from '@/data/countries';
 
 /**
  * Most selectors now take an explicit `list` argument so we can pass either
@@ -33,7 +34,8 @@ export function getAllParties(list: TradeAgreement[] = bundledAgreements): { cod
   list.forEach(a => {
     a.parties.forEach((code, i) => {
       if (SKIP_CODES.has(code)) return;
-      const nameZh = a.partyNamesZh[i] ?? code;
+      // Always prefer the canonical registry Chinese name; fall back to stored.
+      const nameZh = countryDisplay(code, a.partyNamesZh[i] ?? code);
       const existing = map.get(code);
       if (existing) existing.count++;
       else map.set(code, { nameZh, count: 1 });
@@ -42,6 +44,15 @@ export function getAllParties(list: TradeAgreement[] = bundledAgreements): { cod
   return Array.from(map.entries())
     .map(([code, v]) => ({ code, ...v }))
     .sort((a, b) => b.count - a.count);
+}
+
+/** Filter parties by a query matching code / zh / en / aliases. */
+export function filterPartiesByQuery(
+  parties: { code: string; nameZh: string; count: number }[],
+  query: string,
+): { code: string; nameZh: string; count: number }[] {
+  if (!query.trim()) return parties;
+  return parties.filter(p => countryMatchesQuery(p.code, query) || p.nameZh.includes(query));
 }
 
 export function getAgreementsForParty(code: string, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
@@ -80,9 +91,11 @@ export function search(query: string, list: TradeAgreement[] = bundledAgreements
   return list.filter(a =>
     a.name.toLowerCase().includes(q) ||
     a.nameZh.includes(query) ||
+    a.fullNameZh?.includes(query) ||
     a.shortName?.toLowerCase().includes(q) ||
     a.partyNamesZh.some(p => p.includes(query)) ||
     a.partyNames.some(p => p.toLowerCase().includes(q)) ||
+    a.parties.some(code => countryMatchesQuery(code, query)) ||
     a.descriptionZh.includes(query),
   );
 }

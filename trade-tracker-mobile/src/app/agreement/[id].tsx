@@ -9,6 +9,8 @@ import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS, ERA_INFO } from '@/data/type
 import type { ArticleGroup, Article, IndigoScore, AgreementDetail } from '@/data/types';
 import { ARTICLE_STRUCTURES } from '@/data/article-structures';
 import { AGREEMENT_DETAILS } from '@/data/agreement-details';
+import { countryDisplay } from '@/data/countries';
+import { tagLabel } from '@/data/tags';
 import { Colors } from '@/constants/theme';
 import StatusBadge from '@/components/status-badge';
 import { useWatchlist } from '@/lib/watchlist';
@@ -76,8 +78,10 @@ export default function AgreementDetail() {
         {/* Title */}
         <View>
           <Text style={[styles.title, { color: c.text }]}>{a.nameZh}</Text>
+          {a.fullNameZh && (
+            <Text style={[styles.fullName, { color: c.textSecondary }]}>{a.fullNameZh}</Text>
+          )}
           <Text style={[styles.subtitle, { color: c.textSecondary }]}>{a.name}</Text>
-          {a.shortName && <Text style={[styles.short, { color: c.textSecondary }]}>{a.shortName}</Text>}
         </View>
 
         {/* Badges */}
@@ -167,14 +171,14 @@ export default function AgreementDetail() {
         <View>
           <Text style={[styles.sectionTitle, { color: c.text }]}>締約方</Text>
           <View style={styles.partiesWrap}>
-            {a.partyNamesZh.map((p, i) => {
-              const partyCode = a.parties[i];
+            {a.parties.map((partyCode, i) => {
+              const display = countryDisplay(partyCode, a.partyNamesZh[i] ?? partyCode);
               return (
                 <Pressable
                   key={i}
-                  onPress={() => partyCode && !['MULTI', 'WORLD', 'EU', 'ASEAN'].includes(partyCode) && router.push(`/country/${partyCode}`)}
+                  onPress={() => partyCode && router.push(`/country/${partyCode}`)}
                   style={[styles.party, { backgroundColor: c.backgroundElement }]}>
-                  <Text style={{ color: c.text, fontSize: 13 }}>{p}</Text>
+                  <Text style={{ color: c.text, fontSize: 13 }}>{display}</Text>
                 </Pressable>
               );
             })}
@@ -246,7 +250,7 @@ export default function AgreementDetail() {
             <View style={styles.partiesWrap}>
               {a.tags.map((t, i) => (
                 <View key={i} style={[styles.tag, { backgroundColor: '#dbeafe' }]}>
-                  <Text style={{ color: '#1e40af', fontSize: 11, fontWeight: '600' }}>{t}</Text>
+                  <Text style={{ color: '#1e40af', fontSize: 11, fontWeight: '600' }}>{tagLabel(t)}</Text>
                 </View>
               ))}
             </View>
@@ -464,6 +468,7 @@ function IndigoCard({ indigo, c }: { indigo: IndigoScore; c: any }) {
 const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: '800', lineHeight: 28 },
   subtitle: { fontSize: 13, marginTop: 4 },
+  fullName: { fontSize: 13, marginTop: 4, lineHeight: 18 },
   short: { fontSize: 12, marginTop: 2 },
   badgesRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, alignItems: 'center' },
   metaBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999 },

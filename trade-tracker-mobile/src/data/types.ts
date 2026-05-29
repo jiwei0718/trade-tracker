@@ -104,6 +104,7 @@ export interface TradeAgreement {
   id: string;
   name: string;
   nameZh: string;
+  fullNameZh?: string;   // full official Chinese name (shown in detail, not on card)
   shortName?: string;
   type: AgreementType;
   status: AgreementStatus;

@@ -6,6 +6,80 @@ import type { ArticleGroup } from './types';
  * Source: user's research tables (USJDTA / SADEA / UKSDEA / KSDPA / WTO JSI).
  */
 export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
+  // ─── 臺日數位貿易協議 (Taiwan–Japan Digital Trade Agreement) ─────────
+  'taiwan-japan-dta': [
+    {
+      theme: '定義、目標與範圍', themeEn: 'Definitions, Objectives & Scope',
+      articles: [
+        { num: 'Art.1', zh: '定義', en: 'Definitions' },
+        { num: 'Art.2', zh: '原則與目標', en: 'Principles and Objectives' },
+        { num: 'Art.3', zh: '範圍', en: 'Scope' },
+      ],
+    },
+    {
+      theme: '市場開放', themeEn: 'Market Access',
+      articles: [
+        { num: 'Art.4', zh: '關稅', en: 'Customs Duties' },
+        { num: 'Art.5', zh: '數位產品之非歧視待遇', en: 'Non-Discriminatory Treatment of Digital Products' },
+        { num: 'Art.16', zh: '原始碼', en: 'Source Code' },
+        { num: 'Art.17', zh: '使用密碼學之商業資通訊科技產品', en: 'Commercial ICT Products that Use Cryptography' },
+      ],
+    },
+    {
+      theme: '資料流動', themeEn: 'Data Flows',
+      articles: [
+        { num: 'Art.12', zh: '以電子方式跨境傳輸資訊', en: 'Cross-Border Transfer of Information by Electronic Means' },
+        { num: 'Art.13', zh: '算力設施位置', en: 'Location of Computing Facilities' },
+        { num: 'Art.18', zh: '開放政府資料', en: 'Open Government Data' },
+      ],
+    },
+    {
+      theme: '數位貿易便捷化', themeEn: 'Digital Trade Facilitation',
+      articles: [
+        { num: 'Art.6', zh: '電子交易框架', en: 'Electronic Transactions Framework' },
+        { num: 'Art.7', zh: '電子商務管制', en: 'Regulations on Electronic Commerce' },
+        { num: 'Art.8', zh: '電子認證與電子簽章', en: 'Electronic Authentication and Electronic Signatures' },
+        { num: 'Art.19', zh: '以電子方式締結契約', en: 'Conclusion of Contracts by Electronic Means' },
+        { num: 'Art.20', zh: '電子發票', en: 'Electronic Invoicing' },
+        { num: 'Art.22', zh: '無紙化貿易管理', en: 'Paperless Trading' },
+      ],
+    },
+    {
+      theme: '數位信任', themeEn: 'Digital Trust',
+      articles: [
+        { num: 'Art.9', zh: '線上消費者保護', en: 'Online Consumer Protection' },
+        { num: 'Art.10', zh: '個人資訊保護', en: 'Personal Information Protection' },
+        { num: 'Art.11', zh: '電子商務取得及使用網際網路之原則', en: 'Principles on Access to and Use of the Internet for Electronic Commerce' },
+        { num: 'Art.14', zh: '未經請求之商業電子訊息', en: 'Unsolicited Commercial Electronic Messages' },
+        { num: 'Art.15', zh: '網路安全', en: 'Cybersecurity' },
+        { num: 'Art.23', zh: '網際網路服務提供者', en: 'Internet Service Providers' },
+      ],
+    },
+    {
+      theme: '合作與對話機制', themeEn: 'Cooperation & Dialogue',
+      articles: [
+        { num: 'Art.21', zh: '透明度', en: 'Transparency' },
+        { num: 'Art.24', zh: '合作', en: 'Cooperation' },
+      ],
+    },
+    {
+      theme: '例外規定', themeEn: 'Exceptions',
+      articles: [
+        { num: 'Art.25', zh: '一般例外', en: 'General Exceptions' },
+        { num: 'Art.26', zh: '安全例外', en: 'Security Exceptions' },
+        { num: 'Art.27', zh: '審慎例外', en: 'Prudential Exceptions' },
+      ],
+    },
+    {
+      theme: '協議管理', themeEn: 'Administration',
+      articles: [
+        { num: 'Art.28', zh: '諮商', en: 'Consultations' },
+        { num: 'Art.29', zh: '一般檢視', en: 'General Review' },
+        { num: 'Art.30', zh: '生效、修改及終止', en: 'Entry into Force, Modification and Termination' },
+      ],
+    },
+  ],
+
   // ─── 美日數位貿易協定 (US–Japan Digital Trade Agreement) ───────────
   'us-japan-dta': [
     {
