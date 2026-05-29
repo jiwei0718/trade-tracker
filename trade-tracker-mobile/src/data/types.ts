@@ -113,6 +113,8 @@ export interface TradeAgreement {
   partyNames: string[];
   partyNamesZh: string[];
   keyDates: KeyDates;
+  latestProgressDate?: string;  // YYYY-MM of the most recent milestone (e.g. an accession)
+  latestProgressNote?: string;  // short note, e.g. "英國加入"
   tradeVolume?: number;     // billions USD (last available year)
   description: string;
   descriptionZh: string;

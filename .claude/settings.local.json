@@ -109,7 +109,10 @@
       "Bash(tee /tmp/expo_v3.log)",
       "Bash(curl -s -o /dev/null -w \"warm:%{http_code}\\\\n\" \"http://localhost:8081/node_modules/expo-router/entry.bundle?platform=android&dev=true\")",
       "Bash(powershell.exe -c '\\(Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -like '\\\\''192.168.*'\\\\'' -and \\(Get-NetAdapter -InterfaceIndex $_.InterfaceIndex\\).Status -eq '\\\\''Up'\\\\'' } | Select-Object -First 1\\).IPAddress')",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: country registry \\(UK/中華民國臺灣, multi-field search\\), Taiwan-Japan article structure, ZH+EN tags, concise card names\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: country registry \\(UK/中華民國臺灣, multi-field search\\), Taiwan-Japan article structure, ZH+EN tags, concise card names\")",
+      "Bash(tee /tmp/expo_v4.log)",
+      "Bash(python -m backend.scrapers.country_names)",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: 211-country map \\(Luxembourg+all\\), fix comma-split, merge CPTPP cards, add DEPA/DEFA/OECD, latest-progress date sorting\")"
     ]
   }
 }

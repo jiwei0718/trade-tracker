@@ -18,6 +18,10 @@ export function getEffectiveDate(a: TradeAgreement): string | undefined {
 }
 
 export function getLatestEventDate(a: TradeAgreement): { kind: string; date: string } | null {
+  // Explicit latest-progress date wins (e.g. an accession after entry-into-force).
+  if (a.latestProgressDate) {
+    return { kind: 'latest_progress', date: a.latestProgressDate };
+  }
   const events: { kind: string; date: string }[] = [];
   for (const [k, v] of Object.entries(a.keyDates)) {
     if (v) events.push({ kind: k, date: v });
@@ -25,6 +29,16 @@ export function getLatestEventDate(a: TradeAgreement): { kind: string; date: str
   if (events.length === 0) return null;
   events.sort((x, y) => y.date.localeCompare(x.date));
   return events[0];
+}
+
+/** Signing date (簽署日期) if present. */
+export function getSignedDate(a: TradeAgreement): string | undefined {
+  return a.keyDates.signed;
+}
+
+/** Latest progress date (最新進展日期). */
+export function getLatestProgressDate(a: TradeAgreement): string | undefined {
+  return a.latestProgressDate ?? getLatestEventDate(a)?.date;
 }
 
 const SKIP_CODES = new Set(['MULTI', 'WORLD', 'WTO', 'ASEAN', 'EU', 'CPTPP', 'ACP', 'OACPS', 'AU-CONT', 'WTO-JSI']);

@@ -24,14 +24,12 @@ log = logging.getLogger(__name__)
 def _parse_parties(rta_name: str, signatories: str) -> tuple[list[str], list[str], list[str]]:
     """Return (codes, en_names, zh_names).
 
-    Prefer the signatories column; else parse the RTA name by splitting on ' - '.
+    Parse from the RTA name by splitting on ' - ' (hyphen with surrounding
+    spaces). We avoid splitting the signatories column on commas because many
+    official names contain commas ("Korea, Republic of").
     """
-    raw: list[str] = []
-    if signatories and signatories.strip():
-        raw = [s.strip() for s in re.split(r"[;,]", signatories) if s.strip() and len(s.strip()) > 1]
-    if not raw:
-        # Split RTA name on ' - ' (hyphen with surrounding spaces)
-        raw = [p.strip() for p in re.split(r"\s+-\s+", rta_name) if p.strip()]
+    # Split RTA name on ' - ' (hyphen with surrounding spaces)
+    raw = [p.strip() for p in re.split(r"\s+-\s+", rta_name) if p.strip()]
 
     codes, ens, zhs = [], [], []
     seen = set()
@@ -151,14 +149,14 @@ def fetch() -> list[dict[str, Any]]:
             key_dates: dict[str, str] = {}
             sig = _fmt_date(col(row, "Date of Signature (G)")) or _fmt_date(col(row, "Date of Signature (S)"))
             eif = _fmt_date(col(row, "Date of Entry into Force (G)")) or _fmt_date(col(row, "Date of Entry into Force (S)"))
-            notif = _fmt_date(col(row, "Date of Notification (G)")) or _fmt_date(col(row, "Date of Notification (S)"))
             inactive = _fmt_date(col(row, "Inactive Date"))
             if sig:      key_dates["signed"] = sig
             if eif:      key_dates["in_force"] = eif
-            if notif and "proposed" not in key_dates: key_dates["proposed"] = notif
             if inactive: key_dates["expired"] = inactive
+            # NB: we deliberately do NOT map "Date of Notification" — it is often
+            # recent (re-notifications) and would pollute "latest progress" sorting.
 
-            era_date = eif or sig or notif
+            era_date = eif or sig
             coverage = str(col(row, "Coverage") or "")
             region = str(col(row, "Region") or "")
 

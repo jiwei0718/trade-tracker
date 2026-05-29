@@ -201,7 +201,21 @@ export default function AgreementDetail() {
                   </View>
                 </View>
               ))}
+            {a.latestProgressDate && (
+              <View style={styles.timelineItem}>
+                <View style={[styles.timelineDot, { backgroundColor: '#16a34a' }]} />
+                <Text style={[styles.timelineLabel, { color: '#16a34a', fontWeight: '700' }]}>最新進展</Text>
+                <View style={[styles.timelineDate, { backgroundColor: '#dcfce7' }]}>
+                  <Text style={{ color: '#15803d', fontSize: 12, fontFamily: 'ui-monospace' }}>{a.latestProgressDate}</Text>
+                </View>
+              </View>
+            )}
           </View>
+          {a.latestProgressNote && (
+            <Text style={{ color: c.textSecondary, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+              ⓘ {a.latestProgressNote}
+            </Text>
+          )}
         </View>
 
         {/* Description */}
