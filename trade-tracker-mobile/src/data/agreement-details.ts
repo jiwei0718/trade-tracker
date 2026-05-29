@@ -441,4 +441,138 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       { label: 'European Council — Samoa Agreement', url: 'https://www.consilium.europa.eu/en/policies/eu-acp-partnership-agreement/', lang: 'en' },
     ],
   },
+
+  // ── 中國系雙邊 FTA（最新狀態為 AI 整理，byTool）──
+  'china-asean': {
+    latestStatus: {
+      summary:
+        '中國—東協自由貿易區（CAFTA）自 2010 年全面生效，是中國最早、規模最大的 FTA 之一。雙方「3.0 版」升級談判已於 2024 年實質完成，新增數位經濟、綠色經濟、供應鏈互聯等章節，並於 2025 年簽署升級議定書。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'ASEAN — ASEAN-China FTA', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' },
+    ],
+  },
+  'china-chile': {
+    latestStatus: {
+      summary:
+        '中國—智利自由貿易協定 2006 年生效，是中國與拉美國家的首個 FTA；其後陸續完成服務貿易、投資補充協定，並於 2019 年再升級，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'China FTA Network（中國自由貿易區服務網）', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+    ],
+  },
+  'china-pakistan': {
+    latestStatus: {
+      summary:
+        '中國—巴基斯坦自由貿易協定 2007 年生效，是中巴經濟走廊（CPEC）的重要制度基礎。第二階段議定書於 2019 年簽署、2020 年生效，進一步擴大零關稅產品範圍，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'China FTA Network', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+    ],
+  },
+  'china-nz': {
+    latestStatus: {
+      summary:
+        '中國—紐西蘭自由貿易協定 2008 年生效，是中國與已開發國家的首個 FTA。升級議定書於 2021 年簽署、2022 年生效，擴大木材、乳製品等市場開放並納入電子商務、環境條款，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'New Zealand MFAT — China FTA', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/china-china-fta', lang: 'en' },
+    ],
+  },
+  'china-korea': {
+    latestStatus: {
+      summary:
+        '中國—韓國自由貿易協定 2015 年 12 月生效，為兩大東亞經濟體間的重要協定。第二階段（服務貿易與投資）談判持續進行中，目標進一步開放服務市場。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'China FTA Network', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+    ],
+  },
+  'china-australia': {
+    latestStatus: {
+      summary:
+        '中澳自由貿易協定（ChAFTA）2015 年 12 月生效。雖然 2020–2023 年間雙邊一度因政治緊張陷入貿易摩擦（中國對澳洲大麥、葡萄酒、煤炭等加徵關稅或設限），相關措施已於 2023–2024 年陸續解除，協定本身持續有效運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'Australia DFAT — ChAFTA', url: 'https://www.dfat.gov.au/trade/agreements/in-force/chafta', lang: 'en' },
+    ],
+  },
+  'eu-china-cai': {
+    latestStatus: {
+      summary:
+        '歐盟—中國《全面投資協定》（CAI）於 2020 年 12 月完成原則性談判，但因 2021 年雙方相互制裁（涉新疆人權），歐洲議會凍結批准程序，協定迄今停滯、未生效，前景高度不確定。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-China CAI', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/china/eu-china-agreement_en', lang: 'en' },
+    ],
+  },
+
+  // ── 美國系雙邊 FTA（最新狀態為 AI 整理，byTool）──
+  'us-singapore': {
+    latestStatus: {
+      summary:
+        '美國—新加坡自由貿易協定 2004 年生效，是美國與亞洲國家的首個 FTA，涵蓋貨品、服務、投資與電子商務，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — Singapore FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/singapore-fta', lang: 'en' },
+    ],
+  },
+  'us-chile': {
+    latestStatus: {
+      summary:
+        '美國—智利自由貿易協定 2004 年生效，雙邊貨品關稅已全面消除，協定持續運作，並為後續美國 FTA 範本之一。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — Chile FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/chile-fta', lang: 'en' },
+    ],
+  },
+  'us-australia': {
+    latestStatus: {
+      summary:
+        '美國—澳洲自由貿易協定（AUSFTA）2005 年生效，涵蓋貨品、服務、投資與政府採購，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — Australia FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/australian-fta', lang: 'en' },
+    ],
+  },
+  'cafta-dr': {
+    latestStatus: {
+      summary:
+        '美國—中美洲—多明尼加自由貿易協定（CAFTA-DR）涵蓋美國與中美洲五國及多明尼加，自 2006 年起分批生效，是美國深化與中美洲經貿與供應鏈整合的核心協定，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — CAFTA-DR', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/cafta-dr-dominican-republic-central-america-fta', lang: 'en' },
+    ],
+  },
+  'us-korea': {
+    latestStatus: {
+      summary:
+        '美韓自由貿易協定（KORUS）2012 年生效，是美國與亞洲規模最大的 FTA 之一。經川普政府要求重啟談判後，修訂版於 2018 年簽署、2019 年 1 月生效（調整汽車與鋼鐵條款），協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — KORUS FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/korus-fta', lang: 'en' },
+    ],
+  },
+  'us-japan-phase1': {
+    latestStatus: {
+      summary:
+        '美日第一階段貿易協定 2020 年 1 月生效，為有限範圍的早期收穫協定，日本降低美國農產品關稅、美國調降部分工業品關稅。與其同步簽署的《美日數位貿易協定》另立專章。後續更全面的第二階段談判並未實質推進。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — US-Japan Trade Agreement', url: 'https://ustr.gov/countries-regions/japan-korea-apec/japan/us-japan-trade-agreement-negotiations', lang: 'en' },
+    ],
+  },
 };
