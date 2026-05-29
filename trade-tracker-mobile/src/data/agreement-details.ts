@@ -325,4 +325,120 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       { label: 'ASEAN — DEFA', url: 'https://asean.org/our-communities/economic-community/', lang: 'en' },
     ],
   },
+
+  // ── 多邊協定 / GATT-WTO 體系（最新狀態為 AI 整理，byTool）──
+  'gatt-1947': {
+    latestStatus: {
+      summary:
+        '《關稅暨貿易總協定》（GATT 1947）於 1947 年 10 月簽署、1948 年 1 月生效，主導戰後多邊貿易自由化達 47 年、共 8 個談判回合。1995 年世界貿易組織（WTO）成立後，GATT 1947 由「GATT 1994」併入 WTO 法律架構繼續適用，原臨時性的 GATT 組織則走入歷史。',
+      asOf: '1995-01', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — The GATT years: from Havana to Marrakesh', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact4_e.htm', lang: 'en' },
+    ],
+  },
+  'kennedy-round': {
+    latestStatus: {
+      summary:
+        'GATT 第 6 回合（甘迺迪回合，1964–1967）談判完成，工業國家關稅平均削減約三分之一，並首度通過《反傾銷協定》。其成果已永久併入後續 GATT/WTO 體系。',
+      asOf: '1967-06', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — Understanding the WTO: The GATT years', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact4_e.htm', lang: 'en' },
+    ],
+  },
+  'tokyo-round': {
+    latestStatus: {
+      summary:
+        'GATT 第 7 回合（東京回合，1973–1979）談判完成，首次系統性處理非關稅障礙，通過補貼、技術性貿易障礙、政府採購等多項「規約」（Codes）。成果延續於 WTO 多邊規則中。',
+      asOf: '1979-11', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — The GATT years', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact4_e.htm', lang: 'en' },
+    ],
+  },
+  'uruguay-round': {
+    latestStatus: {
+      summary:
+        'GATT 第 8 回合（烏拉圭回合，1986–1994）是規模最大的多邊貿易談判，1994 年 4 月於馬拉喀什簽署最終文件，催生世界貿易組織（WTO），並將服務貿易（GATS）、智慧財產權（TRIPS）納入體系、建立具拘束力的爭端解決機制。1995 年 1 月 1 日 WTO 正式運作。',
+      asOf: '1995-01', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — The Uruguay Round', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact5_e.htm', lang: 'en' },
+    ],
+  },
+  'wto': {
+    latestStatus: {
+      summary:
+        '世界貿易組織（WTO）自 1995 年運作至今，為全球多邊貿易體系核心。近年面臨改革壓力：上訴機構（Appellate Body）因美國自 2019 年起阻擋法官任命而停擺，爭端解決上訴功能癱瘓；第 13 屆部長會議（MC13，2024 年 2 月於阿布達比）就漁業補貼、電子商務等議題進展有限。第 14 屆部長會議（MC14，2026 年 3 月於喀麥隆雅溫德）亦未能完成電子傳輸關稅暫免之延續。',
+      detail:
+        'WTO 由烏拉圭回合於 1995 年 1 月 1 日成立，管理 GATT（貨品）、GATS（服務）、TRIPS（智財）三大支柱並提供爭端解決機制，現有逾 160 個會員。\n\n【爭端解決危機】上訴機構自 2019 年 12 月起因美國持續阻擋新法官任命而無法運作，導致「上訴入虛空」（appeal into the void）問題；部分會員以「多方臨時上訴仲裁安排」（MPIA）作為替代。\n\n【部長會議】MC12（2022）達成漁業補貼協定等成果；MC13（2024 阿布達比）延續電子傳輸關稅暫免至 MC14；MC14（2026 雅溫德）未能完成 moratorium 延續，該措施於 2026 年 3 月底依期失效，惟同會議通過《電子商務協定過渡性安排宣言》。\n\n【我國地位】我國以「臺灣、澎湖、金門及馬祖個別關稅領域」名義於 2002 年 1 月 1 日成為 WTO 會員。',
+      asOf: '2026-04', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO 官方網站', url: 'https://www.wto.org/', lang: 'en' },
+      { label: '經濟部國際貿易署 — WTO', url: 'https://www.trade.gov.tw/', lang: 'zh' },
+    ],
+  },
+  'china-wto': {
+    latestStatus: {
+      summary:
+        '中國於 2001 年 12 月 11 日正式加入 WTO，為全球貿易格局帶來結構性影響。其加入議定書中部分「非市場經濟」條款與履約爭議至今仍是美中及歐中貿易摩擦的焦點，相關過渡條款多已屆期。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — China and the WTO', url: 'https://www.wto.org/english/thewto_e/countries_e/china_e.htm', lang: 'en' },
+    ],
+  },
+  'doha-round': {
+    latestStatus: {
+      summary:
+        '杜哈發展議程（Doha Round）於 2001 年啟動，原以開發中國家發展為核心，但因農業補貼、市場開放等南北分歧長期僵持，自 2008 年談判破裂後實質停滯。WTO 已轉向以複邊（plurilateral）與議題式倡議（如電子商務 JSI）推進，整體單一回合模式被視為已難重啟。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO — The Doha Round', url: 'https://www.wto.org/english/tratop_e/dda_e/dda_e.htm', lang: 'en' },
+    ],
+  },
+  'apec-1989': {
+    latestStatus: {
+      summary:
+        '亞太經濟合作會議（APEC）為 21 個環太平洋經濟體組成的論壇型組織，以非拘束性方式推動區域貿易與投資自由化。1994 年「茂物目標」屆期後，2020 年通過「布特拉加亞願景 2040」（Putrajaya Vision 2040），持續以年度領袖會議與部長會議運作。我國以「中華臺北」名義參與。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'APEC 官方網站', url: 'https://www.apec.org/', lang: 'en' },
+      { label: '外交部 — APEC', url: 'https://www.mofa.gov.tw/', lang: 'zh' },
+    ],
+  },
+  'lome-convention': {
+    latestStatus: {
+      summary:
+        '《洛梅公約》（1975–2000）為歐洲共同體與非洲、加勒比海及太平洋（ACP）國家間的發展與貿易合作架構，提供 ACP 產品單向優惠進入歐洲市場。2000 年由《科托努協定》取代。',
+      asOf: '2000-06', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — ACP', url: 'https://international-partnerships.ec.europa.eu/countries/african-caribbean-and-pacific-countries_en', lang: 'en' },
+    ],
+  },
+  'cotonou': {
+    latestStatus: {
+      summary:
+        '《科托努協定》（Cotonou Agreement，2000 年簽署）為歐盟與 ACP 國家的全面夥伴協定，涵蓋發展合作、政治對話與貿易。協定於 2020 年到期後歷經多次延展，已由 2023 年簽署的《薩摩亞協定》接續取代。',
+      asOf: '2023-11', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — Post-Cotonou', url: 'https://international-partnerships.ec.europa.eu/policies/post-cotonou_en', lang: 'en' },
+    ],
+  },
+  'samoa-agreement': {
+    latestStatus: {
+      summary:
+        '《薩摩亞協定》（Samoa Agreement）為歐盟與非加太（OACPS）79 國的新夥伴架構，2023 年 11 月 15 日於薩摩亞簽署，2024 年 1 月 1 日起暫時適用，取代《科托努協定》。涵蓋永續發展、人權、和平安全、移民與貿易投資等六大優先領域。',
+      asOf: '2024-01', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Council — Samoa Agreement', url: 'https://www.consilium.europa.eu/en/policies/eu-acp-partnership-agreement/', lang: 'en' },
+    ],
+  },
 };
