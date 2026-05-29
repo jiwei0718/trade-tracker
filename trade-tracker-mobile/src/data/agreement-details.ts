@@ -187,4 +187,142 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       { label: '新加坡 MTI — KSDPA 官方頁面', url: 'https://www.mti.gov.sg/Trade/Digital-Economy-Agreements/The-Korea-Singapore-Digital-Partnership-Agreement', lang: 'en' },
     ],
   },
+
+  // ── 主要現代大型協定（按最新進展補充；摘要為 AI 整理之公開資訊，byTool）──
+  'cptpp': {
+    latestStatus: {
+      summary:
+        'CPTPP 自 2018 年 12 月生效，現有 12 個締約方。英國為首個新加入成員，其加入議定書已於 2024 年 12 月 15 日對英國生效。中國、中華民國（臺灣）、烏克蘭、烏拉圭、哥斯大黎加等已提出加入申請；哥斯大黎加加入工作小組已於 2024 年成立並啟動審查。',
+      detail:
+        'CPTPP（跨太平洋夥伴全面進步協定）原 11 國於 2018 年 3 月簽署、同年 12 月 30 日生效。\n\n【擴大】英國於 2021 年 2 月申請加入，2023 年 7 月簽署加入議定書，2024 年 12 月 15 日正式生效，成為首個非創始成員，締約方增至 12 國。\n\n【待審申請】中國（2021/9）、中華民國（臺灣）（2021/9）、烏克蘭（2023）、烏拉圭（2024）、哥斯大黎加（2022）等已提出加入申請。哥斯大黎加加入工作小組已成立並進入審查程序。新成員加入須經全體現有締約方共識決。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'New Zealand MFAT — CPTPP（存放國官方頁面）', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/cptpp', lang: 'en' },
+      { label: 'UK DBT — CPTPP accession', url: 'https://www.gov.uk/government/collections/the-uks-accession-to-cptpp', lang: 'en' },
+    ],
+  },
+
+  'rcep': {
+    latestStatus: {
+      summary:
+        'RCEP（區域全面經濟夥伴協定）為全球最大自由貿易區，涵蓋 15 國、約全球 30% GDP 與人口。2020 年 11 月簽署，2022 年 1 月 1 日生效。菲律賓於 2023 年 6 月完成批准後，協定已對全部 15 個簽署國生效。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'RCEP 官方網站（秘書處）', url: 'https://rcepsec.org/', lang: 'en' },
+      { label: 'ASEAN — RCEP', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' },
+    ],
+  },
+
+  'usmca': {
+    latestStatus: {
+      summary:
+        'USMCA（美墨加協定，取代 NAFTA）自 2020 年 7 月 1 日生效。依協定第 34.7 條，三國須於生效滿 6 年（2026 年 7 月）進行首次「聯合檢視」（joint review），決定是否延長 16 年效期；各方已於 2026 年展開檢視準備，並涉及關稅與汽車原產地規則等爭議。',
+      asOf: '2026-05', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — USMCA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement', lang: 'en' },
+    ],
+  },
+
+  'eu-japan-epa': {
+    latestStatus: {
+      summary:
+        '歐日經濟夥伴協定 2019 年 2 月生效。雙方其後就跨境資料流動補充規範談判，《資料自由流動條款》（納入 EPA 的議定書）已於 2024 年 7 月生效，補足原協定未納入的資料流動承諾。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Japan EPA', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/japan/eu-japan-agreement_en', lang: 'en' },
+    ],
+  },
+
+  'eu-uk-tca': {
+    latestStatus: {
+      summary:
+        '歐盟—英國《貿易與合作協定》（TCA）於 2021 年 5 月 1 日正式生效（2021 年 1 月起暫時適用）。雙方於 2025 年起依協定檢視條款檢討執行情況，並就漁業、青年流動、衛生與植物防疫（SPS）等議題協商。',
+      asOf: '2026-05', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-UK TCA', url: 'https://commission.europa.eu/strategy-and-policy/relations-non-eu-countries/relations-united-kingdom/eu-uk-trade-and-cooperation-agreement_en', lang: 'en' },
+    ],
+  },
+
+  'eu-mercosur': {
+    latestStatus: {
+      summary:
+        '歐盟與南方共同市場（Mercosur）歷經逾 25 年談判，於 2024 年 12 月 6 日宣布完成政治協議，將形成涵蓋逾 7 億人口的大型自由貿易區。協定尚待法律文本整理（legal scrubbing）、翻譯，並經歐盟理事會、歐洲議會及各國批准方能生效；歐洲部分國家（如法國）與農業團體仍有反對聲浪。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Mercosur', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/mercosur/eu-mercosur-agreement_en', lang: 'en' },
+    ],
+  },
+
+  'uk-india': {
+    latestStatus: {
+      summary:
+        '英印《全面經濟貿易協定》（CETA）歷經逾 3 年、14 輪談判，於 2025 年 5 月 6 日宣布達成協議，並於 2025 年 7 月 24 日正式簽署。協定涵蓋貨品關稅大幅削減（英國威士忌、汽車；印度紡織、成衣）、服務與專業人員流動，尚待雙方國內批准後生效。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'UK DBT — UK-India trade deal', url: 'https://www.gov.uk/government/collections/uk-india-free-trade-agreement', lang: 'en' },
+    ],
+  },
+
+  'india-uae': {
+    latestStatus: {
+      summary:
+        '印度—阿聯《全面經濟夥伴協定》（CEPA）於 2022 年 2 月簽署、同年 5 月 1 日生效，是印度近年首個全面性 FTA，目標將雙邊非石油貿易大幅提升，協定持續運作中。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'India Ministry of Commerce — India-UAE CEPA', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' },
+    ],
+  },
+
+  'afcfta': {
+    latestStatus: {
+      summary:
+        '非洲大陸自由貿易區（AfCFTA）協定 2019 年生效，2021 年 1 月 1 日正式啟動貿易，為涵蓋 54 個非洲國家、約 14 億人口的全球成員數最多自由貿易區。「引導貿易倡議」（Guided Trade Initiative）持續擴大參與國與品項，逐步落實零關稅貿易。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'AfCFTA Secretariat', url: 'https://au-afcfta.org/', lang: 'en' },
+    ],
+  },
+
+  'depa': {
+    latestStatus: {
+      summary:
+        'DEPA（數位經濟夥伴協定）由新加坡、智利、紐西蘭發起，2021 年 1 月生效，採模組化設計。韓國加入議定書已生效，成為首個新加入成員；中國、加拿大、哥斯大黎加、秘魯、阿聯等相繼提出加入申請並進行審查。',
+      asOf: '2025-12', byTool: true,
+    },
+    indigo: {
+      total: 0.64, raw: 18.0, max: 28, official: false,
+      sourceNote: '本工具依 OECD INDIGO-t 方法論粗估；非 OECD 官方分數。模組化設計，E 類新興議題（AI、金融科技、數位身分）覆蓋完整。',
+      domains: [
+        { code: 'A', name: '促進電子商務', raw: 6.0, max: 7, score: 0.86 },
+        { code: 'B', name: '開放性與電子商務', raw: 2.5, max: 5, score: 0.50 },
+        { code: 'C', name: '信任與電子商務', raw: 5.5, max: 6, score: 0.92 },
+        { code: 'D', name: '跨境資料流動與在地化', raw: 2.0, max: 2, score: 1.0 },
+        { code: 'E', name: '廣義數位經濟議題', raw: 2.0, max: 8, score: 0.25, note: 'AI、金融科技、數位身分、數位包容等模組納入' },
+      ],
+      asOf: '2026-05',
+    },
+    sourceDocs: [
+      { label: 'New Zealand MFAT — DEPA', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-concluded-but-not-in-force/digital-economy-partnership-agreement-depa', lang: 'en' },
+    ],
+  },
+
+  'asean-defa': {
+    latestStatus: {
+      summary:
+        'ASEAN 數位經濟框架協定（DEFA）為全球首個區域性數位經濟協定，2023 年 9 月啟動談判。ASEAN 領袖於 2025 年 5 月第 46 屆東協高峰會宣布實質完成（substantial conclusion）談判，目標於 2025 年內簽署，預估可使東協數位經濟規模倍增。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'ASEAN — DEFA', url: 'https://asean.org/our-communities/economic-community/', lang: 'en' },
+    ],
+  },
 };
