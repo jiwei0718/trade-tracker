@@ -7,78 +7,87 @@ import type { ArticleGroup } from './types';
  */
 export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
   // ─── 臺日數位貿易協議 (Taiwan–Japan Digital Trade Agreement) ─────────
-  'taiwan-japan-dta': [
-    {
-      theme: '定義、目標與範圍', themeEn: 'Definitions, Objectives & Scope',
-      articles: [
-        { num: 'Art.1', zh: '定義', en: 'Definitions' },
-        { num: 'Art.2', zh: '原則與目標', en: 'Principles and Objectives' },
-        { num: 'Art.3', zh: '範圍', en: 'Scope' },
-      ],
-    },
-    {
-      theme: '市場開放', themeEn: 'Market Access',
-      articles: [
-        { num: 'Art.4', zh: '關稅', en: 'Customs Duties' },
-        { num: 'Art.5', zh: '數位產品之非歧視待遇', en: 'Non-Discriminatory Treatment of Digital Products' },
-        { num: 'Art.16', zh: '原始碼', en: 'Source Code' },
-        { num: 'Art.17', zh: '使用密碼學之商業資通訊科技產品', en: 'Commercial ICT Products that Use Cryptography' },
-      ],
-    },
-    {
-      theme: '資料流動', themeEn: 'Data Flows',
-      articles: [
-        { num: 'Art.12', zh: '以電子方式跨境傳輸資訊', en: 'Cross-Border Transfer of Information by Electronic Means' },
-        { num: 'Art.13', zh: '算力設施位置', en: 'Location of Computing Facilities' },
-        { num: 'Art.18', zh: '開放政府資料', en: 'Open Government Data' },
-      ],
-    },
-    {
-      theme: '數位貿易便捷化', themeEn: 'Digital Trade Facilitation',
-      articles: [
-        { num: 'Art.6', zh: '電子交易框架', en: 'Electronic Transactions Framework' },
-        { num: 'Art.7', zh: '電子商務管制', en: 'Regulations on Electronic Commerce' },
-        { num: 'Art.8', zh: '電子認證與電子簽章', en: 'Electronic Authentication and Electronic Signatures' },
-        { num: 'Art.19', zh: '以電子方式締結契約', en: 'Conclusion of Contracts by Electronic Means' },
-        { num: 'Art.20', zh: '電子發票', en: 'Electronic Invoicing' },
-        { num: 'Art.22', zh: '無紙化貿易管理', en: 'Paperless Trading' },
-      ],
-    },
-    {
-      theme: '數位信任', themeEn: 'Digital Trust',
-      articles: [
-        { num: 'Art.9', zh: '線上消費者保護', en: 'Online Consumer Protection' },
-        { num: 'Art.10', zh: '個人資訊保護', en: 'Personal Information Protection' },
-        { num: 'Art.11', zh: '電子商務取得及使用網際網路之原則', en: 'Principles on Access to and Use of the Internet for Electronic Commerce' },
-        { num: 'Art.14', zh: '未經請求之商業電子訊息', en: 'Unsolicited Commercial Electronic Messages' },
-        { num: 'Art.15', zh: '網路安全', en: 'Cybersecurity' },
-        { num: 'Art.23', zh: '網際網路服務提供者', en: 'Internet Service Providers' },
-      ],
-    },
-    {
-      theme: '合作與對話機制', themeEn: 'Cooperation & Dialogue',
-      articles: [
-        { num: 'Art.21', zh: '透明度', en: 'Transparency' },
-        { num: 'Art.24', zh: '合作', en: 'Cooperation' },
-      ],
-    },
-    {
-      theme: '例外規定', themeEn: 'Exceptions',
-      articles: [
-        { num: 'Art.25', zh: '一般例外', en: 'General Exceptions' },
-        { num: 'Art.26', zh: '安全例外', en: 'Security Exceptions' },
-        { num: 'Art.27', zh: '審慎例外', en: 'Prudential Exceptions' },
-      ],
-    },
-    {
-      theme: '協議管理', themeEn: 'Administration',
-      articles: [
-        { num: 'Art.28', zh: '諮商', en: 'Consultations' },
-        { num: 'Art.29', zh: '一般檢視', en: 'General Review' },
-        { num: 'Art.30', zh: '生效、修改及終止', en: 'Entry into Force, Modification and Termination' },
-      ],
-    },
-  ],
+  //  全 30 條官方中譯全文（中華民國政府官方版，臺灣日本關係協會 2025/12/4 簽署）
+  'taiwan-japan-dta': (() => {
+    const OF = (zh: string) => ({
+      zh,
+      zhSource: 'official' as const,
+      zhSourceNote: '中華民國政府官方中譯本（臺灣日本關係協會公布；本協議以英文作準）',
+      sourceUrl: 'https://www.trade.gov.tw/',
+    });
+    return [
+      {
+        theme: '定義、目標與範圍', themeEn: 'Definitions, Objectives & Scope',
+        articles: [
+          { num: 'Art.1', zh: '定義', en: 'Definitions', fullText: OF('本協議定義之用語包括：\n(a)「演算法」：為解決問題或取得結果而採取之既定步驟序列。\n(b)「領域」：就日本台灣交流協會指日本；就臺灣日本關係協會指臺灣。\n(c)「加密演算法或密碼」、(d)「密文」、(j)「加密技術」、(p)「加密」、(r)「金鑰」：與密碼學相關之定義。\n(e)「商業電子訊息」：為商業目的透過電信服務向個人電子地址發送之電子訊息（至少包括電子郵件）。\n(f)「商業ICT產品」：為商業應用而設計、以電子方式進行資訊處理與通訊之產品（含軟體）。\n(g)「算力設施」：處理或儲存商業用資料之電腦伺服器及儲存裝置。\n(h)「涵蓋之企業」、(i)「涵蓋之人」：由他方之個人所有或控制之企業，或他方之個人。\n(k)「數位產品」：以數位方式編碼、為商業銷售或分銷而製作且得透過電子傳輸之電腦程式、文字、影片、圖像、錄音等（不含數位化金融工具）。\n(l)「電子驗證」、(m)「電子發票」、(n)「開立電子發票架構」、(o)「電子簽章」、(q)「電子傳輸」、(s)「詮釋資料」、(t)「開放政府資料」、(u)「人」、(v)「貿易管理文件」、(w)「未經請求之商業電子訊息」、(x)「WTO協定」。') },
+          { num: 'Art.2', zh: '原則與目標', en: 'Principles and Objectives', fullText: OF('1. 雙方認知數位貿易所提供之經濟成長及機會、建立促進消費者對數位貿易信心架構之重要性，及促進數位貿易發展與使用之重要性。\n2. 本協議目的係：(a) 促進雙方領域內之電子商務及全球數位貿易之更廣泛使用；(b) 促成營造對數位貿易使用具信任與信心之環境；及 (c) 加強在雙方領域就數位貿易發展之合作。') },
+          { num: 'Art.3', zh: '範圍', en: 'Scope', fullText: OF('1. 本協議不適用於任一方就下列事項採取或維持之措施：(a) 政府採購；(b) 由相關主管機關提供、既非以商業方式提供亦非與他者競爭之服務（除適用 GATS 金融服務附件第1條(c)項外）；(c) 由相關主管機關持有或處理之資訊及相關措施（第18條另有規定者除外）。\n2. 本協議任何規定不適用於稅收措施。\n3. 本協議不得解釋為影響雙方依《服務貿易總協定》(GATS) 所做之現行有效承諾。\n4. 倘本協議與依 GATS 所做之現行承諾不一致，應以 GATS 承諾為準。') },
+        ],
+      },
+      {
+        theme: '市場開放', themeEn: 'Market Access',
+        articles: [
+          { num: 'Art.4', zh: '關稅', en: 'Customs Duties', fullText: OF('1. 雙方應請各自領域內相關主管機關，不得對一方之人與他方之人間之電子傳輸（包括以電子方式傳輸之內容）課徵關稅。\n2. 為臻明確，第1項不禁止任一方對以電子方式傳輸之內容課徵內地稅、規費或其他費用，惟該等稅捐、規費或費用應以符合本協議之方式課徵。') },
+          { num: 'Art.5', zh: '數位產品之非歧視性待遇', en: 'Non-Discriminatory Treatment of Digital Products', fullText: OF('1. 雙方應請相關主管機關對在他方領域內創作、製作、出版、簽約、委託或首次依商業條款提供之數位產品，或其作者/表演者/製作人/開發者/所有者係他方之人之數位產品，不得給予低於其他同類數位產品之待遇。\n2. 關於智慧財產權，第1項不適用於與相關智財協定中權利義務不一致之情形。\n3. 本條不適用於補貼或補助（含貸款、保證及保險）。\n4. 本條不適用於廣播。') },
+          { num: 'Art.16', zh: '原始碼', en: 'Source Code', fullText: OF('1. 雙方應請相關主管機關，不得要求移轉或存取他方之人持有之軟體原始碼、或要求移轉或存取該原始碼表達之演算法，以作為該軟體或含該軟體之產品於其領域內進口、分銷、銷售或使用之條件。\n2. 第1項不妨礙監管機構或司法機關於特定調查、檢查、審查、執法行動或司法程序中，要求他方之人保存及提供軟體原始碼或演算法（須受防止未經授權揭露之防護措施限制）。') },
+          { num: 'Art.17', zh: '使用加密技術之商業資訊與通訊技術產品', en: 'Commercial ICT Products that Use Cryptography', fullText: OF('1. 雙方應請相關主管機關，不得要求商業 ICT 產品之製造商或供應商為下列行為，以作為製造、銷售、分銷、進口或使用之條件：(a) 移轉或提供存取與加密技術相關之專屬資訊（如私鑰、秘密參數、演算法規格）；(b) 與各自領域之人建立夥伴關係或合作；或 (c) 使用或整合特定之加密演算法或密碼。\n2~3. 不妨礙監管/司法機關於調查等程序要求提供資訊（須防止未經授權揭露）。本條不適用於執法機關依法律程序取得存取、金融工具監管、政府網絡存取、金融監理，及主管機關自用之產品。') },
+        ],
+      },
+      {
+        theme: '資料流動', themeEn: 'Data Flows',
+        articles: [
+          { num: 'Art.12', zh: '以電子方式跨境傳輸資訊', en: 'Cross-Border Transfer of Information by Electronic Means', fullText: OF('1. 雙方應請相關主管機關，不得禁止或限制以電子方式跨境傳輸資訊（包括個人資訊），若該活動係為協議涵蓋之人之商業運作所需。\n2. 本條不妨礙任一方為達正當公共政策目的所必要而與第1項不一致之措施，前提係該措施：(a) 適用方式不構成專斷或無理之歧視或變相之貿易限制；及 (b) 所施加之限制不超過為達成該政策目的所必要者。') },
+          { num: 'Art.13', zh: '算力設施位置', en: 'Location of Computing Facilities', fullText: OF('1. 雙方應請相關主管機關不得要求涵蓋之人在該方領域使用或設置算力設施，以作為其在該領域從事營業之條件。\n2. 本條不妨礙任一方為達正當公共政策目的所必要而與第1項不一致之措施，前提係該措施不構成專斷/無理歧視或變相貿易限制，且限制不超過必要程度。') },
+          { num: 'Art.18', zh: '開放政府資料', en: 'Open Government Data', fullText: OF('1. 雙方認知將區域或地方機關所持有資料以數位形式供公眾存取及使用之效益。\n2. 雙方宜鼓勵相關主管機關擴大開放政府資料之涵蓋範圍。\n3. 於選擇開放之範圍內，致力確保資料：(a) 機器可讀及開放格式；(b) 可搜尋及擷取；(c) 及時更新；(d) 附詮釋資料；(e) 以無償或合理成本普遍提供。\n4. 致力避免不當阻礙重製、重新散布、重新分組或商業/非商業使用。\n5. 致力就促進公眾存取政府開放資料合作，特別針對中小企業。') },
+        ],
+      },
+      {
+        theme: '數位貿易便捷化', themeEn: 'Digital Trade Facilitation',
+        articles: [
+          { num: 'Art.6', zh: '電子交易架構', en: 'Electronic Transactions Framework', fullText: OF('1. 雙方應請相關主管機關維持一套規範電子交易之法律架構，符合《1996 年聯合國國際貿易法委員會電子商務模範法》或《聯合國國際契約使用電子通訊公約》(2005) 之原則。\n2. 並致力：(a) 避免對電子交易施以不必要之監管負擔；及 (b) 促進利害關係人對法律架構研擬提供意見。') },
+          { num: 'Art.7', zh: '規章', en: 'Regulations', fullText: OF('雙方應請各自領域內相關主管機關確保其所有影響電子商務之普遍適用措施（包括與蒐集資訊相關之措施），均以合理、客觀及公正之方式實施。') },
+          { num: 'Art.8', zh: '電子驗證與電子簽章', en: 'Electronic Authentication and Electronic Signatures', fullText: OF('1. 除法律另有規定，不得僅因簽章係電子形式即否定其法律效果、效力或證據能力。\n2. 不得：(a) 禁止交易參與方共同決定適當之電子驗證方法或簽章；或 (b) 阻止其向司法/行政機關證明交易符合相關法律要求。\n3. 縱有第2項，仍得就特定交易類型要求符合特定效能標準或經認可機構驗證。\n4. 於法律允許範圍內，將第1~3項適用於電子印鑑、電子時間戳記及電子掛號投遞服務。\n5~6. 鼓勵使用可互通之電子驗證；得於自願基礎上鼓勵電子簽章相互承認。') },
+          { num: 'Art.19', zh: '以電子方式訂立契約', en: 'Conclusion of Contracts by Electronic Means', fullText: OF('除法律另有規定，雙方應請相關主管機關不得採取或維持以下措施：(a) 僅因契約係以電子方式訂立即否定其法律效果、效力或可執行性；或 (b) 以其他方式對使用以電子方式訂立之契約造成障礙。') },
+          { num: 'Art.20', zh: '開立電子發票', en: 'Electronic Invoicing', fullText: OF('1. 雙方認知開立電子發票架構有助增進電子商務交易之成本效益、效率、準確性及可靠性。\n2. 若制定相關措施，致力設計以支持跨境互通性，並考量相關國際標準、指引或建議。\n3. 酌情致力分享開立電子發票之最佳實務作法。') },
+          { num: 'Art.22', zh: '無紙化貿易管理', en: 'Paperless Trading', fullText: OF('1. 雙方應請相關主管機關致力向公眾提供所有貿易管理文件之電子版本。\n2. 致力接受以電子形式提交之貿易管理文件與紙本具同等法律效力。\n3. 於國際場域合作，以提升對電子形式貿易管理文件之接受程度。') },
+        ],
+      },
+      {
+        theme: '數位信任', themeEn: 'Digital Trust',
+        articles: [
+          { num: 'Art.9', zh: '線上消費者保護', en: 'Online Consumer Protection', fullText: OF('1. 雙方認知採取並維持透明有效措施以保護消費者免受詐欺及欺騙性商業行為侵害之重要性。\n2. 採取或維持消費者保護法規，防止對線上消費者造成實際或潛在損害之詐欺及欺騙性商業行為。\n3. 致力確保：(a) 提供者公正誠信對待消費者；(b) 提供完整、準確、透明之商品/服務資訊；(c) 商品及服務之安全性。\n4. 提供不低於其他形式商業之消費者保護水準。\n5~6. 消費者保護機關間合作；促進消費者對救濟或申訴機制（含跨境）之可及性與認知。') },
+          { num: 'Art.10', zh: '個人資訊保護', en: 'Personal Information Protection', fullText: OF('1. 雙方認知保護電子商務使用者個人資訊之經濟與社會效益。\n2. 採取或維持個人資訊保護之法律架構，並考量相關國際機構之原則與指引；認知對政府存取私部門持有個人資料採高標準保護（如 OECD 相關原則）有助促進數位經濟信任。\n3~4. 致力採取非歧視性作法；公布救濟途徑及法遵指引。\n5~6. 鼓勵發展促進不同制度相容性之機制，包括全球跨境隱私規則 (CBPR) 制度及全球資料處理者隱私認證 (PRP) 制度，並致力促進「全球 CBPR 論壇」。\n7. 確保對個人資訊跨境流動之限制均屬必要且與風險相稱。') },
+          { num: 'Art.11', zh: '為電子商務接取與使用網際網路之原則', en: 'Principles on Access to and Use of the Internet for Electronic Commerce', fullText: OF('雙方依各自政策、法律及規定，宜請相關主管機關採取或維持適當措施，確保其領域內消費者得：(a) 於合理、透明及非歧視性之網絡管理下，接取與使用其選擇之網際網路服務及應用程式；(b) 將其選擇之裝置連結網際網路（不得損害網絡）；及 (c) 取得有關其網際網路接取服務提供者網絡管理作法之資訊。') },
+          { num: 'Art.14', zh: '未經請求之商業電子訊息', en: 'Unsolicited Commercial Electronic Messages', fullText: OF('1. 採取或維持措施：(a) 要求提供者加強接收方免於持續接收之能力；(b) 依法規要求須取得接收方同意；或 (c) 以其他方式使未經請求之商業電子訊息最少化。\n2. 確保商業電子訊息可清楚辨識、揭露代表何人發送，並使接收方得隨時免費要求停止接收。\n3. 對違規發送方提供救濟或追訴途徑。\n4. 致力就共同關切之適當案件合作。') },
+          { num: 'Art.15', zh: '網路安全', en: 'Cybersecurity', fullText: OF('1. 雙方認知網路安全威脅將損害對電子商務之信心。\n2. 致力：(a) 建立各自負責因應網路安全事件之能力；及 (b) 合作識別並減輕惡意入侵或惡意程式碼散布、及時因應事件並分享資訊與最佳實務。\n3. 認知以風險為基礎之作法（依風險管理最佳實務及以共識、透明、開放方式制定之標準）之重要性，並鼓勵企業採用。') },
+          { num: 'Art.23', zh: '網際網路服務提供者', en: 'Internet Service Providers', fullText: OF('1. 為鼓勵 ISP 與權利人合作保護智慧財產權，雙方應請相關主管機關於 ISP 遵循相關程序移除侵權內容時，依法限制該 ISP 之責任。\n2. 建立機制，使權利人就其有正當理由主張侵權之內容已向 ISP 提出有效通知者，得依法要求自 ISP 取得資訊發送方之身分資訊。') },
+        ],
+      },
+      {
+        theme: '合作與對話機制', themeEn: 'Cooperation & Dialogue',
+        articles: [
+          { num: 'Art.21', zh: '透明化', en: 'Transparency', fullText: OF('1. 儘速公布關於或影響本協議運作之普遍適用措施；無法公布者以其他方式公開，並於可行時在網際網路公開。\n2. 對任一方就具體資訊之請求儘速回覆。\n3. 於可能時：(a) 提前公布擬採取之措施；及 (b) 提供利害關係人及他方提出意見之合理機會。\n4. 於要求公布資訊時，於可能情形確保在線上公布。') },
+          { num: 'Art.24', zh: '合作', en: 'Cooperation', fullText: OF('雙方認知電子商務之全球性特質，應請相關主管機關致力：(a) 協助中小企業克服使用電子商務之障礙；(b) 就法規、政策、執行及法遵交換資訊與經驗（含個資保護、線上消費者保護、未經請求商業電子訊息、電子通訊安全、電子驗證、主管機關數位化等）；(c) 就消費者取得線上商品服務交換意見；(d) 積極參與區域及多邊場域；(e) 鼓勵私部門研擬自律方法（行為準則、契約範本、指引及執行機制）。') },
+        ],
+      },
+      {
+        theme: '例外規定', themeEn: 'Exceptions',
+        articles: [
+          { num: 'Art.25', zh: '一般例外', en: 'General Exceptions', fullText: OF('為本協議目的，《1994 年關稅暨貿易總協定》第二十條及其解釋性附註，以及《服務貿易總協定》第十四條，應準用之。') },
+          { num: 'Art.26', zh: '安全例外', en: 'Security Exceptions', fullText: OF('本協議任何規定均不得解釋為要求任一方：(a) 提供其認揭露將違背重大安全利益之資訊；(b) 阻止其採取保護重大安全利益所必要之行動（涉及核材料、武器彈藥戰爭器材貿易、軍事供應服務、保護關鍵公共基礎設施，或於戰爭/武裝衝突/緊急情況期間）；或 (c) 阻止其採取旨在配合《聯合國憲章》維護國際和平與安全之措施。') },
+          { num: 'Art.27', zh: '審慎例外', en: 'Prudential Exceptions', fullText: OF('1. 本協議不妨礙任一方基於審慎理由（保護投資人、存款人、保單持有人，或確保金融體系完整與穩定）採取或維持措施；惟不得以該等措施作為規避本協議承諾或義務之手段。\n2. 本協議不適用於任何公共實體為推行貨幣及相關信貸政策或匯率政策而採取之具普遍適用且不具歧視性之措施。') },
+        ],
+      },
+      {
+        theme: '協議管理', themeEn: 'Administration',
+        articles: [
+          { num: 'Art.28', zh: '諮商', en: 'Consultations', fullText: OF('若一方於任何時間對他方執行本協議有所關切，關切一方得以書面向他方請求諮商。雙方應盡一切努力達成相互滿意之解決方案。') },
+          { num: 'Art.29', zh: '總體檢討', en: 'General Review', fullText: OF('經任一方請求，雙方得於雙方決定之任何時間，就本協議之執行與運作進行總體檢討。') },
+          { num: 'Art.30', zh: '生效、修正與終止', en: 'Entry into Force, Modification and Termination', fullText: OF('1. 本協議自雙方相互通知各自程序完成之日起生效。\n2. 縱「2013 年電子商務協議」第12條第3項另有規定，該協議仍應自本協議生效之日起終止。\n3. 任一方得隨時提出諮商請求以修正本協議。\n4. 任一方得於一年前以書面通知他方終止本協議。\n（本協議以英文製作一式兩份，於 2025 年 12 月 4 日於臺北完成。）') },
+        ],
+      },
+    ];
+  })(),
 
   // ─── 美日數位貿易協定 (US–Japan Digital Trade Agreement) ───────────
   'us-japan-dta': [

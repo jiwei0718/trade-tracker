@@ -75,6 +75,7 @@ const TAG_LABELS: Record<string, { zh: string; en: string }> = {
   'environment': { zh: '環境', en: 'Environment' },
   'msme': { zh: '中小微企業', en: 'MSME' },
   'investment-facilitation': { zh: '投資便利化', en: 'Investment Facilitation' },
+  'joint-statement': { zh: '聯合聲明', en: 'Joint Statement' },
 };
 
 export function tagLabel(tag: string): string {

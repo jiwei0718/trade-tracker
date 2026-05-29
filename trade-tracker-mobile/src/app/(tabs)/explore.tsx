@@ -12,7 +12,7 @@ import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { tagLabel } from '@/data/tags';
 
-type Mode = 'agreements' | 'countries';
+type Mode = 'agreements' | 'countries' | 'tags';
 type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
@@ -65,6 +65,15 @@ export default function Explore() {
 
   const partyResults = useMemo(() => filterPartiesByQuery(parties, query), [query, parties]);
 
+  // All tags with counts, for the 議題 (topics) mode.
+  const tagResults = useMemo(() => {
+    const counts: Record<string, number> = {};
+    agreements.forEach(a => a.tags?.forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
+    let entries = Object.entries(counts).map(([tag, count]) => ({ tag, count, label: tagLabel(tag) }));
+    if (query) entries = entries.filter(e => e.label.includes(query) || e.tag.includes(query.toLowerCase()));
+    return entries.sort((a, b) => b.count - a.count);
+  }, [agreements, query]);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
       <View style={[styles.header, { borderBottomColor: c.backgroundElement }]}>
@@ -81,12 +90,17 @@ export default function Explore() {
             style={[styles.tab, mode === 'countries' && { backgroundColor: c.background }]}>
             <Text style={[styles.tabText, { color: mode === 'countries' ? c.text : c.textSecondary }]}>國家</Text>
           </Pressable>
+          <Pressable
+            onPress={() => setMode('tags')}
+            style={[styles.tab, mode === 'tags' && { backgroundColor: c.background }]}>
+            <Text style={[styles.tabText, { color: mode === 'tags' ? c.text : c.textSecondary }]}>議題</Text>
+          </Pressable>
         </View>
 
         <View style={[styles.searchBox, { backgroundColor: c.backgroundElement }]}>
           <Ionicons name="search" size={16} color={c.textSecondary} />
           <TextInput
-            placeholder={mode === 'agreements' ? '搜尋協定名稱、國家…' : '搜尋國家…'}
+            placeholder={mode === 'agreements' ? '搜尋協定名稱、國家…' : mode === 'tags' ? '搜尋議題…' : '搜尋國家…'}
             placeholderTextColor={c.textSecondary}
             value={query}
             onChangeText={setQuery}
@@ -178,11 +192,35 @@ export default function Explore() {
           renderItem={({ item }) => <AgreementCard agreement={item} />}
           ListHeaderComponent={
             <Text style={{ color: c.textSecondary, fontSize: 12, marginBottom: 4 }}>
-              共 {filtered.length} 個協定
+              共 {filtered.length} 個協定{tagFilter ? `（議題：${tagLabel(tagFilter)}）` : ''}
             </Text>
           }
           ListEmptyComponent={
             <Text style={{ color: c.textSecondary, textAlign: 'center', marginTop: 40 }}>沒有符合條件的協定</Text>
+          }
+        />
+      ) : mode === 'tags' ? (
+        <FlatList
+          data={tagResults}
+          keyExtractor={t => t.tag}
+          numColumns={2}
+          columnWrapperStyle={{ gap: 8 }}
+          contentContainerStyle={{ padding: 16, gap: 8 }}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => { setTagFilter(item.tag); setQuery(''); setMode('agreements'); }}
+              style={({ pressed }) => [
+                styles.tagCard,
+                { backgroundColor: '#7c3aed15', borderColor: '#7c3aed40', opacity: pressed ? 0.7 : 1 },
+              ]}>
+              <Text style={[styles.tagCardLabel, { color: c.text }]} numberOfLines={2}>{item.label}</Text>
+              <Text style={{ color: '#7c3aed', fontSize: 12, fontWeight: '700', marginTop: 2 }}>{item.count} 個協定</Text>
+            </Pressable>
+          )}
+          ListHeaderComponent={
+            <Text style={{ color: c.textSecondary, fontSize: 12, marginBottom: 4 }}>
+              依議題瀏覽 · 共 {tagResults.length} 個議題（點選即篩選協定）
+            </Text>
           }
         />
       ) : (
@@ -262,4 +300,6 @@ const styles = StyleSheet.create({
   countryRow: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 10 },
   countryName: { fontSize: 15, fontWeight: '700' },
   countryMeta: { fontSize: 12, marginTop: 2 },
+  tagCard: { flex: 1, padding: 14, borderRadius: 12, borderWidth: 1, minHeight: 64, justifyContent: 'center' },
+  tagCardLabel: { fontSize: 14, fontWeight: '700', lineHeight: 18 },
 });
