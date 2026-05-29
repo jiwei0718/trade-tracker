@@ -130,7 +130,7 @@ export default function AgreementDetail() {
         {detail?.indigo && <IndigoCard indigo={detail.indigo} c={c} />}
 
         {/* Volume */}
-        {a.tradeVolume && (
+        {!!a.tradeVolume && (
           <View style={[styles.volumeCard, { backgroundColor: color + '15', borderColor: color + '40' }]}>
             <Text style={[styles.volumeLabel, { color: c.textSecondary }]}>估計貿易量</Text>
             <Text style={[styles.volumeValue, { color }]}>${a.tradeVolume.toLocaleString()}億 USD</Text>

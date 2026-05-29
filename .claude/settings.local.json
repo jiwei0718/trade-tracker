@@ -118,7 +118,8 @@
       "Bash(tee /tmp/expo_v6.log)",
       "Bash(powershell.exe -c \"Start-Process 'C:\\\\Users\\\\jiwei\\\\OneDrive\\\\Desktop\\\\claude code\\\\協定追蹤工具\\\\掃我連App.png'\")",
       "Bash(npx -y tsx -e \"import { ARTICLE_STRUCTURES } from './trade-tracker-mobile/src/data/article-structures.ts'; const tj=ARTICLE_STRUCTURES['taiwan-japan-dta']; const n=tj.reduce\\(\\(s,g\\)=>s+g.articles.length,0\\); const full=tj.flatMap\\(g=>g.articles\\).filter\\(a=>a.fullText\\).length; console.log\\('TJ articles:',n,'with fullText:',full\\);\")",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: Taiwan-Japan 30-article official ZH full text, WT/GC/283 parallel track \\(incl. Taiwan\\), browse 議題/tags mode\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: Taiwan-Japan 30-article official ZH full text, WT/GC/283 parallel track \\(incl. Taiwan\\), browse 議題/tags mode\")",
+      "Bash(tee /tmp/expo_v7.log)"
     ]
   }
 }

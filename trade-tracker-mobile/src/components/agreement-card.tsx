@@ -54,7 +54,7 @@ export default function AgreementCard({ agreement: a, compact }: Props) {
         <StatusBadge status={a.status} size="s" />
         <Text style={[styles.meta, { color: c.textSecondary }]}>· {TYPE_LABELS[a.type]}</Text>
         {date && <Text style={[styles.meta, { color: c.textSecondary }]}>· {date}</Text>}
-        {a.tradeVolume && (
+        {!!a.tradeVolume && (
           <Text style={[styles.meta, { color: c.textSecondary }]}>· ${a.tradeVolume.toLocaleString()}億</Text>
         )}
       </View>
