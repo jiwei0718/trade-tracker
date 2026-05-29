@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-29T14:21:30.667Z",
+  "generated_at": "2026-05-29T15:12:48.305Z",
   "generator": "seed-export",
-  "count": 97,
+  "count": 103,
   "agreements": [
     {
       "id": "cobden-chevalier",
@@ -3366,6 +3366,253 @@
         "negotiating",
         "geopolitics"
       ]
+    },
+    {
+      "id": "wto-rta-new-zealand-chinese-taipei",
+      "name": "ANZTEC (New Zealand – Chinese Taipei Economic Cooperation Agreement)",
+      "nameZh": "臺紐經濟合作協定 (ANZTEC)",
+      "fullNameZh": "紐西蘭與臺澎金馬個別關稅領域經濟合作協定 (ANZTEC)",
+      "shortName": "ANZTEC",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "NZ",
+        "TW"
+      ],
+      "partyNames": [
+        "New Zealand",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "紐西蘭",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2013-07",
+        "in_force": "2013-12"
+      },
+      "tradeVolume": 12,
+      "description": "Taiwan's first economic cooperation agreement with a developed economy with which it has no formal diplomatic ties. Covers goods, services, investment, e-commerce, government procurement and indigenous cooperation.",
+      "descriptionZh": "我國與無邦交之已開發經濟體簽署的首個經濟合作協定，涵蓋貨品、服務、投資、電子商務、政府採購及原住民族合作。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "服務貿易",
+        "投資",
+        "電子商務",
+        "政府採購",
+        "原住民族合作"
+      ],
+      "tags": [
+        "taiwan",
+        "goods",
+        "services",
+        "investment",
+        "flagship"
+      ],
+      "significance": "我國突破外交限制、與已開發國家簽署 FTA 的里程碑，為後續 ASTEP 鋪路。"
+    },
+    {
+      "id": "wto-rta-singapore-chinese-taipei",
+      "name": "ASTEP (Singapore – Chinese Taipei Economic Partnership Agreement)",
+      "nameZh": "臺星經濟夥伴協定 (ASTEP)",
+      "fullNameZh": "新加坡與臺澎金馬個別關稅領域經濟夥伴協定 (ASTEP)",
+      "shortName": "ASTEP",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "SG",
+        "TW"
+      ],
+      "partyNames": [
+        "Singapore",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "新加坡",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2013-11",
+        "in_force": "2014-04"
+      },
+      "tradeVolume": 30,
+      "description": "Taiwan's economic partnership agreement with Singapore — its first with an Asian economy. Covers goods, services, investment, e-commerce and dispute settlement.",
+      "descriptionZh": "我國與新加坡簽署的經濟夥伴協定，是我國與亞洲經濟體的首個 FTA，涵蓋貨品、服務、投資、電子商務及爭端解決。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "服務貿易",
+        "投資",
+        "電子商務",
+        "爭端解決"
+      ],
+      "tags": [
+        "taiwan",
+        "goods",
+        "services",
+        "investment",
+        "flagship"
+      ],
+      "significance": "我國與亞洲經濟體的首個 FTA，與 ANZTEC 並列我國對外經貿突破的代表作。"
+    },
+    {
+      "id": "wto-rta-guatemala-chinese-taipei",
+      "name": "Guatemala – Chinese Taipei Free Trade Agreement",
+      "nameZh": "臺瓜地馬拉自由貿易協定",
+      "shortName": "臺瓜 FTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fta_boom",
+      "parties": [
+        "GT",
+        "TW"
+      ],
+      "partyNames": [
+        "Guatemala",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "瓜地馬拉",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2005-09",
+        "in_force": "2006-07"
+      },
+      "tradeVolume": 1.5,
+      "description": "Free trade agreement with Guatemala, a Central American diplomatic ally. Remains in force.",
+      "descriptionZh": "我國與中美洲邦交國瓜地馬拉的自由貿易協定，目前仍生效中。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "原產地規則",
+        "防衛措施"
+      ],
+      "tags": [
+        "taiwan",
+        "goods"
+      ],
+      "significance": "我國在中美洲少數仍維持邦交並維持 FTA 的國家之一。"
+    },
+    {
+      "id": "wto-rta-panama-chinese-taipei",
+      "name": "Panama – Chinese Taipei Free Trade Agreement",
+      "nameZh": "臺巴拿馬自由貿易協定",
+      "shortName": "臺巴 FTA",
+      "type": "bilateral",
+      "status": "expired",
+      "era": "fta_boom",
+      "parties": [
+        "PA",
+        "TW"
+      ],
+      "partyNames": [
+        "Panama",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "巴拿馬",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2003-08",
+        "in_force": "2004-01",
+        "expired": "2017-06"
+      },
+      "tradeVolume": 0,
+      "description": "Taiwan's first FTA (in force 2004). Effectively terminated when Panama switched diplomatic recognition to the PRC in June 2017.",
+      "descriptionZh": "我國第一個自由貿易協定（2004 年生效）。2017 年 6 月巴拿馬與我斷交、轉與中華人民共和國建交後，本協定實質終止。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "原產地規則"
+      ],
+      "tags": [
+        "taiwan",
+        "goods",
+        "geopolitics"
+      ],
+      "significance": "我國史上第一個 FTA，亦是首個因邦交生變而終止的 FTA。"
+    },
+    {
+      "id": "wto-rta-nicaragua-chinese-taipei",
+      "name": "Nicaragua – Chinese Taipei Free Trade Agreement",
+      "nameZh": "臺尼加拉瓜自由貿易協定",
+      "shortName": "臺尼 FTA",
+      "type": "bilateral",
+      "status": "expired",
+      "era": "fta_boom",
+      "parties": [
+        "NI",
+        "TW"
+      ],
+      "partyNames": [
+        "Nicaragua",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "尼加拉瓜",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2006-06",
+        "in_force": "2008-01",
+        "expired": "2022-07"
+      },
+      "tradeVolume": 0,
+      "description": "FTA with Nicaragua, terminated after Nicaragua switched recognition to the PRC in December 2021.",
+      "descriptionZh": "我國與尼加拉瓜的自由貿易協定，尼國於 2021 年 12 月與我斷交、轉與中國建交後終止。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "原產地規則"
+      ],
+      "tags": [
+        "taiwan",
+        "goods",
+        "geopolitics"
+      ],
+      "significance": "又一因邦交生變而終止的 FTA，反映我國經貿受地緣政治牽動。"
+    },
+    {
+      "id": "wto-rta-el-salvador-honduras-chinese-taipei",
+      "name": "El Salvador, Honduras – Chinese Taipei Free Trade Agreement",
+      "nameZh": "臺薩爾瓦多及宏都拉斯自由貿易協定",
+      "shortName": "臺薩宏 FTA",
+      "type": "plurilateral",
+      "status": "expired",
+      "era": "fta_boom",
+      "parties": [
+        "SV",
+        "HN",
+        "TW"
+      ],
+      "partyNames": [
+        "El Salvador",
+        "Honduras",
+        "Taiwan"
+      ],
+      "partyNamesZh": [
+        "薩爾瓦多",
+        "宏都拉斯",
+        "中華民國(臺灣)"
+      ],
+      "keyDates": {
+        "signed": "2007-05",
+        "in_force": "2008-03",
+        "expired": "2023-12"
+      },
+      "tradeVolume": 0,
+      "description": "Trilateral FTA. Unwound as El Salvador (2018) and Honduras (2023) switched diplomatic recognition to the PRC.",
+      "descriptionZh": "三方自由貿易協定。薩爾瓦多（2018）與宏都拉斯（2023）相繼與我斷交、轉與中國建交後終止。",
+      "keyProvisions": [
+        "貨品關稅消除",
+        "原產地規則"
+      ],
+      "tags": [
+        "taiwan",
+        "goods",
+        "geopolitics"
+      ],
+      "significance": "中美洲邦交骨牌效應下終止的 FTA。"
     },
     {
       "id": "us-japan-dta",

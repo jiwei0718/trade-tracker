@@ -46,6 +46,17 @@ def _parse_parties(rta_name: str, signatories: str) -> tuple[list[str], list[str
 EXPORT_URL = "https://rtais.wto.org/UI/ExportAllRTAList.aspx"
 LIST_URL = "https://rtais.wto.org/"
 
+# RTA ids curated by hand in the app seed (with correct status, Chinese names,
+# descriptions). The scraper skips them so it does not overwrite curated data.
+SKIP_IDS = {
+    "wto-rta-new-zealand-chinese-taipei",
+    "wto-rta-singapore-chinese-taipei",
+    "wto-rta-guatemala-chinese-taipei",
+    "wto-rta-panama-chinese-taipei",
+    "wto-rta-nicaragua-chinese-taipei",
+    "wto-rta-el-salvador-honduras-chinese-taipei",
+}
+
 # WTO status strings → our internal vocab
 def _normalize_status(s: str) -> str:
     s = (s or "").strip().lower()
@@ -139,6 +150,8 @@ def fetch() -> list[dict[str, Any]]:
             name = str(col(row, "RTA Name") or "").strip()
             if not name:
                 continue
+            if _slugify(name) in SKIP_IDS:
+                continue  # curated by hand in the app seed
             status = _normalize_status(str(col(row, "Status")))
             # NB: "RTA Composition" = Bilateral/Plurilateral (a TYPE), not parties.
             composition = str(col(row, "RTA Composition") or "")

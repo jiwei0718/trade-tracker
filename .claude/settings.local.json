@@ -121,7 +121,9 @@
       "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: Taiwan-Japan 30-article official ZH full text, WT/GC/283 parallel track \\(incl. Taiwan\\), browse 議題/tags mode\")",
       "Bash(tee /tmp/expo_v7.log)",
       "Bash(npx -y tsx -e \"import { agreements } from './trade-tracker-mobile/src/data/agreements.ts'; import { writeFileSync } from 'fs'; const out = { schema_version: 1, generated_at: new Date\\(\\).toISOString\\(\\), generator: 'seed-export', count: agreements.length, agreements }; writeFileSync\\('data/seed/agreements.seed.json', JSON.stringify\\(out, null, 2\\), 'utf-8'\\); const jsi=agreements.find\\(a=>a.id==='wto-jsi-ecommerce'\\); console.log\\('JSI parties:',jsi.parties.length,'TW in JSI:',jsi.parties.includes\\('TW'\\),'relatedIds:',jsi.relatedIds\\);\")",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"fix: FlatList numColumns key; fold WT/GC/283 under JSI \\(parentId/relatedIds\\), add Taiwan to JSI search\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"fix: FlatList numColumns key; fold WT/GC/283 under JSI \\(parentId/relatedIds\\), add Taiwan to JSI search\")",
+      "Bash(npx -y tsx -e \"import { agreements } from './trade-tracker-mobile/src/data/agreements.ts'; import { writeFileSync } from 'fs'; const out={schema_version:1,generated_at:new Date\\(\\).toISOString\\(\\),generator:'seed-export',count:agreements.length,agreements}; writeFileSync\\('data/seed/agreements.seed.json',JSON.stringify\\(out,null,2\\),'utf-8'\\); console.log\\('seed:',agreements.length\\);\")",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"content: curate Taiwan's 6 bilateral FTAs \\(ANZTEC/ASTEP/Guatemala/Panama/Nicaragua/El Salvador-Honduras\\) with correct status, ZH names, latest status, sources\")"
     ]
   }
 }

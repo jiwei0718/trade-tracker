@@ -31,6 +31,59 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     ],
   },
 
+  'us-taiwan-21st': {
+    latestStatus: {
+      summary: '美臺於 2023 年 6 月 1 日簽署「臺美 21 世紀貿易倡議」首批協定，涵蓋海關及貿易便捷化、良好法制作業、服務業國內規章、反貪腐、中小企業 5 項議題。第二階段就勞動、環境、農業、數位貿易、標準、國營事業、非市場政策等議題持續談判。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — U.S.-Taiwan Initiative on 21st-Century Trade', url: 'https://ustr.gov/countries-regions/china-mongolia-taiwan/taiwan', lang: 'en' },
+      { label: '經濟部國際貿易署', url: 'https://www.trade.gov.tw/', lang: 'zh' },
+    ],
+  },
+  'wto-rta-new-zealand-chinese-taipei': {
+    latestStatus: {
+      summary: 'ANZTEC 自 2013 年 12 月生效以來持續運作，逾 99% 我國輸紐產品及全部紐國輸我農產品已享零關稅，是我國對外經貿正常化的重要範例。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署 — ANZTEC', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+  'wto-rta-singapore-chinese-taipei': {
+    latestStatus: {
+      summary: 'ASTEP 自 2014 年 4 月生效以來持續運作，雙方絕大多數貨品已達零關稅，並涵蓋服務、投資及電子商務合作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署 — ASTEP', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+  'wto-rta-guatemala-chinese-taipei': {
+    latestStatus: {
+      summary: '臺瓜 FTA 仍生效中。瓜地馬拉為我國中美洲重要邦交國，協定持續提供雙邊貨品優惠關稅。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+  'wto-rta-panama-chinese-taipei': {
+    latestStatus: {
+      summary: '本協定（我國史上首個 FTA，2004 年生效）已實質終止。巴拿馬於 2017 年 6 月與我斷交、轉與中華人民共和國建交，雙邊優惠關稅安排隨之失效。',
+      asOf: '2017-06', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+  'wto-rta-nicaragua-chinese-taipei': {
+    latestStatus: {
+      summary: '本協定已終止。尼加拉瓜於 2021 年 12 月與我斷交、轉與中國建交後，雙邊 FTA 失效。',
+      asOf: '2022-07', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+  'wto-rta-el-salvador-honduras-chinese-taipei': {
+    latestStatus: {
+      summary: '本三方協定已終止。薩爾瓦多（2018）與宏都拉斯（2023）相繼與我斷交、轉與中國建交，協定失效。',
+      asOf: '2023-12', byTool: true,
+    },
+    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+  },
+
   'taiwan-japan-dta': {
     latestStatus: {
       summary: '台日數位貿易協議於 2025 年 12 月 4 日由臺灣日本關係協會與日本台灣交流協會簽署，是我國少數以官方文本對外簽署的數位貿易協議。在跨境資料流動與數位信任領域已奠定完整規範基礎，但廣義數位經濟議題（AI、金融科技等）尚未納入。',
