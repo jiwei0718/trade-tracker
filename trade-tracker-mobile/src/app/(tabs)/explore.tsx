@@ -10,6 +10,7 @@ import { Colors } from '@/constants/theme';
 import { getAllParties, search, getEffectiveDate, filterPartiesByQuery } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
+import { tagLabel } from '@/data/tags';
 
 type Mode = 'agreements' | 'countries';
 type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
@@ -32,14 +33,23 @@ export default function Explore() {
   const [query, setQuery] = useState('');
   const [statusFilters, setStatusFilters] = useState<Set<AgreementStatus>>(new Set());
   const [eraFilter, setEraFilter] = useState<EraKey | null>(null);
+  const [tagFilter, setTagFilter] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>('newest');
 
   const parties = useMemo(() => getAllParties(agreements), [agreements]);
+
+  // Most common tags across the dataset, for the tag filter row.
+  const topTags = useMemo(() => {
+    const counts: Record<string, number> = {};
+    agreements.forEach(a => a.tags?.forEach(t => { counts[t] = (counts[t] ?? 0) + 1; }));
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([t]) => t).slice(0, 24);
+  }, [agreements]);
 
   const filtered = useMemo(() => {
     let list = query ? search(query, agreements) : [...agreements];
     if (statusFilters.size) list = list.filter(a => statusFilters.has(a.status));
     if (eraFilter) list = list.filter(a => a.era === eraFilter);
+    if (tagFilter) list = list.filter(a => a.tags?.includes(tagFilter));
     // Sort
     list = [...list].sort((a, b) => {
       switch (sortKey) {
@@ -51,7 +61,7 @@ export default function Explore() {
       }
     });
     return list;
-  }, [query, statusFilters, eraFilter, sortKey, agreements]);
+  }, [query, statusFilters, eraFilter, tagFilter, sortKey, agreements]);
 
   const partyResults = useMemo(() => filterPartiesByQuery(parties, query), [query, parties]);
 
@@ -114,6 +124,26 @@ export default function Explore() {
                     setStatusFilters(next);
                   }}
                 />
+              ))}
+            </ScrollView>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                <Ionicons name="pricetag" size={13} color={c.textSecondary} />
+                <Text style={{ color: c.textSecondary, fontSize: 12, marginRight: 2 }}>標籤</Text>
+              </View>
+              {topTags.map(t => (
+                <Pressable
+                  key={t}
+                  onPress={() => setTagFilter(tagFilter === t ? null : t)}
+                  style={[
+                    styles.chip,
+                    tagFilter === t ? { backgroundColor: '#7c3aed' } : { backgroundColor: c.backgroundElement },
+                  ]}>
+                  <Text style={{ color: tagFilter === t ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>
+                    {tagLabel(t)}
+                  </Text>
+                </Pressable>
               ))}
             </ScrollView>
 

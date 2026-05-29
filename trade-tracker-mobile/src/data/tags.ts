@@ -63,6 +63,18 @@ const TAG_LABELS: Record<string, { zh: string; en: string }> = {
   'trump': { zh: '川普', en: 'Trump' },
   'forum': { zh: '論壇', en: 'Forum' },
   'non-binding': { zh: '非拘束性', en: 'Non-Binding' },
+  'logistics': { zh: '物流', en: 'Logistics' },
+  'e-commerce': { zh: '電子商務', en: 'E-Commerce' },
+  'source-code': { zh: '原始碼', en: 'Source Code' },
+  'cryptography': { zh: '密碼學產品', en: 'Cryptography' },
+  'consumer-protection': { zh: '消費者保護', en: 'Consumer Protection' },
+  'cybersecurity': { zh: '網路安全', en: 'Cybersecurity' },
+  'digital-id': { zh: '數位身分', en: 'Digital Identity' },
+  'paperless': { zh: '無紙化貿易', en: 'Paperless Trading' },
+  'labour': { zh: '勞工', en: 'Labour' },
+  'environment': { zh: '環境', en: 'Environment' },
+  'msme': { zh: '中小微企業', en: 'MSME' },
+  'investment-facilitation': { zh: '投資便利化', en: 'Investment Facilitation' },
 };
 
 export function tagLabel(tag: string): string {

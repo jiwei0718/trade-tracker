@@ -25,12 +25,9 @@ from .base import http_get, make_source
 log = logging.getLogger(__name__)
 
 JSI_PAGES = [
-    {
-        "id": "wto-jsi-ecommerce",
-        "nameZh": "WTO電子商務聯合聲明倡議 (E-commerce JSI)",
-        "name": "WTO Joint Statement Initiative on E-commerce",
-        "url": "https://www.wto.org/english/tratop_e/ecom_e/joint_statement_e.htm",
-    },
+    # NB: the E-commerce JSI is curated directly in the app seed
+    # (id 'wto-jsi-ecommerce') with the full 40-participant list, so it is
+    # intentionally omitted here to avoid the scraper overwriting curated data.
     {
         "id": "wto-jsi-ifd",
         "nameZh": "WTO投資便利化發展協定 (Investment Facilitation for Development)",

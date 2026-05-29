@@ -14,7 +14,12 @@ export type AgreementType =
   | 'multilateral'
   | 'regional'
   | 'sectoral'
-  | 'plurilateral';
+  | 'plurilateral'
+  | 'jsi'
+  | 'ministerial'
+  | 'mou'
+  | 'joint_declaration'
+  | 'pilot';
 
 export type EraKey =
   | 'pre_gatt'        // 19世紀-1947
@@ -150,11 +155,16 @@ export const STATUS_COLORS: Record<AgreementStatus, string> = {
 };
 
 export const TYPE_LABELS: Record<AgreementType, string> = {
-  bilateral:     '雙邊',
-  multilateral:  '多邊',
-  regional:      '區域',
-  sectoral:      '特定領域',
-  plurilateral:  '複邊',
+  bilateral:         '雙邊',
+  multilateral:      '多邊',
+  regional:          '區域',
+  sectoral:          '特定領域',
+  plurilateral:      '複邊',
+  jsi:               '聯合聲明倡議',
+  ministerial:       '部長決議',
+  mou:               '備忘錄',
+  joint_declaration: '聯合聲明',
+  pilot:             '先導計畫',
 };
 
 export const ERA_INFO: Record<EraKey, { label: string; range: string; tagline: string; summaryZh: string }> = {

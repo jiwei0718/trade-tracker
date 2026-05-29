@@ -112,7 +112,9 @@
       "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: country registry \\(UK/中華民國臺灣, multi-field search\\), Taiwan-Japan article structure, ZH+EN tags, concise card names\")",
       "Bash(tee /tmp/expo_v4.log)",
       "Bash(python -m backend.scrapers.country_names)",
-      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: 211-country map \\(Luxembourg+all\\), fix comma-split, merge CPTPP cards, add DEPA/DEFA/OECD, latest-progress date sorting\")"
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: 211-country map \\(Luxembourg+all\\), fix comma-split, merge CPTPP cards, add DEPA/DEFA/OECD, latest-progress date sorting\")",
+      "Bash(tee /tmp/expo_v5.log)",
+      "Bash(git -c user.name=\"jiwei0718\" -c user.email=\"jiwei0718@users.noreply.github.com\" commit -q -m \"feat: merge 66-country into WTO JSI \\(40 participants\\), JSI official article full text, more tags + tag-filter browsing\")"
     ]
   }
 }

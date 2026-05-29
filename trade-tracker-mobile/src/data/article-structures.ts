@@ -440,7 +440,17 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
     {
       theme: 'C：開放性與電子商務', themeEn: 'Openness and Electronic Commerce',
       articles: [
-        { num: 'Art.11', zh: '電子傳輸關稅', en: 'Customs Duties on Electronic Transmissions' },
+        {
+          num: 'Art.11', zh: '電子傳輸關稅', en: 'Customs Duties on Electronic Transmissions',
+          fullText: {
+            originalLang: 'en',
+            en: '11.1 For the purposes of this Article, "electronic transmission" means a transmission made using any electromagnetic means and includes the content of the transmission.\n11.2 The Parties acknowledge the importance of the Work Programme on Electronic Commerce (WT/L/274) and recognize that the practice of not imposing customs duties on electronic transmissions has played an important role in the development of the digital economy.\n11.3 No Party shall impose customs duties on electronic transmissions between a person of one Party and a person of another Party.\n11.4 For greater certainty, paragraph 3 does not preclude a Party from imposing internal taxes, fees, or other charges on electronic transmissions in a manner not inconsistent with the WTO Agreement.\n11.5 Taking into account the evolving nature of electronic commerce and digital technology, the Parties shall review this Article in the fifth year after the date of entry into force of this Agreement, and periodically thereafter.',
+            zh: '11.1 就本條而言，「電子傳輸」指以任何電磁方式進行之傳輸，並包含傳輸之內容。\n11.2 締約方體認電子商務工作計畫（WT/L/274）之重要性，並認知不對電子傳輸課徵關稅之作法，對數位經濟發展具有重要作用。\n11.3 任一締約方不得對一締約方之人與另一締約方之人間之電子傳輸課徵關稅。\n11.4 為明確計，第3項不排除締約方以不牴觸 WTO 協定之方式，對電子傳輸課徵內地稅、規費或其他費用。\n11.5 考量電子商務與數位科技不斷演進之性質，締約方應於本協定生效後第五年檢討本條，其後並定期檢討。',
+            zhSource: 'tool',
+            zhSourceNote: '本工具翻譯（WTO 官方僅有英、法、西三種作準語言，無官方中文版）',
+            sourceUrl: 'https://docs.wto.org/',
+          },
+        },
         { num: 'Art.12', zh: '開放政府資料', en: 'Open Government Data' },
         { num: 'Art.13', zh: '電子商務之網際網路接取與使用', en: 'Access to and Use of the Internet for Electronic Commerce' },
       ],
@@ -450,7 +460,17 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       articles: [
         { num: 'Art.14', zh: '線上消費者保護', en: 'Online Consumer Protection' },
         { num: 'Art.15', zh: '未經請求之商業電子訊息', en: 'Unsolicited Commercial Electronic Messages' },
-        { num: 'Art.16', zh: '個人資料保護', en: 'Personal Data Protection' },
+        {
+          num: 'Art.16', zh: '個人資料保護', en: 'Personal Data Protection',
+          fullText: {
+            originalLang: 'en',
+            en: '16.1 For the purposes of this Article, "personal data" means any information relating to an identified or identifiable natural person.\n16.2 The Parties recognize that strong and effective protection of personal data and related individual rights contribute to enhancing consumer confidence and trust in the digital economy.\n16.3 Each Party shall adopt or maintain a legal framework that provides for the protection of the personal data of users of electronic commerce.\n16.4 In developing its legal framework for the protection of personal data, each Party should take into account principles and guidelines developed by relevant international bodies or organizations.\n16.7 Recognizing that the Parties may take different legal approaches to protecting personal data, each Party should encourage the development of mechanisms to promote compatibility between these different regimes.',
+            zh: '16.1 就本條而言，「個人資料」指與已識別或可識別之自然人有關之任何資訊。\n16.2 締約方體認，對個人資料及相關個人權利之強健且有效保護，有助於提升消費者對數位經濟之信心與信任。\n16.3 各締約方應採行或維持提供電子商務使用者個人資料保護之法律框架。\n16.4 各締約方於發展其個人資料保護之法律框架時，宜參酌相關國際機構或組織所發展之原則與指引。\n16.7 體認締約方對個人資料保護可能採取不同法律途徑，各締約方宜鼓勵發展促進不同制度間相容性之機制。',
+            zhSource: 'tool',
+            zhSourceNote: '本工具翻譯（WTO 官方僅有英、法、西三種作準語言，無官方中文版）',
+            sourceUrl: 'https://docs.wto.org/',
+          },
+        },
         { num: 'Art.17', zh: '網路安全', en: 'Cybersecurity' },
       ],
     },
