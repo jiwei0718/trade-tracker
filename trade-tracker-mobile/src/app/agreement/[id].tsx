@@ -156,6 +156,34 @@ export default function AgreementDetail() {
           </View>
         )}
 
+        {/* Related instruments / sub-agreements */}
+        {a.relatedIds && a.relatedIds.length > 0 && (
+          <View>
+            <Text style={[styles.sectionTitle, { color: c.text }]}>相關文件 / 子倡議</Text>
+            <View style={{ gap: 6 }}>
+              {a.relatedIds.map(rid => {
+                const r = getAgreementById(rid, agreements);
+                if (!r) return null;
+                return (
+                  <Pressable
+                    key={rid}
+                    onPress={() => router.push(`/agreement/${rid}`)}
+                    style={[styles.docRow, { backgroundColor: '#7c3aed15', borderColor: '#7c3aed40', borderWidth: 1 }]}>
+                    <Ionicons name="git-branch-outline" size={16} color="#7c3aed" />
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: c.text, fontSize: 13, fontWeight: '600' }}>{r.nameZh}</Text>
+                      <Text style={{ color: c.textSecondary, fontSize: 11 }}>
+                        {r.partyNamesZh.length} 個締約方{r.parties.includes('TW') ? '（含我國）' : ''}
+                      </Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={16} color={c.textSecondary} />
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        )}
+
         {/* Significance highlight */}
         {a.significance && (
           <View style={[styles.sigCard, { backgroundColor: '#fef3c7', borderColor: '#fbbf24' }]}>

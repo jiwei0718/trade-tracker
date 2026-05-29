@@ -12,6 +12,11 @@ export function getAgreementById(id: string, list: TradeAgreement[] = bundledAgr
   return list.find(a => a.id === id);
 }
 
+/** Top-level agreements only — excludes sub-instruments (e.g. WT/GC/283 under the JSI). */
+export function topLevel(list: TradeAgreement[]): TradeAgreement[] {
+  return list.filter(a => !a.parentId);
+}
+
 export function getEffectiveDate(a: TradeAgreement): string | undefined {
   const d = a.keyDates;
   return d.in_force ?? d.signed ?? d.concluded ?? d.started ?? d.proposed ?? d.suspended ?? d.cancelled ?? d.expired ?? d.superseded;
@@ -43,7 +48,8 @@ export function getLatestProgressDate(a: TradeAgreement): string | undefined {
 
 const SKIP_CODES = new Set(['MULTI', 'WORLD', 'WTO', 'ASEAN', 'EU', 'CPTPP', 'ACP', 'OACPS', 'AU-CONT', 'WTO-JSI']);
 
-export function getAllParties(list: TradeAgreement[] = bundledAgreements): { code: string; nameZh: string; count: number }[] {
+export function getAllParties(listIn: TradeAgreement[] = bundledAgreements): { code: string; nameZh: string; count: number }[] {
+  const list = topLevel(listIn);
   const map = new Map<string, { nameZh: string; count: number }>();
   list.forEach(a => {
     a.parties.forEach((code, i) => {
@@ -70,7 +76,7 @@ export function filterPartiesByQuery(
 }
 
 export function getAgreementsForParty(code: string, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
-  return list
+  return topLevel(list)
     .filter(a => a.parties.includes(code))
     .sort((x, y) => {
       const dx = getEffectiveDate(x) ?? '';
@@ -96,13 +102,13 @@ export function sortByMostRecent(list: TradeAgreement[]): TradeAgreement[] {
 }
 
 export function getRecentlyChanged(limit = 8, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
-  return sortByMostRecent([...list]).slice(0, limit);
+  return sortByMostRecent(topLevel(list)).slice(0, limit);
 }
 
 export function search(query: string, list: TradeAgreement[] = bundledAgreements): TradeAgreement[] {
   if (!query) return [];
   const q = query.toLowerCase();
-  return list.filter(a =>
+  return topLevel(list).filter(a =>
     a.name.toLowerCase().includes(q) ||
     a.nameZh.includes(query) ||
     a.fullNameZh?.includes(query) ||
@@ -114,7 +120,8 @@ export function search(query: string, list: TradeAgreement[] = bundledAgreements
   );
 }
 
-export function getStats(list: TradeAgreement[] = bundledAgreements) {
+export function getStats(listIn: TradeAgreement[] = bundledAgreements) {
+  const list = topLevel(listIn);
   const byStatus: Record<string, number> = {};
   list.forEach(a => { byStatus[a.status] = (byStatus[a.status] ?? 0) + 1; });
   const totalVolume = list.reduce((s, a) => s + (a.tradeVolume ?? 0), 0);

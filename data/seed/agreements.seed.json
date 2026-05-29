@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-29T14:00:47.183Z",
+  "generated_at": "2026-05-29T14:21:30.667Z",
   "generator": "seed-export",
   "count": 97,
   "agreements": [
@@ -3021,7 +3021,15 @@
         "CH",
         "UA",
         "AE",
-        "UK"
+        "UK",
+        "TW",
+        "US",
+        "MX",
+        "EC",
+        "GT",
+        "PA",
+        "PY",
+        "UY"
       ],
       "partyNames": [
         "Argentina",
@@ -3063,7 +3071,15 @@
         "Switzerland",
         "Ukraine",
         "UAE",
-        "United Kingdom"
+        "United Kingdom",
+        "Taiwan",
+        "United States",
+        "Mexico",
+        "Ecuador",
+        "Guatemala",
+        "Panama",
+        "Paraguay",
+        "Uruguay"
       ],
       "partyNamesZh": [
         "阿根廷",
@@ -3105,7 +3121,15 @@
         "瑞士",
         "烏克蘭",
         "阿聯酋",
-        "英國"
+        "英國",
+        "中華民國(臺灣)",
+        "美國",
+        "墨西哥",
+        "厄瓜多",
+        "瓜地馬拉",
+        "巴拿馬",
+        "巴拉圭",
+        "烏拉圭"
       ],
       "keyDates": {
         "proposed": "2019-01",
@@ -3113,10 +3137,10 @@
         "signed": "2026-03"
       },
       "latestProgressDate": "2026-04",
-      "latestProgressNote": "MC14 通過《電子商務協定過渡性安排宣言》(WT/MIN(26)/W/26)；moratorium 於 2026 年 3 月底失效，我國等 23 國於 4 月提交複邊臨時措施聯合聲明",
+      "latestProgressNote": "MC14 通過《電子商務協定過渡性安排宣言》(WT/MIN(26)/W/26)；moratorium 於 2026 年 3 月底失效，我國等 23 國於 4 月提交複邊臨時措施聯合聲明（WT/GC/283）",
       "tradeVolume": 4500,
-      "description": "WTO plurilateral Agreement on Electronic Commerce under the Joint Statement Initiative. 40 participants (EU counted as 27 → ~66 economies, ~70% of global trade). Adopted with an Interim Arrangements Annex at MC14 (28 March 2026); enters into force once 45 instruments of acceptance are deposited.",
-      "descriptionZh": "WTO 聯合聲明倡議下的複邊電子商務協定。40 個參與方（歐盟計為 27 國 → 約 66 個經濟體，涵蓋約 70% 全球貿易）。2026 年 3 月 28 日 MC14 通過並附《過渡性安排附件》，待 45 份接受書交存後生效。",
+      "description": "WTO plurilateral Agreement on Electronic Commerce under the Joint Statement Initiative. 40 participants adopt the Agreement/Interim Arrangements (WT/MIN(26)/W/26; EU counted as 27 → ~66 economies). Separately, 23 members — including Taiwan, the US and Mexico — maintain the e-transmission moratorium via the plurilateral Joint Statement WT/GC/283. Adopted at MC14 (28 March 2026); the Agreement enters into force once 45 instruments of acceptance are deposited.",
+      "descriptionZh": "WTO 聯合聲明倡議下的複邊電子商務協定。包含兩條平行軌道：\n(1) 40 個參與方採納《電子商務協定》及過渡性安排（WT/MIN(26)/W/26，歐盟計為 27 國 → 約 66 個經濟體）；\n(2) 含我國（臺澎金馬個別關稅領域）、美國、墨西哥在內的 23 個成員，另以《電子傳輸暫免課徵關稅聯合聲明》(WT/GC/283) 相互維持不課關稅。\n我國係透過第 (2) 軌道（WT/GC/283）參與——詳見下方「相關文件」。協定於 2026 年 3 月 28 日 MC14 通過，待 45 份接受書交存後生效。",
       "keyProvisions": [
         "電子傳輸關稅暫免",
         "電子交易框架/電子簽章",
@@ -3131,10 +3155,14 @@
         "wto",
         "digital",
         "data flows",
+        "taiwan",
         "post-liberation-day",
         "mile-stone"
       ],
-      "significance": "全球首個 WTO 體系內的多邊數位貿易規則，我國為 40 個參與方之一。"
+      "relatedIds": [
+        "wt-gc-283-moratorium"
+      ],
+      "significance": "全球首個 WTO 體系內的多邊數位貿易規則；我國透過 WT/GC/283 聯合聲明參與。"
     },
     {
       "id": "wt-gc-283-moratorium",
@@ -3242,6 +3270,7 @@
         "post-liberation-day",
         "joint-statement"
       ],
+      "parentId": "wto-jsi-ecommerce",
       "significance": "我國參與 WTO 電子商務領域的關鍵途徑——與 WT/MIN(26)/W/26 過渡性安排平行運作。"
     },
     {

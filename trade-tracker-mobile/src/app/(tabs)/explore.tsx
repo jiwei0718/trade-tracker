@@ -46,7 +46,7 @@ export default function Explore() {
   }, [agreements]);
 
   const filtered = useMemo(() => {
-    let list = query ? search(query, agreements) : [...agreements];
+    let list = query ? search(query, agreements) : agreements.filter(a => !a.parentId);
     if (statusFilters.size) list = list.filter(a => statusFilters.has(a.status));
     if (eraFilter) list = list.filter(a => a.era === eraFilter);
     if (tagFilter) list = list.filter(a => a.tags?.includes(tagFilter));
@@ -186,6 +186,7 @@ export default function Explore() {
 
       {mode === 'agreements' ? (
         <FlatList
+          key="list-agreements"
           data={filtered}
           keyExtractor={a => a.id}
           contentContainerStyle={{ padding: 16, gap: 10 }}
@@ -201,6 +202,7 @@ export default function Explore() {
         />
       ) : mode === 'tags' ? (
         <FlatList
+          key="list-tags-2col"
           data={tagResults}
           keyExtractor={t => t.tag}
           numColumns={2}
@@ -225,6 +227,7 @@ export default function Explore() {
         />
       ) : (
         <FlatList
+          key="list-countries"
           data={partyResults}
           keyExtractor={p => p.code}
           contentContainerStyle={{ padding: 16, gap: 8 }}

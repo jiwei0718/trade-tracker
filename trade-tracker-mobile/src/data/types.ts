@@ -126,6 +126,8 @@ export interface TradeAgreement {
   keyProvisions?: string[];
   tags?: string[];
   supersededBy?: string;    // id of replacement agreement
+  parentId?: string;        // if this is a sub-instrument of another agreement (hidden from top-level lists)
+  relatedIds?: string[];    // related agreements / sub-instruments shown in the detail
   significance?: string;    // brief Chinese-language "why it matters"
   articleStructure?: ArticleGroup[];  // detailed clause breakdown
 }
