@@ -46,6 +46,14 @@ def _merge_one(
     if update.get("tradeVolume") is not None:
         out["tradeVolume"] = update["tradeVolume"]
 
+    # Descriptive fields (parties/names): refresh from high-confidence sources
+    # (e.g. WTO export at 0.95). Curated seed records are never re-scraped, so
+    # this only affects authoritative re-scrapes, not hand-curated data.
+    if confidence >= 0.9:
+        for fld in ("parties", "partyNames", "partyNamesZh", "nameZh", "name", "type", "era"):
+            if update.get(fld):
+                out[fld] = update[fld]
+
     # description: never overwrite seed text unless seed was empty
     if not base.get("descriptionZh") and update.get("descriptionZh"):
         out["descriptionZh"] = update["descriptionZh"]

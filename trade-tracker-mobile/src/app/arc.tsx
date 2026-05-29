@@ -7,6 +7,8 @@ import { STATUS_COLORS, STATUS_LABELS } from '@/data/types';
 import type { AgreementStatus } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import { useData } from '@/lib/data-context';
+import { getEffectiveDate } from '@/lib/selectors';
+import YearRangeSlider from '@/components/year-range-slider';
 
 // Key parties shown in arc diagram (left column)
 const PARTIES = [
@@ -47,15 +49,24 @@ export default function ArcDiagram() {
   const { agreements } = useData();
   const [filter, setFilter] = useState<'all' | 'post_lib' | 'in_force' | 'negotiating'>('all');
   const [selected, setSelected] = useState<string | null>(null);
+  const MIN_YEAR = 1947;
+  const MAX_YEAR = 2026;
+  const [yearFrom, setYearFrom] = useState(MIN_YEAR);
+  const [yearTo, setYearTo] = useState(MAX_YEAR);
 
   const filtered = useMemo(() => {
     return agreements.filter(a => {
-      if (filter === 'post_lib') return a.tags?.includes('post-liberation-day');
-      if (filter === 'in_force') return a.status === 'in_force';
-      if (filter === 'negotiating') return a.status === 'negotiating';
+      if (filter === 'post_lib' && !a.tags?.includes('post-liberation-day')) return false;
+      if (filter === 'in_force' && a.status !== 'in_force') return false;
+      if (filter === 'negotiating' && a.status !== 'negotiating') return false;
+      const d = getEffectiveDate(a);
+      if (d) {
+        const yr = parseInt(d.split('-')[0], 10);
+        if (yr < yearFrom || yr > yearTo) return false;
+      }
       return true;
     });
-  }, [filter]);
+  }, [filter, yearFrom, yearTo, agreements]);
 
   // Layout: vertical list of parties on the left, arcs curving right.
   const labelW = 100;
@@ -105,6 +116,17 @@ export default function ArcDiagram() {
             </Text>
           </Pressable>
         ))}
+      </View>
+
+      {/* Year range slider */}
+      <View style={[styles.sliderBar, { backgroundColor: c.backgroundElement }]}>
+        <YearRangeSlider
+          min={MIN_YEAR}
+          max={MAX_YEAR}
+          from={yearFrom}
+          to={yearTo}
+          onChange={(f, t) => { setYearFrom(f); setYearTo(t); }}
+        />
       </View>
 
       <View style={[styles.legend, { borderBottomColor: c.backgroundElement }]}>
@@ -186,6 +208,7 @@ export default function ArcDiagram() {
 
 const styles = StyleSheet.create({
   filterBar: { flexDirection: 'row', gap: 6, padding: 8 },
+  sliderBar: { paddingHorizontal: 12, paddingTop: 2, paddingBottom: 6 },
   filterChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: 12, paddingBottom: 6, borderBottomWidth: 1 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 3 },
