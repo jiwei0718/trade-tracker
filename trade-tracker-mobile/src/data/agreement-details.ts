@@ -687,4 +687,301 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       { label: 'EFTA — The EEA Agreement', url: 'https://www.efta.int/eea/eea-agreement', lang: 'en' },
     ],
   },
+
+  // ── 英國系（後脫歐 FTA，byTool）──
+  'uk-australia': {
+    latestStatus: {
+      summary: '英澳自由貿易協定 2021 年 12 月簽署、2023 年 5 月 31 日生效，是英國脫歐後首個「從零談起」的全新 FTA，將在多年內消除幾乎所有雙邊關稅。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'UK DBT — UK-Australia FTA', url: 'https://www.gov.uk/government/collections/uk-australia-free-trade-agreement', lang: 'en' }],
+  },
+  'uk-nz': {
+    latestStatus: {
+      summary: '英國—紐西蘭自由貿易協定 2022 年 2 月簽署、2023 年 5 月 31 日與英澳協定同日生效，逐步消除雙邊關稅並涵蓋服務、數位貿易與環境條款。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'UK DBT — UK-New Zealand FTA', url: 'https://www.gov.uk/government/collections/uk-new-zealand-free-trade-agreement', lang: 'en' }],
+  },
+  'uk-japan': {
+    latestStatus: {
+      summary: '英日《全面經濟夥伴協定》（CEPA）2020 年 10 月簽署、2021 年 1 月生效，是英國脫歐後首個重大貿易協定，大致延續原歐日 EPA 內容並強化數位貿易條款。英國其後並透過 CPTPP 進一步深化與日本經貿。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'UK DBT — UK-Japan CEPA', url: 'https://www.gov.uk/government/collections/uk-japan-comprehensive-economic-partnership-agreement', lang: 'en' }],
+  },
+
+  // ── 印度系（byTool）──
+  'india-korea': {
+    latestStatus: {
+      summary: '印度—韓國《全面經濟夥伴協定》（CEPA）2010 年生效。雙方升級談判持續進行，盼擴大市場開放並調整原產地規則。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+  },
+  'india-japan': {
+    latestStatus: {
+      summary: '印度—日本《全面經濟夥伴協定》（CEPA）2011 年生效。雙方就協定檢視與升級進行討論，以擴大製造業與供應鏈合作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+  },
+  'india-australia': {
+    latestStatus: {
+      summary: '印度—澳洲《經濟合作暨貿易協定》（ECTA）2022 年 12 月 29 日生效，為早期收穫協定；雙方正就更全面的《全面經濟合作協定》（CECA）持續談判。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'Australia DFAT — India ECTA', url: 'https://www.dfat.gov.au/trade/agreements/in-force/aifta', lang: 'en' }],
+  },
+  'india-oman': {
+    latestStatus: {
+      summary: '印度—阿曼《全面經濟夥伴協定》（CEPA）談判已大致完成，將是印度在波斯灣地區繼印阿聯 CEPA 後的另一重要協定，待最終確認與簽署。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+  },
+  'india-nz': {
+    latestStatus: {
+      summary: '印度—紐西蘭自由貿易協定談判於 2025 年 3 月正式啟動，雙方設定加速完成的目標，乳製品市場開放為主要議題之一。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'New Zealand MFAT — India', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/agreements-under-negotiation/india', lang: 'en' }],
+  },
+  'india-canada-suspended': {
+    latestStatus: {
+      summary: '印度—加拿大《早期進展貿易協定》（EPTA）談判於 2023 年 9 月因兩國外交關係惡化（涉錫克教領袖 Nijjar 命案爭議）而暫停，迄今未恢復。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+  },
+
+  // ── 東協對外 FTA（byTool）──
+  'asean-india': {
+    latestStatus: {
+      summary: '東協—印度自由貿易協定（貨品部分 AITIGA 於 2010 年生效）。雙方自 2023 年起進行協定檢視與升級談判，目標於 2025 年完成。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — FTAs with Dialogue Partners', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' }],
+  },
+  'asean-aus-nz': {
+    latestStatus: {
+      summary: '東協—澳洲—紐西蘭自由貿易協定（AANZFTA）2010 年生效。升級議定書於 2023 年簽署、2024 年起陸續生效，新增電子商務、永續發展等章節。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — AANZFTA', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' }],
+  },
+  'asean-korea': {
+    latestStatus: {
+      summary: '東協—韓國自由貿易協定 2007 年起分階段生效，涵蓋貨品、服務與投資，並透過 RCEP 進一步整合，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — ASEAN-Korea FTA', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' }],
+  },
+  'asean-japan': {
+    latestStatus: {
+      summary: '東協—日本《全面經濟夥伴協定》（AJCEP）2008 年生效，其後補充服務與投資章節，並隨 RCEP 深化區域整合，協定持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — AJCEP', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' }],
+  },
+  'aec-2015': {
+    latestStatus: {
+      summary: '東協經濟共同體（AEC）於 2015 年底正式建立，致力打造單一市場與生產基地。「AEC 藍圖 2025」持續推進貨品、服務、投資、資金與技術勞工流通的深化整合。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — Economic Community', url: 'https://asean.org/our-communities/economic-community/', lang: 'en' }],
+  },
+
+  // ── EFTA / 其他現役（byTool）──
+  'efta-mercosur': {
+    latestStatus: {
+      summary: 'EFTA（瑞士、挪威、冰島、列支敦斯登）與南方共同市場（Mercosur）於 2025 年宣布完成自由貿易協定談判，將形成跨大西洋的大型自貿關係，後續待法律整理與各方批准。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'EFTA — Mercosur', url: 'https://www.efta.int/free-trade/free-trade-agreements/mercosur', lang: 'en' }],
+  },
+  'mercosur-singapore': {
+    latestStatus: {
+      summary: '南方共同市場—新加坡自由貿易協定（MCSFTA）2023 年 12 月簽署，是 Mercosur 與亞洲國家的首個 FTA，待各成員國完成批准後生效。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'Singapore MTI — Mercosur-Singapore FTA', url: 'https://www.mti.gov.sg/Trade/Free-Trade-Agreements', lang: 'en' }],
+  },
+  'us-uk-fta': {
+    latestStatus: {
+      summary: '美英於 2025 年 5 月 8 日宣布「經濟繁榮協議」（Economic Prosperity Deal），屬範圍有限的關稅安排（涉汽車、鋼鋁、牛肉、乙醇等），而非全面性 FTA；後續細節與實施仍在推進。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'UK DBT — UK-US trade deal', url: 'https://www.gov.uk/government/news', lang: 'en' }],
+  },
+  'eu-us-talks': {
+    latestStatus: {
+      summary: '歐美早年的《跨大西洋貿易與投資夥伴協定》（TTIP）談判自 2016 年起停滯。2025 年雙方因川普政府關稅爭端重啟協商，並達成以基準關稅為核心的框架性安排，惟細節與爭議仍多。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'European Commission — EU-US', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/united-states_en', lang: 'en' }],
+  },
+  'tpp-original': {
+    latestStatus: {
+      summary: '《跨太平洋夥伴協定》（TPP）12 國於 2016 年 2 月簽署，但因美國於 2017 年 1 月退出而未能生效。其餘 11 國其後改組為 CPTPP（2018 年生效），TPP 原協定已實質由 CPTPP 取代。',
+      asOf: '2018-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'New Zealand MFAT — CPTPP', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/cptpp', lang: 'en' }],
+  },
+
+  // ── 歷史里程碑（byTool）──
+  'cobden-chevalier': {
+    latestStatus: {
+      summary: '《英法商務條約》（1860）引入最惠國（MFN）原則並透過互相援引擴散至歐洲各國，奠定 19 世紀自由貿易網絡的基礎。屬歷史性條約，於一次大戰前後的保護主義浪潮中式微。',
+      asOf: '1914-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'WTO — Principles of the trading system (MFN)', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact2_e.htm', lang: 'en' }],
+  },
+  'mckinley-tariff': {
+    latestStatus: {
+      summary: '美國《麥金利關稅法》（1890）將平均進口關稅大幅提高至約 48%，是 19 世紀末美國保護主義的代表，屬歷史事件。',
+      asOf: '1894-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'US Office of the Historian — Tariffs', url: 'https://history.state.gov/milestones', lang: 'en' }],
+  },
+  'imperial-preference': {
+    latestStatus: {
+      summary: '《渥太華協定》（1932）建立大英帝國內部的特惠關稅制度（帝國特惠制），對外則築起關稅壁壘。二戰後在 GATT 多邊自由化下逐步瓦解，屬歷史制度。',
+      asOf: '1947-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'WTO — The GATT years', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact4_e.htm', lang: 'en' }],
+  },
+  'hawley-smoot': {
+    latestStatus: {
+      summary: '美國《斯姆特—霍利關稅法》（1930）大幅調高逾兩萬項商品關稅，引發各國報復、加劇全球貿易萎縮與大蕭條，常被引為保護主義之鑑，屬歷史事件。',
+      asOf: '1934-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'US Office of the Historian — Smoot-Hawley', url: 'https://history.state.gov/milestones/1921-1936/protectionism', lang: 'en' }],
+  },
+  'rtaa-1934': {
+    latestStatus: {
+      summary: '美國《互惠貿易協定法》（RTAA，1934）將關稅談判授權由國會移轉至總統，開啟以雙邊互惠協定降低關稅的時代，為戰後 GATT 多邊體系奠基。其精神已由 GATT/WTO 承接。',
+      asOf: '1947-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'US Office of the Historian — RTAA', url: 'https://history.state.gov/milestones/1921-1936/protectionism', lang: 'en' }],
+  },
+  'us-uk-1938': {
+    latestStatus: {
+      summary: '《美英貿易協定》（1938）為依《互惠貿易協定法》簽署的雙邊降稅協定，是二戰前美英經貿合作的代表，屬歷史協定，後為 GATT 多邊體系取代。',
+      asOf: '1947-01', byTool: true,
+    },
+    sourceDocs: [{ label: 'US Office of the Historian', url: 'https://history.state.gov/milestones', lang: 'en' }],
+  },
+  'eec-rome': {
+    latestStatus: {
+      summary: '《羅馬條約》（1957）創立歐洲經濟共同體（EEC），建立共同市場與關稅同盟，是歐洲整合的起點。EEC 其後歷經《馬斯垂克條約》等演變為今日的歐洲聯盟（EU）。',
+      asOf: '1993-11', byTool: true,
+    },
+    sourceDocs: [{ label: 'EU — Treaty of Rome', url: 'https://european-union.europa.eu/principles-countries-history/history-eu_en', lang: 'en' }],
+  },
+  'efta-1960': {
+    latestStatus: {
+      summary: '《斯德哥爾摩公約》（1960）創立歐洲自由貿易協會（EFTA）。雖多數創始國其後加入歐盟，EFTA 至今仍由瑞士、挪威、冰島、列支敦斯登 4 國維持運作，並對外積極簽署 FTA。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'EFTA 官方網站', url: 'https://www.efta.int/', lang: 'en' }],
+  },
+  'lafta': {
+    latestStatus: {
+      summary: '拉丁美洲自由貿易協會（LAFTA，1960）為拉美早期區域整合嘗試，因目標過於宏大而成效有限，1980 年由更具彈性的拉丁美洲整合協會（ALADI）取代。',
+      asOf: '1980-08', byTool: true,
+    },
+    sourceDocs: [{ label: 'ALADI', url: 'https://www.aladi.org/', lang: 'es' }],
+  },
+  'aladi': {
+    latestStatus: {
+      summary: '拉丁美洲整合協會（ALADI，1980）取代 LAFTA，以彈性的雙邊與次區域優惠安排推動拉美經濟整合，現有 13 個會員國，為 Mercosur、安第斯共同體等的制度傘架，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ALADI 官方網站', url: 'https://www.aladi.org/', lang: 'es' }],
+  },
+  'asean-founding': {
+    latestStatus: {
+      summary: '《曼谷宣言》（1967）創立東南亞國家協會（ASEAN）。東協其後由 5 國擴展至 10 國，並於 2015 年建立東協經濟共同體（AEC），成為全球重要的區域組織，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN 官方網站', url: 'https://asean.org/', lang: 'en' }],
+  },
+  'caricom-1973': {
+    latestStatus: {
+      summary: '《查瓜拉馬斯條約》（1973）創立加勒比共同體（CARICOM），推動加勒比地區單一市場與經濟整合（CSME），現有 15 個成員國，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'CARICOM 官方網站', url: 'https://caricom.org/', lang: 'en' }],
+  },
+  'andean-community': {
+    latestStatus: {
+      summary: '安第斯共同體（CAN，1969 年《卡塔赫納協定》）為南美洲的關稅同盟與整合機制，現有玻利維亞、哥倫比亞、厄瓜多、秘魯 4 個會員國，與 Mercosur 並列南美兩大整合集團，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'Comunidad Andina', url: 'https://www.comunidadandina.org/', lang: 'es' }],
+  },
+  'auto-pact-1965': {
+    latestStatus: {
+      summary: '《加美汽車產品協定》（Auto Pact，1965）建立北美汽車業的免關稅整合，深刻形塑跨境供應鏈。其優惠安排於 2001 年因 WTO 裁決違反規則而終止，相關功能由 NAFTA／USMCA 承接。',
+      asOf: '2001-02', byTool: true,
+    },
+    sourceDocs: [{ label: 'WTO — Canada Autos dispute (DS139/142)', url: 'https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds139_e.htm', lang: 'en' }],
+  },
+  'us-israel-1985': {
+    latestStatus: {
+      summary: '美國—以色列自由貿易協定（1985）是美國史上第一個自由貿易協定，已消除雙邊絕大多數貨品關稅，至今仍生效，並為後續美國 FTA 樹立範式。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'USTR — Israel FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/israel-fta', lang: 'en' }],
+  },
+  'cer-anzcerta': {
+    latestStatus: {
+      summary: '澳洲—紐西蘭《更緊密經濟關係貿易協定》（ANZCERTA／CER，1983）是全球最全面、自由化程度最高的 FTA 之一，已實現貨品與服務的近乎完全自由流通，持續深化（如單一經濟市場議程）。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'Australia DFAT — ANZCERTA', url: 'https://www.dfat.gov.au/trade/agreements/in-force/anzcerta', lang: 'en' }],
+  },
+  'mercosur-1991': {
+    latestStatus: {
+      summary: '《亞松森條約》（1991）創立南方共同市場（Mercosur），由阿根廷、巴西、巴拉圭、烏拉圭組成關稅同盟。其後對外談判漸增（如 2024 年與歐盟達成協議），為南美最大整合集團，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'Mercosur 官方網站', url: 'https://www.mercosur.int/', lang: 'es' }],
+  },
+  'afta-1992': {
+    latestStatus: {
+      summary: '東協自由貿易區（AFTA，1992）透過「共同有效優惠關稅」（CEPT）大幅降低區內關稅，其機制其後由《東協貨品貿易協定》（ATIGA）與東協經濟共同體（AEC）承接深化，持續運作。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'ASEAN — Economic Community', url: 'https://asean.org/our-communities/economic-community/', lang: 'en' }],
+  },
+  'nafta': {
+    latestStatus: {
+      summary: '《北美自由貿易協定》（NAFTA，1994）整合美國、加拿大、墨西哥市場逾 25 年。2020 年 7 月 1 日由重新談判的《美墨加協定》（USMCA）取代，NAFTA 正式走入歷史。',
+      asOf: '2020-07', byTool: true,
+    },
+    sourceDocs: [{ label: 'USTR — USMCA (replacing NAFTA)', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement', lang: 'en' }],
+  },
+  'maastricht': {
+    latestStatus: {
+      summary: '《馬斯垂克條約》（1992 年簽署、1993 年生效）正式創立歐洲聯盟（EU），確立經濟暨貨幣聯盟（為歐元鋪路）與共同外交安全政策。其後經《阿姆斯特丹》《尼斯》《里斯本》等條約修訂，奠定今日 EU 架構。',
+      asOf: '2009-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'EU — History', url: 'https://european-union.europa.eu/principles-countries-history/history-eu_en', lang: 'en' }],
+  },
+  'ita-1996': {
+    latestStatus: {
+      summary: 'WTO《資訊科技協定》（ITA，1996）消除半導體、電腦、電信設備等資訊科技產品關稅，是少數成功的複邊降稅協定。2015 年達成擴大版（ITA-II），新增約 200 項產品，持續適用。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'WTO — Information Technology Agreement', url: 'https://www.wto.org/english/tratop_e/inftec_e/inftec_e.htm', lang: 'en' }],
+  },
+  'wto-fin-services': {
+    latestStatus: {
+      summary: 'WTO《金融服務協定》（GATS 第五議定書，1997 年達成、1999 年生效）開放銀行、保險、證券等金融服務市場，為 GATS 體系下的重要承諾，持續適用。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [{ label: 'WTO — Financial services', url: 'https://www.wto.org/english/tratop_e/serv_e/finance_e/finance_e.htm', lang: 'en' }],
+  },
 };
