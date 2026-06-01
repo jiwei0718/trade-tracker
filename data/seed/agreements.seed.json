@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-29T15:12:48.305Z",
+  "generated_at": "2026-06-01T12:43:18.692Z",
   "generator": "seed-export",
-  "count": 103,
+  "count": 108,
   "agreements": [
     {
       "id": "cobden-chevalier",
@@ -832,7 +832,7 @@
       "descriptionZh": "美國第一個雙邊自由貿易協定，是後來NAFTA以後美國全面推動FTA戰略的起點。",
       "tags": [
         "historical",
-        "us-fta",
+        "fta",
         "first-of-kind"
       ]
     },
@@ -869,7 +869,7 @@
         "Free movement of people"
       ],
       "tags": [
-        "bilateral-flagship"
+        "flagship"
       ]
     },
     {
@@ -1256,8 +1256,7 @@
       "descriptionZh": "歷時15年談判，中國加入WTO，徹底改變全球貿易格局，加速全球化與供應鏈轉移。",
       "tags": [
         "historical",
-        "mile-stone",
-        "china"
+        "mile-stone"
       ],
       "significance": "近代貿易史上最重要事件之一，引發「中國衝擊」、全球工廠轉移、後續美中貿易摩擦的根源。"
     },
@@ -1325,7 +1324,7 @@
         "E-commerce"
       ],
       "tags": [
-        "us-fta",
+        "fta",
         "first-asia"
       ]
     },
@@ -1357,7 +1356,7 @@
       "description": "First US FTA with South American country. Pioneered modern provisions on labour, environment, e-commerce.",
       "descriptionZh": "美國第一個與南美國家的FTA，開創了現代協定中勞工、環境、電子商務等條款。",
       "tags": [
-        "us-fta"
+        "fta"
       ]
     },
     {
@@ -1388,7 +1387,7 @@
       "description": "Comprehensive FTA covering 99% of US goods trade with Australia.",
       "descriptionZh": "全面性FTA，涵蓋美澳間99%的商品貿易。",
       "tags": [
-        "us-fta"
+        "fta"
       ]
     },
     {
@@ -1434,7 +1433,7 @@
       "description": "US trade deal with five Central American countries and Dominican Republic.",
       "descriptionZh": "美國與五個中美洲國家及多明尼加的自由貿易協定。",
       "tags": [
-        "us-fta",
+        "fta",
         "regional"
       ]
     },
@@ -1468,7 +1467,7 @@
       "description": "US largest FTA outside North America. Renegotiated in 2018 to update auto rules under Trump pressure.",
       "descriptionZh": "美國在北美以外最大的FTA，2018年因川普壓力重新談判更新汽車條款。",
       "tags": [
-        "us-fta",
+        "fta",
         "flagship"
       ]
     },
@@ -1502,7 +1501,7 @@
       "description": "EU first FTA with an Asian partner. Strong enforcement mechanisms.",
       "descriptionZh": "歐盟與亞洲夥伴的首個FTA，具備完善執法機制。",
       "tags": [
-        "eu-fta",
+        "fta",
         "first-asia-eu"
       ]
     },
@@ -1536,7 +1535,7 @@
       "description": "Largest FTA by population (1.9bn). Upgraded version (3.0) in force 2025.",
       "descriptionZh": "按人口計算全球最大自貿區（19億人），3.0升級版2025年生效。",
       "tags": [
-        "china-fta",
+        "fta",
         "flagship"
       ]
     },
@@ -1568,7 +1567,7 @@
       "description": "China first FTA in Latin America.",
       "descriptionZh": "中國在拉美的首個FTA。",
       "tags": [
-        "china-fta"
+        "fta"
       ]
     },
     {
@@ -1599,7 +1598,7 @@
       "description": "Strategic ally FTA, expanded in 2019 second phase.",
       "descriptionZh": "戰略盟友間的FTA，2019年第二階段擴大。",
       "tags": [
-        "china-fta"
+        "fta"
       ]
     },
     {
@@ -1630,7 +1629,7 @@
       "description": "China first FTA with a developed country. Upgraded 2022.",
       "descriptionZh": "中國與已開發國家的首個FTA，2022年升級。",
       "tags": [
-        "china-fta"
+        "fta"
       ]
     },
     {
@@ -1852,7 +1851,7 @@
       "description": "Removes 98% of tariffs. First EU deal with a major developed country.",
       "descriptionZh": "消除98%關稅，歐盟首個與主要已開發國家的協定。",
       "tags": [
-        "eu-fta",
+        "fta",
         "flagship"
       ]
     },
@@ -1886,7 +1885,7 @@
       "description": "Gateway agreement for EU access to ASEAN.",
       "descriptionZh": "歐盟進入東協的門戶協定。",
       "tags": [
-        "eu-fta"
+        "fta"
       ]
     },
     {
@@ -1962,7 +1961,7 @@
       "description": "Covers 90% goods trade. Major deal between top trading partners.",
       "descriptionZh": "涵蓋90%貨物貿易，兩大互為最大貿易夥伴。",
       "tags": [
-        "china-fta",
+        "fta",
         "flagship"
       ]
     },
@@ -1997,7 +1996,7 @@
       "description": "Effectively suspended via Chinese trade restrictions on Australian wine, barley, coal, beef. Partial lifting from 2023.",
       "descriptionZh": "中方對澳洲葡萄酒、大麥、煤炭、牛肉貿易限制使協定實質暫停，2023年起部分解除。",
       "tags": [
-        "china-fta",
+        "fta",
         "geopolitics"
       ],
       "significance": "貿易協定被地緣政治綁架的典型案例。"
@@ -2128,15 +2127,18 @@
       "tradeVolume": 5200,
       "description": "Restructured TPP after US withdrawal. UK acceded Dec 2024 as the first non-original member. China, Taiwan, Ukraine, Costa Rica applications pending.",
       "descriptionZh": "TPP 美國退出後重組。英國於 2024 年 12 月成為首個非原始成員。中國、臺灣、烏克蘭、哥斯大黎加等申請中。",
+      "relatedIds": [
+        "cptpp-expansion"
+      ],
       "tags": [
-        "regional",
+        "fta",
         "flagship"
       ]
     },
     {
       "id": "eu-japan-epa",
       "name": "EU–Japan Economic Partnership Agreement",
-      "nameZh": "歐盟–日本經濟夥伴關係協定",
+      "nameZh": "歐盟–日本經濟夥伴協定",
       "shortName": "EU–Japan EPA",
       "type": "bilateral",
       "status": "in_force",
@@ -2163,7 +2165,7 @@
       "description": "Among largest bilateral deals. Covers 635mn people, ~1/3 global GDP.",
       "descriptionZh": "最大雙邊協定之一，涵蓋6.35億人口、約全球GDP的三分之一。",
       "tags": [
-        "eu-fta",
+        "fta",
         "flagship"
       ]
     },
@@ -2197,7 +2199,7 @@
       "description": "EU first FTA with developing Asian economy.",
       "descriptionZh": "歐盟首個與亞洲發展中經濟體的FTA。",
       "tags": [
-        "eu-fta"
+        "fta"
       ]
     },
     {
@@ -2235,7 +2237,7 @@
     {
       "id": "rcep",
       "name": "Regional Comprehensive Economic Partnership",
-      "nameZh": "區域全面經濟夥伴關係協定",
+      "nameZh": "區域全面經濟夥伴協定 (RCEP)",
       "shortName": "RCEP",
       "type": "regional",
       "status": "in_force",
@@ -2345,8 +2347,7 @@
       "descriptionZh": "2020年12月經7年談判完成，但歐洲議會因新疆制裁問題暫停批准，至今凍結中。",
       "tags": [
         "suspended",
-        "geopolitics",
-        "china"
+        "geopolitics"
       ],
       "significance": "人權議題否決經貿協定的標誌性案例。"
     },
@@ -2380,7 +2381,7 @@
       "description": "UK first bespoke post-Brexit FTA.",
       "descriptionZh": "英國脫歐後第一個專屬FTA。",
       "tags": [
-        "uk-fta",
+        "fta",
         "brexit"
       ]
     },
@@ -2412,7 +2413,7 @@
       "description": "Comprehensive FTA. Zero tariffs on goods.",
       "descriptionZh": "全面FTA，商品零關稅。",
       "tags": [
-        "uk-fta",
+        "fta",
         "brexit"
       ]
     },
@@ -2444,7 +2445,7 @@
       "description": "UK first major post-Brexit FTA.",
       "descriptionZh": "英國脫歐後首個重大FTA。",
       "tags": [
-        "uk-fta",
+        "fta",
         "brexit"
       ]
     },
@@ -2478,7 +2479,7 @@
       "description": "Record 88-day negotiation. Fastest FTA India ever signed.",
       "descriptionZh": "創紀錄88天完成談判，是印度最快的FTA。",
       "tags": [
-        "india-fta"
+        "fta"
       ]
     },
     {
@@ -2509,7 +2510,7 @@
       "description": "Interim ECTA covering 98% of Australian goods. Full CEPA under negotiation.",
       "descriptionZh": "臨時ECTA涵蓋澳洲98%商品，全面CEPA談判中。",
       "tags": [
-        "india-fta"
+        "fta"
       ]
     },
     {
@@ -2635,7 +2636,7 @@
       "description": "Updates 2003 deal with digital, hydrogen, critical raw materials chapters.",
       "descriptionZh": "升級2003年協定，新增數位、綠氫、關鍵原材料章節。",
       "tags": [
-        "eu-fta",
+        "fta",
         "minerals"
       ]
     },
@@ -2668,7 +2669,7 @@
       "description": "Modernised 2000 deal with updated digital, SOE, procurement chapters.",
       "descriptionZh": "升級2000年協定，更新數位、國企、政府採購條款。",
       "tags": [
-        "eu-fta"
+        "fta"
       ]
     },
     {
@@ -2867,7 +2868,7 @@
       "descriptionZh": "英國脫歐後最重要協定，含威士忌、汽車、紡織。",
       "tags": [
         "post-liberation-day",
-        "uk-fta",
+        "fta",
         "brexit"
       ]
     },
@@ -2900,7 +2901,7 @@
       "descriptionZh": "2025年6月達成，印度解放日後加速簽約的一部分。",
       "tags": [
         "post-liberation-day",
-        "india-fta"
+        "fta"
       ]
     },
     {
@@ -2932,7 +2933,7 @@
       "descriptionZh": "長期停滯的談判於2025年8月達成。",
       "tags": [
         "post-liberation-day",
-        "india-fta"
+        "fta"
       ]
     },
     {
@@ -3337,35 +3338,47 @@
     {
       "id": "cptpp-expansion",
       "name": "CPTPP Expansion Applications",
-      "nameZh": "CPTPP擴員申請",
+      "nameZh": "CPTPP 擴員申請",
       "shortName": "CPTPP Expansion",
       "type": "regional",
       "status": "negotiating",
       "era": "post_liberation",
+      "parentId": "cptpp",
       "parties": [
-        "CPTPP",
         "CN",
         "TW",
         "UA",
         "CO",
-        "EC"
+        "EC",
+        "CR"
       ],
       "partyNames": [
-        "China, Taiwan, Ukraine, Colombia, Ecuador (applicants)"
+        "China",
+        "Taiwan",
+        "Ukraine",
+        "Colombia",
+        "Ecuador",
+        "Costa Rica"
       ],
       "partyNamesZh": [
-        "中國、臺灣、烏克蘭、哥倫比亞、厄瓜多（申請中）"
+        "中國",
+        "中華民國(臺灣)",
+        "烏克蘭",
+        "哥倫比亞",
+        "厄瓜多",
+        "哥斯大黎加"
       ],
       "keyDates": {
         "proposed": "2021-09"
       },
       "tradeVolume": 6500,
-      "description": "Multiple economies applied; China since Sep 2021, stalled.",
-      "descriptionZh": "多國申請；中國自2021年9月起停滯。",
+      "description": "Pending applications to accede to the CPTPP: China and Chinese Taipei (Sep 2021), Ukraine, Uruguay, Ecuador, Colombia and Costa Rica. The Costa Rica accession working group was established in 2024; China's bid remains stalled.",
+      "descriptionZh": "申請加入 CPTPP 的經濟體：中國與中華民國（臺灣）（2021 年 9 月）、烏克蘭、烏拉圭、厄瓜多、哥倫比亞、哥斯大黎加。哥斯大黎加加入工作小組已於 2024 年成立；中國的申請案仍處停滯。新成員須經全體現有締約方共識決。",
       "tags": [
         "negotiating",
         "geopolitics"
-      ]
+      ],
+      "significance": "CPTPP 是少數仍在擴員的大型自由貿易協定，申請名單反映地緣政治角力（如中國與臺灣同時申請）。"
     },
     {
       "id": "wto-rta-new-zealand-chinese-taipei",
@@ -3699,7 +3712,8 @@
     {
       "id": "asean-defa",
       "name": "ASEAN Digital Economy Framework Agreement",
-      "nameZh": "東協數位經濟框架協議",
+      "nameZh": "東協數位經濟架構協定 (DEFA)",
+      "fullNameZh": "東南亞國家協會數位經濟架構協定 (DEFA)",
       "shortName": "DEFA",
       "type": "regional",
       "status": "negotiating",
@@ -3909,6 +3923,254 @@
       "descriptionZh": "2024年4月啟動，南共市多元化戰略一部分。",
       "tags": [
         "post-liberation-day",
+        "negotiating"
+      ]
+    },
+    {
+      "id": "ipef",
+      "name": "Indo-Pacific Economic Framework for Prosperity",
+      "nameZh": "印太經濟繁榮架構 (IPEF)",
+      "fullNameZh": "印太經濟繁榮架構",
+      "shortName": "IPEF",
+      "type": "plurilateral",
+      "status": "in_force",
+      "era": "post_liberation",
+      "parties": [
+        "US",
+        "AU",
+        "BN",
+        "FJ",
+        "IN",
+        "ID",
+        "JP",
+        "KR",
+        "MY",
+        "NZ",
+        "PH",
+        "SG",
+        "TH",
+        "VN"
+      ],
+      "partyNames": [
+        "United States",
+        "Australia",
+        "Brunei",
+        "Fiji",
+        "India",
+        "Indonesia",
+        "Japan",
+        "South Korea",
+        "Malaysia",
+        "New Zealand",
+        "Philippines",
+        "Singapore",
+        "Thailand",
+        "Vietnam"
+      ],
+      "partyNamesZh": [
+        "美國",
+        "澳洲",
+        "汶萊",
+        "斐濟",
+        "印度",
+        "印尼",
+        "日本",
+        "韓國",
+        "馬來西亞",
+        "紐西蘭",
+        "菲律賓",
+        "新加坡",
+        "泰國",
+        "越南"
+      ],
+      "keyDates": {
+        "started": "2022-05",
+        "signed": "2023-11",
+        "in_force": "2024-02"
+      },
+      "tradeVolume": 1000,
+      "description": "US-led 14-country framework launched May 2022, structured in four pillars: Trade, Supply Chains, Clean Economy, Fair Economy. Pillar II (Supply Chain Agreement) signed Nov 2023, entered into force Feb 2024. Pillars III & IV signed 2024. Pillar I (Trade) remains under negotiation. India participates only in Pillars II-IV.",
+      "descriptionZh": "美國主導、2022 年 5 月啟動的 14 國印太架構，分四大支柱：貿易、供應鏈、潔淨經濟、公平經濟。第二支柱（供應鏈協定）於 2023 年 11 月簽署、2024 年 2 月生效；第三、第四支柱於 2024 年簽署；第一支柱（貿易）仍在談判。印度僅參與第二、第三、第四支柱。",
+      "keyProvisions": [
+        "Supply chain resilience",
+        "Clean energy",
+        "Tax & anti-corruption",
+        "Trade facilitation (under negotiation)"
+      ],
+      "tags": [
+        "post-liberation-day",
+        "plurilateral",
+        "supply-chain",
+        "climate",
+        "flagship"
+      ],
+      "significance": "美國印太戰略下的旗艦經濟倡議，不以傳統市場開放為核心，改以供應鏈、潔淨經濟等議題切入。"
+    },
+    {
+      "id": "japan-australia-jaepa",
+      "name": "Japan-Australia Economic Partnership Agreement",
+      "nameZh": "日澳經濟夥伴協定 (JAEPA)",
+      "shortName": "JAEPA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "JP",
+        "AU"
+      ],
+      "partyNames": [
+        "Japan",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "日本",
+        "澳洲"
+      ],
+      "keyDates": {
+        "signed": "2014-07",
+        "in_force": "2015-01"
+      },
+      "tradeVolume": 70,
+      "description": "Comprehensive EPA in force since Jan 2015. Largely superseded by CPTPP and RCEP for tariff schedules but remains the bilateral baseline.",
+      "descriptionZh": "2015 年 1 月生效之全面經濟夥伴協定，後因 CPTPP、RCEP 生效而部分被取代，但仍為雙邊基準。",
+      "tags": [
+        "bilateral"
+      ]
+    },
+    {
+      "id": "korea-australia-kafta",
+      "name": "Korea-Australia FTA",
+      "nameZh": "韓澳自由貿易協定 (KAFTA)",
+      "shortName": "KAFTA",
+      "type": "bilateral",
+      "status": "in_force",
+      "era": "fragmentation",
+      "parties": [
+        "KR",
+        "AU"
+      ],
+      "partyNames": [
+        "South Korea",
+        "Australia"
+      ],
+      "partyNamesZh": [
+        "韓國",
+        "澳洲"
+      ],
+      "keyDates": {
+        "signed": "2014-04",
+        "in_force": "2014-12"
+      },
+      "tradeVolume": 30,
+      "description": "KAFTA entered into force December 2014, eliminating tariffs on most bilateral trade over time.",
+      "descriptionZh": "2014 年 12 月生效，逐步消除雙邊絕大多數關稅。",
+      "tags": [
+        "bilateral"
+      ]
+    },
+    {
+      "id": "gcc-korea",
+      "name": "GCC–Korea FTA",
+      "nameZh": "海合會–韓國自由貿易協定",
+      "shortName": "GCC–KR FTA",
+      "type": "regional",
+      "status": "signed",
+      "era": "post_liberation",
+      "parties": [
+        "SA",
+        "AE",
+        "QA",
+        "KW",
+        "BH",
+        "OM",
+        "KR"
+      ],
+      "partyNames": [
+        "Saudi Arabia",
+        "UAE",
+        "Qatar",
+        "Kuwait",
+        "Bahrain",
+        "Oman",
+        "South Korea"
+      ],
+      "partyNamesZh": [
+        "沙烏地阿拉伯",
+        "阿聯",
+        "卡達",
+        "科威特",
+        "巴林",
+        "阿曼",
+        "韓國"
+      ],
+      "keyDates": {
+        "signed": "2023-12"
+      },
+      "tradeVolume": 86,
+      "description": "Korea–GCC FTA signed December 2023 after over a decade of negotiations; pending ratification.",
+      "descriptionZh": "歷經逾十年談判後，於 2023 年 12 月簽署，待各方批准生效。",
+      "tags": [
+        "signed"
+      ]
+    },
+    {
+      "id": "switzerland-eu-bilaterals",
+      "name": "Switzerland–EU Bilateral Agreements",
+      "nameZh": "瑞士–歐盟雙邊協定（雙邊架構 III）",
+      "shortName": "CH–EU Bilaterals",
+      "type": "bilateral",
+      "status": "signed",
+      "era": "post_liberation",
+      "parties": [
+        "CH",
+        "EU"
+      ],
+      "partyNames": [
+        "Switzerland",
+        "European Union"
+      ],
+      "partyNamesZh": [
+        "瑞士",
+        "歐洲聯盟"
+      ],
+      "keyDates": {
+        "started": "2014-05",
+        "signed": "2024-12"
+      },
+      "tradeVolume": 320,
+      "description": "Switzerland-EU \"Bilaterals III\" package: substantial conclusion announced Dec 2024 to stabilise and modernise the network of ~120 bilateral agreements with new institutional framework and dynamic adoption of EU law. Awaiting formal signing and Swiss referendum.",
+      "descriptionZh": "瑞士與歐盟的「雙邊架構 III」整套協定：2024 年 12 月宣布實質完成，將以新制度架構與動態接軌歐盟法穩定並更新雙方逾百項雙邊協定，待正式簽署與瑞士公投。",
+      "tags": [
+        "post-liberation-day",
+        "bilateral"
+      ]
+    },
+    {
+      "id": "eu-thailand-fta",
+      "name": "EU-Thailand FTA",
+      "nameZh": "歐盟–泰國自由貿易協定",
+      "shortName": "EU–TH FTA",
+      "type": "bilateral",
+      "status": "negotiating",
+      "era": "post_liberation",
+      "parties": [
+        "EU",
+        "TH"
+      ],
+      "partyNames": [
+        "European Union",
+        "Thailand"
+      ],
+      "partyNamesZh": [
+        "歐洲聯盟",
+        "泰國"
+      ],
+      "keyDates": {
+        "started": "2023-03"
+      },
+      "description": "EU-Thailand FTA negotiations relaunched March 2023, aiming for an ambitious modern FTA with sustainability commitments.",
+      "descriptionZh": "歐盟與泰國 FTA 談判於 2023 年 3 月重啟，目標訂立涵蓋永續承諾的現代化高標準 FTA。",
+      "tags": [
         "negotiating"
       ]
     }

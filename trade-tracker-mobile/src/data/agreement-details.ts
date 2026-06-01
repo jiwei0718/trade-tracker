@@ -1020,4 +1020,65 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     },
     sourceDocs: [{ label: 'WTO — Financial services', url: 'https://www.wto.org/english/tratop_e/serv_e/finance_e/finance_e.htm', lang: 'en' }],
   },
+
+  // ── 新增遺漏項目（byTool）──
+  'ipef': {
+    latestStatus: {
+      summary:
+        '印太經濟繁榮架構（IPEF）由 14 國於 2022 年 5 月啟動，分四大支柱。第二支柱《供應鏈協定》2023 年 11 月簽署、2024 年 2 月生效；第三支柱《潔淨經濟協定》與第四支柱《公平經濟協定》於 2024 年 6 月簽署；第一支柱《貿易》談判尚未完成。川普 2025 年重返後對 IPEF 立場仍待釐清。',
+      detail:
+        '【架構】IPEF 不是傳統 FTA，刻意避開市場進入承諾，改以四支柱推動：\n  I. 貿易（含勞動、環境、數位、農業、透明化、競爭、貿易便捷化等子議題）\n  II. 供應鏈韌性（關鍵供應鏈緊急應變網絡、勞動權利諮詢機制）\n  III. 潔淨經濟（潔淨能源、減碳、永續基礎建設）\n  IV. 公平經濟（反貪腐、稅務透明化）\n\n【成員】美國、澳、汶、斐、印、印尼、日、韓、馬、紐、菲、新、泰、越，共 14 國。印度僅參與第二、三、四支柱。\n\n【進展】\n  - 2023/11/16：第二支柱「供應鏈協定」簽署\n  - 2024/2/24：供應鏈協定生效\n  - 2024/6：第三支柱「潔淨經濟協定」、第四支柱「公平經濟協定」簽署\n  - 2024/10：潔淨經濟及公平經濟協定生效（前 5 個批准成員間）\n  - 2025–：川普政府對 IPEF 政策走向仍在評估，第一支柱談判前景不明',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'USTR — IPEF', url: 'https://ustr.gov/trade-agreements/agreements-currently-under-negotiation/indo-pacific-economic-framework-prosperity-ipef', lang: 'en' },
+      { label: 'US Department of Commerce — IPEF', url: 'https://www.commerce.gov/ipef', lang: 'en' },
+    ],
+  },
+  'japan-australia-jaepa': {
+    latestStatus: {
+      summary: '日澳經濟夥伴協定（JAEPA）2015 年 1 月生效後持續運作；CPTPP 與 RCEP 生效後，部分關稅安排於該等多邊架構下另行落實，JAEPA 仍為雙邊基準制度。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'Australia DFAT — JAEPA', url: 'https://www.dfat.gov.au/trade/agreements/in-force/jaepa', lang: 'en' },
+    ],
+  },
+  'korea-australia-kafta': {
+    latestStatus: {
+      summary: '韓澳自由貿易協定（KAFTA）2014 年 12 月生效以來持續運作，雙邊絕大多數貨品已達零關稅。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'Australia DFAT — KAFTA', url: 'https://www.dfat.gov.au/trade/agreements/in-force/kafta', lang: 'en' },
+    ],
+  },
+  'gcc-korea': {
+    latestStatus: {
+      summary: '韓國—海合會自由貿易協定歷經逾十年談判後，於 2023 年 12 月正式簽署，涵蓋貨品、服務與電子商務；待韓國與海合會 6 個成員國分別完成國內批准程序後生效。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'Korea MOFA — Korea-GCC FTA', url: 'https://www.fta.go.kr/eng/', lang: 'en' },
+    ],
+  },
+  'switzerland-eu-bilaterals': {
+    latestStatus: {
+      summary: '瑞士與歐盟「雙邊架構 III」（Bilaterals III）於 2024 年 12 月 20 日宣布實質完成談判，將以新制度架構（含動態接軌歐盟法、爭端解決、國家補貼規範）穩定並更新雙方逾百項雙邊協定。後續待法律整理、簽署與瑞士公投批准。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — Switzerland', url: 'https://commission.europa.eu/strategy-and-policy/relations-non-eu-countries/relations-switzerland_en', lang: 'en' },
+      { label: 'Swiss FDFA — EU dossier', url: 'https://www.eda.admin.ch/europa/en/home.html', lang: 'en' },
+    ],
+  },
+  'eu-thailand-fta': {
+    latestStatus: {
+      summary: '歐盟—泰國自由貿易協定談判於 2023 年 3 月重啟，涵蓋貨品、服務、投資、永續發展與數位貿易。雙方已多輪會談，目標於 2025 年完成。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'European Commission — EU-Thailand', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/thailand/eu-thailand-agreement_en', lang: 'en' },
+    ],
+  },
 };
