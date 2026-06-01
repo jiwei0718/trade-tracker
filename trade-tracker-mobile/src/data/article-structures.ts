@@ -1239,4 +1239,73 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── AANZFTA（東協—澳洲—紐西蘭自由貿易協定，18 章）────────────
+  //   2009/2 簽署、2010/1 起分階段生效；2023 升級議定書、2024+ 生效
+  'asean-aus-nz': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '建立自由貿易區、目標、與一般定義', en: 'Establishment, Objectives and General Definitions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.4', zh: '海關程序', en: 'Customs Procedures' },
+        { num: 'Ch.5', zh: '食品安全檢驗與動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.6', zh: '標準、技術性法規與符合性評鑑程序', en: 'Standards, Technical Regulations and Conformity Assessment' },
+        { num: 'Ch.7', zh: '貿易救濟', en: 'Trade Remedies' },
+      ],
+    },
+    {
+      theme: '服務、人員與電商（含 2024 升級）', themeEn: 'Services, People & E-Commerce',
+      articles: [
+        { num: 'Ch.8', zh: '服務貿易', en: 'Trade in Services' },
+        { num: 'Ch.9', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.10', zh: '電子商務（2024 升級新增「數位貿易」議題）', en: 'Electronic Commerce (upgraded 2024)' },
+        { num: 'Ch.11', zh: '投資', en: 'Investment' },
+      ],
+    },
+    {
+      theme: '經濟合作、智財與制度', themeEn: 'Cooperation, IP & Institutional',
+      articles: [
+        { num: 'Ch.12', zh: '經濟合作', en: 'Economic Cooperation' },
+        { num: 'Ch.13', zh: '智慧財產', en: 'Intellectual Property' },
+        { num: 'Ch.14', zh: '競爭', en: 'Competition' },
+        { num: 'Ch.15', zh: '一般條款及例外', en: 'General Provisions and Exceptions' },
+        { num: 'Ch.16', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.17', zh: '諮商與爭端解決', en: 'Consultations and Dispute Settlement' },
+        { num: 'Ch.18', zh: '最終條款', en: 'Final Provisions' },
+        { num: 'Upgrade', zh: '2023 升級議定書（2024 陸續生效）：新增中小企業章、貿易與永續發展章；升級電商、政府採購、原產地規則。', en: '2023 Upgrade Protocol (entered into force 2024): adds SME and Sustainability chapters' },
+      ],
+    },
+  ],
+
+  // ─── 印度—澳洲 ECTA（早期收穫協定，14 章）────────────────────
+  //   2022/4 簽署、2022/12 生效
+  'india-australia': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款及一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.4', zh: '海關程序及貿易便捷化', en: 'Customs Procedures and Trade Facilitation' },
+        { num: 'Ch.5', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.6', zh: '食品安全檢驗與動植物防疫檢疫', en: 'SPS Measures' },
+        { num: 'Ch.7', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+      ],
+    },
+    {
+      theme: '服務、人員與制度', themeEn: 'Services, People & Institutional',
+      articles: [
+        { num: 'Ch.8', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.9', zh: '專業服務', en: 'Professional Services' },
+        { num: 'Ch.10', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.11', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.12', zh: '一般條款及例外', en: 'General Provisions and Exceptions' },
+        { num: 'Ch.13', zh: '行政及機構規定', en: 'Administrative and Institutional Provisions' },
+        { num: 'Ch.14', zh: '最終條款', en: 'Final Provisions' },
+        { num: 'Note', zh: '附註：本協定為「早期收穫」性質，雙方並行談判更全面的《全面經濟合作協定》（CECA），擬納入投資、政府採購、智財、競爭、永續發展等章節。', en: 'Note: ECTA is an "early harvest"; broader CECA (investment, procurement, IP, etc.) is under negotiation.' },
+      ],
+    },
+  ],
 };
