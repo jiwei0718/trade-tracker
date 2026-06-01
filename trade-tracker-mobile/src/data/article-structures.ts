@@ -1406,4 +1406,66 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── ANZCERTA（澳紐更緊密經濟關係貿易協定，1983）─────────────
+  'cer-anzcerta': [
+    {
+      theme: '主協定（28 條）', themeEn: 'Main Agreement (28 Articles)',
+      articles: [
+        { num: 'Art.1-3', zh: '目標、範圍、定義', en: 'Objectives, Scope, Definitions' },
+        { num: 'Art.4', zh: '貿易自由化（貨品關稅消除）', en: 'Free Trade in Goods' },
+        { num: 'Art.5-8', zh: '原產地規則、海關協助、邊境措施', en: 'Rules of Origin, Customs Cooperation' },
+        { num: 'Art.9-10', zh: '反傾銷與平衡稅（1990 起雙邊不再適用）', en: 'Anti-Dumping & CV Duties (waived since 1990)' },
+        { num: 'Art.11', zh: '緊急防衛措施', en: 'Safeguards' },
+        { num: 'Art.12-13', zh: '量化限制、進口許可', en: 'Quantitative Restrictions, Licensing' },
+        { num: 'Art.14-16', zh: '政府採購、競爭政策、業務移地', en: 'Govt Procurement, Competition, Business Mobility' },
+        { num: 'Art.17', zh: '服務貿易議定書', en: 'Trade in Services Protocol' },
+        { num: 'Art.18', zh: '保留、例外', en: 'Reservations, Exceptions' },
+        { num: 'Art.19-28', zh: '一般、機構、爭端解決、修訂、終止、生效等條款', en: 'General, Institutional, Disputes, etc.' },
+      ],
+    },
+    {
+      theme: '主要議定書與安排', themeEn: 'Major Protocols',
+      articles: [
+        { num: 'P.1989', zh: '《服務貿易議定書》（1988 簽、1989 生效，雙邊服務業全面自由化）', en: 'Trade in Services Protocol (1988)' },
+        { num: 'P.SEM', zh: '《單一經濟市場》（SEM）議程（1992 起）：法規調和、共同市場規範', en: 'Single Economic Market (since 1992)' },
+        { num: 'P.MRA', zh: '《貨品標準相互承認安排》（TTMRA，1998）', en: 'Trans-Tasman Mutual Recognition' },
+        { num: 'P.Travel', zh: '《澳紐自由旅行安排》（1973）— 雙方公民可自由進出、居住、工作', en: 'Trans-Tasman Travel Arrangement' },
+        { num: 'Note', zh: '附註：ANZCERTA 是全球自由化程度最高、最全面的 FTA 之一，被視為「FTA 模範生」。', en: 'Note: ANZCERTA is among the most comprehensive FTAs globally.' },
+      ],
+    },
+  ],
+
+  // ─── ASEAN 創立（1967 曼谷宣言）+ 主要章程文件 ──────────────────
+  'asean-founding': [
+    {
+      theme: '創始文件', themeEn: 'Founding Documents',
+      articles: [
+        { num: 'Doc.1', zh: '《曼谷宣言》（ASEAN Declaration，1967/8/8）— 由印尼、馬、菲、新、泰外長於泰國曼谷簽署，宣示成立 ASEAN，闡明 7 大目標：經濟成長、社會進步、文化發展、區域和平穩定、訓練與研究合作、農工合作、國際組織連結。', en: 'Bangkok Declaration (1967-08-08)' },
+        { num: 'Doc.2', zh: '《東南亞和平、自由與中立區宣言》（ZOPFAN，1971）', en: 'ZOPFAN Declaration (1971)' },
+        { num: 'Doc.3', zh: '《東南亞友好合作條約》（TAC，1976）— 規範區內成員與外部夥伴關係之核心原則', en: 'Treaty of Amity and Cooperation (1976)' },
+      ],
+    },
+    {
+      theme: '會員擴張', themeEn: 'Membership Expansion',
+      articles: [
+        { num: 'E.1', zh: '汶萊加入（1984/1/8）— 第 6 個會員', en: 'Brunei (1984)' },
+        { num: 'E.2', zh: '越南加入（1995/7/28）— 第 7 個會員', en: 'Vietnam (1995)' },
+        { num: 'E.3', zh: '寮國、緬甸加入（1997/7/23）— 第 8、9 個會員', en: 'Laos & Myanmar (1997)' },
+        { num: 'E.4', zh: '柬埔寨加入（1999/4/30）— 第 10 個會員，達成「ASEAN-10」', en: 'Cambodia (1999)' },
+        { num: 'E.5', zh: '東帝汶（觀察員 2022，未來會員）', en: 'Timor-Leste (observer; future member)' },
+      ],
+    },
+    {
+      theme: '深化整合與三大共同體', themeEn: 'Deepening & 3 Communities',
+      articles: [
+        { num: 'I.1', zh: 'AFTA 東協自由貿易區（1992 啟動 CEPT，2010 對 ASEAN-6 全面零關稅）', en: 'AFTA (1992)' },
+        { num: 'I.2', zh: '《ASEAN 憲章》（2007 簽署、2008/12/15 生效）— 賦予 ASEAN 法人地位', en: 'ASEAN Charter (in force 2008)' },
+        { num: 'I.3', zh: 'ASEAN 經濟共同體（AEC，2015/12/31 建立）— 三大共同體之一', en: 'AEC (2015)' },
+        { num: 'I.4', zh: 'ASEAN 政治安全共同體（APSC）', en: 'APSC' },
+        { num: 'I.5', zh: 'ASEAN 社會文化共同體（ASCC）', en: 'ASCC' },
+        { num: 'I.6', zh: '《ASEAN 願景 2025》與《ASEAN 共同體願景 2045》（2025/5 通過）', en: 'ASEAN Vision 2025 / 2045' },
+      ],
+    },
+  ],
 };
