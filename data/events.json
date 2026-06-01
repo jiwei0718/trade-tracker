@@ -1,7 +1,24 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-01T12:44:28.782708+00:00",
+  "generated_at": "2026-06-01T18:44:38.636855+00:00",
   "events": [
+    {
+      "id": "agreement-on-fisheries-subsidies:new:2026-06-01T18:44:38.635995+00:00",
+      "agreement_id": "agreement-on-fisheries-subsidies",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-06-01T18:44:38.635995+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/ddgjn_27may26_393_e.htm",
+          "fetched_at": "2026-06-01T18:44:38.627494+00:00",
+          "evidence": "complete the acceptance and implementation of the Agreement on Fisheries Subsidies"
+        }
+      ]
+    },
     {
       "id": "wto-rta-australia-gulf-cooperation-council-gcc:new:2026-05-29T15:16:33.240288+00:00",
       "agreement_id": "wto-rta-australia-gulf-cooperation-council-gcc",
