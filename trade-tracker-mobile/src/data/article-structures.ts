@@ -688,4 +688,172 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── 歐日經濟夥伴協定（EU-Japan EPA）───────────────────────────────
+  'eu-japan-epa': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '一般規定', en: 'General Provisions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則與原產地程序', en: 'Rules of Origin and Origin Procedures' },
+        { num: 'Ch.4', zh: '海關事項與貿易便捷化', en: 'Customs Matters and Trade Facilitation' },
+        { num: 'Ch.5', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.6', zh: '食品安全與防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.7', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+      ],
+    },
+    {
+      theme: '服務、投資、電商與資料', themeEn: 'Services, Investment, E-Commerce & Data',
+      articles: [
+        { num: 'Ch.8', zh: '服務貿易、投資自由化與電子商務', en: 'Trade in Services, Investment Liberalisation and E-Commerce' },
+        { num: 'Ch.9', zh: '資金移動、支付與資本移動及暫行性保障措施', en: 'Capital Movements, Payments and Transfers and Temporary Safeguards' },
+        { num: 'Ch.10', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.11', zh: '競爭政策', en: 'Competition Policy' },
+        { num: 'Ch.12', zh: '補貼', en: 'Subsidies' },
+        { num: 'Ch.13', zh: '國營事業與被授予特權之事業', en: 'State-Owned Enterprises and Enterprises Granted Special Rights' },
+        { num: 'Ch.14', zh: '智慧財產', en: 'Intellectual Property' },
+      ],
+    },
+    {
+      theme: '法規、永續與爭端', themeEn: 'Regulation, Sustainability & Disputes',
+      articles: [
+        { num: 'Ch.15', zh: '公司治理', en: 'Corporate Governance' },
+        { num: 'Ch.16', zh: '貿易與永續發展', en: 'Trade and Sustainable Development' },
+        { num: 'Ch.17', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.18', zh: '良好法規實務與法規合作', en: 'Good Regulatory Practices and Regulatory Cooperation' },
+        { num: 'Ch.19', zh: '農業合作', en: 'Cooperation in the Field of Agriculture' },
+        { num: 'Ch.20', zh: '中小企業', en: 'Small and Medium-sized Enterprises' },
+        { num: 'Ch.21', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.22', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.23', zh: '最終條款', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── 歐英貿易與合作協定（EU-UK TCA）─────────────────────────────
+  'eu-uk-tca': [
+    {
+      theme: '基礎、貿易、運輸、能源、漁業', themeEn: 'Foundations & Trade',
+      articles: [
+        { num: 'Pt.1', zh: '通則與制度規定（共同價值、基本原則、合作機構）', en: 'Common and Institutional Provisions' },
+        { num: 'Pt.2-H1', zh: '第二部 第1編：貨品貿易', en: 'Trade — Goods' },
+        { num: 'Pt.2-H2', zh: '第二部 第2編：服務、投資與數位貿易', en: 'Trade — Services, Investment & Digital' },
+        { num: 'Pt.2-H3', zh: '第二部 第3編：資金移動、支付與資本移動', en: 'Trade — Capital Movements, Payments' },
+        { num: 'Pt.2-H4', zh: '第二部 第4編：智慧財產', en: 'Trade — Intellectual Property' },
+        { num: 'Pt.2-H5', zh: '第二部 第5編：政府採購', en: 'Trade — Public Procurement' },
+        { num: 'Pt.2-H6', zh: '第二部 第6編：競爭、國家補貼、稅務、勞動環境永續、能源', en: 'Trade — Competition, Subsidies, Tax, Sustainability, Energy' },
+        { num: 'Pt.2-H7', zh: '第二部 第7編：透明化、良好法規實務、與貿易相關之爭端解決', en: 'Trade — Transparency, Good Regulatory Practices' },
+        { num: 'Pt.2-A', zh: '航空運輸', en: 'Aviation' },
+        { num: 'Pt.2-R', zh: '道路運輸', en: 'Road Transport' },
+        { num: 'Pt.2-S', zh: '社會安全協調', en: 'Social Security Coordination' },
+        { num: 'Pt.2-F', zh: '漁業', en: 'Fisheries' },
+      ],
+    },
+    {
+      theme: '執法、司法、計畫參與與最終條款', themeEn: 'Law Enforcement, Programmes & Final',
+      articles: [
+        { num: 'Pt.3', zh: '執法與司法合作（資料分享、引渡、刑事司法互助等）', en: 'Law Enforcement and Judicial Cooperation' },
+        { num: 'Pt.4', zh: '主題合作（資料保護、衛生安全、網路安全等）', en: 'Thematic Cooperation' },
+        { num: 'Pt.5', zh: '參與歐盟計畫（Horizon Europe、Copernicus、Euratom 等）', en: 'Participation in EU Programmes' },
+        { num: 'Pt.6', zh: '爭端解決與橫向條款', en: 'Dispute Settlement and Horizontal Provisions' },
+        { num: 'Pt.7', zh: '最終規定（生效、檢視、終止）', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── AfCFTA（非洲大陸自由貿易區協定）─────────────────────────────
+  'afcfta': [
+    {
+      theme: '主協定與議定書', themeEn: 'Main Agreement & Protocols',
+      articles: [
+        { num: 'Main', zh: '建立非洲大陸自由貿易區協定（主協定）', en: 'Agreement Establishing the AfCFTA' },
+        { num: 'P.1', zh: '貨品貿易議定書（含原產地規則、貿易便捷化、SPS、TBT 等附件）', en: 'Protocol on Trade in Goods' },
+        { num: 'P.2', zh: '服務貿易議定書', en: 'Protocol on Trade in Services' },
+        { num: 'P.3', zh: '爭端解決規則與程序議定書', en: 'Protocol on Rules and Procedures on Settlement of Disputes' },
+        { num: 'P.4', zh: '投資議定書', en: 'Protocol on Investment' },
+        { num: 'P.5', zh: '智慧財產權議定書', en: 'Protocol on Intellectual Property Rights' },
+        { num: 'P.6', zh: '競爭政策議定書', en: 'Protocol on Competition Policy' },
+        { num: 'P.7', zh: '數位貿易議定書（2024 年 2 月通過）', en: 'Protocol on Digital Trade (adopted Feb 2024)' },
+        { num: 'P.8', zh: '婦女與青年於貿易中之地位議定書', en: 'Protocol on Women and Youth in Trade' },
+      ],
+    },
+  ],
+
+  // ─── ASEAN DEFA（東協數位經濟架構協定）──────────────────────────
+  //   實質完成於 2025/5 第 46 屆東協高峰會；公開文本草案章節結構
+  'asean-defa': [
+    {
+      theme: '基礎與市場進入', themeEn: 'Foundations & Market Access',
+      articles: [
+        { num: 'Ch.1', zh: '一般規定與定義', en: 'General Provisions and Definitions' },
+        { num: 'Ch.2', zh: '數位貿易便捷化（無紙化貿易、電子發票、電子簽章）', en: 'Digital Trade Facilitation' },
+        { num: 'Ch.3', zh: '跨境電子商務', en: 'Cross-Border E-Commerce' },
+        { num: 'Ch.4', zh: '支付與電子發票', en: 'Payments and E-Invoicing' },
+      ],
+    },
+    {
+      theme: '資料與信任', themeEn: 'Data & Trust',
+      articles: [
+        { num: 'Ch.5', zh: '跨境資料流動與資料保護', en: 'Cross-Border Data Flows and Data Protection' },
+        { num: 'Ch.6', zh: '網路安全', en: 'Cybersecurity' },
+        { num: 'Ch.7', zh: '數位身分', en: 'Digital ID' },
+        { num: 'Ch.8', zh: '線上消費者保護', en: 'Online Consumer Protection' },
+      ],
+    },
+    {
+      theme: '新興技術與數位賦能', themeEn: 'Emerging Tech & Inclusion',
+      articles: [
+        { num: 'Ch.9', zh: '人工智慧', en: 'Artificial Intelligence' },
+        { num: 'Ch.10', zh: '新興主題（綠色數位、金融科技、政府資料等）', en: 'Emerging Topics' },
+        { num: 'Ch.11', zh: '人才能力建構與數位技能', en: 'Talent and Digital Skills' },
+        { num: 'Ch.12', zh: '數位包容（中小企業、婦女、青年）', en: 'Digital Inclusion' },
+        { num: 'Ch.13', zh: '競爭政策', en: 'Competition Policy' },
+      ],
+    },
+    {
+      theme: '制度與最終規定', themeEn: 'Institutional & Final',
+      articles: [
+        { num: 'Ch.14', zh: '透明化與良好法規實務', en: 'Transparency and Good Regulatory Practices' },
+        { num: 'Ch.15', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.16', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.17', zh: '最終規定', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── DEPA（數位經濟夥伴協定）模組化設計 ────────────────────────
+  'depa': [
+    {
+      theme: '模組 1–4：基礎與交易便捷化', themeEn: 'Modules 1-4: Foundations & Facilitation',
+      articles: [
+        { num: 'M.1', zh: '初始條款與一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'M.2', zh: '商業與貿易便捷化（無紙化貿易、電子簽章、電子發票、快遞貨物）', en: 'Business and Trade Facilitation' },
+        { num: 'M.3', zh: '數位產品及相關議題之待遇（關稅、非歧視、原始碼）', en: 'Treatment of Digital Products' },
+        { num: 'M.4', zh: '資料議題（個資保護、跨境資料流動、算力設施位置、開放政府資料）', en: 'Data Issues' },
+      ],
+    },
+    {
+      theme: '模組 5–8：信任與新興議題', themeEn: 'Modules 5-8: Trust & Emerging Topics',
+      articles: [
+        { num: 'M.5', zh: '商業與消費者信任（垃圾訊息、消費者保護、網安、線上安全）', en: 'Wider Trust Environment' },
+        { num: 'M.6', zh: '數位身分', en: 'Digital Identities' },
+        { num: 'M.7', zh: '新興議題與技術（金融科技、人工智慧、政府採購、競爭政策）', en: 'Emerging Trends and Technologies' },
+        { num: 'M.8', zh: '創新與數位經濟合作（資料創新、開放資料、實驗法規沙盒）', en: 'Innovation in the Digital Economy' },
+      ],
+    },
+    {
+      theme: '模組 9–16：包容、合作與制度', themeEn: 'Modules 9-16: Inclusion & Institutional',
+      articles: [
+        { num: 'M.9', zh: '中小企業合作', en: 'Cooperation' },
+        { num: 'M.10', zh: '數位包容', en: 'Digital Inclusion' },
+        { num: 'M.11', zh: '聯合委員會與聯絡點', en: 'Joint Committee and Contact Points' },
+        { num: 'M.12', zh: '透明化', en: 'Transparency' },
+        { num: 'M.13', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'M.14', zh: '例外', en: 'Exceptions' },
+        { num: 'M.15', zh: '最終規定', en: 'Final Provisions' },
+        { num: 'M.16', zh: '附件與加入機制', en: 'Annexes and Accession' },
+      ],
+    },
+  ],
 };
