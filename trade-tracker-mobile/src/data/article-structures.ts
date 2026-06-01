@@ -1083,4 +1083,51 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── NAFTA（北美自由貿易協定，1994–2020 已由 USMCA 取代）──────
+  'nafta': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '目標', en: 'Objectives' },
+        { num: 'Ch.2', zh: '一般定義', en: 'General Definitions' },
+        { num: 'Ch.3', zh: '國民待遇及貨品市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.4', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.5', zh: '海關程序', en: 'Customs Procedures' },
+        { num: 'Ch.6', zh: '能源與基礎石化', en: 'Energy and Basic Petrochemicals' },
+        { num: 'Ch.7', zh: '農業及食品安全防疫檢疫', en: 'Agriculture and SPS Measures' },
+        { num: 'Ch.8', zh: '緊急防衛措施', en: 'Emergency Action' },
+        { num: 'Ch.9', zh: '標準相關措施', en: 'Standards-Related Measures' },
+      ],
+    },
+    {
+      theme: '投資、服務與商務人員', themeEn: 'Investment, Services & Business Persons',
+      articles: [
+        { num: 'Ch.10', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.11', zh: '投資（含投資人對地主國爭端解決 ISDS）', en: 'Investment (with ISDS)' },
+        { num: 'Ch.12', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.13', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.14', zh: '金融服務', en: 'Financial Services' },
+        { num: 'Ch.15', zh: '競爭政策、獨佔與國營事業', en: 'Competition Policy, Monopolies and State Enterprises' },
+        { num: 'Ch.16', zh: '商務人士臨時入境', en: 'Temporary Entry for Business Persons' },
+      ],
+    },
+    {
+      theme: '智財與制度', themeEn: 'IP & Institutional',
+      articles: [
+        { num: 'Ch.17', zh: '智慧財產', en: 'Intellectual Property' },
+        { num: 'Ch.18', zh: '出版、通知及法律行政', en: 'Publication, Notification and Administration of Laws' },
+        { num: 'Ch.19', zh: '反傾銷及反補貼之檢視', en: 'Review of Antidumping and Countervailing Duty Matters' },
+        { num: 'Ch.20', zh: '機構安排及爭端解決', en: 'Institutional Arrangements and Dispute Settlement' },
+      ],
+    },
+    {
+      theme: '例外與最終', themeEn: 'Exceptions & Final',
+      articles: [
+        { num: 'Ch.21', zh: '例外', en: 'Exceptions' },
+        { num: 'Ch.22', zh: '最終條款', en: 'Final Provisions' },
+        { num: 'Side', zh: '《北美勞動合作協定》（NAALC）與《北美環境合作協定》（NAAEC）平行協定', en: 'Side Agreements: NAALC (labour) and NAAEC (environment)' },
+      ],
+    },
+  ],
 };
