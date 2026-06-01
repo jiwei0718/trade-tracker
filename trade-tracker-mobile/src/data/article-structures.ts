@@ -526,4 +526,166 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── CPTPP（跨太平洋夥伴全面進步協定）──────────────────────────────
+  //   章節結構（30 章）；條文全文非官方中譯版本，故僅列章名
+  'cptpp': [
+    {
+      theme: '通則與市場進入', themeEn: 'General & Market Access',
+      articles: [
+        { num: 'Ch.1', zh: '初始規定及一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '國民待遇及貨品市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '原產地規則及原產地程序', en: 'Rules of Origin and Origin Procedures' },
+        { num: 'Ch.4', zh: '紡織品及成衣', en: 'Textile and Apparel Goods' },
+        { num: 'Ch.5', zh: '海關管理及貿易便捷化', en: 'Customs Administration and Trade Facilitation' },
+        { num: 'Ch.6', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.7', zh: '食品安全檢驗與動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.8', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+      ],
+    },
+    {
+      theme: '投資與服務', themeEn: 'Investment & Services',
+      articles: [
+        { num: 'Ch.9', zh: '投資', en: 'Investment' },
+        { num: 'Ch.10', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.11', zh: '金融服務', en: 'Financial Services' },
+        { num: 'Ch.12', zh: '商務人士臨時入境', en: 'Temporary Entry for Business Persons' },
+        { num: 'Ch.13', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.14', zh: '電子商務', en: 'Electronic Commerce' },
+      ],
+    },
+    {
+      theme: '政府與競爭', themeEn: 'Government & Competition',
+      articles: [
+        { num: 'Ch.15', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.16', zh: '競爭政策', en: 'Competition Policy' },
+        { num: 'Ch.17', zh: '國營事業及指定獨佔事業', en: 'State-Owned Enterprises and Designated Monopolies' },
+        { num: 'Ch.18', zh: '智慧財產', en: 'Intellectual Property' },
+      ],
+    },
+    {
+      theme: '勞動、環境與發展', themeEn: 'Labour, Environment & Development',
+      articles: [
+        { num: 'Ch.19', zh: '勞動', en: 'Labour' },
+        { num: 'Ch.20', zh: '環境', en: 'Environment' },
+        { num: 'Ch.21', zh: '合作與能力建構', en: 'Cooperation and Capacity Building' },
+        { num: 'Ch.22', zh: '競爭力與商業便捷化', en: 'Competitiveness and Business Facilitation' },
+        { num: 'Ch.23', zh: '發展', en: 'Development' },
+        { num: 'Ch.24', zh: '中小企業', en: 'Small and Medium-Sized Enterprises' },
+        { num: 'Ch.25', zh: '法規調和', en: 'Regulatory Coherence' },
+        { num: 'Ch.26', zh: '透明化及反貪腐', en: 'Transparency and Anti-Corruption' },
+      ],
+    },
+    {
+      theme: '行政與最終規定', themeEn: 'Administrative & Final',
+      articles: [
+        { num: 'Ch.27', zh: '行政及機構規定', en: 'Administrative and Institutional Provisions' },
+        { num: 'Ch.28', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.29', zh: '例外及一般規定', en: 'Exceptions and General Provisions' },
+        { num: 'Ch.30', zh: '最終規定', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── RCEP（區域全面經濟夥伴協定）─────────────────────────────────
+  'rcep': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款與一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.4', zh: '海關程序與貿易便捷化', en: 'Customs Procedures and Trade Facilitation' },
+        { num: 'Ch.5', zh: '食品安全檢驗與動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.6', zh: '標準、技術性法規與符合性評鑑程序', en: 'Standards, Technical Regulations and Conformity Assessment Procedures' },
+        { num: 'Ch.7', zh: '貿易救濟', en: 'Trade Remedies' },
+      ],
+    },
+    {
+      theme: '服務、人員與投資', themeEn: 'Services & Investment',
+      articles: [
+        { num: 'Ch.8', zh: '服務貿易（含金融、電信、專業服務附件）', en: 'Trade in Services (with Annexes on Financial, Telecommunications, Professional)' },
+        { num: 'Ch.9', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.10', zh: '投資', en: 'Investment' },
+      ],
+    },
+    {
+      theme: '智財、電商與競爭', themeEn: 'IP, E-Commerce & Competition',
+      articles: [
+        { num: 'Ch.11', zh: '智慧財產權', en: 'Intellectual Property' },
+        { num: 'Ch.12', zh: '電子商務', en: 'Electronic Commerce' },
+        { num: 'Ch.13', zh: '競爭', en: 'Competition' },
+        { num: 'Ch.14', zh: '中小企業', en: 'Small and Medium Enterprises' },
+        { num: 'Ch.15', zh: '經濟與技術合作', en: 'Economic and Technical Cooperation' },
+        { num: 'Ch.16', zh: '政府採購', en: 'Government Procurement' },
+      ],
+    },
+    {
+      theme: '一般規定與制度', themeEn: 'General & Institutional',
+      articles: [
+        { num: 'Ch.17', zh: '一般規定與例外', en: 'General Provisions and Exceptions' },
+        { num: 'Ch.18', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.19', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.20', zh: '最終規定', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── USMCA（美墨加協定）─────────────────────────────────────────
+  'usmca': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款與一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '國民待遇與貨品市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '農業', en: 'Agriculture' },
+        { num: 'Ch.4', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.5', zh: '原產地程序', en: 'Origin Procedures' },
+        { num: 'Ch.6', zh: '紡織品及成衣', en: 'Textile and Apparel Goods' },
+        { num: 'Ch.7', zh: '海關管理及貿易便捷化', en: 'Customs Administration and Trade Facilitation' },
+        { num: 'Ch.8', zh: '墨西哥碳氫化合物所有權之承認', en: 'Recognition of Mexico\'s Ownership of Hydrocarbons' },
+        { num: 'Ch.9', zh: '食品安全與防疫檢疫措施', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.10', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.11', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.12', zh: '部門別附件', en: 'Sectoral Annexes' },
+      ],
+    },
+    {
+      theme: '投資、服務與數位', themeEn: 'Investment, Services & Digital',
+      articles: [
+        { num: 'Ch.13', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.14', zh: '投資', en: 'Investment' },
+        { num: 'Ch.15', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.16', zh: '商務人士臨時入境', en: 'Temporary Entry for Business Persons' },
+        { num: 'Ch.17', zh: '金融服務', en: 'Financial Services' },
+        { num: 'Ch.18', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.19', zh: '數位貿易', en: 'Digital Trade' },
+        { num: 'Ch.20', zh: '智慧財產權', en: 'Intellectual Property Rights' },
+      ],
+    },
+    {
+      theme: '競爭、勞動與環境', themeEn: 'Competition, Labor & Environment',
+      articles: [
+        { num: 'Ch.21', zh: '競爭政策', en: 'Competition Policy' },
+        { num: 'Ch.22', zh: '國營事業及指定獨佔事業', en: 'State-Owned Enterprises and Designated Monopolies' },
+        { num: 'Ch.23', zh: '勞動', en: 'Labor' },
+        { num: 'Ch.24', zh: '環境', en: 'Environment' },
+        { num: 'Ch.25', zh: '中小企業', en: 'Small and Medium-Sized Enterprises' },
+        { num: 'Ch.26', zh: '競爭力', en: 'Competitiveness' },
+        { num: 'Ch.27', zh: '反貪腐', en: 'Anti-Corruption' },
+        { num: 'Ch.28', zh: '良好法規實務', en: 'Good Regulatory Practices' },
+      ],
+    },
+    {
+      theme: '行政與最終規定', themeEn: 'Administrative & Final',
+      articles: [
+        { num: 'Ch.29', zh: '公布與行政', en: 'Publication and Administration' },
+        { num: 'Ch.30', zh: '行政及機構規定', en: 'Administrative and Institutional Provisions' },
+        { num: 'Ch.31', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.32', zh: '例外及一般規定', en: 'Exceptions and General Provisions' },
+        { num: 'Ch.33', zh: '總體經濟政策與匯率事項', en: 'Macroeconomic Policies and Exchange Rate Matters' },
+        { num: 'Ch.34', zh: '最終規定', en: 'Final Provisions' },
+      ],
+    },
+  ],
 };
