@@ -318,11 +318,47 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'asean-defa': {
     latestStatus: {
       summary:
-        'ASEAN 數位經濟框架協定（DEFA）為全球首個區域性數位經濟協定，2023 年 9 月啟動談判。ASEAN 領袖於 2025 年 5 月第 46 屆東協高峰會宣布實質完成（substantial conclusion）談判，目標於 2025 年內簽署，預估可使東協數位經濟規模倍增。',
+        'ASEAN 數位經濟架構協定（DEFA）為全球首個區域性數位經濟協定，2023 年 9 月啟動談判。ASEAN 領袖於 2025 年 5 月第 46 屆東協高峰會宣布實質完成（substantial conclusion）談判，目標於 2025 年內簽署，預估可使東協數位經濟規模倍增。',
       asOf: '2025-12', byTool: true,
+    },
+    indigo: {
+      total: 0.66, raw: 18.5, max: 28, official: false,
+      sourceNote: '本工具依 OECD INDIGO-t 方法論粗估（依公開草案章節結構）；非 OECD 官方分數',
+      domains: [
+        { code: 'A', name: '促進電子商務', raw: 6.0, max: 7, score: 0.86, note: '電子簽章、電子發票、無紙化貿易、電子支付完整納入' },
+        { code: 'B', name: '開放性與電子商務', raw: 2.5, max: 5, score: 0.50 },
+        { code: 'C', name: '信任與電子商務', raw: 5.5, max: 6, score: 0.92, note: '消費者保護、個資、網安、加密章節完整' },
+        { code: 'D', name: '跨境資料流動與在地化', raw: 2.0, max: 2, score: 1.0 },
+        { code: 'E', name: '廣義數位經濟議題', raw: 2.5, max: 8, score: 0.31, note: 'AI、數位身分、金融科技、數位包容、人才能力等新興議題模組' },
+      ],
+      asOf: '2025-12',
     },
     sourceDocs: [
       { label: 'ASEAN — DEFA', url: 'https://asean.org/our-communities/economic-community/', lang: 'en' },
+    ],
+  },
+
+  // 子協定：CPTPP 擴員申請（屬 CPTPP 之延伸事項）
+  'cptpp-expansion': {
+    latestStatus: {
+      summary:
+        'CPTPP 擴員程序：英國加入議定書已於 2024 年 12 月 15 日生效。截至 2025 年底，已提出加入申請者包含中國、中華民國（臺灣）、烏拉圭、烏克蘭、哥斯大黎加；哥斯大黎加加入工作小組已於 2024 年成立並啟動審查程序。新成員加入須經全體現有 12 個締約方共識決。',
+      asOf: '2025-12', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'New Zealand MFAT — CPTPP accession', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/cptpp/cptpp-accessions', lang: 'en' },
+    ],
+  },
+
+  // 子協定：WT/GC/283 電子傳輸關稅暫免聯合聲明（JSI 內的臨時安排）
+  'wt-gc-283-moratorium': {
+    latestStatus: {
+      summary:
+        'WTO 第 14 屆部長會議（MC14，2026/3）未能完成電子傳輸關稅暫免（moratorium）的延續，該措施於 2026 年 3 月底依期失效。2026 年 4 月 1 日，包含我國在內 23 個 WTO 成員聯合提交《電子傳輸暫免課徵關稅聯合聲明》（WT/GC/283），以複邊臨時措施維持簽署成員間不對電子傳輸課徵關稅之做法，效期至下次總理事會會議召開為止。',
+      asOf: '2026-04', byTool: true,
+    },
+    sourceDocs: [
+      { label: 'WTO Documents Online — WT/GC/283', url: 'https://docs.wto.org/', lang: 'en' },
     ],
   },
 
