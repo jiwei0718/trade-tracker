@@ -1130,4 +1130,113 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── ANZTEC（臺紐經濟合作協定，25 章）────────────────────────
+  //   臺灣與紐西蘭於 2013/7 簽署、同年 12/1 生效
+  'wto-rta-new-zealand-chinese-taipei': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款及一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則及實施程序', en: 'Rules of Origin and Origin Procedures' },
+        { num: 'Ch.4', zh: '海關程序及合作', en: 'Customs Procedures and Cooperation' },
+        { num: 'Ch.5', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.6', zh: '食品安全檢驗與動植物防疫檢疫措施及合作', en: 'SPS Measures and Cooperation' },
+        { num: 'Ch.7', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+      ],
+    },
+    {
+      theme: '服務、投資與人員', themeEn: 'Services, Investment & People',
+      articles: [
+        { num: 'Ch.8', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.9', zh: '投資', en: 'Investment' },
+        { num: 'Ch.10', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.11', zh: '政府採購', en: 'Government Procurement' },
+      ],
+    },
+    {
+      theme: '競爭、智財、電商與合作', themeEn: 'Competition, IP, E-Commerce & Cooperation',
+      articles: [
+        { num: 'Ch.12', zh: '競爭', en: 'Competition' },
+        { num: 'Ch.13', zh: '智慧財產', en: 'Intellectual Property' },
+        { num: 'Ch.14', zh: '電子商務', en: 'Electronic Commerce' },
+        { num: 'Ch.15', zh: '合作', en: 'Cooperation' },
+        { num: 'Ch.16', zh: '原住民族合作（全球首見專章）', en: 'Cooperation in Respect of Indigenous Peoples (world-first chapter)' },
+        { num: 'Ch.17', zh: '電影及電視合製', en: 'Films and Television' },
+      ],
+    },
+    {
+      theme: '環境、勞動與制度', themeEn: 'Environment, Labour & Institutional',
+      articles: [
+        { num: 'Ch.18', zh: '環境', en: 'Environment' },
+        { num: 'Ch.19', zh: '勞動', en: 'Labour' },
+        { num: 'Ch.20', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.21', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.22', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.23', zh: '一般條款及例外', en: 'General Provisions and Exceptions' },
+        { num: 'Ch.24', zh: '最終條款', en: 'Final Provisions' },
+        { num: 'Ch.25', zh: '最終條款（附則）', en: 'Final Clauses' },
+      ],
+    },
+  ],
+
+  // ─── ASTEP（臺星經濟夥伴協定，18 章）─────────────────────────
+  //   2013/11 簽署、2014/4 生效
+  'wto-rta-singapore-chinese-taipei': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款', en: 'Initial Provisions' },
+        { num: 'Ch.2', zh: '一般定義', en: 'General Definitions' },
+        { num: 'Ch.3', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.4', zh: '原產地規則', en: 'Rules of Origin' },
+        { num: 'Ch.5', zh: '海關程序', en: 'Customs Procedures' },
+        { num: 'Ch.6', zh: '食品安全檢驗與動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.7', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.8', zh: '貿易救濟', en: 'Trade Remedies' },
+      ],
+    },
+    {
+      theme: '服務、投資、電信與電商', themeEn: 'Services, Investment, Telecom & E-Commerce',
+      articles: [
+        { num: 'Ch.9', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.10', zh: '投資', en: 'Investment' },
+        { num: 'Ch.11', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.12', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.13', zh: '電子商務', en: 'Electronic Commerce' },
+      ],
+    },
+    {
+      theme: '採購、競爭與制度', themeEn: 'Procurement, Competition & Institutional',
+      articles: [
+        { num: 'Ch.14', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.15', zh: '競爭', en: 'Competition' },
+        { num: 'Ch.16', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.17', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.18', zh: '最終條款', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── 羅馬條約（建立歐洲經濟共同體之條約，1957）──────────────────
+  'eec-rome': [
+    {
+      theme: '原則與基礎', themeEn: 'Principles & Foundations',
+      articles: [
+        { num: 'Pt.1', zh: '第一部 原則', en: 'Part One — Principles' },
+        { num: 'Pt.2', zh: '第二部 共同體之基礎（貨品自由移動、農業、人員/服務/資本自由移動、運輸）', en: 'Part Two — Foundations of the Community (free movement of goods, agriculture, persons/services/capital, transport)' },
+        { num: 'Pt.3', zh: '第三部 共同體之政策（競爭、稅務、法律調和、經濟政策、社會政策、歐洲投資銀行）', en: 'Part Three — Policy of the Community (competition, tax, approximation of laws, economic policy, social policy, EIB)' },
+        { num: 'Pt.4', zh: '第四部 海外國家與領地之聯繫', en: 'Part Four — Association of Overseas Countries and Territories' },
+      ],
+    },
+    {
+      theme: '機構與一般條款', themeEn: 'Institutions & General Provisions',
+      articles: [
+        { num: 'Pt.5', zh: '第五部 共同體之機構（議會、理事會、執委會、法院、經濟暨社會委員會、會計安排）', en: 'Part Five — Institutions of the Community' },
+        { num: 'Pt.6', zh: '第六部 一般條款與最終規定', en: 'Part Six — General and Final Provisions' },
+        { num: 'Note', zh: '附註：本條約後由《單一歐洲法》（1986）、《馬斯垂克條約》（1992）、《阿姆斯特丹條約》（1997）、《尼斯條約》（2001）、《里斯本條約》（2007）逐步修訂；其架構演變為今日《歐洲聯盟運作條約》（TFEU）。', en: 'Note: progressively amended by SEA (1986), Maastricht (1992), Amsterdam (1997), Nice (2001), Lisbon (2007); evolved into today\'s TFEU.' },
+      ],
+    },
+  ],
 };
