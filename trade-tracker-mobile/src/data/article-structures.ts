@@ -856,4 +856,63 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── CETA（歐盟—加拿大全面經濟貿易協定，30 章）────────────────────
+  'eu-canada-ceta': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '一般定義與初始條款', en: 'General Definitions and Initial Provisions' },
+        { num: 'Ch.2', zh: '國民待遇與貨品市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.4', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.5', zh: '食品安全與動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.6', zh: '海關與貿易便捷化', en: 'Customs and Trade Facilitation' },
+        { num: 'Ch.7', zh: '補貼', en: 'Subsidies' },
+      ],
+    },
+    {
+      theme: '投資、服務與專業人員', themeEn: 'Investment, Services & Mobility',
+      articles: [
+        { num: 'Ch.8', zh: '投資（含投資法院制度 ICS）', en: 'Investment (incl. Investment Court System)' },
+        { num: 'Ch.9', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.10', zh: '自然人臨時入境與停留', en: 'Temporary Entry and Stay of Natural Persons' },
+        { num: 'Ch.11', zh: '專業資格相互承認', en: 'Mutual Recognition of Professional Qualifications' },
+        { num: 'Ch.12', zh: '國內監管', en: 'Domestic Regulation' },
+        { num: 'Ch.13', zh: '金融服務', en: 'Financial Services' },
+        { num: 'Ch.14', zh: '國際海運服務', en: 'International Maritime Transport Services' },
+        { num: 'Ch.15', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.16', zh: '電子商務', en: 'Electronic Commerce' },
+      ],
+    },
+    {
+      theme: '競爭、政府事業與智財', themeEn: 'Competition, SOEs & IP',
+      articles: [
+        { num: 'Ch.17', zh: '競爭政策', en: 'Competition Policy' },
+        { num: 'Ch.18', zh: '國營事業、獨佔與被授予特權之事業', en: 'State Enterprises, Monopolies and Enterprises Granted Special Rights' },
+        { num: 'Ch.19', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.20', zh: '智慧財產', en: 'Intellectual Property' },
+      ],
+    },
+    {
+      theme: '法規合作、永續與勞動環境', themeEn: 'Regulation, Sustainability, Labour & Environment',
+      articles: [
+        { num: 'Ch.21', zh: '法規合作', en: 'Regulatory Cooperation' },
+        { num: 'Ch.22', zh: '貿易與永續發展', en: 'Trade and Sustainable Development' },
+        { num: 'Ch.23', zh: '貿易與勞動', en: 'Trade and Labour' },
+        { num: 'Ch.24', zh: '貿易與環境', en: 'Trade and Environment' },
+        { num: 'Ch.25', zh: '雙邊對話與合作', en: 'Bilateral Dialogues and Cooperation' },
+      ],
+    },
+    {
+      theme: '行政與最終規定', themeEn: 'Administrative & Final',
+      articles: [
+        { num: 'Ch.26', zh: '行政與機構規定', en: 'Administrative and Institutional Provisions' },
+        { num: 'Ch.27', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.28', zh: '例外', en: 'Exceptions' },
+        { num: 'Ch.29', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.30', zh: '最終規定', en: 'Final Provisions' },
+      ],
+    },
+  ],
 };
