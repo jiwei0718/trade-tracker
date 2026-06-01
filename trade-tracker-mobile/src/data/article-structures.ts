@@ -1308,4 +1308,102 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── WTO（馬拉喀什協定 + 附件 1A/1B/1C/2/3/4）─────────────────
+  'wto': [
+    {
+      theme: '主協定', themeEn: 'Main Agreement',
+      articles: [
+        { num: 'Main', zh: '《建立世界貿易組織馬拉喀什協定》（1994/4/15 簽署）— 設立 WTO 之法律基礎，含 16 條：機構架構、決策、會員資格、預算、修正、退出。', en: 'Marrakesh Agreement Establishing the WTO (signed 1994-04-15)' },
+      ],
+    },
+    {
+      theme: '附件 1A：貨品貿易多邊協定', themeEn: 'Annex 1A: Multilateral Agreements on Trade in Goods',
+      articles: [
+        { num: 'A.1A-1', zh: 'GATT 1994（含 GATT 1947 經修訂後條款）', en: 'GATT 1994' },
+        { num: 'A.1A-2', zh: '《農業協定》', en: 'Agreement on Agriculture' },
+        { num: 'A.1A-3', zh: '《食品安全檢驗與動植物防疫檢疫措施協定》（SPS）', en: 'SPS Agreement' },
+        { num: 'A.1A-4', zh: '《紡織品與成衣協定》（ATC；2005 屆期）', en: 'ATC (expired 2005)' },
+        { num: 'A.1A-5', zh: '《技術性貿易障礙協定》（TBT）', en: 'TBT Agreement' },
+        { num: 'A.1A-6', zh: '《與貿易有關之投資措施協定》（TRIMs）', en: 'TRIMs Agreement' },
+        { num: 'A.1A-7', zh: '《反傾銷協定》', en: 'Anti-Dumping Agreement' },
+        { num: 'A.1A-8', zh: '《關稅估價協定》', en: 'Customs Valuation Agreement' },
+        { num: 'A.1A-9', zh: '《裝船前檢驗協定》', en: 'PSI Agreement' },
+        { num: 'A.1A-10', zh: '《原產地規則協定》', en: 'Rules of Origin Agreement' },
+        { num: 'A.1A-11', zh: '《輸入許可程序協定》', en: 'Import Licensing Agreement' },
+        { num: 'A.1A-12', zh: '《補貼暨平衡措施協定》（SCM）', en: 'SCM Agreement' },
+        { num: 'A.1A-13', zh: '《防衛措施協定》', en: 'Safeguards Agreement' },
+        { num: 'A.1A-14', zh: '《貿易便捷化協定》（TFA；2017 生效）', en: 'TFA (in force 2017)' },
+        { num: 'A.1A-15', zh: '《漁業補貼協定》（2022 部分通過；2024 補充協定談判中）', en: 'Fisheries Subsidies Agreement' },
+      ],
+    },
+    {
+      theme: '附件 1B/1C：服務與智財', themeEn: 'Annex 1B/1C: Services & IP',
+      articles: [
+        { num: 'A.1B', zh: '《服務貿易總協定》（GATS）— 涵蓋金融、電信、運輸、專業服務等', en: 'GATS' },
+        { num: 'A.1C', zh: '《與貿易有關之智慧財產權協定》（TRIPS）— 專利、商標、著作權、地理標示、營業秘密', en: 'TRIPS Agreement' },
+      ],
+    },
+    {
+      theme: '附件 2/3：爭端解決與政策審議', themeEn: 'Annex 2/3: Disputes & TPRM',
+      articles: [
+        { num: 'A.2', zh: '《爭端解決規則與程序瞭解書》（DSU）— 設立爭端解決機構（DSB）、小組、上訴機構', en: 'DSU — Dispute Settlement' },
+        { num: 'A.3', zh: '《貿易政策審議機制》（TPRM）— 定期審議會員貿易政策', en: 'TPRM' },
+      ],
+    },
+    {
+      theme: '附件 4：複邊貿易協定', themeEn: 'Annex 4: Plurilateral Agreements',
+      articles: [
+        { num: 'A.4-GPA', zh: '《政府採購協定》（GPA；複邊，2014 修訂生效）', en: 'Government Procurement Agreement' },
+        { num: 'A.4-Civil', zh: '《民用航空器貿易協定》（複邊）', en: 'Trade in Civil Aircraft Agreement' },
+      ],
+    },
+    {
+      theme: '其後加入：複邊倡議（JSI）', themeEn: 'Post-Marrakesh: JSIs',
+      articles: [
+        { num: 'JSI-1', zh: '《電子商務聯合聲明倡議》（2019 啟動，2024 穩定文本；2026/3 通過《過渡性安排宣言》）', en: 'E-Commerce JSI' },
+        { num: 'JSI-2', zh: '《投資便捷化發展協定》（2024/2 結案，待入 Annex 4）', en: 'Investment Facilitation for Development' },
+        { num: 'JSI-3', zh: '《服務貿易國內規章》（2024/2 部分採納）', en: 'Services Domestic Regulation' },
+        { num: 'JSI-4', zh: '《電子傳輸暫免課徵關稅》工作計畫（2026/3 失效後改為 WT/GC/283）', en: 'E-Transmissions Moratorium' },
+      ],
+    },
+  ],
+
+  // ─── 馬斯垂克條約（建立歐洲聯盟條約，1992）─────────────────────
+  'maastricht': [
+    {
+      theme: '共同條款', themeEn: 'Common Provisions',
+      articles: [
+        { num: 'T-I', zh: 'Title I 共同條款（A–F 條）：建立歐洲聯盟、目標、原則', en: 'Title I — Common Provisions (Arts. A-F)' },
+      ],
+    },
+    {
+      theme: '修訂歐洲共同體條約（第一支柱）', themeEn: 'Pillar I — Amendments to EC Treaties',
+      articles: [
+        { num: 'T-II', zh: 'Title II 修訂《建立歐洲經濟共同體條約》（含經濟暨貨幣聯盟 EMU、共同政策、機構強化）', en: 'Title II — EEC Treaty amendments (incl. EMU)' },
+        { num: 'T-III', zh: 'Title III 修訂《建立歐洲煤鋼共同體條約》', en: 'Title III — ECSC Treaty amendments' },
+        { num: 'T-IV', zh: 'Title IV 修訂《建立歐洲原子能共同體條約》', en: 'Title IV — Euratom Treaty amendments' },
+      ],
+    },
+    {
+      theme: '共同外交安全政策（第二支柱）', themeEn: 'Pillar II — CFSP',
+      articles: [
+        { num: 'T-V', zh: 'Title V 共同外交與安全政策（CFSP）— 政府間合作模式', en: 'Title V — Common Foreign and Security Policy' },
+      ],
+    },
+    {
+      theme: '司法與內政事務（第三支柱）', themeEn: 'Pillar III — JHA',
+      articles: [
+        { num: 'T-VI', zh: 'Title VI 司法與內政事務合作（JHA）— 移民、難民、警政、刑事司法', en: 'Title VI — Cooperation in JHA' },
+      ],
+    },
+    {
+      theme: '最終條款與議定書', themeEn: 'Final Provisions & Protocols',
+      articles: [
+        { num: 'T-VII', zh: 'Title VII 最終條款（修訂程序、批准、生效）', en: 'Title VII — Final Provisions' },
+        { num: 'Prot', zh: '附帶 17 項議定書（含經濟暨貨幣聯盟、英國與丹麥之豁免、社會政策議定書等）', en: '17 Protocols (incl. EMU, UK/Denmark opt-outs, Social Policy)' },
+        { num: 'Note', zh: '附註：本條約之三支柱架構於 2009 年《里斯本條約》生效後廢除，整合為今日《歐盟條約》（TEU）與《歐盟運作條約》（TFEU）兩大條約。', en: 'Note: Three-pillar structure abolished by Lisbon Treaty (2009); restructured into today\'s TEU and TFEU.' },
+      ],
+    },
+  ],
 };
