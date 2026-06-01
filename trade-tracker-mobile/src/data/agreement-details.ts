@@ -895,6 +895,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'india-nz': {
     latestStatus: {
       summary: '印度—紐西蘭自由貿易協定談判於 2025 年 3 月正式啟動，雙方設定加速完成的目標，乳製品市場開放為主要議題之一。',
+      detail:
+        '印度—紐西蘭自由貿易協定談判於 2025 年 3 月 16 日 Modi 印度與紐西蘭總理 Luxon 共同訪問新德里時宣布正式啟動，原計畫於 60 天內完成首輪實質會談。\n\n【談判背景】(1) 印紐曾於 2010 年啟動 FTA 談判，但因紐方對印開放乳製品（紐方優勢產業）市場關切而長期僵持、2015 年實質停滯；(2) 印度於 2019 年退出 RCEP 後，紐方需單獨與印度建立 FTA 關係；(3) 雙方各於 2024–2025 年完成新政府就任（紐方 Luxon 國家黨上台、印度 Modi 第三任期），形成新的談判動能。\n\n【核心爭議】\n(1) **乳製品**：紐方乳業（Fonterra）希望進入印度市場（印度為全球最大乳製品消費國，年值約 1,500 億美元）。但印度乳業關係 8,000 萬小農生計，是政治禁忌；歷年來印度對所有 FTA 夥伴均拒絕納入乳製品市場開放（含 RCEP）；\n(2) **農產品**：印度紅肉、葡萄酒、奇異果均有印方關注；\n(3) **服務貿易**：印方要求擴大專業人員（IT、會計、護理）赴紐簽證；\n(4) **數位貿易**：紐方要求高標準章節（與 DEPA 一致）。\n\n【規模】2024 年雙邊貿易僅約 19 億紐元，遠低於兩國潛力；FTA 完成預期可使雙邊貿易倍增。\n\n【近期動向】2025 年 3 月啟動後已完成 3 輪實質會談，主要在乳製品（紐方逐步妥協為「過渡期 + 配額」模式）、印方紅肉開放上取得進展，但雙方均期待 2025–2026 年內完成。',
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [{ label: 'New Zealand MFAT — India', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/agreements-under-negotiation/india', lang: 'en' }],
@@ -1007,6 +1009,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'cobden-chevalier': {
     latestStatus: {
       summary: '《英法商務條約》（1860）引入最惠國（MFN）原則並透過互相援引擴散至歐洲各國，奠定 19 世紀自由貿易網絡的基礎。屬歷史性條約，於一次大戰前後的保護主義浪潮中式微。',
+      detail:
+        '《科布登—謝瓦利耶條約》（Cobden-Chevalier Treaty）由英國經濟學家 Richard Cobden 與法方代表 Michel Chevalier 主導談判，1860 年 1 月 23 日簽署，是工業革命後第一個現代意義的雙邊「貿易自由化」條約。\n\n【主要內容】(1) 英國對法國葡萄酒、白蘭地、絲綢等大幅降稅；(2) 法國對英國工業品（煤、鐵、機械、紡織）大幅降稅，多項免稅；(3) 第一條納入**「最惠國條款」**（MFN clause）：任一方對第三國給予的優惠，自動延伸至對方。\n\n【「條約網絡」效應】MFN 條款形成「條約串聯效應」：英法之後，歐洲各國相繼簽署雙邊貿易條約，相互援引 MFN，使優惠條款快速擴散。1860–1875 年間：法國—比利時（1861）、英國—比利時（1862）、英國—義大利（1863）、法國—關稅同盟（1862）、法國—瑞士（1864）等共逾 50 個條約。\n\n【經濟影響】19 世紀下半葉成為「自由貿易黃金時代」：歐洲平均關稅由 1820 年代約 50% 降至 1875 年約 9–12%；歐洲內部貿易大幅成長。\n\n【衰落】1873 年「長期蕭條」後，農業保護主義興起：德國 1879 年俾斯麥關稅、法國 1881 年 Méline 關稅、義大利 1887 年關稅、各國相繼提高農產品關稅。1892 年法國《Méline 法》正式廢除自由貿易、提高工業品關稅，標誌條約體系實質終結。1914 年一戰爆發後，條約體系完全瓦解。\n\n【歷史地位】(1) MFN 原則經 Cobden-Chevalier 確立，成為 20 世紀 GATT/WTO 體系的核心原則之一（GATT 第 1 條）；(2) 條約串聯效應為當代「FTA 第三方援用條款」（含 CPTPP、RCEP）的雛形；(3) 19 世紀自由貿易—20 世紀初保護主義—戰後 GATT 自由化，形成貿易史的「鐘擺」循環。',
       asOf: '1914-01', byTool: true,
     },
     sourceDocs: [{ label: 'WTO — Principles of the trading system (MFN)', url: 'https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact2_e.htm', lang: 'en' }],
@@ -1037,6 +1041,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'rtaa-1934': {
     latestStatus: {
       summary: '美國《互惠貿易協定法》（RTAA，1934）將關稅談判授權由國會移轉至總統，開啟以雙邊互惠協定降低關稅的時代，為戰後 GATT 多邊體系奠基。其精神已由 GATT/WTO 承接。',
+      detail:
+        '《互惠貿易協定法》（Reciprocal Trade Agreements Act, RTAA）由國務卿 Cordell Hull 主導，1934 年 6 月 12 日經羅斯福總統簽署生效，是美國貿易政策史上里程碑式立法。\n\n【背景】《斯姆特—霍利關稅法》（1930）保護主義引發全球報復，加劇大蕭條。羅斯福政府為扭轉局面、振興出口、修補與盟邦關係，需突破國會逐項投票的慣性。\n\n【主要內容】\n(1) **授權移轉**：國會授權總統與外國談判雙邊互惠協定，將特定品項關稅最多調降 50%，**無需逐個重新立法批准**（此前美國憲法傳統下，關稅由國會詳細制定）；\n(2) **互惠原則**：對方須提供相當之關稅優惠；\n(3) **MFN 自動延伸**：協定中之降稅自動延伸至所有與美方有 MFN 待遇之國家；\n(4) **3 年期限**：原始法 3 年屆期，後續多次續展（1937、1940、1943…）至 1962 年由《貿易擴展法》取代。\n\n【主要協定】RTAA 授權下，美方 1934–1947 年間與 30 餘國簽署雙邊互惠協定，含古巴（1934）、巴西（1935）、加拿大（1935）、英國（1938）、阿根廷（1941）等。\n\n【經濟影響】美國平均關稅由 1933 年約 60% 降至 1947 年約 25%；雙邊互惠模式為戰後 GATT 多邊降稅奠定範本與政治可行性基礎。\n\n【歷史意義】\n(1) RTAA 確立「**行政協定模式**」（executive agreement），開啟總統主導對外貿易談判之傳統，影響至今；\n(2) MFN 自動延伸機制為 GATT 第 1 條 MFN 原則的直接前身；\n(3) 1962《貿易擴展法》延續 RTAA 精神，賦予甘迺迪總統授權啟動甘迺迪回合；\n(4) 後續歷次《貿易法》（1974、1988、2002、2015）均建立「快速通關」（Trade Promotion Authority, TPA）機制，亦源自 RTAA。',
       asOf: '1947-01', byTool: true,
     },
     sourceDocs: [{ label: 'US Office of the Historian — RTAA', url: 'https://history.state.gov/milestones/1921-1936/protectionism', lang: 'en' }],
@@ -1058,6 +1064,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'efta-1960': {
     latestStatus: {
       summary: '《斯德哥爾摩公約》（1960）創立歐洲自由貿易協會（EFTA）。雖多數創始國其後加入歐盟，EFTA 至今仍由瑞士、挪威、冰島、列支敦斯登 4 國維持運作，並對外積極簽署 FTA。',
+      detail:
+        '歐洲自由貿易協會（European Free Trade Association, EFTA）由 1960 年 1 月 4 日《斯德哥爾摩公約》（Stockholm Convention）建立，1960 年 5 月 3 日生效，由英、奧、丹、挪、葡、瑞典、瑞士 7 國發起。後芬蘭（1961 聯繫、1986 正式）、冰島（1970）、列支敦斯登（1991）加入。\n\n【「七國 vs 六國」歷史】EFTA 為對抗歐洲經濟共同體（EEC，6 國）而成立。英方倡議「自由貿易區」（無共同對外關稅）以平衡 EEC 的「關稅同盟」模式。\n\n【會員流失】成員陸續轉投歐盟：英、丹（1973）、葡（1986）、奧、芬、瑞典（1995）。現會員：瑞士、挪威、冰島、列支敦斯登（4 國）。\n\n【主要功能】\n(1) **內部自由貿易**：成員間貨品零關稅（不含農業 / 漁業）；\n(2) **EEA 機制**：3 個會員（不含瑞士）透過 EEA 參與歐盟單一市場；瑞士透過雙邊條約模式整合；\n(3) **對外 FTA 網絡**：EFTA 集體與全球約 40 個國家/區域簽 FTA，包括加拿大、墨西哥、智利、新加坡、韓國、印度、中國香港、海合會（GCC）等；2025 年完成與 Mercosur、印度 FTA。\n\n【特色】(1) EFTA 對外 FTA 通常較歐盟更具彈性，能更快達成（因無農業共同政策、無內部立法障礙）；(2) 4 個會員均為高所得國家（人均 GDP 約 9 萬美元）、合計人口僅約 1,400 萬，但對外貿易約 7,000 億美元，是全球重要的貿易主體。\n\n【法律機構】EFTA 法院（盧森堡）、EFTA 監督機構（ESA，布魯塞爾）、EFTA 秘書處（日內瓦）。',
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [{ label: 'EFTA 官方網站', url: 'https://www.efta.int/', lang: 'en' }],
@@ -1072,6 +1080,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'aladi': {
     latestStatus: {
       summary: '拉丁美洲整合協會（ALADI，1980）取代 LAFTA，以彈性的雙邊與次區域優惠安排推動拉美經濟整合，現有 13 個會員國，為 Mercosur、安第斯共同體等的制度傘架，持續運作。',
+      detail:
+        '拉丁美洲整合協會（Asociación Latinoamericana de Integración, ALADI）由 1980 年 8 月 12 日《蒙特維多條約》（Montevideo Treaty 1980）建立，1981 年生效，取代 1960 年的 LAFTA。秘書處設於烏拉圭蒙特維多。\n\n【為何取代 LAFTA】LAFTA（1960）採剛性「全體共同降稅」模式，要求 12 年內達零關稅，但因成員經濟發展差距過大而失敗。ALADI 改採「彈性整合」：允許成員以雙邊、多邊、次區域形式自由安排優惠。\n\n【成員】13 個正式會員國：阿根廷、玻利維亞、巴西、智利、哥倫比亞、古巴、厄瓜多、墨西哥、巴拿馬（2012 加入）、巴拉圭、秘魯、烏拉圭、委內瑞拉；尼加拉瓜（2011 通過加入但未完成）。\n\n【三大優惠類別】\n(1) **區域關稅優惠**（PAR）：對全體成員的部分關稅減讓；\n(2) **區域範圍協定**（AAR）：可於部分成員間就單一議題達成（如關稅、服務、貿易便捷化）；\n(3) **部分範圍協定**（AAP）：成員間雙邊或次區域 FTA。\n\n【實質角色】(1) ALADI 為拉美「FTA 制度傘架」：成員間絕大多數 FTA（含 Mercosur、安第斯共同體、智利 FTA 網絡）均以 ALADI 為法律基礎；(2) 對 LDC 成員（玻、厄、巴拉圭）給予「特殊待遇」（NMF Plus）；(3) 為拉美在 WTO 體系下「整體南方」談判提供平台。\n\n【現況】2024 年成員間區內貿易約 1,500 億美元，佔總貿易約 13%（雖低於歐盟、北美），但 ALADI 作為制度框架在持續運作。',
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [{ label: 'ALADI 官方網站', url: 'https://www.aladi.org/', lang: 'es' }],
@@ -1086,6 +1096,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'caricom-1973': {
     latestStatus: {
       summary: '《查瓜拉馬斯條約》（1973）創立加勒比共同體（CARICOM），推動加勒比地區單一市場與經濟整合（CSME），現有 15 個成員國，持續運作。',
+      detail:
+        '《查瓜拉馬斯條約》（Treaty of Chaguaramas）於 1973 年 7 月 4 日由 4 個前英屬殖民地（巴貝多、蓋亞那、牙買加、千里達及托巴哥）簽署，創立加勒比共同體（Caribbean Community, CARICOM），1973 年 8 月 1 日生效。2001 年修訂為《查瓜拉馬斯修訂條約》，建立加勒比單一市場與經濟（CSME）架構。\n\n【成員】15 個正式會員國：安提瓜及巴布達、巴哈馬、巴貝多、貝里斯、多明尼克、格瑞那達、蓋亞那、海地、牙買加、蒙瑟瑞、聖克里斯多福及尼維斯、聖露西亞、聖文森及格瑞那丁、蘇利南、千里達及托巴哥。另有 5 個聯繫會員（含百慕達、開曼、英屬維京群島等）。\n\n【主要內容】(1) 共同市場：成員間貨品、服務、資本、人員自由流通；(2) 共同對外關稅；(3) 共同貿易政策；(4) 經濟政策協調；(5) 加勒比法院（CCJ）為爭端解決機關，部分成員亦以其取代英國樞密院作為終審法院。\n\n【規模】總人口約 1,800 萬、合計 GDP 約 1,000 億美元，雖規模小，但為加勒比區域整合的核心制度。\n\n【對外關係】CARICOM 與歐盟簽有《CARIFORUM-EU 經濟夥伴協定》（2008，含古巴）；與加拿大、哥斯大黎加、哥倫比亞、委內瑞拉、多明尼加共和國有貿易安排；2024 年起與英國談判 FTA。\n\n【挑戰】(1) 海地長期動盪影響整體運作；(2) 與美國雙邊關係（特別是貿易、移民）持續為議題；(3) 氣候變遷對小島國的存亡威脅。',
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [{ label: 'CARICOM 官方網站', url: 'https://caricom.org/', lang: 'en' }],
@@ -1093,6 +1105,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'andean-community': {
     latestStatus: {
       summary: '安第斯共同體（CAN，1969 年《卡塔赫納協定》）為南美洲的關稅同盟與整合機制，現有玻利維亞、哥倫比亞、厄瓜多、秘魯 4 個會員國，與 Mercosur 並列南美兩大整合集團，持續運作。',
+      detail:
+        '安第斯共同體（Comunidad Andina, CAN）由 1969 年 5 月 26 日《卡塔赫納協定》（Cartagena Agreement）建立，原稱「安第斯集團」（Andean Group），1996 年改為現名。\n\n【會員變動】\n  - 創始會員：玻利維亞、智利、哥倫比亞、厄瓜多、秘魯（共 5 國）\n  - 1973：委內瑞拉加入\n  - 1976：智利退出（皮諾契政權政策分歧）\n  - 2006：委內瑞拉退出（轉向 Mercosur）\n  - 現會員：玻利維亞、哥倫比亞、厄瓜多、秘魯（4 國）\n  - 聯繫國：阿根廷、巴西、智利、巴拉圭、烏拉圭（Mercosur 4 國）\n\n【主要架構】(1) 共同對外關稅（CET）：理論上存在，但成員實質執行不一；(2) 自由貿易區：成員間 100% 工業品零關稅；(3) 共同農業政策；(4) 自然人移動：互相承認 CAN 國民簽證簡化；(5) 機構：安第斯議會、安第斯法院、總秘書處（設於利馬）。\n\n【規模】總人口約 1.1 億，合計 GDP 約 7,800 億美元；2024 年內部貿易約 100 億美元，雖佔總貿易僅 10%，但對小型成員（玻、厄）非常重要。\n\n【挑戰】(1) 與 Mercosur 競合：兩集團簽有《經濟互補協定》（ACE）相互優惠，但完整整合「南美共同體」（UNASUR）計畫已停滯；(2) 厄瓜多、秘魯、哥倫比亞均與美方簽 FTA，使 CAN 對外貿易政策碎片化；(3) 玻利維亞 2024 年加入 Mercosur 後，其 CAN 會籍與義務之關係待釐清。',
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [{ label: 'Comunidad Andina', url: 'https://www.comunidadandina.org/', lang: 'es' }],
@@ -1100,6 +1114,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   'auto-pact-1965': {
     latestStatus: {
       summary: '《加美汽車產品協定》（Auto Pact，1965）建立北美汽車業的免關稅整合，深刻形塑跨境供應鏈。其優惠安排於 2001 年因 WTO 裁決違反規則而終止，相關功能由 NAFTA／USMCA 承接。',
+      detail:
+        '《加美汽車產品協定》（Canada-United States Automotive Products Agreement, Auto Pact）於 1965 年 1 月 16 日由加總理 Pearson 與美總統 Johnson 在德州 LBJ 牧場簽署，1966 年生效。\n\n【背景】1960 年代加方汽車業生產規模小、成本高，無法與美方競爭。Auto Pact 旨在透過北美整合提升加方汽車業競爭力，並維持加方就業。\n\n【主要內容】\n(1) **整車免關稅**：加方對符合資格的美方汽車製造商（限「Big Three」福特、通用、克萊斯勒、後加 American Motors）的整車進口免關稅；\n(2) **零件免關稅**：合資格製造商對汽車零件互運免關稅；\n(3) **加方安全閥**：加方規定合資格製造商須在加方維持一定的「生產對銷售比」（production-to-sales ratio）與最低「加方加值含量」（CVA），實質保障加方汽車業；\n(4) **不對其他國家適用**：屬美加之間排他性安排。\n\n【經濟成果】生效後 35 年間，加方汽車業由「小規模當地組裝」轉型為「北美整合生產基地」，年產約 250 萬輛、就業約 13 萬人，安大略汽車業 GDP 大幅成長。NAFTA（1994）將汽車優惠延伸至墨西哥。\n\n【WTO 裁決與終止】\n  - 1998：日本、歐盟在 WTO 控告 Auto Pact 之歧視性安排違反 MFN（DS139、DS142）\n  - 2000/2：WTO 上訴機構裁定加方違反；\n  - 2001/2：加方廢除 Auto Pact 優惠關稅，相關功能由 NAFTA 第 4 章（汽車原產地）承接；\n  - 2020：USMCA 進一步強化北美汽車原產地（75% 北美比例、40-45% 勞動價值含量）。\n\n【歷史意義】(1) Auto Pact 為產業特定 FTA 之經典案例，影響後續全球汽車業 RTA 設計；(2) 也是 WTO 機制糾正 MFN 違反的代表案例；(3) 加方汽車業迄今仍在全球前 10 大生產國之列，Auto Pact 奠定的整合根基持續發揮作用。',
       asOf: '2001-02', byTool: true,
     },
     sourceDocs: [{ label: 'WTO — Canada Autos dispute (DS139/142)', url: 'https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds139_e.htm', lang: 'en' }],
