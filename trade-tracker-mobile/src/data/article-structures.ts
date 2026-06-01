@@ -915,4 +915,172 @@ export const ARTICLE_STRUCTURES: Record<string, ArticleGroup[]> = {
       ],
     },
   ],
+
+  // ─── IPEF（印太經濟繁榮架構，四大支柱）────────────────────────
+  'ipef': [
+    {
+      theme: '四大支柱', themeEn: 'Four Pillars',
+      articles: [
+        { num: 'P.I', zh: '第一支柱：貿易（談判中）— 勞動、環境、數位、農業、透明化、競爭、貿易便捷化等七個子議題', en: 'Pillar I: Trade (under negotiation) — Labour, Environment, Digital, Agriculture, Transparency, Competition, Trade Facilitation' },
+        { num: 'P.II', zh: '第二支柱：供應鏈協定（2023/11 簽署、2024/2 生效）— 關鍵供應鏈韌性、應變網絡、勞動權利諮詢機制', en: 'Pillar II: Supply Chain Agreement (signed Nov 2023, in force Feb 2024)' },
+        { num: 'P.III', zh: '第三支柱：潔淨經濟協定（2024/6 簽署、2024/10 生效）— 潔淨能源、減碳、永續基礎建設', en: 'Pillar III: Clean Economy Agreement (signed Jun 2024, in force Oct 2024)' },
+        { num: 'P.IV', zh: '第四支柱：公平經濟協定（2024/6 簽署、2024/10 生效）— 反貪腐、稅務透明化', en: 'Pillar IV: Fair Economy Agreement (signed Jun 2024, in force Oct 2024)' },
+        { num: 'P.V', zh: '整體 IPEF 協定（含部長理事會、聯合委員會、爭端解決）', en: 'Overarching IPEF Agreement' },
+      ],
+    },
+  ],
+
+  // ─── KORUS（美韓自由貿易協定，24 章）─────────────────────────
+  'us-korea': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款及定義', en: 'Initial Provisions and Definitions' },
+        { num: 'Ch.2', zh: '貨品國民待遇及市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '農業', en: 'Agriculture' },
+        { num: 'Ch.4', zh: '紡織品及成衣', en: 'Textiles and Apparel' },
+        { num: 'Ch.5', zh: '藥品及醫療器材', en: 'Pharmaceuticals and Medical Devices' },
+        { num: 'Ch.6', zh: '原產地規則及原產地程序', en: 'Rules of Origin and Origin Procedures' },
+        { num: 'Ch.7', zh: '海關管理與貿易便捷化', en: 'Customs Administration and Trade Facilitation' },
+        { num: 'Ch.8', zh: '食品安全及防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.9', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.10', zh: '貿易救濟', en: 'Trade Remedies' },
+      ],
+    },
+    {
+      theme: '投資、服務與金融', themeEn: 'Investment, Services & Finance',
+      articles: [
+        { num: 'Ch.11', zh: '投資', en: 'Investment' },
+        { num: 'Ch.12', zh: '跨境服務貿易', en: 'Cross-Border Trade in Services' },
+        { num: 'Ch.13', zh: '金融服務', en: 'Financial Services' },
+        { num: 'Ch.14', zh: '電信', en: 'Telecommunications' },
+        { num: 'Ch.15', zh: '電子商務', en: 'Electronic Commerce' },
+      ],
+    },
+    {
+      theme: '競爭、政府採購與智財', themeEn: 'Competition, Procurement & IP',
+      articles: [
+        { num: 'Ch.16', zh: '競爭相關事項', en: 'Competition-Related Matters' },
+        { num: 'Ch.17', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.18', zh: '智慧財產', en: 'Intellectual Property Rights' },
+      ],
+    },
+    {
+      theme: '勞動、環境與最終', themeEn: 'Labor, Environment & Final',
+      articles: [
+        { num: 'Ch.19', zh: '勞動', en: 'Labor' },
+        { num: 'Ch.20', zh: '環境', en: 'Environment' },
+        { num: 'Ch.21', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.22', zh: '機構規定與爭端解決', en: 'Institutional Provisions and Dispute Settlement' },
+        { num: 'Ch.23', zh: '例外', en: 'Exceptions' },
+        { num: 'Ch.24', zh: '最終條款', en: 'Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── EU-Korea FTA（15 章）─────────────────────────────────────
+  'eu-korea': [
+    {
+      theme: '通則與市場進入', themeEn: 'General & Market Access',
+      articles: [
+        { num: 'Ch.1', zh: '目標與一般定義', en: 'Objectives and General Definitions' },
+        { num: 'Ch.2', zh: '貨品國民待遇及市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.4', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.5', zh: '食品安全與防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.6', zh: '海關與貿易便捷化', en: 'Customs and Trade Facilitation' },
+      ],
+    },
+    {
+      theme: '服務、投資與電商', themeEn: 'Services, Investment & E-Commerce',
+      articles: [
+        { num: 'Ch.7', zh: '服務貿易、設立與電子商務', en: 'Trade in Services, Establishment and Electronic Commerce' },
+        { num: 'Ch.8', zh: '支付與資金移動', en: 'Payments and Capital Movements' },
+        { num: 'Ch.9', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.10', zh: '智慧財產', en: 'Intellectual Property' },
+        { num: 'Ch.11', zh: '競爭', en: 'Competition' },
+      ],
+    },
+    {
+      theme: '透明化、永續與爭端', themeEn: 'Transparency, Sustainability & Disputes',
+      articles: [
+        { num: 'Ch.12', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.13', zh: '貿易與永續發展', en: 'Trade and Sustainable Development' },
+        { num: 'Ch.14', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.15', zh: '機構、一般及最終規定', en: 'Institutional, General and Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── EU-Vietnam EVFTA（17 章）────────────────────────────────
+  'eu-vietnam': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '目標與一般定義', en: 'Objectives and General Definitions' },
+        { num: 'Ch.2', zh: '國民待遇及貨品市場進入', en: 'National Treatment and Market Access for Goods' },
+        { num: 'Ch.3', zh: '貿易救濟', en: 'Trade Remedies' },
+        { num: 'Ch.4', zh: '海關與貿易便捷化', en: 'Customs and Trade Facilitation' },
+        { num: 'Ch.5', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.6', zh: '食品安全與防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.7', zh: '非關稅障礙與再生能源產品', en: 'Non-Tariff Barriers and Renewable Energy' },
+      ],
+    },
+    {
+      theme: '服務、投資與政府採購', themeEn: 'Services, Investment & Procurement',
+      articles: [
+        { num: 'Ch.8', zh: '服務貿易、投資自由化與電子商務', en: 'Liberalisation of Investment, Trade in Services and E-Commerce' },
+        { num: 'Ch.9', zh: '政府採購', en: 'Government Procurement' },
+        { num: 'Ch.10', zh: '競爭政策', en: 'Competition Policy' },
+        { num: 'Ch.11', zh: '國營事業、被授予特權之事業及指定獨佔事業', en: 'State-Owned Enterprises' },
+        { num: 'Ch.12', zh: '智慧財產', en: 'Intellectual Property' },
+      ],
+    },
+    {
+      theme: '永續、合作與制度', themeEn: 'Sustainability, Cooperation & Institutional',
+      articles: [
+        { num: 'Ch.13', zh: '貿易與永續發展', en: 'Trade and Sustainable Development' },
+        { num: 'Ch.14', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.15', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.16', zh: '合作與能力建構', en: 'Cooperation and Capacity Building' },
+        { num: 'Ch.17', zh: '機構、一般及最終規定', en: 'Institutional, General and Final Provisions' },
+      ],
+    },
+  ],
+
+  // ─── ChAFTA（中澳自由貿易協定，17 章）──────────────────────────
+  'china-australia': [
+    {
+      theme: '通則與貨品', themeEn: 'General & Goods',
+      articles: [
+        { num: 'Ch.1', zh: '初始條款及一般定義', en: 'Initial Provisions and General Definitions' },
+        { num: 'Ch.2', zh: '貨品貿易', en: 'Trade in Goods' },
+        { num: 'Ch.3', zh: '原產地規則及原產地實施程序', en: 'Rules of Origin and Implementation Procedures' },
+        { num: 'Ch.4', zh: '海關程序及貿易便捷化', en: 'Customs Procedures and Trade Facilitation' },
+        { num: 'Ch.5', zh: '食品安全及動植物防疫檢疫', en: 'Sanitary and Phytosanitary Measures' },
+        { num: 'Ch.6', zh: '技術性貿易障礙', en: 'Technical Barriers to Trade' },
+        { num: 'Ch.7', zh: '貿易救濟', en: 'Trade Remedies' },
+      ],
+    },
+    {
+      theme: '服務、投資與人員', themeEn: 'Services, Investment & People',
+      articles: [
+        { num: 'Ch.8', zh: '服務貿易', en: 'Trade in Services' },
+        { num: 'Ch.9', zh: '投資', en: 'Investment' },
+        { num: 'Ch.10', zh: '自然人移動', en: 'Movement of Natural Persons' },
+        { num: 'Ch.11', zh: '電子商務', en: 'Electronic Commerce' },
+        { num: 'Ch.12', zh: '智慧財產', en: 'Intellectual Property' },
+      ],
+    },
+    {
+      theme: '透明化、合作與制度', themeEn: 'Transparency, Cooperation & Institutional',
+      articles: [
+        { num: 'Ch.13', zh: '透明化', en: 'Transparency' },
+        { num: 'Ch.14', zh: '機構規定', en: 'Institutional Provisions' },
+        { num: 'Ch.15', zh: '爭端解決', en: 'Dispute Settlement' },
+        { num: 'Ch.16', zh: '一般條款及例外', en: 'General Provisions and Exceptions' },
+        { num: 'Ch.17', zh: '最終條款', en: 'Final Provisions' },
+      ],
+    },
+  ],
 };
