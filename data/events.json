@@ -1,7 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-03T18:03:31.292064+00:00",
+  "generated_at": "2026-06-04T16:27:07.489244+00:00",
   "events": [
+    {
+      "id": "wto-rta-faeroe-islands-switzerland-liechtenstein:new:2026-06-04T16:27:07.488521+00:00",
+      "agreement_id": "wto-rta-faeroe-islands-switzerland-liechtenstein",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-06-04T16:27:07.488521+00:00",
+      "effective_date": "1995-03",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-04T16:25:58.961496+00:00"
+        }
+      ]
+    },
     {
       "id": "wto-rta-mercosur-egypt:new:2026-06-03T18:03:31.291259+00:00",
       "agreement_id": "wto-rta-mercosur-egypt",
