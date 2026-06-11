@@ -1,7 +1,41 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-10T16:41:17.923980+00:00",
+  "generated_at": "2026-06-11T16:59:24.984332+00:00",
   "events": [
+    {
+      "id": "wto-jsi-ecommerce:status:2026-06-11T16:59:24.983522+00:00",
+      "agreement_id": "wto-jsi-ecommerce",
+      "kind": "status_change",
+      "from_value": "signed",
+      "to_value": "in_force",
+      "detected_at": "2026-06-11T16:59:24.983522+00:00",
+      "effective_date": "2027-MM",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/jsec_09jun26_414_e.htm",
+          "fetched_at": "2026-06-11T16:59:24.974186+00:00",
+          "evidence": "Members discuss preparations to bring E-Commerce Agreement into force by mid-2027"
+        }
+      ]
+    },
+    {
+      "id": "wto-jsi-ecommerce:date_in_force:2026-06-11T16:59:24.983522+00:00",
+      "agreement_id": "wto-jsi-ecommerce",
+      "kind": "date_added",
+      "from_value": null,
+      "to_value": "in_force=2027-MM",
+      "detected_at": "2026-06-11T16:59:24.983522+00:00",
+      "effective_date": "2027-MM",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/jsec_09jun26_414_e.htm",
+          "fetched_at": "2026-06-11T16:59:24.974186+00:00",
+          "evidence": "Members discuss preparations to bring E-Commerce Agreement into force by mid-2027"
+        }
+      ]
+    },
     {
       "id": "wto-rta-faeroe-islands-switzerland-liechtenstein:new:2026-06-04T16:27:07.488521+00:00",
       "agreement_id": "wto-rta-faeroe-islands-switzerland-liechtenstein",
