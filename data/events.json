@@ -1,7 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-18T16:39:49.415337+00:00",
+  "generated_at": "2026-06-19T16:11:56.848111+00:00",
   "events": [
+    {
+      "id": "wto-rta-israel-viet-nam:new:2026-06-19T16:11:56.847211+00:00",
+      "agreement_id": "wto-rta-israel-viet-nam",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-06-19T16:11:56.847211+00:00",
+      "effective_date": "2024-11",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-19T16:10:38.241830+00:00"
+        }
+      ]
+    },
     {
       "id": "wto-jsi-ecommerce:status:2026-06-11T16:59:24.983522+00:00",
       "agreement_id": "wto-jsi-ecommerce",
