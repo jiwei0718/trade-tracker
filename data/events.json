@@ -1,7 +1,53 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-29T16:41:04.625797+00:00",
+  "generated_at": "2026-06-30T15:37:00.012056+00:00",
   "events": [
+    {
+      "id": "government-procurement-agreement-gpa-2012:status:2026-06-30T15:37:00.011152+00:00",
+      "agreement_id": "government-procurement-agreement-gpa-2012",
+      "kind": "status_change",
+      "from_value": "negotiating",
+      "to_value": "in_force",
+      "detected_at": "2026-06-30T15:37:00.011152+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-27T14:49:01.795285+00:00",
+          "evidence": "welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-30T15:37:00.001626+00:00",
+          "evidence": "parties to the Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        }
+      ]
+    },
+    {
+      "id": "government-procurement-agreement-gpa-2012:date_in_force:2026-06-30T15:37:00.011152+00:00",
+      "agreement_id": "government-procurement-agreement-gpa-2012",
+      "kind": "date_added",
+      "from_value": null,
+      "to_value": "in_force=2026-06",
+      "detected_at": "2026-06-30T15:37:00.011152+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-27T14:49:01.795285+00:00",
+          "evidence": "welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-30T15:37:00.001626+00:00",
+          "evidence": "parties to the Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        }
+      ]
+    },
     {
       "id": "reciprocal-trade-and-investment-agreement:new:2026-06-29T16:41:04.624993+00:00",
       "agreement_id": "reciprocal-trade-and-investment-agreement",
