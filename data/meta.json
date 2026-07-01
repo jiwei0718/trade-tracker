@@ -1,9 +1,9 @@
 {
-  "last_run_at": "2026-06-30T15:37:00.012056+00:00",
-  "agreement_count": 765,
-  "event_count_this_run": 2,
+  "last_run_at": "2026-07-01T15:48:36.255714+00:00",
+  "agreement_count": 767,
+  "event_count_this_run": 4,
   "source_counts": {
-    "wto_rta": 652,
+    "wto_rta": 653,
     "wto_jsi": 6,
     "desta": 0,
     "rss": 20,

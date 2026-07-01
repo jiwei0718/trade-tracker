@@ -1,7 +1,98 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-30T15:37:00.012056+00:00",
+  "generated_at": "2026-07-01T15:48:36.255714+00:00",
   "events": [
+    {
+      "id": "government-procurement-agreement-gpa-2012:status:2026-07-01T15:48:36.254898+00:00",
+      "agreement_id": "government-procurement-agreement-gpa-2012",
+      "kind": "status_change",
+      "from_value": "in_force",
+      "to_value": "concluded",
+      "detected_at": "2026-07-01T15:48:36.254898+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-27T14:49:01.795285+00:00",
+          "evidence": "welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-30T15:37:00.001626+00:00",
+          "evidence": "parties to the Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-07-01T15:48:36.246652+00:00",
+          "evidence": "Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        }
+      ]
+    },
+    {
+      "id": "government-procurement-agreement-gpa-2012:date_concluded:2026-07-01T15:48:36.254898+00:00",
+      "agreement_id": "government-procurement-agreement-gpa-2012",
+      "kind": "date_added",
+      "from_value": null,
+      "to_value": "concluded=2026-06",
+      "detected_at": "2026-07-01T15:48:36.254898+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-27T14:49:01.795285+00:00",
+          "evidence": "welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-06-30T15:37:00.001626+00:00",
+          "evidence": "parties to the Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/gpro_24jun26_430_e.htm",
+          "fetched_at": "2026-07-01T15:48:36.246652+00:00",
+          "evidence": "Government Procurement Agreement (GPA) 2012 welcomed Uruguay as its 39th observer"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-ukraine-united-arab-emirates:new:2026-07-01T15:48:36.254898+00:00",
+      "agreement_id": "wto-rta-ukraine-united-arab-emirates",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-07-01T15:48:36.254898+00:00",
+      "effective_date": "2026-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-01T15:47:32.337591+00:00"
+        }
+      ]
+    },
+    {
+      "id": "reciprocal-trade-and-investment-talks:new:2026-07-01T15:48:36.254898+00:00",
+      "agreement_id": "reciprocal-trade-and-investment-talks",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-07-01T15:48:36.254898+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://ustr.gov/about/policy-offices/press-office/press-releases/2026/june/united-states-and-uzbekistan-announce-early-harvest-trade-accelerate-agreement-reciprocal-trade-and",
+          "fetched_at": "2026-07-01T15:48:36.246608+00:00",
+          "evidence": "Accelerate Agreement on Reciprocal Trade and Investment Talks"
+        }
+      ]
+    },
     {
       "id": "government-procurement-agreement-gpa-2012:status:2026-06-30T15:37:00.011152+00:00",
       "agreement_id": "government-procurement-agreement-gpa-2012",
