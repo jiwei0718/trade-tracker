@@ -1,7 +1,7 @@
 {
-  "last_run_at": "2026-07-01T15:48:36.255714+00:00",
+  "last_run_at": "2026-07-02T15:23:38.757844+00:00",
   "agreement_count": 767,
-  "event_count_this_run": 4,
+  "event_count_this_run": 0,
   "source_counts": {
     "wto_rta": 653,
     "wto_jsi": 6,
@@ -9,5 +9,5 @@
     "rss": 20,
     "gdelt": 0
   },
-  "llm_findings": 2
+  "llm_findings": 1
 }
