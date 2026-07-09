@@ -1,7 +1,30 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-08T15:28:04.646645+00:00",
+  "generated_at": "2026-07-09T16:05:50.344785+00:00",
   "events": [
+    {
+      "id": "agreement-on-fisheries-subsidies:status:2026-07-09T16:05:50.343923+00:00",
+      "agreement_id": "agreement-on-fisheries-subsidies",
+      "kind": "status_change",
+      "from_value": "in_force",
+      "to_value": "negotiating",
+      "detected_at": "2026-07-09T16:05:50.343923+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/ddgjn_27may26_393_e.htm",
+          "fetched_at": "2026-06-01T18:44:38.627494+00:00",
+          "evidence": "complete the acceptance and implementation of the Agreement on Fisheries Subsidies"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/fish_08jul26_449_e.htm",
+          "fetched_at": "2026-07-09T16:05:50.334537+00:00",
+          "evidence": "Rules Negotiating Group Chair reports on fisheries subsidies negotiations, next steps"
+        }
+      ]
+    },
     {
       "id": "government-procurement-agreement-gpa-2012:status:2026-07-01T15:48:36.254898+00:00",
       "agreement_id": "government-procurement-agreement-gpa-2012",
