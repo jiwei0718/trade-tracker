@@ -1,7 +1,24 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-09T16:05:50.344785+00:00",
+  "generated_at": "2026-07-10T15:36:59.517506+00:00",
   "events": [
+    {
+      "id": "agreement-on-reciprocal-trade-and-investment-talks:new:2026-07-10T15:36:59.516636+00:00",
+      "agreement_id": "agreement-on-reciprocal-trade-and-investment-talks",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-07-10T15:36:59.516636+00:00",
+      "effective_date": "2026-06",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://ustr.gov/about/policy-offices/press-office/press-releases/2026/june/united-states-and-uzbekistan-announce-early-harvest-trade-accelerate-agreement-reciprocal-trade-and",
+          "fetched_at": "2026-07-10T15:36:59.507424+00:00",
+          "evidence": "Accelerate Agreement on Reciprocal Trade and Investment Talks"
+        }
+      ]
+    },
     {
       "id": "agreement-on-fisheries-subsidies:status:2026-07-09T16:05:50.343923+00:00",
       "agreement_id": "agreement-on-fisheries-subsidies",
