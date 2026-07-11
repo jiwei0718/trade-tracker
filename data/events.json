@@ -1,7 +1,24 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-10T15:36:59.517506+00:00",
+  "generated_at": "2026-07-11T14:25:30.765621+00:00",
   "events": [
+    {
+      "id": "fisheries-subsidies-agreement:new:2026-07-11T14:25:30.764759+00:00",
+      "agreement_id": "fisheries-subsidies-agreement",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-07-11T14:25:30.764759+00:00",
+      "effective_date": "2026-07",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/fish_08jul26_449_e.htm",
+          "fetched_at": "2026-07-11T14:25:30.755509+00:00",
+          "evidence": "Rules Negotiating Group Chair reports on fisheries subsidies negotiations, next steps"
+        }
+      ]
+    },
     {
       "id": "agreement-on-reciprocal-trade-and-investment-talks:new:2026-07-10T15:36:59.516636+00:00",
       "agreement_id": "agreement-on-reciprocal-trade-and-investment-talks",
