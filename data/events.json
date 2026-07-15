@@ -1,7 +1,24 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-14T15:00:43.847162+00:00",
+  "generated_at": "2026-07-15T14:59:17.017431+00:00",
   "events": [
+    {
+      "id": "wto:status:2026-07-15T14:59:17.016230+00:00",
+      "agreement_id": "wto",
+      "kind": "status_change",
+      "from_value": "in_force",
+      "to_value": "negotiating",
+      "detected_at": "2026-07-15T14:59:17.016230+00:00",
+      "effective_date": "1995-01",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-15T14:59:16.999476+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        }
+      ]
+    },
     {
       "id": "fisheries-subsidies-agreement:new:2026-07-11T14:25:30.764759+00:00",
       "agreement_id": "fisheries-subsidies-agreement",
