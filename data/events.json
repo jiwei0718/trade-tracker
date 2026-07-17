@@ -1,7 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-16T15:08:54.817060+00:00",
+  "generated_at": "2026-07-17T14:49:20.781111+00:00",
   "events": [
+    {
+      "id": "wto-rta-united-kingdom-india:new:2026-07-17T14:49:20.780252+00:00",
+      "agreement_id": "wto-rta-united-kingdom-india",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-07-17T14:49:20.780252+00:00",
+      "effective_date": "2026-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-17T14:48:02.013065+00:00"
+        }
+      ]
+    },
     {
       "id": "wto:status:2026-07-15T14:59:17.016230+00:00",
       "agreement_id": "wto",
