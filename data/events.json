@@ -1,7 +1,24 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-21T15:09:43.058661+00:00",
+  "generated_at": "2026-07-22T15:10:16.094453+00:00",
   "events": [
+    {
+      "id": "u-s-jordan-agreement-on-reciprocal-trade:new:2026-07-22T15:10:16.093423+00:00",
+      "agreement_id": "u-s-jordan-agreement-on-reciprocal-trade",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "signed",
+      "detected_at": "2026-07-22T15:10:16.093423+00:00",
+      "effective_date": "2026-07",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-signs-us-jordan-agreement-reciprocal-trade",
+          "fetched_at": "2026-07-22T15:10:16.083760+00:00",
+          "evidence": "Ambassador Greer Signs the U.S.-Jordan Agreement on Reciprocal Trade"
+        }
+      ]
+    },
     {
       "id": "wto-rta-united-kingdom-india:new:2026-07-17T14:49:20.780252+00:00",
       "agreement_id": "wto-rta-united-kingdom-india",
