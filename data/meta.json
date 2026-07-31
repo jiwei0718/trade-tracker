@@ -1,5 +1,5 @@
 {
-  "last_run_at": "2026-07-30T15:17:21.081346+00:00",
+  "last_run_at": "2026-07-31T15:24:59.274056+00:00",
   "agreement_count": 771,
   "event_count_this_run": 0,
   "source_counts": {
@@ -9,5 +9,5 @@
     "rss": 20,
     "gdelt": 0
   },
-  "llm_findings": 0
+  "llm_findings": 1
 }
