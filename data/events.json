@@ -1,7 +1,373 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-04T15:30:25.178552+00:00",
+  "generated_at": "2026-08-05T15:20:44.882123+00:00",
   "events": [
+    {
+      "id": "wto-jsi-sdr:status:2026-08-05T15:20:44.881145+00:00",
+      "agreement_id": "wto-jsi-sdr",
+      "kind": "status_change",
+      "from_value": "in_force",
+      "to_value": "negotiating",
+      "detected_at": "2026-08-05T15:20:44.881145+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-29T15:15:15.306109+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-29T16:50:01.589314+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-30T14:43:49.758194+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-05-31T14:50:42.206725+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-01T12:43:34.091354+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-01T18:43:30.926116+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-02T17:46:38.702272+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-03T18:02:43.133560+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-04T16:25:59.479063+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-05T16:05:53.527797+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-06T14:48:15.553231+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-07T14:56:16.186323+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-08T16:51:47.953867+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-09T16:09:01.886071+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-10T16:40:15.535341+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-11T16:58:34.001721+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-12T16:24:31.275515+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-13T15:04:22.839193+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-14T15:10:58.748832+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-15T17:58:03.183254+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-16T18:07:41.741865+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-17T16:41:04.102921+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-18T16:38:38.066915+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-19T16:10:38.768078+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-20T15:06:19.944563+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-21T15:13:44.331559+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-22T17:44:21.953762+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-23T15:56:22.389396+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-24T15:35:42.643850+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-25T15:43:20.099870+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-26T15:27:54.568031+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-27T14:48:06.199385+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-28T14:51:09.578194+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-29T16:40:02.391283+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-06-30T15:36:01.196360+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-01T15:47:32.802065+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-02T15:22:21.126340+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-03T15:15:30.827924+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-04T14:41:47.037454+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-05T14:48:38.960238+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-06T16:25:23.675294+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-07T15:45:37.999120+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-08T15:27:06.457925+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-09T16:04:50.342175+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-10T15:35:38.856542+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-11T14:24:26.257870+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-12T14:35:55.620631+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-13T15:45:15.053529+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-14T14:59:13.664587+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-15T14:57:56.758946+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-16T15:08:04.577586+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-17T14:48:02.696645+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-18T14:21:58.955422+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-19T14:25:29.603148+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-20T15:16:02.878048+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-21T15:08:18.734777+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-22T15:08:51.358094+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-23T15:15:18.313874+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-24T15:00:36.616360+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-25T14:39:51.749004+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-26T14:41:07.327764+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-27T15:47:28.729081+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-28T15:25:40.964187+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-29T15:11:39.925549+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-30T15:16:01.947793+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-07-31T15:23:41.182942+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-08-01T14:37:26.791479+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-08-02T14:39:38.278533+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-08-03T15:47:55.422697+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-08-04T15:29:02.365270+00:00"
+        },
+        {
+          "name": "WTO JSI page",
+          "url": "https://www.wto.org/english/tratop_e/serv_e/jsdomreg_e.htm",
+          "fetched_at": "2026-08-05T15:19:29.151202+00:00"
+        }
+      ]
+    },
     {
       "id": "u-s-jordan-agreement-on-reciprocal-trade:new:2026-07-22T15:10:16.093423+00:00",
       "agreement_id": "u-s-jordan-agreement-on-reciprocal-trade",
