@@ -1,7 +1,311 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-05T15:20:44.882123+00:00",
+  "generated_at": "2026-08-07T14:16:21.334001+00:00",
   "events": [
+    {
+      "id": "wto-rta-eaeu-iran:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-eaeu-iran",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2025-05",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eaeu-serbia:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-eaeu-serbia",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2021-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eaeu-viet-nam:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-eaeu-viet-nam",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2016-10",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-efta-gcc:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-efta-gcc",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2014-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eu-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-eu-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1997-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-european-free-trade-association-efta-accession-of-iceland:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-european-free-trade-association-efta-accession-of-iceland",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1970-03",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-faroe-islands-norway:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-faroe-islands-norway",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1993-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-faroe-islands-switzerland-liechtenstein:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-faroe-islands-switzerland-liechtenstein",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1995-03",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-gcc-singapore:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-gcc-singapore",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2013-09",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-iceland-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-iceland-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2006-11",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-mercosur-india:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-mercosur-india",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2009-06",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-mercosur-israel:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-mercosur-israel",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2009-12",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-mercosur-sacu:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-mercosur-sacu",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2016-04",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-t-rkiye-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-t-rkiye-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2017-10",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-united-kingdom-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-united-kingdom-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "2021-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-ec-faroe-islands-agreement-of-1992:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-ec-faroe-islands-agreement-of-1992",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1992-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-estonia-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-estonia-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1998-12",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-faroe-islands-iceland:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-faroe-islands-iceland",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1993-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-poland-faroe-islands:new:2026-08-07T14:16:21.333069+00:00",
+      "agreement_id": "wto-rta-poland-faroe-islands",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-07T14:16:21.333069+00:00",
+      "effective_date": "1998-06",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        }
+      ]
+    },
     {
       "id": "wto-jsi-sdr:status:2026-08-05T15:20:44.881145+00:00",
       "agreement_id": "wto-jsi-sdr",
