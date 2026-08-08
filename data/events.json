@@ -1,7 +1,1767 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-07T14:16:21.334001+00:00",
+  "generated_at": "2026-08-08T13:50:54.766074+00:00",
   "events": [
+    {
+      "id": "wto-rta-asean-free-trade-area-afta:status:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-asean-free-trade-area-afta",
+      "kind": "status_change",
+      "from_value": "expired",
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2010-05",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T15:15:14.405455+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T15:15:14.405455+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T16:50:01.132767+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T16:50:01.132767+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-30T14:43:49.285807+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-30T14:43:49.285807+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-31T14:50:41.692048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-31T14:50:41.692048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T12:43:32.801815+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T12:43:32.801815+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T18:43:30.240688+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T18:43:30.240688+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-02T17:46:37.950897+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-02T17:46:37.950897+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-03T18:02:42.279038+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-03T18:02:42.279038+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-04T16:25:58.961496+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-04T16:25:58.961496+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-05T16:05:53.160520+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-05T16:05:53.160520+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-06T14:48:14.947532+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-06T14:48:14.947532+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-07T14:56:15.855745+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-07T14:56:15.855745+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-08T16:51:47.468722+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-08T16:51:47.468722+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-09T16:09:01.365493+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-09T16:09:01.365493+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-10T16:40:14.980048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-10T16:40:14.980048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-11T16:58:33.327268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-11T16:58:33.327268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-12T16:24:30.780684+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-12T16:24:30.780684+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-13T15:04:22.072526+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-13T15:04:22.072526+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-14T15:10:58.313298+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-14T15:10:58.313298+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-15T17:58:02.412268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-15T17:58:02.412268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-16T18:07:41.250321+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-16T18:07:41.250321+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-17T16:41:03.582492+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-17T16:41:03.582492+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-18T16:38:37.709701+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-18T16:38:37.709701+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-19T16:10:38.241830+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-19T16:10:38.241830+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-20T15:06:19.469260+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-20T15:06:19.469260+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-21T15:13:43.889834+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-21T15:13:43.889834+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-22T17:44:21.554664+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-22T17:44:21.554664+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-23T15:56:21.838432+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-23T15:56:21.838432+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-24T15:35:42.231788+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-24T15:35:42.231788+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-25T15:43:19.085036+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-25T15:43:19.085036+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-26T15:27:54.023990+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-26T15:27:54.023990+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-27T14:48:05.649312+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-27T14:48:05.649312+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-28T14:51:09.110507+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-28T14:51:09.110507+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-29T16:40:01.964519+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-29T16:40:01.964519+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-30T15:36:00.768994+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-30T15:36:00.768994+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-01T15:47:32.337591+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-01T15:47:32.337591+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-02T15:22:20.681969+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-02T15:22:20.681969+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-03T15:15:30.364770+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-03T15:15:30.364770+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-04T14:41:46.725205+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-04T14:41:46.725205+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-05T14:48:38.614269+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-05T14:48:38.614269+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-06T16:25:23.256881+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-06T16:25:23.256881+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-07T15:45:37.617847+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-07T15:45:37.617847+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-08T15:27:06.102586+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-08T15:27:06.102586+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-09T16:04:49.905949+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-09T16:04:49.905949+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-10T15:35:38.509906+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-10T15:35:38.509906+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-11T14:24:25.511548+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-11T14:24:25.511548+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-12T14:35:55.091460+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-12T14:35:55.091460+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-13T15:45:14.623071+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-13T15:45:14.623071+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-14T14:59:13.208660+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-14T14:59:13.208660+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-15T14:57:56.303196+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-15T14:57:56.303196+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-16T15:08:03.672888+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-16T15:08:03.672888+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-17T14:48:02.013065+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-17T14:48:02.013065+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-18T14:21:58.633710+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-18T14:21:58.633710+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-19T14:25:29.030762+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-19T14:25:29.030762+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-20T15:16:02.429137+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-20T15:16:02.429137+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-21T15:08:18.338056+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-21T15:08:18.338056+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-22T15:08:50.870430+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-22T15:08:50.870430+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-23T15:15:17.675916+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-23T15:15:17.675916+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-24T15:00:35.878227+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-24T15:00:35.878227+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-25T14:39:51.047330+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-25T14:39:51.047330+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-26T14:41:06.845449+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-26T14:41:06.845449+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-27T15:47:28.079968+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-27T15:47:28.079968+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-28T15:25:40.473500+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-28T15:25:40.473500+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-29T15:11:39.202977+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-29T15:11:39.202977+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-30T15:16:01.428965+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-30T15:16:01.428965+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-31T15:23:40.650226+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-31T15:23:40.650226+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-01T14:37:25.908224+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-01T14:37:25.908224+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-02T14:39:37.663622+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-02T14:39:37.663622+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-03T15:47:54.051933+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-03T15:47:54.051933+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-04T15:29:01.427058+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-04T15:29:01.427058+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-05T15:19:28.686631+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-05T15:19:28.686631+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-gulf-cooperation-council-gcc:status:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-gulf-cooperation-council-gcc",
+      "kind": "status_change",
+      "from_value": "expired",
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2003-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T15:15:14.405455+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T15:15:14.405455+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T16:50:01.132767+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-29T16:50:01.132767+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-30T14:43:49.285807+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-30T14:43:49.285807+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-31T14:50:41.692048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-05-31T14:50:41.692048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T12:43:32.801815+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T12:43:32.801815+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T18:43:30.240688+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-01T18:43:30.240688+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-02T17:46:37.950897+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-02T17:46:37.950897+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-03T18:02:42.279038+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-03T18:02:42.279038+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-04T16:25:58.961496+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-04T16:25:58.961496+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-05T16:05:53.160520+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-05T16:05:53.160520+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-06T14:48:14.947532+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-06T14:48:14.947532+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-07T14:56:15.855745+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-07T14:56:15.855745+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-08T16:51:47.468722+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-08T16:51:47.468722+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-09T16:09:01.365493+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-09T16:09:01.365493+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-10T16:40:14.980048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-10T16:40:14.980048+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-11T16:58:33.327268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-11T16:58:33.327268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-12T16:24:30.780684+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-12T16:24:30.780684+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-13T15:04:22.072526+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-13T15:04:22.072526+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-14T15:10:58.313298+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-14T15:10:58.313298+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-15T17:58:02.412268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-15T17:58:02.412268+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-16T18:07:41.250321+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-16T18:07:41.250321+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-17T16:41:03.582492+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-17T16:41:03.582492+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-18T16:38:37.709701+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-18T16:38:37.709701+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-19T16:10:38.241830+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-19T16:10:38.241830+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-20T15:06:19.469260+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-20T15:06:19.469260+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-21T15:13:43.889834+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-21T15:13:43.889834+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-22T17:44:21.554664+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-22T17:44:21.554664+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-23T15:56:21.838432+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-23T15:56:21.838432+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-24T15:35:42.231788+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-24T15:35:42.231788+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-25T15:43:19.085036+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-25T15:43:19.085036+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-26T15:27:54.023990+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-26T15:27:54.023990+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-27T14:48:05.649312+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-27T14:48:05.649312+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-28T14:51:09.110507+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-28T14:51:09.110507+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-29T16:40:01.964519+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-29T16:40:01.964519+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-30T15:36:00.768994+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-06-30T15:36:00.768994+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-01T15:47:32.337591+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-01T15:47:32.337591+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-02T15:22:20.681969+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-02T15:22:20.681969+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-03T15:15:30.364770+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-03T15:15:30.364770+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-04T14:41:46.725205+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-04T14:41:46.725205+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-05T14:48:38.614269+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-05T14:48:38.614269+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-06T16:25:23.256881+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-06T16:25:23.256881+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-07T15:45:37.617847+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-07T15:45:37.617847+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-08T15:27:06.102586+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-08T15:27:06.102586+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-09T16:04:49.905949+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-09T16:04:49.905949+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-10T15:35:38.509906+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-10T15:35:38.509906+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-11T14:24:25.511548+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-11T14:24:25.511548+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-12T14:35:55.091460+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-12T14:35:55.091460+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-13T15:45:14.623071+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-13T15:45:14.623071+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-14T14:59:13.208660+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-14T14:59:13.208660+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-15T14:57:56.303196+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-15T14:57:56.303196+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-16T15:08:03.672888+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-16T15:08:03.672888+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-17T14:48:02.013065+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-17T14:48:02.013065+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-18T14:21:58.633710+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-18T14:21:58.633710+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-19T14:25:29.030762+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-19T14:25:29.030762+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-20T15:16:02.429137+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-20T15:16:02.429137+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-21T15:08:18.338056+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-21T15:08:18.338056+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-22T15:08:50.870430+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-22T15:08:50.870430+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-23T15:15:17.675916+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-23T15:15:17.675916+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-24T15:00:35.878227+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-24T15:00:35.878227+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-25T14:39:51.047330+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-25T14:39:51.047330+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-26T14:41:06.845449+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-26T14:41:06.845449+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-27T15:47:28.079968+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-27T15:47:28.079968+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-28T15:25:40.473500+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-28T15:25:40.473500+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-29T15:11:39.202977+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-29T15:11:39.202977+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-30T15:16:01.428965+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-30T15:16:01.428965+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-31T15:23:40.650226+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-07-31T15:23:40.650226+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-01T14:37:25.908224+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-01T14:37:25.908224+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-02T14:39:37.663622+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-02T14:39:37.663622+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-03T15:47:54.051933+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-03T15:47:54.051933+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-04T15:29:01.427058+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-04T15:29:01.427058+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-05T15:19:28.686631+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-05T15:19:28.686631+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-07T14:14:59.989405+00:00"
+        },
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-australia-gcc:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-australia-gcc",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-japan-gcc:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-japan-gcc",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "negotiating",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": null,
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-cptpp-accession-of-the-united-kingdom:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-cptpp-accession-of-the-united-kingdom",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2024-12",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-apta-accession-of-china:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-apta-accession-of-china",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2002-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-cacm-accession-of-panama:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-cacm-accession-of-panama",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2013-05",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-comesa-accession-of-egypt:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-comesa-accession-of-egypt",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "1999-02",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-comesa-accession-of-seychelles:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-comesa-accession-of-seychelles",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2009-05",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-comesa-accession-of-tunisia:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-comesa-accession-of-tunisia",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2019-06",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eac-accession-of-burundi-and-rwanda:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-eac-accession-of-burundi-and-rwanda",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2007-07",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eaeu-accession-of-armenia:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-eaeu-accession-of-armenia",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2015-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eaeu-accession-of-the-kyrgyz-republic:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-eaeu-accession-of-the-kyrgyz-republic",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2015-08",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-laia-accession-of-cuba:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-laia-accession-of-cuba",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "1999-08",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-sadc-accession-of-seychelles:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-sadc-accession-of-seychelles",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2015-05",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-safta-accession-of-afghanistan:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-safta-accession-of-afghanistan",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2011-08",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-albania-kosovo:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-albania-kosovo",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2003-10",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-asean-free-trade-area-afta-inactive:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-asean-free-trade-area-afta-inactive",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "1993-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-eaeu-iran-interim-agreement:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-eaeu-iran-interim-agreement",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "2019-10",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
+    {
+      "id": "wto-rta-gulf-cooperation-council-gcc-inactive:new:2026-08-08T13:50:54.765051+00:00",
+      "agreement_id": "wto-rta-gulf-cooperation-council-gcc-inactive",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "expired",
+      "detected_at": "2026-08-08T13:50:54.765051+00:00",
+      "effective_date": "1982-01",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-08T13:49:53.427160+00:00"
+        }
+      ]
+    },
     {
       "id": "wto-rta-eaeu-iran:new:2026-08-07T14:16:21.333069+00:00",
       "agreement_id": "wto-rta-eaeu-iran",
