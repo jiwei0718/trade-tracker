@@ -1,13 +1,13 @@
 {
-  "last_run_at": "2026-08-10T14:24:01.849597+00:00",
+  "last_run_at": "2026-08-11T14:22:48.529175+00:00",
   "agreement_count": 808,
   "event_count_this_run": 0,
   "source_counts": {
-    "wto_rta": 0,
-    "wto_jsi": 0,
+    "wto_rta": 654,
+    "wto_jsi": 6,
     "desta": 0,
-    "rss": 10,
+    "rss": 20,
     "gdelt": 0
   },
-  "llm_findings": 0
+  "llm_findings": 1
 }
