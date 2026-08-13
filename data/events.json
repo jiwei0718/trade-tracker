@@ -1,7 +1,126 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T14:23:34.396309+00:00",
+  "generated_at": "2026-08-13T14:26:02.245703+00:00",
   "events": [
+    {
+      "id": "wto:status:2026-08-13T14:26:02.244793+00:00",
+      "agreement_id": "wto",
+      "kind": "status_change",
+      "from_value": "proposed",
+      "to_value": "negotiating",
+      "detected_at": "2026-08-13T14:26:02.244793+00:00",
+      "effective_date": "1995-01",
+      "sources": [
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-15T14:59:16.999476+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-16T15:08:54.807348+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-17T14:49:20.771000+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-18T14:22:59.738556+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-19T14:26:27.453799+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-20T15:17:24.372155+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-21T15:09:43.048122+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO after 18-year hiatus"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_09jul26_455_e.htm",
+          "fetched_at": "2026-07-22T15:10:16.083786+00:00",
+          "evidence": "Bhutan resumes negotiations to join the WTO"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-07-31T15:24:59.260686+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal, thanks members for continuing engagement"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-01T14:38:16.199001+00:00",
+          "evidence": "Uzbekistan reaffirmed its determination to complete its WTO accession process within 2026"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-03T15:48:56.502090+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-04T15:30:25.169032+00:00",
+          "evidence": "Uzbekistan reaffirmed its determination to complete its WTO accession process within 2026"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-05T15:20:44.871001+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-08T13:50:54.755778+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-09T13:54:36.970639+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-11T14:22:48.520459+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-12T14:23:34.386114+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        },
+        {
+          "name": "LLM extraction",
+          "url": "https://www.wto.org/english/news_e/news26_e/acc_27jul26_470_e.htm",
+          "fetched_at": "2026-08-13T14:26:02.236150+00:00",
+          "evidence": "Uzbekistan reaffirms 2026 WTO accession goal"
+        }
+      ]
+    },
     {
       "id": "wto:status:2026-08-12T14:23:34.395351+00:00",
       "agreement_id": "wto",
