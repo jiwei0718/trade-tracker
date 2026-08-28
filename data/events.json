@@ -1,7 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-27T22:55:07.239912+00:00",
+  "generated_at": "2026-08-28T22:59:20.047233+00:00",
   "events": [
+    {
+      "id": "wto-rta-hong-kong-china-peru:new:2026-08-28T22:59:20.046355+00:00",
+      "agreement_id": "wto-rta-hong-kong-china-peru",
+      "kind": "new_agreement",
+      "from_value": null,
+      "to_value": "in_force",
+      "detected_at": "2026-08-28T22:59:20.046355+00:00",
+      "effective_date": "2026-09",
+      "sources": [
+        {
+          "name": "WTO RTA-IS",
+          "url": "https://rtais.wto.org/",
+          "fetched_at": "2026-08-28T22:58:31.516997+00:00"
+        }
+      ]
+    },
     {
       "id": "wto-rta-pacific-alliance-singapore:new:2026-08-18T13:49:25.118063+00:00",
       "agreement_id": "wto-rta-pacific-alliance-singapore",
