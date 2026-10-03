@@ -9,6 +9,7 @@ import type { AgreementStatus, EraKey } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import { getAllParties, search, getEffectiveDate, filterPartiesByQuery } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
+import ChipRow from '@/components/chip-row';
 import { useData } from '@/lib/data-context';
 import { tagLabel, tagCategory, TAG_CATEGORY_LABELS, TAG_CATEGORY_ORDER } from '@/data/tags';
 import type { TagCategory } from '@/data/tags';
@@ -160,7 +161,7 @@ export default function Explore() {
 
         {mode === 'agreements' && (
           <>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
+            <ChipRow contentStyle={styles.chipsRow}>
               <Chip label="所有時期" active={!eraFilter} onPress={() => setEraFilter(null)} />
               {Object.entries(ERA_INFO).map(([key, info]) => (
                 <Chip
@@ -170,8 +171,8 @@ export default function Explore() {
                   onPress={() => setEraFilter(eraFilter === key ? null : (key as EraKey))}
                 />
               ))}
-            </ScrollView>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
+            </ChipRow>
+            <ChipRow contentStyle={styles.chipsRow}>
               {STATUSES.map(s => (
                 <StatusChip
                   key={s}
@@ -184,9 +185,9 @@ export default function Explore() {
                   }}
                 />
               ))}
-            </ScrollView>
+            </ChipRow>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
+            <ChipRow contentStyle={styles.chipsRow} collapsedCount={13}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                 <Ionicons name="pricetag" size={13} color={c.textSecondary} />
                 <Text style={{ color: c.textSecondary, fontSize: 12, marginRight: 2 }}>標籤</Text>
@@ -204,7 +205,7 @@ export default function Explore() {
                   </Text>
                 </Pressable>
               ))}
-            </ScrollView>
+            </ChipRow>
 
             <View style={styles.sortRow}>
               <Ionicons name="swap-vertical" size={14} color={c.textSecondary} />

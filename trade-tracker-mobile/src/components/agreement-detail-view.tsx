@@ -147,14 +147,9 @@ export default function AgreementDetailView({ id, embedded }: Props) {
         )}
 
         {/* Tracked developments from the update pipelines */}
-        {agreementEvents.length > 0 && (
+        {newsEvents.length > 0 && (
           <View>
-            <Text style={[styles.sectionTitle, { color: c.text }]}>
-              追蹤到的動態{newsEvents.length ? `(${newsEvents.length})` : ''}
-            </Text>
-            {newsEvents.length === 0 && (
-              <Text style={{ color: c.textSecondary, fontSize: 12 }}>尚無新聞或官方文件動態。</Text>
-            )}
+            <Text style={[styles.sectionTitle, { color: c.text }]}>追蹤到的動態({newsEvents.length})</Text>
             {newsEvents.slice(0, 20).map(e => <EventRow key={e.id} event={e} hideAgreement />)}
             {importEvents.length > 0 && (
               <Pressable onPress={() => setShowImportLog(v => !v)} style={{ marginTop: 6 }}>

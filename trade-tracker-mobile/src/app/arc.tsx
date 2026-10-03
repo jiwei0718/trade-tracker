@@ -8,6 +8,7 @@ import Svg, { Circle, Path, Text as SvgText, G } from 'react-native-svg';
 import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS } from '@/data/types';
 import type { AgreementStatus, AgreementType } from '@/data/types';
 import { Colors } from '@/constants/theme';
+import ChipRow from '@/components/chip-row';
 import { useData } from '@/lib/data-context';
 import { getEffectiveDate } from '@/lib/selectors';
 import { getAgreementTags } from '@/lib/issue-tags';
@@ -139,7 +140,7 @@ export default function ArcDiagram() {
   return (
     <View style={{ flex: 1, backgroundColor: c.background }}>
       {/* Type chips: agreement type (filters out e.g. multilateral WTO noise) */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
+      <ChipRow style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
         <Text style={{ color: c.textSecondary, fontSize: 11 }}>類型</Text>
         {TYPE_OPTIONS.map(opt => (
           <Pressable
@@ -149,10 +150,10 @@ export default function ArcDiagram() {
             <Text style={{ color: typeFilter === opt.key ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>{opt.label}</Text>
           </Pressable>
         ))}
-      </ScrollView>
+      </ChipRow>
 
       {/* Event-basis chips: which milestone the year range applies to */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
+      <ChipRow style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
         <Text style={{ color: c.textSecondary, fontSize: 11 }}>區間內</Text>
         {EVENT_OPTIONS.map(opt => (
           <Pressable
@@ -167,7 +168,7 @@ export default function ArcDiagram() {
             </Text>
           </Pressable>
         ))}
-      </ScrollView>
+      </ChipRow>
 
       {/* Year range slider */}
       <View style={[styles.sliderBar, { backgroundColor: c.backgroundElement }]}>
@@ -181,7 +182,7 @@ export default function ArcDiagram() {
       </View>
 
       {/* Topic chips */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentContainerStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }}>
+      <ChipRow style={[styles.filterBar, { backgroundColor: c.backgroundElement }]} contentStyle={{ gap: 6, alignItems: 'center', paddingRight: 16 }} collapsedCount={14}>
         <Ionicons name="pricetag" size={12} color={c.textSecondary} />
         <Pressable
           onPress={() => setTopicTag(null)}
@@ -196,7 +197,7 @@ export default function ArcDiagram() {
             <Text style={{ color: topicTag === t ? '#fff' : c.text, fontSize: 12, fontWeight: '600' }}>{tagLabel(t)}</Text>
           </Pressable>
         ))}
-      </ScrollView>
+      </ChipRow>
 
       {/* Result count */}
       <View style={{ paddingHorizontal: 12, paddingVertical: 4, backgroundColor: c.backgroundElement }}>

@@ -12,12 +12,13 @@ import { useWatchlist } from '@/lib/watchlist';
 import { useData } from '@/lib/data-context';
 import { byEventDateDesc, isNewsworthy } from '@/lib/data-source';
 import { timeAgo } from '@/lib/format';
-import { usePageWidth } from '@/hooks/use-desktop';
+import { useIsDesktop, usePageWidth } from '@/hooks/use-desktop';
 
 export default function Home() {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const page = usePageWidth();
+  const desktop = useIsDesktop();
   const { agreements, events, runs, source, fetchedAt, error, loading, refresh, unseenCount } = useData();
   const recent = getRecentlyChanged(6, agreements);
   const stats = getStats(agreements);
@@ -83,59 +84,72 @@ export default function Home() {
           </Pressable>
         </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>最新動態</Text>
-          <Pressable onPress={() => router.push('/(tabs)/updates')}>
-            <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
-          </Pressable>
-        </View>
-        <View>
-          {latestNews.map(e => (
-            <EventRow key={e.id} event={e} agreement={e.agreementId ? byId.get(e.agreementId) : undefined} />
-          ))}
-          {latestNews.length === 0 && (
-            <Text style={{ color: c.textSecondary, fontSize: 13 }}>{loading ? '載入中…' : '目前沒有新動態。'}</Text>
-          )}
+        {/* Desktop: two columns side by side; phones: stacked */}
+        <View style={desktop ? styles.columns : styles.stack}>
+          <View style={desktop ? { flex: 3 } : undefined}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: c.text }]}>最新動態</Text>
+              <Pressable onPress={() => router.push('/(tabs)/updates')}>
+                <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
+              </Pressable>
+            </View>
+            {latestNews.map(e => (
+              <EventRow key={e.id} event={e} agreement={e.agreementId ? byId.get(e.agreementId) : undefined} />
+            ))}
+            {latestNews.length === 0 && (
+              <Text style={{ color: c.textSecondary, fontSize: 13 }}>{loading ? '載入中…' : '目前沒有新動態。'}</Text>
+            )}
+          </View>
+
+          <View style={desktop ? { flex: 2 } : undefined}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: c.text }]}>最近有進展的協定</Text>
+              <Pressable onPress={() => router.push('/(tabs)/explore')}>
+                <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
+              </Pressable>
+            </View>
+            <View style={{ gap: 10, marginTop: 8 }}>
+              {recent.map(a => <AgreementCard key={a.id} agreement={a} compact />)}
+            </View>
+          </View>
         </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>最近有進展的協定</Text>
-          <Pressable onPress={() => router.push('/(tabs)/explore')}>
-            <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
-          </Pressable>
-        </View>
-        <View style={{ gap: 10 }}>
-          {recent.map(a => <AgreementCard key={a.id} agreement={a} compact />)}
-        </View>
-
-        <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>快速功能</Text>
-        </View>
-        <View style={styles.actionsRow}>
-          <ActionTile icon="git-network" label="關聯圖" onPress={() => router.push('/arc')} color="#7c3aed" />
-          <ActionTile icon="swap-horizontal" label="協定比較" onPress={() => router.push('/compare')} color="#16a34a" />
-        </View>
-        <View style={styles.actionsRow}>
-          <ActionTile icon="time" label="歷史時期" onPress={() => router.push('/eras')} color="#0ea5e9" />
-          <ActionTile icon="book" label="名詞對照" onPress={() => router.push('/glossary')} color="#f59e0b" />
-        </View>
-
-        <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>歷史時期</Text>
-        </View>
-        <View style={{ gap: 8 }}>
-          {Object.entries(ERA_INFO).map(([key, info]) => (
-            <Pressable
-              key={key}
-              onPress={() => router.push(`/era/${key}`)}
-              style={[styles.eraRow, { backgroundColor: c.backgroundElement }]}>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.eraTitle, { color: c.text }]}>{info.label}</Text>
-                <Text style={[styles.eraMeta, { color: c.textSecondary }]}>{info.range} · {info.tagline}</Text>
+        <View style={desktop ? styles.columns : styles.stack}>
+          <View style={desktop ? { flex: 2 } : undefined}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: c.text }]}>快速功能</Text>
+            </View>
+            <View style={{ gap: 10, marginTop: 8 }}>
+              <View style={styles.actionsRow}>
+                <ActionTile icon="git-network" label="關聯圖" onPress={() => router.push('/arc')} color="#7c3aed" />
+                <ActionTile icon="swap-horizontal" label="協定比較" onPress={() => router.push('/compare')} color="#16a34a" />
               </View>
-              <Ionicons name="chevron-forward" size={20} color={c.textSecondary} />
-            </Pressable>
-          ))}
+              <View style={styles.actionsRow}>
+                <ActionTile icon="time" label="歷史時期" onPress={() => router.push('/eras')} color="#0ea5e9" />
+                <ActionTile icon="book" label="名詞對照" onPress={() => router.push('/glossary')} color="#f59e0b" />
+              </View>
+            </View>
+          </View>
+
+          <View style={desktop ? { flex: 3 } : undefined}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: c.text }]}>歷史時期</Text>
+            </View>
+            <View style={{ gap: 8, marginTop: 8 }}>
+              {Object.entries(ERA_INFO).map(([key, info]) => (
+                <Pressable
+                  key={key}
+                  onPress={() => router.push(`/era/${key}`)}
+                  style={[styles.eraRow, { backgroundColor: c.backgroundElement }]}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[styles.eraTitle, { color: c.text }]}>{info.label}</Text>
+                    <Text style={[styles.eraMeta, { color: c.textSecondary }]}>{info.range} · {info.tagline}</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color={c.textSecondary} />
+                </Pressable>
+              ))}
+            </View>
+          </View>
         </View>
 
         <View style={{ height: 32 }} />
@@ -147,8 +161,9 @@ export default function Home() {
 function StatCard({ label, value, icon, color }: { label: string; value: string; icon: any; color: string }) {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
+  const desktop = useIsDesktop();
   return (
-    <View style={[styles.statCard, { backgroundColor: c.backgroundElement }]}>
+    <View style={[styles.statCard, { backgroundColor: c.backgroundElement }, desktop && { minWidth: '22%' }]}>
       <Ionicons name={icon} size={18} color={color} />
       <Text style={[styles.statValue, { color: c.text }]}>{value}</Text>
       <Text style={[styles.statLabel, { color: c.textSecondary }]}>{label}</Text>
@@ -181,6 +196,8 @@ const styles = StyleSheet.create({
   alertCard: { padding: 12, borderRadius: 12, borderWidth: 1, gap: 4 },
   featureCard: { padding: 14, borderRadius: 14, borderWidth: 1 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 },
+  columns: { flexDirection: 'row', gap: 28, alignItems: 'flex-start' },
+  stack: { gap: 14 },
   sectionTitle: { fontSize: 16, fontWeight: '800' },
   actionsRow: { flexDirection: 'row', gap: 10 },
   actionTile: { flex: 1, padding: 14, borderRadius: 12, alignItems: 'center', gap: 6 },
