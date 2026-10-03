@@ -10,9 +10,11 @@
       "typeVersion": 1,
       "position": [
         0,
-        400
+        700
       ],
-      "parameters": {}
+      "parameters": {},
+      "notes": "從這裡開始執行",
+      "notesInFlow": true
     },
     {
       "id": "9419cbc5-8e6d-5022-a7a2-830b7d6993c3",
@@ -20,8 +22,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        220,
-        400
+        260,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -50,7 +52,9 @@
           "id": "TtSupabaseSecret",
           "name": "Supabase secret key (trade-tracker)"
         }
-      }
+      },
+      "notes": "讀「每次最多送幾則給 AI」",
+      "notesInFlow": true
     },
     {
       "id": "e155892e-3134-59b6-8a05-630bb5163ec9",
@@ -58,8 +62,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        440,
-        400
+        520,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -89,7 +93,9 @@
           "name": "Supabase secret key (trade-tracker)"
         }
       },
-      "executeOnce": true
+      "executeOnce": true,
+      "notes": "讀 3 個來源是否停用",
+      "notesInFlow": true
     },
     {
       "id": "ff629568-8ca4-5e91-8bd5-621df197b2b3",
@@ -97,13 +103,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        660,
-        400
+        780,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 流程設定。最多送幾則給 AI 讀資料庫的 update_settings(news),在控制台調整。\nconst settings = $('讀取更新設定').first().json;\nconst sources = Object.fromEntries($('讀取來源設定').all().map((i) => [i.json.id, i.json]));\nreturn [{ json: {\n  model: 'gemini-2.5-flash',\n  lookbackDays: 120,          // 第一次看到的項目,只有發布在近 120 天內的才送 AI;更早的只記為已看過\n  maxLlmItems: settings.max_llm_items ?? 30,\n  batchSize: 10,              // 每次呼叫 AI 處理幾則\n  sources,\n  agreementIds: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium'],\n  keywords: ['e-commerce', 'electronic commerce', 'electronic transmission', 'moratorium',\n             'joint statement initiative', 'digital trade', 'wt/gc/283'],\n} }];"
-      }
+      },
+      "notes": "流程參數集中在這裡",
+      "notesInFlow": true
     },
     {
       "id": "3805e523-46df-528c-a477-4d1f15b56b80",
@@ -111,8 +119,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        880,
-        400
+        1040,
+        700
       ],
       "parameters": {
         "method": "POST",
@@ -141,7 +149,9 @@
           "id": "TtSupabaseSecret",
           "name": "Supabase secret key (trade-tracker)"
         }
-      }
+      },
+      "notes": "資料庫記一筆「執行中」",
+      "notesInFlow": true
     },
     {
       "id": "92779ffc-7741-5481-8e33-fbd1b9f49997",
@@ -149,8 +159,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1100,
-        200
+        1460,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -195,7 +205,9 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 3000,
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "notes": "查 WTO 官方文件庫",
+      "notesInFlow": true
     },
     {
       "id": "02b2dc91-39b5-54bd-98ca-f11922868b28",
@@ -203,13 +215,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1320,
-        200
+        1720,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst sid = 'wto-docs-ecom';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 WTO 官方文件').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst tag = (h, t) => { const m = h.match(new RegExp(`<${t}>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\nconst items = (res.data.match(/<autn:hit>[\\s\\S]*?<\\/autn:hit>/g) || []).map((h) => {\n  const symbol = tag(h, 'SYMBOL');\n  const [d, m, y] = tag(h, 'ISSUINGDATE').slice(0, 10).split('/');   // dd/mm/yyyy\n  const file = tag(h, 'FILENAMESA').replace(/^[qQ]:\\//, '');\n  return {\n    source_id: sid, item_key: symbol, title: tag(h, 'CATTITLE') || symbol,\n    url: file ? `https://docs.wto.org/dol2fe/Pages/SS/directdoc.aspx?filename=q:/${file}&Open=True` : null,\n    published_at: y && m && d ? `${y}-${m}-${d}` : null,\n    publisher_domain: 'wto.org',\n    raw: { symbol, subjects: tag(h, 'SUBJECTLIST'), doc_type: tag(h, 'TYPES'),\n           countries: tag(h, 'CONCERNEDCOUNTRIES').split('#').filter(Boolean).slice(0, 80),\n           contents: tag(h, 'CONTENTS').slice(0, 500) },\n  };\n}).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
-      }
+      },
+      "notes": "XML → 文件清單",
+      "notesInFlow": true
     },
     {
       "id": "2fa68fd9-2702-5325-a068-ca9e3728d334",
@@ -217,8 +231,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1540,
-        200
+        1980,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -246,7 +260,9 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 3000,
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "notes": "讀 WTO 新聞 RSS",
+      "notesInFlow": true
     },
     {
       "id": "82a0048e-223e-5e79-9f0b-1e1325405b09",
@@ -254,13 +270,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1760,
-        200
+        2240,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst parseRss = (xml) => (String(xml).match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || []).map((it) => {\n  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n  const sourceUrl = (it.match(/<source[^>]*url=\"([^\"]+)\"/) || [])[1] || '';\n  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),\n           pubDate: get('pubDate'), source: get('source'), sourceUrl };\n});\nconst isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };\n// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域\nconst host = (u) => String(u || '').replace(/^[a-z]+:\\/\\//i, '').split(/[/?#:]/)[0].replace(/^www\\./, '').toLowerCase();\n\nconst sid = 'wto-news-rss';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 WTO 新聞').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst items = parseRss(res.data).map((e) => ({\n  source_id: sid, item_key: e.link || e.guid, title: e.title, url: e.link,\n  published_at: isoDate(e.pubDate), publisher_domain: 'wto.org',\n  raw: { description: e.description.slice(0, 800) },\n})).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
-      }
+      },
+      "notes": "RSS → 新聞清單",
+      "notesInFlow": true
     },
     {
       "id": "750b2ae7-2701-549f-8b3a-30061fa9ee3b",
@@ -268,8 +286,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1980,
-        200
+        2500,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -318,7 +336,9 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 3000,
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "notes": "用關鍵字搜尋新聞",
+      "notesInFlow": true
     },
     {
       "id": "2c19a378-74c2-5801-8156-77ee62135bc4",
@@ -326,13 +346,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2200,
-        200
+        2760,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst parseRss = (xml) => (String(xml).match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || []).map((it) => {\n  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n  const sourceUrl = (it.match(/<source[^>]*url=\"([^\"]+)\"/) || [])[1] || '';\n  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),\n           pubDate: get('pubDate'), source: get('source'), sourceUrl };\n});\nconst isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };\n// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域\nconst host = (u) => String(u || '').replace(/^[a-z]+:\\/\\//i, '').split(/[/?#:]/)[0].replace(/^www\\./, '').toLowerCase();\n\nconst sid = 'gnews-wto-ecom';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 Google 新聞').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst items = parseRss(res.data).map((e) => {\n  const publisher = e.source;\n  const title = publisher && e.title.endsWith(` - ${publisher}`) ? e.title.slice(0, -(publisher.length + 3)) : e.title;\n  return {\n    source_id: sid, item_key: e.guid || e.link, title, url: e.link,\n    published_at: isoDate(e.pubDate), publisher_domain: host(e.sourceUrl),\n    raw: { publisher, description: e.description.slice(0, 800) },\n  };\n}).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
-      }
+      },
+      "notes": "記下原始媒體網域",
+      "notesInFlow": true
     },
     {
       "id": "961670c3-4f31-5652-98bf-4c1cd26bfd2e",
@@ -340,13 +362,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2420,
-        400
+        3180,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 合併三個來源,新聞用關鍵字初篩(官方文件本身就是 JSI 查詢結果,全部保留)\nconst cfg = $('設定').first().json;\nconst parts = ['整理 WTO 文件', '整理 WTO 新聞', '整理 Google 新聞'].map((n) => $(n).first().json);\nconst relevant = (i) => i.source_id === 'wto-docs-ecom'\n  || cfg.keywords.some((k) => `${i.title} ${i.raw?.description ?? ''}`.toLowerCase().includes(k));\nconst rows = [];\nconst stats = {};\nconst seen = new Set();\nfor (const p of parts) {\n  const kept = (p.items || []).filter(relevant);\n  stats[p.source_id] = { status: p.status, fetched: (p.items || []).length, relevant: kept.length, error: p.error ?? null };\n  for (const i of kept) {\n    const k = `${i.source_id}|${i.item_key}`;\n    if (seen.has(k)) continue;\n    seen.add(k);\n    rows.push({ source_id: i.source_id, item_key: i.item_key, title: (i.title || '').slice(0, 500), url: i.url,\n                published_at: i.published_at, raw: { ...i.raw, publisher_domain: i.publisher_domain } });\n  }\n}\nreturn [{ json: { rows, stats } }];"
-      }
+      },
+      "notes": "新聞須含關鍵字",
+      "notesInFlow": true
     },
     {
       "id": "4faca03a-0951-5238-b107-b9d0e76baf65",
@@ -354,8 +378,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2640,
-        400
+        3440,
+        700
       ],
       "parameters": {
         "method": "POST",
@@ -394,7 +418,9 @@
           "name": "Supabase secret key (trade-tracker)"
         }
       },
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "看過的自動略過",
+      "notesInFlow": true
     },
     {
       "id": "85419b68-a7ac-5d71-b9c2-7de722c40ea7",
@@ -402,8 +428,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2860,
-        400
+        3700,
+        700
       ],
       "parameters": {
         "method": "GET",
@@ -446,7 +472,9 @@
         }
       },
       "executeOnce": true,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "所有還沒處理的項目",
+      "notesInFlow": true
     },
     {
       "id": "b2cab832-bcdf-5523-94f8-fafbe45595ba",
@@ -454,13 +482,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3080,
-        400
+        3960,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 決定這次要送 AI 的項目:尚未處理、且在回溯期間內的,依新到舊、最多 maxLlmItems 則\nconst cfg = $('設定').first().json;\nconst pending = $('讀取待處理項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst cutoff = Date.now() - cfg.lookbackDays * 86400000;\nconst old = pending.filter((r) => r.published_at && Date.parse(r.published_at) < cutoff);\nconst recent = pending.filter((r) => !r.published_at || Date.parse(r.published_at) >= cutoff)\n  .sort((a, b) => String(b.published_at ?? '').localeCompare(String(a.published_at ?? '')));\nconst forLlm = recent.slice(0, cfg.maxLlmItems);\nconst summary = {\n  pending: pending.length, baselineIds: old.map((r) => r.id),\n  deferred: recent.length - forLlm.length, llmCount: forLlm.length,\n};\n\nconst system = `你是國際貿易協定研究助理,負責追蹤「WTO 電子商務協定(Agreement on Electronic Commerce,源自電子商務聯合聲明倡議 JSI)」與「WT/GC/283 電子傳輸暫免課徵關稅聯合聲明」的進展。對輸入的每一則項目判斷:\n1. relevant:是否直接涉及上述兩者。一般數位經濟、其他協定或泛論的報導判 false。\n2. agreement_id:wto-jsi-ecommerce(電子商務協定或 JSI 本身)、wt-gc-283-moratorium(電子傳輸關稅暫免、WT/GC/283)、none。\n3. event_type:new_document(新的官方文件)、ministerial(部長會議或總理事會的決定)、accession(成員遞交接受書或加入)、signed、in_force、news(其他報導)。只有原文明確寫出「已簽署」「已生效」才可以用 signed 或 in_force。\n4. event_date:事件發生日期 YYYY-MM-DD;不確定就用項目的發布日期;都沒有就留空字串。\n5. summary_zh:臺灣繁體中文摘要,80 字以內。只能根據提供的內容,不可推測或補充原文沒有的資訊。專有名詞第一次出現時,用半形括號附英文原文。\n6. confidence:0 到 1,你對以上判斷的把握。\n譯名:Agreement=協定、Arrangement=協議、Treaty=條約、Convention=公約、Covenant=盟約、MOU=備忘錄、Joint Statement / Joint Declaration=聯合聲明、Joint Statement Initiative=聯合聲明倡議、Pilot Project=先導計畫、WTO=世界貿易組織、General Council=總理事會、Ministerial Conference=部長會議、interim arrangements=過渡性安排。報導裡用 deal、pact 指稱電子商務協定時,一律寫「電子商務協定」,不可寫成「協議」。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。\n每一則都要回傳,key 必須和輸入完全相同。`;\n\nconst schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {\n  key: { type: 'STRING' }, relevant: { type: 'BOOLEAN' },\n  agreement_id: { type: 'STRING', enum: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium', 'none'] },\n  event_type: { type: 'STRING', enum: ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'] },\n  event_date: { type: 'STRING' }, summary_zh: { type: 'STRING' }, confidence: { type: 'NUMBER' },\n}, required: ['key', 'relevant', 'agreement_id', 'event_type', 'event_date', 'summary_zh', 'confidence'] } };\n\nconst batches = [];\nfor (let i = 0; i < forLlm.length; i += cfg.batchSize) batches.push(forLlm.slice(i, i + cfg.batchSize));\nif (!batches.length) return [{ json: { hasBatch: false, batch: [], summary } }];\nreturn batches.map((batch) => {\n  const payload = batch.map((r) => ({\n    key: String(r.id), source: r.source_id, publisher: r.raw?.publisher_domain ?? '', published_at: r.published_at,\n    title: r.title, document_symbol: r.raw?.symbol, subjects: r.raw?.subjects, doc_type: r.raw?.doc_type,\n    description: r.raw?.description ?? r.raw?.contents ?? '',\n  }));\n  return { json: { hasBatch: true, batch, summary, request: {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: JSON.stringify(payload) }] }],\n    generationConfig: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.2 },\n  } } };\n});"
-      }
+      },
+      "notes": "近 120 天、每批 10 則",
+      "notesInFlow": true
     },
     {
       "id": "0af1ad3b-80a3-54c6-a1da-0c620ad1e2c3",
@@ -468,8 +498,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3300,
-        400
+        4220,
+        700
       ],
       "parameters": {
         "conditions": {
@@ -494,7 +524,9 @@
           "combinator": "and"
         },
         "options": {}
-      }
+      },
+      "notes": "上:有 → AI;下:沒有 → 收尾",
+      "notesInFlow": true
     },
     {
       "id": "b266f888-578a-56be-886a-39243b348bad",
@@ -502,8 +534,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3520,
-        240
+        4560,
+        420
       ],
       "parameters": {
         "method": "POST",
@@ -527,7 +559,9 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 5000,
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "notes": "Gemini,失敗重試 3 次",
+      "notesInFlow": true
     },
     {
       "id": "4a8c8075-2502-52f5-b4ae-d851f3f3f0ec",
@@ -535,13 +569,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3740,
-        240
+        4820,
+        420
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 品質檢查:格式 → 協定代碼 → 日期 → 來源信任等級 → 決定「顯示(active)/待確認(pending)」\nconst cfg = $('設定').first().json;\nconst runId = $('建立執行紀錄').first().json.id;\nconst plans = $('規劃 AI 批次').all().map((i) => i.json).filter((p) => p.hasBatch);\nconst responses = $input.all().map((i) => i.json);\n\nconst TIER = {\n  'wto.org': 'S', 'ustr.gov': 'S', 'trade.gov.tw': 'S', 'europa.eu': 'S', 'gov.uk': 'S', 'mfat.govt.nz': 'S',\n  'dfat.gov.au': 'S', 'mti.gov.sg': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S', 'mofa.gov.tw': 'S',\n  'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',\n  'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A',\n  'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'cna.com.tw': 'B',\n  'economist.com': 'B', 'scmp.com': 'B', 'politico.eu': 'B', 'politico.com': 'B', 'theguardian.com': 'B',\n  'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'apnews.com': 'B',\n};\nconst tierOf = (d) => {\n  const p = String(d || '').split('.');\n  for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }\n  return 'C';\n};\nconst DATE = /^\\d{4}-\\d{2}(-\\d{2})?$/;\nconst today = new Date().toISOString().slice(0, 10);\nconst okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;\nconst TYPES = ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'];\nconst STATE_CHANGING = ['signed', 'in_force', 'accession'];\n// 譯名規則的最後防線(AI 偶爾不遵守):只改明確的詞,不碰「平台」這類一般用字\nconst fixTerms = (s) => s\n  .replace(/電子商務協議/g, '電子商務協定')\n  .replace(/台灣/g, '臺灣')\n  .replace(/中華民國（臺灣）/g, '中華民國(臺灣)');\n\nconst events = [], handledIds = [], failedIds = [], rejected = [];\nplans.forEach((plan, idx) => {\n  let out = null;\n  try { out = JSON.parse(responses[idx]?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''); } catch { out = null; }\n  if (!Array.isArray(out)) { failedIds.push(...plan.batch.map((b) => b.id)); return; }\n  const byKey = Object.fromEntries(out.map((o) => [String(o.key), o]));\n  for (const item of plan.batch) {\n    const o = byKey[String(item.id)];\n    if (!o) { failedIds.push(item.id); continue; }\n    handledIds.push(item.id);\n    const isDoc = item.source_id === 'wto-docs-ecom';\n    const domain = item.raw?.publisher_domain || '';\n    const tier = isDoc ? 'S' : tierOf(domain);\n    const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);\n    let agreementId = o.agreement_id, type = o.event_type, conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));\n    if (isDoc) {\n      // 官方文件:分類用規則,不靠 AI;AI 只負責摘要\n      agreementId = String(item.raw?.symbol || '').startsWith('WT/GC/283') ? 'wt-gc-283-moratorium' : 'wto-jsi-ecommerce';\n      type = 'new_document'; conf = 1;\n    } else {\n      if (!o.relevant || !cfg.agreementIds.includes(agreementId)) { rejected.push({ id: item.id, reason: 'not relevant' }); continue; }\n      if (!TYPES.includes(type)) type = 'news';\n    }\n    if (!summary) { rejected.push({ id: item.id, reason: 'empty summary' }); continue; }\n    const published = String(item.published_at || '').slice(0, 10);\n    const eventDate = isDoc ? published : (okDate(o.event_date) ? o.event_date : (okDate(published) ? published : null));\n    let status = 'pending';\n    if (tier === 'S' && conf >= 0.7) status = 'active';\n    else if (STATE_CHANGING.includes(type)) status = 'pending';      // 非官方來源宣稱狀態改變:待交叉確認\n    else if ((tier === 'A' || tier === 'B') && conf >= 0.6) status = 'active';\n    events.push({\n      agreement_id: agreementId, event_type: type, event_date: eventDate, summary_zh: summary,\n      source_id: item.source_id, source_url: item.url, source_item_id: item.id, confidence: conf,\n      status, by_tool: cfg.model, run_id: runId,\n      new_value: { title: item.title, publisher: domain, tier, symbol: item.raw?.symbol ?? null },\n    });\n  }\n});\nreturn [{ json: { events, handledIds, failedIds, rejected } }];"
-      }
+      },
+      "notes": "品質檢查,決定顯示或待確認",
+      "notesInFlow": true
     },
     {
       "id": "a15a6e7d-f6d9-5375-bc3c-a512bd1b966b",
@@ -549,8 +585,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3960,
-        240
+        5080,
+        420
       ],
       "parameters": {
         "method": "POST",
@@ -581,7 +617,9 @@
         }
       },
       "onError": "continueRegularOutput",
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "只新增事件,不改協定",
+      "notesInFlow": true
     },
     {
       "id": "0e7ae987-2ab4-5525-8221-38fcd11086f7",
@@ -589,13 +627,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4180,
-        400
+        5500,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 整理這次執行的結果:哪些項目標記為已處理、各來源狀態、執行紀錄\nconst run = $('建立執行紀錄').first().json;\nconst merged = $('合併與初篩').first().json;\nconst plan = $('規劃 AI 批次').first().json.summary;\nconst fresh = $('存入新項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst v = $('驗證並產生事件').isExecuted\n  ? $('驗證並產生事件').first().json\n  : { events: [], handledIds: [], failedIds: [], rejected: [] };\nconst writeFailed = $('寫入事件').isExecuted && !!$('寫入事件').first().json.error;\n\nconst processed = [...plan.baselineIds, ...v.handledIds];\nconst sourceRuns = Object.entries(merged.stats).map(([sid, s]) => ({\n  run_id: run.id, source_id: sid, status: s.status, items_fetched: s.fetched,\n  items_new: fresh.filter((r) => r.source_id === sid).length, error: s.error,\n}));\nconst partial = writeFailed || v.failedIds.length > 0 || sourceRuns.some((s) => s.status === 'error');\nconst written = writeFailed ? 0 : v.events.length;\nconst report = {\n  抓取: Object.fromEntries(Object.entries(merged.stats).map(([k, s]) => [k, `${s.status}:抓到 ${s.fetched} 則,相關 ${s.relevant} 則`])),\n  第一次見到: fresh.length,\n  只記為已看過的舊項目: plan.baselineIds.length,\n  送給AI: plan.llmCount,\n  超過上限留待下次: plan.deferred,\n  AI處理失敗留待下次: v.failedIds.length,\n  判定不相關: v.rejected.length,\n  新事件: written,\n  其中直接顯示: writeFailed ? 0 : v.events.filter((e) => e.status === 'active').length,\n  其中待確認: writeFailed ? 0 : v.events.filter((e) => e.status === 'pending').length,\n};\nreturn [{ json: {\n  processedFilter: processed.length ? `in.(${processed.join(',')})` : 'eq.-1',\n  sourceRuns,\n  runPatch: { status: partial ? 'partial' : 'success', finished_at: new Date().toISOString(),\n              llm_items: plan.llmCount, events_count: written,\n              error: writeFailed ? String($('寫入事件').first().json.error?.message ?? 'events insert failed') : null },\n  report,\n} }];"
-      }
+      },
+      "notes": "統計這次的結果",
+      "notesInFlow": true
     },
     {
       "id": "818ca9df-fe8f-5f26-b889-6e4f4195bebb",
@@ -603,8 +643,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4400,
-        400
+        5760,
+        700
       ],
       "parameters": {
         "method": "PATCH",
@@ -644,7 +684,9 @@
         }
       },
       "executeOnce": true,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "下次不再送 AI",
+      "notesInFlow": true
     },
     {
       "id": "cd0c148e-8056-55ea-97d6-5c51f59579ca",
@@ -652,8 +694,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4620,
-        400
+        6020,
+        700
       ],
       "parameters": {
         "method": "POST",
@@ -684,7 +726,9 @@
         }
       },
       "executeOnce": true,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "健康燈號的依據",
+      "notesInFlow": true
     },
     {
       "id": "097c731d-4172-5776-a28a-68a08ac7febd",
@@ -692,8 +736,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4840,
-        400
+        6280,
+        700
       ],
       "parameters": {
         "method": "PATCH",
@@ -733,7 +777,9 @@
         }
       },
       "executeOnce": true,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "notes": "標記成功或部分失敗",
+      "notesInFlow": true
     },
     {
       "id": "bf9c2866-cc3a-5de9-bd43-db1a7ed48b9d",
@@ -741,12 +787,94 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5060,
-        400
+        6540,
+        700
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "return [{ json: $('收尾整理').first().json.report }];"
+      },
+      "notes": "點我看中文報告",
+      "notesInFlow": true
+    },
+    {
+      "id": "cbe517f4-e04e-5eb6-b866-8cf5b57d64a2",
+      "name": "① 讀取設定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        476
+      ],
+      "parameters": {
+        "content": "## ① 讀取設定(準備工作)\n- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。這條流程沒有排程,不會自己跑。\n- **讀取更新設定**:從資料庫讀「每次最多送幾則給 AI」,目前是 30 則。\n- **讀取來源設定**:讀這條流程用到的 3 個來源,以及有沒有被停用(停用的會跳過)。\n- **設定**:模型名稱、回溯天數(120 天)、搜尋關鍵字等參數都集中在這裡。要調整就改這個節點。\n- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。",
+        "width": 1220,
+        "height": 414,
+        "color": 4
+      }
+    },
+    {
+      "id": "7762ab76-1748-5c71-a2c1-ea95250d3b16",
+      "name": "② 抓取資料來源",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        416
+      ],
+      "parameters": {
+        "content": "## ② 抓取三個資料來源\n- **抓 WTO 官方文件**:向 WTO 官方文件庫查詢電子商務 JSI 相關文件(INF/ECOM、WT/GC/283、WT/MIN(26)/42 等),目前約 119 份。\n- **整理 WTO 文件**:把查詢結果(XML)整理成一筆筆文件:文件編號、標題、日期、PDF 連結。\n- **抓 WTO 新聞**:讀 WTO「最新消息」RSS,每次約 10 則。\n- **整理 WTO 新聞**:整理成標題、日期、連結、摘要。\n- **抓 Google 新聞**:用關鍵字搜尋 Google 新聞 RSS,最多 100 則。\n- **整理 Google 新聞**:整理新聞,並記下原始媒體的網域(例如 reuters.com),之後用來判斷可信度。\n\n任何一個來源抓取失敗都不會中斷流程,只會記為「失敗」,網頁「資料狀態」頁的燈號會變黃或紅。",
+        "width": 1480,
+        "height": 474,
+        "color": 6
+      }
+    },
+    {
+      "id": "eaa2d657-d4fc-5b4d-8721-dcdaf6b20168",
+      "name": "③ 判斷哪些是新的",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3140,
+        476
+      ],
+      "parameters": {
+        "content": "## ③ 判斷哪些是新的\n- **合併與初篩**:把三個來源合在一起。新聞要含關鍵字(e-commerce、moratorium 等)才保留;官方文件全部保留。\n- **存入新項目**:存進資料庫的「已看過項目」清單,已經存過的會自動略過。判斷新舊就是靠這一步。\n- **讀取待處理項目**:讀出所有「還沒處理過」的項目,包括上次超過上限、還沒輪到的。\n- **規劃 AI 批次**:只挑近 120 天內的項目,依新到舊、最多送「上限」則給 AI,每 10 則一批。更舊的只記為已看過,不送 AI。\n- **有要給 AI 的項目?**:有 → 往上走到 ④;沒有新東西 → 直接往右到 ⑤ 收尾,不花 AI 額度。",
+        "width": 1220,
+        "height": 414,
+        "color": 5
+      }
+    },
+    {
+      "id": "46abdd40-e03f-565a-a7a7-a58fa01a6823",
+      "name": "④ AI 處理與品質檢查",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        76
+      ],
+      "parameters": {
+        "content": "## ④ AI 處理與品質檢查\n只有在有新項目時才會執行。\n- **AI 分類與摘要**:把一批項目送給 Gemini,請它判斷是否相關、事件類型、日期,並寫繁體中文摘要(附譯名對照表)。失敗會自動重試 3 次。\n- **驗證並產生事件**:品質檢查:\n  - 官方文件的分類由規則決定,AI 只負責摘要\n  - 檢查協定代碼和日期格式\n  - 官方、學術、一線媒體 → 直接顯示;一般媒體 → 待確認\n  - 非官方來源宣稱「已簽署/已生效」→ 一律待確認\n  - 自動修正譯名(電子商務協議→協定、台→臺)\n- **寫入事件**:把通過檢查的事件寫進資料庫。只新增事件,不會改協定本身的狀態。",
+        "width": 700,
+        "height": 534,
+        "color": 3
+      }
+    },
+    {
+      "id": "27c3bfcc-05ef-5633-91bd-25cb5e2518be",
+      "name": "⑤ 收尾與紀錄",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5460,
+        476
+      ],
+      "parameters": {
+        "content": "## ⑤ 收尾與紀錄\n- **收尾整理**:統計哪些項目已處理完、每個來源的結果。\n- **標記已處理**:處理完的項目做記號,下次不會再送 AI。AI 失敗的不做記號,下次會重試。\n- **寫入來源結果**:記錄每個來源這次抓到幾則、有幾則是新的,也就是網頁「資料狀態」頁健康燈號的依據。\n- **完成執行紀錄**:把這次執行標記為「成功」或「部分失敗」,記下 AI 處理數和新事件數。\n- **執行摘要**:點開這個節點,就能看到這次的中文報告。",
+        "width": 1220,
+        "height": 414,
+        "color": 7
       }
     },
     {
@@ -756,13 +884,13 @@
       "typeVersion": 1,
       "position": [
         -40,
-        -20
+        -384
       ],
       "parameters": {
-        "content": "## WTO 電子商務 JSI 追蹤(第一條流程)\n**只會在手動執行時跑**,沒有排程(自動更新預設關閉)。\n\n1. 讀資料庫的更新設定與來源開關\n2. 抓 WTO 官方文件庫、WTO 新聞、Google 新聞\n3. 存入資料庫,只留下尚未處理的項目\n4. AI 分批分類、摘要(附譯名對照)\n5. 品質檢查後寫入事件:官方/學術/一線媒體直接顯示,其餘待確認\n\n每個節點都可以點開看輸入與輸出。",
-        "height": 300,
-        "width": 520,
-        "color": 5
+        "content": "## WTO 電子商務 JSI 追蹤(第一條流程)\n**怎麼執行**:按畫面下方「Execute workflow」。這條流程沒有排程,只會在你手動執行時跑(自動更新預設關閉)。\n\n**流程**:① 讀取設定 → ② 抓三個來源 → ③ 判斷哪些是新的 → ④ AI 摘要與品質檢查 → ⑤ 收尾與紀錄\n\n**怎麼看結果**\n- 點任何一個節點,右側會顯示它收到的資料(輸入)和產出的資料(輸出)\n- 最右邊的「執行摘要」是這次的中文報告\n- 網頁版 http://localhost:8082 的「動態」和「資料狀態」頁會顯示新結果(按重新整理)\n\n**注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。",
+        "width": 1120,
+        "height": 420,
+        "color": 1
       }
     }
   ],

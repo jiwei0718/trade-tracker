@@ -24,7 +24,10 @@ nodes: list[dict] = []
 connections: dict[str, dict] = {}
 
 
-def node(name, type_, version, pos, params, **extra):
+def node(name, type_, version, pos, params, note=None, **extra):
+    """note: one-line description shown under the node on the canvas."""
+    if note:
+        extra |= {"notes": note, "notesInFlow": True}
     nodes.append({
         "id": str(uuid.uuid5(uuid.NAMESPACE_URL, f"{WORKFLOW_ID}/{name}")),
         "name": name, "type": type_, "typeVersion": version, "position": pos,
@@ -41,7 +44,7 @@ def link(src, dst, out=0):
 
 
 def http(name, pos, method, url, *, cred=SB_CRED, query=None, headers=None, body=None,
-         text=False, timeout=60000, **settings):
+         text=False, timeout=60000, note=None, **settings):
     params = {"method": method, "url": url, "options": {"timeout": timeout}}
     if cred:
         params |= {"authentication": "genericCredentialType", "genericAuthType": "httpHeaderAuth"}
@@ -54,11 +57,17 @@ def http(name, pos, method, url, *, cred=SB_CRED, query=None, headers=None, body
     if text:
         params["options"]["response"] = {"response": {"responseFormat": "text", "outputPropertyName": "data"}}
     extra = {"credentials": cred} if cred else {}
-    return node(name, "n8n-nodes-base.httpRequest", 4.2, pos, params, **extra, **settings)
+    return node(name, "n8n-nodes-base.httpRequest", 4.2, pos, params, note=note, **extra, **settings)
 
 
-def code(name, pos, js):
-    return node(name, "n8n-nodes-base.code", 2, pos, {"mode": "runOnceForAllItems", "jsCode": js.strip()})
+def code(name, pos, js, note=None):
+    return node(name, "n8n-nodes-base.code", 2, pos, {"mode": "runOnceForAllItems", "jsCode": js.strip()}, note=note)
+
+
+def sticky(name, pos, width, height, color, content):
+    """A note on the canvas. Placed behind nodes, so it can frame a group of them."""
+    return node(name, "n8n-nodes-base.stickyNote", 1, pos,
+                {"content": content, "width": width, "height": height, "color": color})
 
 
 FETCH = dict(executeOnce=True, retryOnFail=True, maxTries=3, waitBetweenTries=3000,
@@ -349,50 +358,104 @@ return [{ json: {
 } }];
 """
 
+# ─── Layout ───────────────────────────────────────────────────────────────
+# Five colour-coded sections. A sticky note frames each section and explains
+# every node in it; each node also shows a one-line note underneath.
+
+MAIN_Y = 700        # main row
+AI_Y = 420          # the AI branch sits above the main row; the "nothing for AI" path runs underneath
+STEP = 260          # horizontal distance between nodes
+NODE_H = 100        # node box height
+NOTE_H = 50         # room for the one-line note under a node
+PAD = 40
+
+
+def xs(start, n):
+    return [start + i * STEP for i in range(n)]
+
+
+def text_height(content, width):
+    """Generous estimate of how tall a sticky's text is (CJK ~14px wide, ~24px per line)."""
+    per_line = max(10, int((width - 40) / 14))
+    h = 30
+    for line in content.split("\n"):
+        if line.startswith("## "):
+            h += 44
+        elif not line.strip():
+            h += 12
+        else:
+            h += 24 * max(1, -(-len(line) // per_line))
+    return h + 10
+
+
+sections = []
+
+
+def section(name, xs_, y, color, content):
+    """Sticky note framing nodes placed at x positions xs_ on row y: text on top, nodes below."""
+    x = xs_[0] - PAD
+    width = xs_[-1] - xs_[0] + 100 + 2 * PAD
+    th = text_height(content, width)
+    top = y - th - 20
+    height = th + 20 + NODE_H + NOTE_H + PAD
+    sticky(name, [x, top], width, height, color, content)
+    sections.append((name, x, top, width, height, y, xs_))
+
+
+S1 = xs(0, 5)
+S2 = xs(S1[-1] + STEP + 160, 6)
+S3 = xs(S2[-1] + STEP + 160, 5)
+S4 = xs(S3[-1] + STEP + 80, 3)
+S5 = xs(S4[-1] + STEP + 160, 5)
+
 # ─── Nodes ────────────────────────────────────────────────────────────────
 
-Y, X = 400, 0
-trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [X, Y], {})
-settings = http("讀取更新設定", [X + 220, Y], "GET", f"{SB}/update_settings",
-                query=[{"name": "pipeline", "value": "eq.news"}, {"name": "select", "value": "max_llm_items,auto_enabled"}])
-srcs = http("讀取來源設定", [X + 440, Y], "GET", f"{SB}/sources",
+trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {},
+               note="從這裡開始執行")
+settings = http("讀取更新設定", [S1[1], MAIN_Y], "GET", f"{SB}/update_settings",
+                query=[{"name": "pipeline", "value": "eq.news"}, {"name": "select", "value": "max_llm_items,auto_enabled"}],
+                note="讀「每次最多送幾則給 AI」")
+srcs = http("讀取來源設定", [S1[2], MAIN_Y], "GET", f"{SB}/sources",
             query=[{"name": "id", "value": f"in.({','.join(SOURCE_IDS)})"},
-                   {"name": "select", "value": "id,enabled,tier,url,config"}], executeOnce=True)
-config = code("設定", [X + 660, Y], JS_CONFIG)
-run = http("建立執行紀錄", [X + 880, Y], "POST", f"{SB}/pipeline_runs",
+                   {"name": "select", "value": "id,enabled,tier,url,config"}], executeOnce=True,
+            note="讀 3 個來源是否停用")
+config = code("設定", [S1[3], MAIN_Y], JS_CONFIG, note="流程參數集中在這裡")
+run = http("建立執行紀錄", [S1[4], MAIN_Y], "POST", f"{SB}/pipeline_runs",
            headers=[{"name": "Prefer", "value": "return=representation"}],
-           body='={{ JSON.stringify({ pipeline: "all", trigger: "manual", runner: "n8n", status: "running" }) }}')
+           body='={{ JSON.stringify({ pipeline: "all", trigger: "manual", runner: "n8n", status: "running" }) }}',
+           note="資料庫記一筆「執行中」")
 
-f_docs = http("抓 WTO 官方文件", [X + 1100, Y - 200], "GET",
+f_docs = http("抓 WTO 官方文件", [S2[0], MAIN_Y], "GET",
               "https://docs.wto.org/dol2fe/Pages/SS/GetXMLResults.aspx", cred=None, text=True,
               headers=[UA],
               query=[{"name": "DataSource", "value": "Cat"},
                      {"name": "query", "value": "={{ $('設定').first().json.sources['wto-docs-ecom'].config.query }}"},
-                     {"name": "Language", "value": "English"}], **FETCH)
-p_docs = code("整理 WTO 文件", [X + 1320, Y - 200], JS_PARSE_DOCS)
-f_news = http("抓 WTO 新聞", [X + 1540, Y - 200], "GET", "https://www.wto.org/library/rss/latest_news_e.xml",
-              cred=None, text=True, headers=[UA], **FETCH)
-p_news = code("整理 WTO 新聞", [X + 1760, Y - 200], JS_PARSE_WTO_NEWS)
-f_gn = http("抓 Google 新聞", [X + 1980, Y - 200], "GET", "https://news.google.com/rss/search",
+                     {"name": "Language", "value": "English"}], note="查 WTO 官方文件庫", **FETCH)
+p_docs = code("整理 WTO 文件", [S2[1], MAIN_Y], JS_PARSE_DOCS, note="XML → 文件清單")
+f_news = http("抓 WTO 新聞", [S2[2], MAIN_Y], "GET", "https://www.wto.org/library/rss/latest_news_e.xml",
+              cred=None, text=True, headers=[UA], note="讀 WTO 新聞 RSS", **FETCH)
+p_news = code("整理 WTO 新聞", [S2[3], MAIN_Y], JS_PARSE_WTO_NEWS, note="RSS → 新聞清單")
+f_gn = http("抓 Google 新聞", [S2[4], MAIN_Y], "GET", "https://news.google.com/rss/search",
             cred=None, text=True, headers=[UA],
             query=[{"name": n, "value": f"={{{{ $('設定').first().json.sources['gnews-wto-ecom'].config.{n} }}}}"}
-                   for n in ("q", "hl", "gl", "ceid")], **FETCH)
-p_gn = code("整理 Google 新聞", [X + 2200, Y - 200], JS_PARSE_GNEWS)
+                   for n in ("q", "hl", "gl", "ceid")], note="用關鍵字搜尋新聞", **FETCH)
+p_gn = code("整理 Google 新聞", [S2[5], MAIN_Y], JS_PARSE_GNEWS, note="記下原始媒體網域")
 
-collect = code("合併與初篩", [X + 2420, Y], JS_COLLECT)
-store = http("存入新項目", [X + 2640, Y], "POST", f"{SB}/source_items",
+collect = code("合併與初篩", [S3[0], MAIN_Y], JS_COLLECT, note="新聞須含關鍵字")
+store = http("存入新項目", [S3[1], MAIN_Y], "POST", f"{SB}/source_items",
              query=[{"name": "on_conflict", "value": "source_id,item_key"}],
              headers=[{"name": "Prefer", "value": "resolution=ignore-duplicates,return=representation"}],
-             body="={{ JSON.stringify($json.rows) }}", alwaysOutputData=True)
-pending = http("讀取待處理項目", [X + 2860, Y], "GET", f"{SB}/source_items",
+             body="={{ JSON.stringify($json.rows) }}", alwaysOutputData=True,
+             note="看過的自動略過")
+pending = http("讀取待處理項目", [S3[2], MAIN_Y], "GET", f"{SB}/source_items",
                query=[{"name": "select", "value": "id,source_id,item_key,title,url,published_at,raw"},
                       {"name": "processed_at", "value": "is.null"},
                       {"name": "source_id", "value": f"in.({','.join(SOURCE_IDS)})"},
                       {"name": "order", "value": "published_at.desc.nullslast"},
                       {"name": "limit", "value": "1000"}],
-               executeOnce=True, alwaysOutputData=True)
-plan = code("規劃 AI 批次", [X + 3080, Y], JS_PLAN)
-gate = node("有要給 AI 的項目?", "n8n-nodes-base.if", 2.2, [X + 3300, Y], {
+               executeOnce=True, alwaysOutputData=True, note="所有還沒處理的項目")
+plan = code("規劃 AI 批次", [S3[3], MAIN_Y], JS_PLAN, note="近 120 天、每批 10 則")
+gate = node("有要給 AI 的項目?", "n8n-nodes-base.if", 2.2, [S3[4], MAIN_Y], {
     "conditions": {
         "options": {"caseSensitive": True, "leftValue": "", "typeValidation": "strict", "version": 2},
         "conditions": [{"id": str(uuid.uuid5(uuid.NAMESPACE_URL, "gate")), "leftValue": "={{ $json.hasBatch }}",
@@ -400,43 +463,93 @@ gate = node("有要給 AI 的項目?", "n8n-nodes-base.if", 2.2, [X + 3300, Y], 
         "combinator": "and",
     },
     "options": {},
-})
-llm = http("AI 分類與摘要", [X + 3520, Y - 160], "POST",
+}, note="上:有 → AI;下:沒有 → 收尾")
+
+llm = http("AI 分類與摘要", [S4[0], AI_Y], "POST",
            "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('設定').first().json.model }}:generateContent",
            cred=GEMINI_CRED, body="={{ JSON.stringify($json.request) }}", timeout=120000,
-           retryOnFail=True, maxTries=3, waitBetweenTries=5000, onError="continueRegularOutput")
-validate = code("驗證並產生事件", [X + 3740, Y - 160], JS_VALIDATE)
-write = http("寫入事件", [X + 3960, Y - 160], "POST", f"{SB}/events",
+           retryOnFail=True, maxTries=3, waitBetweenTries=5000, onError="continueRegularOutput",
+           note="Gemini,失敗重試 3 次")
+validate = code("驗證並產生事件", [S4[1], AI_Y], JS_VALIDATE, note="品質檢查,決定顯示或待確認")
+write = http("寫入事件", [S4[2], AI_Y], "POST", f"{SB}/events",
              headers=[{"name": "Prefer", "value": "return=minimal"}],
-             body="={{ JSON.stringify($json.events) }}", onError="continueRegularOutput", alwaysOutputData=True)
-finish = code("收尾整理", [X + 4180, Y], JS_FINISH)
-mark = http("標記已處理", [X + 4400, Y], "PATCH", f"{SB}/source_items",
+             body="={{ JSON.stringify($json.events) }}", onError="continueRegularOutput", alwaysOutputData=True,
+             note="只新增事件,不改協定")
+
+finish = code("收尾整理", [S5[0], MAIN_Y], JS_FINISH, note="統計這次的結果")
+mark = http("標記已處理", [S5[1], MAIN_Y], "PATCH", f"{SB}/source_items",
             query=[{"name": "id", "value": "={{ $('收尾整理').first().json.processedFilter }}"}],
             headers=[{"name": "Prefer", "value": "return=minimal"}],
             body="={{ JSON.stringify({ processed_at: new Date().toISOString() }) }}",
-            executeOnce=True, alwaysOutputData=True)
-sruns = http("寫入來源結果", [X + 4620, Y], "POST", f"{SB}/source_runs",
+            executeOnce=True, alwaysOutputData=True, note="下次不再送 AI")
+sruns = http("寫入來源結果", [S5[2], MAIN_Y], "POST", f"{SB}/source_runs",
              headers=[{"name": "Prefer", "value": "return=minimal"}],
-             body="={{ JSON.stringify($('收尾整理').first().json.sourceRuns) }}", executeOnce=True, alwaysOutputData=True)
-done = http("完成執行紀錄", [X + 4840, Y], "PATCH", f"{SB}/pipeline_runs",
+             body="={{ JSON.stringify($('收尾整理').first().json.sourceRuns) }}", executeOnce=True, alwaysOutputData=True,
+             note="健康燈號的依據")
+done = http("完成執行紀錄", [S5[3], MAIN_Y], "PATCH", f"{SB}/pipeline_runs",
             query=[{"name": "id", "value": "=eq.{{ $('建立執行紀錄').first().json.id }}"}],
             headers=[{"name": "Prefer", "value": "return=minimal"}],
-            body="={{ JSON.stringify($('收尾整理').first().json.runPatch) }}", executeOnce=True, alwaysOutputData=True)
-report = code("執行摘要", [X + 5060, Y], "return [{ json: $('收尾整理').first().json.report }];")
+            body="={{ JSON.stringify($('收尾整理').first().json.runPatch) }}", executeOnce=True, alwaysOutputData=True,
+            note="標記成功或部分失敗")
+report = code("執行摘要", [S5[4], MAIN_Y], "return [{ json: $('收尾整理').first().json.report }];",
+              note="點我看中文報告")
 
-node("說明", "n8n-nodes-base.stickyNote", 1, [X - 40, Y - 420], {
-    "content": (
-        "## WTO 電子商務 JSI 追蹤(第一條流程)\n"
-        "**只會在手動執行時跑**,沒有排程(自動更新預設關閉)。\n\n"
-        "1. 讀資料庫的更新設定與來源開關\n"
-        "2. 抓 WTO 官方文件庫、WTO 新聞、Google 新聞\n"
-        "3. 存入資料庫,只留下尚未處理的項目\n"
-        "4. AI 分批分類、摘要(附譯名對照)\n"
-        "5. 品質檢查後寫入事件:官方/學術/一線媒體直接顯示,其餘待確認\n\n"
-        "每個節點都可以點開看輸入與輸出。"
-    ),
-    "height": 300, "width": 520, "color": 5,
-})
+# ─── Sticky notes ─────────────────────────────────────────────────────────
+
+section("① 讀取設定", S1, MAIN_Y, 4, """## ① 讀取設定(準備工作)
+- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。這條流程沒有排程,不會自己跑。
+- **讀取更新設定**:從資料庫讀「每次最多送幾則給 AI」,目前是 30 則。
+- **讀取來源設定**:讀這條流程用到的 3 個來源,以及有沒有被停用(停用的會跳過)。
+- **設定**:模型名稱、回溯天數(120 天)、搜尋關鍵字等參數都集中在這裡。要調整就改這個節點。
+- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。""")
+
+section("② 抓取資料來源", S2, MAIN_Y, 6, """## ② 抓取三個資料來源
+- **抓 WTO 官方文件**:向 WTO 官方文件庫查詢電子商務 JSI 相關文件(INF/ECOM、WT/GC/283、WT/MIN(26)/42 等),目前約 119 份。
+- **整理 WTO 文件**:把查詢結果(XML)整理成一筆筆文件:文件編號、標題、日期、PDF 連結。
+- **抓 WTO 新聞**:讀 WTO「最新消息」RSS,每次約 10 則。
+- **整理 WTO 新聞**:整理成標題、日期、連結、摘要。
+- **抓 Google 新聞**:用關鍵字搜尋 Google 新聞 RSS,最多 100 則。
+- **整理 Google 新聞**:整理新聞,並記下原始媒體的網域(例如 reuters.com),之後用來判斷可信度。
+
+任何一個來源抓取失敗都不會中斷流程,只會記為「失敗」,網頁「資料狀態」頁的燈號會變黃或紅。""")
+
+section("③ 判斷哪些是新的", S3, MAIN_Y, 5, """## ③ 判斷哪些是新的
+- **合併與初篩**:把三個來源合在一起。新聞要含關鍵字(e-commerce、moratorium 等)才保留;官方文件全部保留。
+- **存入新項目**:存進資料庫的「已看過項目」清單,已經存過的會自動略過。判斷新舊就是靠這一步。
+- **讀取待處理項目**:讀出所有「還沒處理過」的項目,包括上次超過上限、還沒輪到的。
+- **規劃 AI 批次**:只挑近 120 天內的項目,依新到舊、最多送「上限」則給 AI,每 10 則一批。更舊的只記為已看過,不送 AI。
+- **有要給 AI 的項目?**:有 → 往上走到 ④;沒有新東西 → 直接往右到 ⑤ 收尾,不花 AI 額度。""")
+
+section("④ AI 處理與品質檢查", S4, AI_Y, 3, """## ④ AI 處理與品質檢查
+只有在有新項目時才會執行。
+- **AI 分類與摘要**:把一批項目送給 Gemini,請它判斷是否相關、事件類型、日期,並寫繁體中文摘要(附譯名對照表)。失敗會自動重試 3 次。
+- **驗證並產生事件**:品質檢查:
+  - 官方文件的分類由規則決定,AI 只負責摘要
+  - 檢查協定代碼和日期格式
+  - 官方、學術、一線媒體 → 直接顯示;一般媒體 → 待確認
+  - 非官方來源宣稱「已簽署/已生效」→ 一律待確認
+  - 自動修正譯名(電子商務協議→協定、台→臺)
+- **寫入事件**:把通過檢查的事件寫進資料庫。只新增事件,不會改協定本身的狀態。""")
+
+section("⑤ 收尾與紀錄", S5, MAIN_Y, 7, """## ⑤ 收尾與紀錄
+- **收尾整理**:統計哪些項目已處理完、每個來源的結果。
+- **標記已處理**:處理完的項目做記號,下次不會再送 AI。AI 失敗的不做記號,下次會重試。
+- **寫入來源結果**:記錄每個來源這次抓到幾則、有幾則是新的,也就是網頁「資料狀態」頁健康燈號的依據。
+- **完成執行紀錄**:把這次執行標記為「成功」或「部分失敗」,記下 AI 處理數和新事件數。
+- **執行摘要**:點開這個節點,就能看到這次的中文報告。""")
+
+top = min(s[2] for s in sections)
+sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 JSI 追蹤(第一條流程)
+**怎麼執行**:按畫面下方「Execute workflow」。這條流程沒有排程,只會在你手動執行時跑(自動更新預設關閉)。
+
+**流程**:① 讀取設定 → ② 抓三個來源 → ③ 判斷哪些是新的 → ④ AI 摘要與品質檢查 → ⑤ 收尾與紀錄
+
+**怎麼看結果**
+- 點任何一個節點,右側會顯示它收到的資料(輸入)和產出的資料(輸出)
+- 最右邊的「執行摘要」是這次的中文報告
+- 網頁版 http://localhost:8082 的「動態」和「資料狀態」頁會顯示新結果(按重新整理)
+
+**注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。""")
 
 for a, b in [(trigger, settings), (settings, srcs), (srcs, config), (config, run), (run, f_docs),
              (f_docs, p_docs), (p_docs, f_news), (f_news, p_news), (p_news, f_gn), (f_gn, p_gn),
