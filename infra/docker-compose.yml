@@ -1,0 +1,30 @@
+# 協定追蹤工具 — 本機自動化環境
+#
+# 啟動:   docker compose -f infra/docker-compose.yml up -d
+# 停止:   docker compose -f infra/docker-compose.yml down
+# 開啟:   http://localhost:5678
+#
+# 說明
+# - n8n 資料(流程、帳號、執行紀錄)存在 Docker volume「n8n_data」,不放在 OneDrive
+#   資料夾,避免雲端同步把資料庫檔弄壞。
+# - 只綁定 127.0.0.1:這台電腦以外(同網段其他裝置)連不進來。
+# - 新建或匯入的流程預設都是「未啟用」,排程不會自己跑;自動更新一律等使用者同意才開。
+# - 版本固定在 2.41.6,升級時改這裡的版本號再重新 up -d。
+
+name: trade-tracker
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.41.6
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Asia/Taipei
+      - TZ=Asia/Taipei
+      - N8N_DIAGNOSTICS_ENABLED=false
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
