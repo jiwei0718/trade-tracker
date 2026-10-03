@@ -1,0 +1,1042 @@
+{
+  "id": "TtJsiEcomFlow001",
+  "name": "WTO 電子商務 JSI 追蹤",
+  "active": false,
+  "nodes": [
+    {
+      "id": "1322797a-0f96-504c-8931-a5a81bb273a3",
+      "name": "手動執行",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        400
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "9419cbc5-8e6d-5022-a7a2-830b7d6993c3",
+      "name": "讀取更新設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        400
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/update_settings",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "pipeline",
+              "value": "eq.news"
+            },
+            {
+              "name": "select",
+              "value": "max_llm_items,auto_enabled"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      }
+    },
+    {
+      "id": "e155892e-3134-59b6-8a05-630bb5163ec9",
+      "name": "讀取來源設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        400
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/sources",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "in.(wto-docs-ecom,wto-news-rss,gnews-wto-ecom)"
+            },
+            {
+              "name": "select",
+              "value": "id,enabled,tier,url,config"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "ff629568-8ca4-5e91-8bd5-621df197b2b3",
+      "name": "設定",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        400
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 流程設定。最多送幾則給 AI 讀資料庫的 update_settings(news),在控制台調整。\nconst settings = $('讀取更新設定').first().json;\nconst sources = Object.fromEntries($('讀取來源設定').all().map((i) => [i.json.id, i.json]));\nreturn [{ json: {\n  model: 'gemini-2.5-flash',\n  lookbackDays: 120,          // 第一次看到的項目,只有發布在近 120 天內的才送 AI;更早的只記為已看過\n  maxLlmItems: settings.max_llm_items ?? 30,\n  batchSize: 10,              // 每次呼叫 AI 處理幾則\n  sources,\n  agreementIds: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium'],\n  keywords: ['e-commerce', 'electronic commerce', 'electronic transmission', 'moratorium',\n             'joint statement initiative', 'digital trade', 'wt/gc/283'],\n} }];"
+      }
+    },
+    {
+      "id": "3805e523-46df-528c-a477-4d1f15b56b80",
+      "name": "建立執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ pipeline: \"all\", trigger: \"manual\", runner: \"n8n\", status: \"running\" }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      }
+    },
+    {
+      "id": "92779ffc-7741-5481-8e33-fbd1b9f49997",
+      "name": "抓 WTO 官方文件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        200
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://docs.wto.org/dol2fe/Pages/SS/GetXMLResults.aspx",
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "data"
+            }
+          }
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "DataSource",
+              "value": "Cat"
+            },
+            {
+              "name": "query",
+              "value": "={{ $('設定').first().json.sources['wto-docs-ecom'].config.query }}"
+            },
+            {
+              "name": "Language",
+              "value": "English"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"
+            }
+          ]
+        }
+      },
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "02b2dc91-39b5-54bd-98ca-f11922868b28",
+      "name": "整理 WTO 文件",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst sid = 'wto-docs-ecom';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 WTO 官方文件').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst tag = (h, t) => { const m = h.match(new RegExp(`<${t}>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\nconst items = (res.data.match(/<autn:hit>[\\s\\S]*?<\\/autn:hit>/g) || []).map((h) => {\n  const symbol = tag(h, 'SYMBOL');\n  const [d, m, y] = tag(h, 'ISSUINGDATE').slice(0, 10).split('/');   // dd/mm/yyyy\n  const file = tag(h, 'FILENAMESA').replace(/^[qQ]:\\//, '');\n  return {\n    source_id: sid, item_key: symbol, title: tag(h, 'CATTITLE') || symbol,\n    url: file ? `https://docs.wto.org/dol2fe/Pages/SS/directdoc.aspx?filename=q:/${file}&Open=True` : null,\n    published_at: y && m && d ? `${y}-${m}-${d}` : null,\n    publisher_domain: 'wto.org',\n    raw: { symbol, subjects: tag(h, 'SUBJECTLIST'), doc_type: tag(h, 'TYPES'),\n           countries: tag(h, 'CONCERNEDCOUNTRIES').split('#').filter(Boolean).slice(0, 80),\n           contents: tag(h, 'CONTENTS').slice(0, 500) },\n  };\n}).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
+      }
+    },
+    {
+      "id": "2fa68fd9-2702-5325-a068-ca9e3728d334",
+      "name": "抓 WTO 新聞",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        200
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://www.wto.org/library/rss/latest_news_e.xml",
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "data"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"
+            }
+          ]
+        }
+      },
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "82a0048e-223e-5e79-9f0b-1e1325405b09",
+      "name": "整理 WTO 新聞",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst parseRss = (xml) => (String(xml).match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || []).map((it) => {\n  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n  const sourceUrl = (it.match(/<source[^>]*url=\"([^\"]+)\"/) || [])[1] || '';\n  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),\n           pubDate: get('pubDate'), source: get('source'), sourceUrl };\n});\nconst isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };\n// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域\nconst host = (u) => String(u || '').replace(/^[a-z]+:\\/\\//i, '').split(/[/?#:]/)[0].replace(/^www\\./, '').toLowerCase();\n\nconst sid = 'wto-news-rss';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 WTO 新聞').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst items = parseRss(res.data).map((e) => ({\n  source_id: sid, item_key: e.link || e.guid, title: e.title, url: e.link,\n  published_at: isoDate(e.pubDate), publisher_domain: 'wto.org',\n  raw: { description: e.description.slice(0, 800) },\n})).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
+      }
+    },
+    {
+      "id": "750b2ae7-2701-549f-8b3a-30061fa9ee3b",
+      "name": "抓 Google 新聞",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        200
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://news.google.com/rss/search",
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "data"
+            }
+          }
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $('設定').first().json.sources['gnews-wto-ecom'].config.q }}"
+            },
+            {
+              "name": "hl",
+              "value": "={{ $('設定').first().json.sources['gnews-wto-ecom'].config.hl }}"
+            },
+            {
+              "name": "gl",
+              "value": "={{ $('設定').first().json.sources['gnews-wto-ecom'].config.gl }}"
+            },
+            {
+              "name": "ceid",
+              "value": "={{ $('設定').first().json.sources['gnews-wto-ecom'].config.ceid }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"
+            }
+          ]
+        }
+      },
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "2c19a378-74c2-5801-8156-77ee62135bc4",
+      "name": "整理 Google 新聞",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst parseRss = (xml) => (String(xml).match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || []).map((it) => {\n  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n  const sourceUrl = (it.match(/<source[^>]*url=\"([^\"]+)\"/) || [])[1] || '';\n  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),\n           pubDate: get('pubDate'), source: get('source'), sourceUrl };\n});\nconst isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };\n// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域\nconst host = (u) => String(u || '').replace(/^[a-z]+:\\/\\//i, '').split(/[/?#:]/)[0].replace(/^www\\./, '').toLowerCase();\n\nconst sid = 'gnews-wto-ecom';\nconst src = $('設定').first().json.sources[sid];\nconst res = $('抓 Google 新聞').first().json;\nif (!src || !src.enabled) return [{ json: { source_id: sid, status: 'skipped', items: [] } }];\nif (res.error || typeof res.data !== 'string') {\n  return [{ json: { source_id: sid, status: 'error', error: String(res.error?.message ?? res.error ?? 'no data'), items: [] } }];\n}\nconst items = parseRss(res.data).map((e) => {\n  const publisher = e.source;\n  const title = publisher && e.title.endsWith(` - ${publisher}`) ? e.title.slice(0, -(publisher.length + 3)) : e.title;\n  return {\n    source_id: sid, item_key: e.guid || e.link, title, url: e.link,\n    published_at: isoDate(e.pubDate), publisher_domain: host(e.sourceUrl),\n    raw: { publisher, description: e.description.slice(0, 800) },\n  };\n}).filter((i) => i.item_key);\nreturn [{ json: { source_id: sid, status: items.length ? 'ok' : 'empty', items } }];"
+      }
+    },
+    {
+      "id": "961670c3-4f31-5652-98bf-4c1cd26bfd2e",
+      "name": "合併與初篩",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        400
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 合併三個來源,新聞用關鍵字初篩(官方文件本身就是 JSI 查詢結果,全部保留)\nconst cfg = $('設定').first().json;\nconst parts = ['整理 WTO 文件', '整理 WTO 新聞', '整理 Google 新聞'].map((n) => $(n).first().json);\nconst relevant = (i) => i.source_id === 'wto-docs-ecom'\n  || cfg.keywords.some((k) => `${i.title} ${i.raw?.description ?? ''}`.toLowerCase().includes(k));\nconst rows = [];\nconst stats = {};\nconst seen = new Set();\nfor (const p of parts) {\n  const kept = (p.items || []).filter(relevant);\n  stats[p.source_id] = { status: p.status, fetched: (p.items || []).length, relevant: kept.length, error: p.error ?? null };\n  for (const i of kept) {\n    const k = `${i.source_id}|${i.item_key}`;\n    if (seen.has(k)) continue;\n    seen.add(k);\n    rows.push({ source_id: i.source_id, item_key: i.item_key, title: (i.title || '').slice(0, 500), url: i.url,\n                published_at: i.published_at, raw: { ...i.raw, publisher_domain: i.publisher_domain } });\n  }\n}\nreturn [{ json: { rows, stats } }];"
+      }
+    },
+    {
+      "id": "4faca03a-0951-5238-b107-b9d0e76baf65",
+      "name": "存入新項目",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2640,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "source_id,item_key"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=ignore-duplicates,return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "85419b68-a7ac-5d71-b9c2-7de722c40ea7",
+      "name": "讀取待處理項目",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2860,
+        400
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,source_id,item_key,title,url,published_at,raw"
+            },
+            {
+              "name": "processed_at",
+              "value": "is.null"
+            },
+            {
+              "name": "source_id",
+              "value": "in.(wto-docs-ecom,wto-news-rss,gnews-wto-ecom)"
+            },
+            {
+              "name": "order",
+              "value": "published_at.desc.nullslast"
+            },
+            {
+              "name": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "b2cab832-bcdf-5523-94f8-fafbe45595ba",
+      "name": "規劃 AI 批次",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        400
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 決定這次要送 AI 的項目:尚未處理、且在回溯期間內的,依新到舊、最多 maxLlmItems 則\nconst cfg = $('設定').first().json;\nconst pending = $('讀取待處理項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst cutoff = Date.now() - cfg.lookbackDays * 86400000;\nconst old = pending.filter((r) => r.published_at && Date.parse(r.published_at) < cutoff);\nconst recent = pending.filter((r) => !r.published_at || Date.parse(r.published_at) >= cutoff)\n  .sort((a, b) => String(b.published_at ?? '').localeCompare(String(a.published_at ?? '')));\nconst forLlm = recent.slice(0, cfg.maxLlmItems);\nconst summary = {\n  pending: pending.length, baselineIds: old.map((r) => r.id),\n  deferred: recent.length - forLlm.length, llmCount: forLlm.length,\n};\n\nconst system = `你是國際貿易協定研究助理,負責追蹤「WTO 電子商務協定(Agreement on Electronic Commerce,源自電子商務聯合聲明倡議 JSI)」與「WT/GC/283 電子傳輸暫免課徵關稅聯合聲明」的進展。對輸入的每一則項目判斷:\n1. relevant:是否直接涉及上述兩者。一般數位經濟、其他協定或泛論的報導判 false。\n2. agreement_id:wto-jsi-ecommerce(電子商務協定或 JSI 本身)、wt-gc-283-moratorium(電子傳輸關稅暫免、WT/GC/283)、none。\n3. event_type:new_document(新的官方文件)、ministerial(部長會議或總理事會的決定)、accession(成員遞交接受書或加入)、signed、in_force、news(其他報導)。只有原文明確寫出「已簽署」「已生效」才可以用 signed 或 in_force。\n4. event_date:事件發生日期 YYYY-MM-DD;不確定就用項目的發布日期;都沒有就留空字串。\n5. summary_zh:臺灣繁體中文摘要,80 字以內。只能根據提供的內容,不可推測或補充原文沒有的資訊。專有名詞第一次出現時,用半形括號附英文原文。\n6. confidence:0 到 1,你對以上判斷的把握。\n譯名:Agreement=協定、Arrangement=協議、Treaty=條約、Convention=公約、Covenant=盟約、MOU=備忘錄、Joint Statement / Joint Declaration=聯合聲明、Joint Statement Initiative=聯合聲明倡議、Pilot Project=先導計畫、WTO=世界貿易組織、General Council=總理事會、Ministerial Conference=部長會議、interim arrangements=過渡性安排。報導裡用 deal、pact 指稱電子商務協定時,一律寫「電子商務協定」,不可寫成「協議」。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。\n每一則都要回傳,key 必須和輸入完全相同。`;\n\nconst schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {\n  key: { type: 'STRING' }, relevant: { type: 'BOOLEAN' },\n  agreement_id: { type: 'STRING', enum: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium', 'none'] },\n  event_type: { type: 'STRING', enum: ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'] },\n  event_date: { type: 'STRING' }, summary_zh: { type: 'STRING' }, confidence: { type: 'NUMBER' },\n}, required: ['key', 'relevant', 'agreement_id', 'event_type', 'event_date', 'summary_zh', 'confidence'] } };\n\nconst batches = [];\nfor (let i = 0; i < forLlm.length; i += cfg.batchSize) batches.push(forLlm.slice(i, i + cfg.batchSize));\nif (!batches.length) return [{ json: { hasBatch: false, batch: [], summary } }];\nreturn batches.map((batch) => {\n  const payload = batch.map((r) => ({\n    key: String(r.id), source: r.source_id, publisher: r.raw?.publisher_domain ?? '', published_at: r.published_at,\n    title: r.title, document_symbol: r.raw?.symbol, subjects: r.raw?.subjects, doc_type: r.raw?.doc_type,\n    description: r.raw?.description ?? r.raw?.contents ?? '',\n  }));\n  return { json: { hasBatch: true, batch, summary, request: {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: JSON.stringify(payload) }] }],\n    generationConfig: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.2 },\n  } } };\n});"
+      }
+    },
+    {
+      "id": "0af1ad3b-80a3-54c6-a1da-0c620ad1e2c3",
+      "name": "有要給 AI 的項目?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3300,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cb7ac9f4-d88a-5f4e-8549-01064f33b915",
+              "leftValue": "={{ $json.hasBatch }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "b266f888-578a-56be-886a-39243b348bad",
+      "name": "AI 分類與摘要",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3520,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('設定').first().json.model }}:generateContent",
+        "options": {
+          "timeout": 120000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtGeminiApiKey01",
+          "name": "Gemini API key"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "4a8c8075-2502-52f5-b4ae-d851f3f3f0ec",
+      "name": "驗證並產生事件",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3740,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 品質檢查:格式 → 協定代碼 → 日期 → 來源信任等級 → 決定「顯示(active)/待確認(pending)」\nconst cfg = $('設定').first().json;\nconst runId = $('建立執行紀錄').first().json.id;\nconst plans = $('規劃 AI 批次').all().map((i) => i.json).filter((p) => p.hasBatch);\nconst responses = $input.all().map((i) => i.json);\n\nconst TIER = {\n  'wto.org': 'S', 'ustr.gov': 'S', 'trade.gov.tw': 'S', 'europa.eu': 'S', 'gov.uk': 'S', 'mfat.govt.nz': 'S',\n  'dfat.gov.au': 'S', 'mti.gov.sg': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S', 'mofa.gov.tw': 'S',\n  'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',\n  'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A',\n  'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'cna.com.tw': 'B',\n  'economist.com': 'B', 'scmp.com': 'B', 'politico.eu': 'B', 'politico.com': 'B', 'theguardian.com': 'B',\n  'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'apnews.com': 'B',\n};\nconst tierOf = (d) => {\n  const p = String(d || '').split('.');\n  for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }\n  return 'C';\n};\nconst DATE = /^\\d{4}-\\d{2}(-\\d{2})?$/;\nconst today = new Date().toISOString().slice(0, 10);\nconst okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;\nconst TYPES = ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'];\nconst STATE_CHANGING = ['signed', 'in_force', 'accession'];\n// 譯名規則的最後防線(AI 偶爾不遵守):只改明確的詞,不碰「平台」這類一般用字\nconst fixTerms = (s) => s\n  .replace(/電子商務協議/g, '電子商務協定')\n  .replace(/台灣/g, '臺灣')\n  .replace(/中華民國（臺灣）/g, '中華民國(臺灣)');\n\nconst events = [], handledIds = [], failedIds = [], rejected = [];\nplans.forEach((plan, idx) => {\n  let out = null;\n  try { out = JSON.parse(responses[idx]?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''); } catch { out = null; }\n  if (!Array.isArray(out)) { failedIds.push(...plan.batch.map((b) => b.id)); return; }\n  const byKey = Object.fromEntries(out.map((o) => [String(o.key), o]));\n  for (const item of plan.batch) {\n    const o = byKey[String(item.id)];\n    if (!o) { failedIds.push(item.id); continue; }\n    handledIds.push(item.id);\n    const isDoc = item.source_id === 'wto-docs-ecom';\n    const domain = item.raw?.publisher_domain || '';\n    const tier = isDoc ? 'S' : tierOf(domain);\n    const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);\n    let agreementId = o.agreement_id, type = o.event_type, conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));\n    if (isDoc) {\n      // 官方文件:分類用規則,不靠 AI;AI 只負責摘要\n      agreementId = String(item.raw?.symbol || '').startsWith('WT/GC/283') ? 'wt-gc-283-moratorium' : 'wto-jsi-ecommerce';\n      type = 'new_document'; conf = 1;\n    } else {\n      if (!o.relevant || !cfg.agreementIds.includes(agreementId)) { rejected.push({ id: item.id, reason: 'not relevant' }); continue; }\n      if (!TYPES.includes(type)) type = 'news';\n    }\n    if (!summary) { rejected.push({ id: item.id, reason: 'empty summary' }); continue; }\n    const published = String(item.published_at || '').slice(0, 10);\n    const eventDate = isDoc ? published : (okDate(o.event_date) ? o.event_date : (okDate(published) ? published : null));\n    let status = 'pending';\n    if (tier === 'S' && conf >= 0.7) status = 'active';\n    else if (STATE_CHANGING.includes(type)) status = 'pending';      // 非官方來源宣稱狀態改變:待交叉確認\n    else if ((tier === 'A' || tier === 'B') && conf >= 0.6) status = 'active';\n    events.push({\n      agreement_id: agreementId, event_type: type, event_date: eventDate, summary_zh: summary,\n      source_id: item.source_id, source_url: item.url, source_item_id: item.id, confidence: conf,\n      status, by_tool: cfg.model, run_id: runId,\n      new_value: { title: item.title, publisher: domain, tier, symbol: item.raw?.symbol ?? null },\n    });\n  }\n});\nreturn [{ json: { events, handledIds, failedIds, rejected } }];"
+      }
+    },
+    {
+      "id": "a15a6e7d-f6d9-5375-bc3c-a512bd1b966b",
+      "name": "寫入事件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3960,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.events) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "0e7ae987-2ab4-5525-8221-38fcd11086f7",
+      "name": "收尾整理",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4180,
+        400
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 整理這次執行的結果:哪些項目標記為已處理、各來源狀態、執行紀錄\nconst run = $('建立執行紀錄').first().json;\nconst merged = $('合併與初篩').first().json;\nconst plan = $('規劃 AI 批次').first().json.summary;\nconst fresh = $('存入新項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst v = $('驗證並產生事件').isExecuted\n  ? $('驗證並產生事件').first().json\n  : { events: [], handledIds: [], failedIds: [], rejected: [] };\nconst writeFailed = $('寫入事件').isExecuted && !!$('寫入事件').first().json.error;\n\nconst processed = [...plan.baselineIds, ...v.handledIds];\nconst sourceRuns = Object.entries(merged.stats).map(([sid, s]) => ({\n  run_id: run.id, source_id: sid, status: s.status, items_fetched: s.fetched,\n  items_new: fresh.filter((r) => r.source_id === sid).length, error: s.error,\n}));\nconst partial = writeFailed || v.failedIds.length > 0 || sourceRuns.some((s) => s.status === 'error');\nconst written = writeFailed ? 0 : v.events.length;\nconst report = {\n  抓取: Object.fromEntries(Object.entries(merged.stats).map(([k, s]) => [k, `${s.status}:抓到 ${s.fetched} 則,相關 ${s.relevant} 則`])),\n  第一次見到: fresh.length,\n  只記為已看過的舊項目: plan.baselineIds.length,\n  送給AI: plan.llmCount,\n  超過上限留待下次: plan.deferred,\n  AI處理失敗留待下次: v.failedIds.length,\n  判定不相關: v.rejected.length,\n  新事件: written,\n  其中直接顯示: writeFailed ? 0 : v.events.filter((e) => e.status === 'active').length,\n  其中待確認: writeFailed ? 0 : v.events.filter((e) => e.status === 'pending').length,\n};\nreturn [{ json: {\n  processedFilter: processed.length ? `in.(${processed.join(',')})` : 'eq.-1',\n  sourceRuns,\n  runPatch: { status: partial ? 'partial' : 'success', finished_at: new Date().toISOString(),\n              llm_items: plan.llmCount, events_count: written,\n              error: writeFailed ? String($('寫入事件').first().json.error?.message ?? 'events insert failed') : null },\n  report,\n} }];"
+      }
+    },
+    {
+      "id": "818ca9df-fe8f-5f26-b889-6e4f4195bebb",
+      "name": "標記已處理",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4400,
+        400
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('收尾整理').first().json.processedFilter }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ processed_at: new Date().toISOString() }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "cd0c148e-8056-55ea-97d6-5c51f59579ca",
+      "name": "寫入來源結果",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4620,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.sourceRuns) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "097c731d-4172-5776-a28a-68a08ac7febd",
+      "name": "完成執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4840,
+        400
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "=eq.{{ $('建立執行紀錄').first().json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.runPatch) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "bf9c2866-cc3a-5de9-bd43-db1a7ed48b9d",
+      "name": "執行摘要",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5060,
+        400
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{ json: $('收尾整理').first().json.report }];"
+      }
+    },
+    {
+      "id": "69f8e77c-254d-5b38-9596-3a1b00f89c2b",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -20
+      ],
+      "parameters": {
+        "content": "## WTO 電子商務 JSI 追蹤(第一條流程)\n**只會在手動執行時跑**,沒有排程(自動更新預設關閉)。\n\n1. 讀資料庫的更新設定與來源開關\n2. 抓 WTO 官方文件庫、WTO 新聞、Google 新聞\n3. 存入資料庫,只留下尚未處理的項目\n4. AI 分批分類、摘要(附譯名對照)\n5. 品質檢查後寫入事件:官方/學術/一線媒體直接顯示,其餘待確認\n\n每個節點都可以點開看輸入與輸出。",
+        "height": 300,
+        "width": 520,
+        "color": 5
+      }
+    }
+  ],
+  "connections": {
+    "手動執行": {
+      "main": [
+        [
+          {
+            "node": "讀取更新設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取更新設定": {
+      "main": [
+        [
+          {
+            "node": "讀取來源設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取來源設定": {
+      "main": [
+        [
+          {
+            "node": "設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "設定": {
+      "main": [
+        [
+          {
+            "node": "建立執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "建立執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "抓 WTO 官方文件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "抓 WTO 官方文件": {
+      "main": [
+        [
+          {
+            "node": "整理 WTO 文件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "整理 WTO 文件": {
+      "main": [
+        [
+          {
+            "node": "抓 WTO 新聞",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "抓 WTO 新聞": {
+      "main": [
+        [
+          {
+            "node": "整理 WTO 新聞",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "整理 WTO 新聞": {
+      "main": [
+        [
+          {
+            "node": "抓 Google 新聞",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "抓 Google 新聞": {
+      "main": [
+        [
+          {
+            "node": "整理 Google 新聞",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "整理 Google 新聞": {
+      "main": [
+        [
+          {
+            "node": "合併與初篩",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "合併與初篩": {
+      "main": [
+        [
+          {
+            "node": "存入新項目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "存入新項目": {
+      "main": [
+        [
+          {
+            "node": "讀取待處理項目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取待處理項目": {
+      "main": [
+        [
+          {
+            "node": "規劃 AI 批次",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "規劃 AI 批次": {
+      "main": [
+        [
+          {
+            "node": "有要給 AI 的項目?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI 分類與摘要": {
+      "main": [
+        [
+          {
+            "node": "驗證並產生事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "驗證並產生事件": {
+      "main": [
+        [
+          {
+            "node": "寫入事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入事件": {
+      "main": [
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "收尾整理": {
+      "main": [
+        [
+          {
+            "node": "標記已處理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "標記已處理": {
+      "main": [
+        [
+          {
+            "node": "寫入來源結果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入來源結果": {
+      "main": [
+        [
+          {
+            "node": "完成執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "完成執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "執行摘要",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "有要給 AI 的項目?": {
+      "main": [
+        [
+          {
+            "node": "AI 分類與摘要",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
