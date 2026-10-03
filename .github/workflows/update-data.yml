@@ -1,14 +1,27 @@
 name: update-data
 
+# 更新控制(Update control)
+#   手動更新:GitHub → Actions → update-data → Run workflow(可選 all / database / news)
+#            或指令:gh workflow run update-data -f pipeline=database
+#   自動更新開關:repo 變數 AUTO_UPDATE。未設定或不是 "on" = 關閉(預設關閉)。
+#            開啟:gh variable set AUTO_UPDATE --body on
+#            關閉:gh variable set AUTO_UPDATE --body off
+#            自動更新要跑哪條:repo 變數 AUTO_UPDATE_PIPELINE(all / database / news,預設 all)
 on:
   schedule:
-    # Daily at 13:00 UTC = 21:00 Taipei time (台灣晚上 9 點)
+    # Daily at 13:00 UTC = 21:00 Taipei time (台灣晚上 9 點);只在 AUTO_UPDATE=on 時真的執行
     - cron: "0 13 * * *"
-  workflow_dispatch:  # also allow manual trigger from Actions tab
+  workflow_dispatch:
     inputs:
-      reason:
-        description: "Reason for manual run"
-        default: "manual refresh"
+      pipeline:
+        description: "要更新哪一部分 / Which pipeline"
+        type: choice
+        options: [all, database, news]
+        default: all
+      max_llm_items:
+        description: "本次最多送幾則新聞給 AI(空白 = 不限)"
+        required: false
+        default: "30"
 
 permissions:
   contents: write  # needed to commit data/*.json back
@@ -19,8 +32,14 @@ concurrency:
 
 jobs:
   update:
+    # 手動觸發一律執行;排程觸發只在自動更新開關打開時執行
+    if: github.event_name == 'workflow_dispatch' || vars.AUTO_UPDATE == 'on'
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      PIPELINE: ${{ github.event_name == 'workflow_dispatch' && inputs.pipeline || vars.AUTO_UPDATE_PIPELINE || 'all' }}
+      MAX_LLM_ITEMS: ${{ github.event_name == 'workflow_dispatch' && inputs.max_llm_items || '30' }}
+      RUN_KIND: ${{ github.event_name == 'workflow_dispatch' && 'manual' || 'scheduled' }}
 
     steps:
       - name: Checkout
@@ -39,7 +58,11 @@ jobs:
       - name: Run pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python backend/run.py
+        run: |
+          ARGS="--only $PIPELINE"
+          if [ -n "$MAX_LLM_ITEMS" ]; then ARGS="$ARGS --max-llm-items $MAX_LLM_ITEMS"; fi
+          echo "Running: python backend/run.py $ARGS ($RUN_KIND)"
+          python backend/run.py $ARGS
 
       - name: Commit updated data
         run: |
@@ -50,7 +73,7 @@ jobs:
             echo "No data changes; skipping commit"
           else
             COUNT=$(python -c "import json;d=json.load(open('data/meta.json'));print(d.get('event_count_this_run', 0))")
-            git commit -m "data: scheduled refresh ($COUNT events)"
+            git commit -m "data: $RUN_KIND refresh [$PIPELINE] ($COUNT events)"
             git push
           fi
 

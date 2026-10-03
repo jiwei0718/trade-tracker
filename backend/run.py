@@ -1,7 +1,16 @@
 """Pipeline entrypoint.
 
 Run from repo root:
-    python backend/run.py
+    python backend/run.py                    # both pipelines
+    python backend/run.py --only database    # agreement databases only (no LLM)
+    python backend/run.py --only news        # news/press releases + LLM only
+    python backend/run.py --only news --max-llm-items 10
+
+Two pipelines:
+- database: structured agreement databases (WTO RTA-IS, WTO JSI, DESTA). No LLM.
+- news:     press releases / news feeds (RSS, GDELT) + LLM extraction.
+            --max-llm-items caps how many news items are sent to the LLM per run
+            (protects the free LLM quota).
 
 What it does:
 1. Loads seed/previous agreements.json
@@ -15,6 +24,7 @@ Failures in any one scraper are isolated; the pipeline always produces output.
 """
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import json
 import logging
@@ -63,7 +73,21 @@ def _safe_run(scraper_module, label: str) -> list[dict]:
         return []
 
 
-def main() -> int:
+def _parse_args(argv: list[str] | None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Trade agreement data pipeline")
+    p.add_argument("--only", choices=["all", "database", "news"], default="all",
+                   help="which pipeline to run (default: all)")
+    p.add_argument("--max-llm-items", type=int, default=None,
+                   help="max news items sent to the LLM this run (default: no cap)")
+    return p.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    run_database = args.only in ("all", "database")
+    run_news = args.only in ("all", "news")
+    log.info("pipeline mode: %s", args.only)
+
     # ── 1. Load seed + previous output ─────────────────────────────────
     seed = _load_json(SEED, {"agreements": []})
     seed_agreements = seed.get("agreements", []) if isinstance(seed, dict) else []
@@ -86,40 +110,46 @@ def main() -> int:
     structured_updates: list[dict] = []
     raw_news: list[dict] = []
 
-    log.info("─── running WTO RTA-IS ───────────────────────────────")
-    rta = _safe_run(wto_rta, "wto_rta")
-    scraper_results["wto_rta"] = rta
-    structured_updates.extend(rta)
+    if run_database:
+        log.info("─── running WTO RTA-IS ───────────────────────────────")
+        rta = _safe_run(wto_rta, "wto_rta")
+        scraper_results["wto_rta"] = rta
+        structured_updates.extend(rta)
 
-    log.info("─── running WTO JSI ──────────────────────────────────")
-    jsi = _safe_run(wto_jsi, "wto_jsi")
-    scraper_results["wto_jsi"] = jsi
-    structured_updates.extend(jsi)
+        log.info("─── running WTO JSI ──────────────────────────────────")
+        jsi = _safe_run(wto_jsi, "wto_jsi")
+        scraper_results["wto_jsi"] = jsi
+        structured_updates.extend(jsi)
 
-    log.info("─── running DESTA ────────────────────────────────────")
-    desta_data = _safe_run(desta, "desta")
-    scraper_results["desta"] = desta_data
-    structured_updates.extend(desta_data)
+        log.info("─── running DESTA ────────────────────────────────────")
+        desta_data = _safe_run(desta, "desta")
+        scraper_results["desta"] = desta_data
+        structured_updates.extend(desta_data)
 
-    log.info("─── running RSS feeds ────────────────────────────────")
-    rss = _safe_run(rss_feeds, "rss_feeds")
-    scraper_results["rss"] = rss
-    raw_news.extend(rss)
+    llm_updates: list[dict] = []
+    if run_news:
+        log.info("─── running RSS feeds ────────────────────────────────")
+        rss = _safe_run(rss_feeds, "rss_feeds")
+        scraper_results["rss"] = rss
+        raw_news.extend(rss)
 
-    log.info("─── running GDELT ────────────────────────────────────")
-    gdelt_data = _safe_run(gdelt, "gdelt")
-    scraper_results["gdelt"] = gdelt_data
-    raw_news.extend(gdelt_data)
+        log.info("─── running GDELT ────────────────────────────────────")
+        gdelt_data = _safe_run(gdelt, "gdelt")
+        scraper_results["gdelt"] = gdelt_data
+        raw_news.extend(gdelt_data)
 
-    # ── 3. LLM extraction over raw news ────────────────────────────────
-    log.info("─── running LLM extractor on %d news items ──────────", len(raw_news))
-    known_ids = [a["id"] for a in previous_agreements]
-    try:
-        llm_updates = llm_extract.extract_updates(raw_news, known_ids)
-    except Exception:
-        log.error("LLM extractor crashed:\n%s", traceback.format_exc())
-        llm_updates = []
-    structured_updates.extend(llm_updates)
+        # ── 3. LLM extraction over raw news ────────────────────────────
+        if args.max_llm_items is not None and len(raw_news) > args.max_llm_items:
+            log.info("capping LLM input: %d → %d items", len(raw_news), args.max_llm_items)
+            raw_news = raw_news[:args.max_llm_items]
+        log.info("─── running LLM extractor on %d news items ──────────", len(raw_news))
+        known_ids = [a["id"] for a in previous_agreements]
+        try:
+            llm_updates = llm_extract.extract_updates(raw_news, known_ids)
+        except Exception:
+            log.error("LLM extractor crashed:\n%s", traceback.format_exc())
+            llm_updates = []
+        structured_updates.extend(llm_updates)
 
     # ── 4. Reconcile ──────────────────────────────────────────────────
     log.info("─── reconciling %d updates against %d previous ──────",
@@ -156,6 +186,7 @@ def main() -> int:
     # Meta: provenance + per-source stats
     OUT_META.write_text(json.dumps({
         "last_run_at": now_iso,
+        "pipeline": args.only,
         "agreement_count": len(merged),
         "event_count_this_run": len(events),
         "source_counts": {k: len(v) for k, v in scraper_results.items()},
