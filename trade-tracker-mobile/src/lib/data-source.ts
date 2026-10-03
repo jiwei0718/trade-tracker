@@ -1,195 +1,279 @@
 /**
- * Live data fetcher.
+ * Data loading.
  *
  * Fetch order:
- *   1. AsyncStorage cache (if fresh, < 6h old)
- *   2. Remote URL (GitHub raw content)
- *   3. Bundled fallback (the static seed in src/data/agreements.ts)
+ *   1. AsyncStorage cache (if fresh, < 10 min old)
+ *   2. Supabase (the live agreement database)
+ *   3. Stale cache, then the bundled seed in src/data/agreements.ts
  *
- * The remote URL is set by REMOTE_DATA_URL below; user must update this
- * after pushing to GitHub. Until then, the app uses only the bundled seed.
+ * Long curated content that rarely changes (article structures, full clause text)
+ * still comes from the bundle; everything else comes from the database.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { TradeAgreement } from '@/data/types';
+import type { AgreementDetail, SourceTier, TradeAgreement } from '@/data/types';
 import { agreements as bundledAgreements } from '@/data/agreements';
+import { sbSelect, supabaseConfigured } from './supabase';
 
-// Live data published by the GitHub Actions pipeline (jiwei0718/trade-tracker).
-const REMOTE_AGREEMENTS_URL =
-  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/agreements.json';
-const REMOTE_EVENTS_URL =
-  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/events.json';
-const REMOTE_META_URL =
-  'https://raw.githubusercontent.com/jiwei0718/trade-tracker/main/data/meta.json';
-
-const CACHE_KEY_AGREEMENTS = 'tt:agreements-v1';
-const CACHE_KEY_EVENTS = 'tt:events-v1';
-const CACHE_KEY_META = 'tt:meta-v1';
+// Bump the version whenever the mapped snapshot shape changes, so stale caches are ignored.
+const CACHE_KEY = 'tt:snapshot-v3';
 const CACHE_KEY_LAST_SEEN = 'tt:last-seen-at';
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000;   // 6 hours
+const CACHE_TTL_MS = 10 * 60 * 1000;
 
-export interface Meta {
-  last_run_at: string;
-  agreement_count: number;
-  event_count_this_run: number;
-  source_counts?: Record<string, number>;
+export interface AgreementEvent {
+  id: number;
+  agreementId: string | null;
+  type: string;
+  eventDate: string | null;
+  summaryZh: string | null;
+  sourceId: string | null;
+  sourceUrl: string | null;
+  confidence: number | null;
+  byTool: string | null;
+  detectedAt: string;
+  oldValue: unknown;
+  newValue: unknown;
+  title?: string;
+  publisher?: string;
+  tier?: SourceTier;
+  symbol?: string;
 }
 
-export interface ChangeEvent {
-  id: string;
-  agreement_id: string;
-  kind: 'status_change' | 'new_agreement' | 'date_added';
-  from_value: string | null;
-  to_value: string;
-  detected_at: string;
-  effective_date: string | null;
-  sources?: { name: string; url: string; fetched_at: string }[];
+export interface SourceHealth {
+  sourceId: string;
+  name: string;
+  nameZh: string | null;
+  pipeline: 'database' | 'news';
+  kind: string;
+  tier: SourceTier;
+  enabled: boolean;
+  lastRunAt: string | null;
+  lastStatus: string | null;
+  consecutiveFailures: number;
+  health: 'green' | 'yellow' | 'red' | 'disabled' | 'never_run';
+  url: string | null;
+  notes: string | null;
+}
+
+export interface PipelineRun {
+  id: number;
+  pipeline: string;
+  trigger: string;
+  status: string;
+  startedAt: string;
+  finishedAt: string | null;
+  llmItems: number;
+  eventsCount: number;
+  error: string | null;
+  runner: string | null;
+}
+
+export interface UpdateSetting {
+  pipeline: 'database' | 'news';
+  autoEnabled: boolean;
+  scheduleCron: string;
+  maxLlmItems: number;
 }
 
 export interface DataSnapshot {
   agreements: TradeAgreement[];
-  events: ChangeEvent[];
-  meta: Meta | null;
-  source: 'remote' | 'cache' | 'bundled';
+  details: Record<string, AgreementDetail>;
+  events: AgreementEvent[];
+  sources: SourceHealth[];
+  runs: PipelineRun[];
+  settings: UpdateSetting[];
+  source: 'live' | 'cache' | 'bundled';
   fetchedAt: string;
+  error?: string;
 }
 
-/**
- * Merge remote agreements with bundled ones. Remote wins on conflicts (by id);
- * bundled-only agreements (e.g. newly added digital trade agreements not yet in
- * the pipeline output) are appended so they always appear. Article structures
- * and other bundled-only fields are backfilled onto matching remote records.
- */
-function mergeWithBundled(remote: TradeAgreement[]): TradeAgreement[] {
-  const bundledById = new Map(bundledAgreements.map(a => [a.id, a]));
-  const remoteIds = new Set(remote.map(a => a.id));
-  const merged = remote.map(a => {
-    const b = bundledById.get(a.id);
-    // Backfill article structure / significance from bundled if remote lacks them
-    if (b) {
-      return {
-        ...a,
-        articleStructure: a.articleStructure ?? b.articleStructure,
-        significance: a.significance ?? b.significance,
-      };
-    }
-    return a;
-  });
-  // Append bundled-only agreements
-  for (const b of bundledAgreements) {
-    if (!remoteIds.has(b.id)) merged.push(b);
+// Sources whose items are official documents (tier S) even when the event row has no tier.
+const OFFICIAL_SOURCES = new Set(['wto-rta-is', 'wto-jsi-pages', 'wto-docs-ecom', 'wto-news-rss']);
+
+const AGREEMENT_COLUMNS = [
+  'id', 'name', 'name_zh', 'full_name_zh', 'short_name', 'type', 'status', 'era', 'key_dates',
+  'latest_progress_date', 'latest_progress_note', 'trade_volume', 'description', 'description_zh',
+  'key_provisions', 'tags', 'superseded_by', 'parent_id', 'related_ids', 'significance',
+  'latest_status', 'indigo', 'source_docs', 'data_as_of', 'parties', 'party_names', 'party_names_zh',
+].join(',');
+
+const opt = <T,>(v: T | null | undefined): T | undefined => (v == null ? undefined : v);
+
+function toAgreement(r: any): TradeAgreement {
+  // Party name arrays can contain nulls (party rows without a name); the app expects strings.
+  const parties: string[] = r.parties ?? [];
+  const names: (string | null)[] = r.party_names ?? [];
+  const namesZh: (string | null)[] = r.party_names_zh ?? [];
+  return {
+    id: r.id,
+    name: r.name,
+    nameZh: r.name_zh ?? r.name,
+    fullNameZh: opt(r.full_name_zh),
+    shortName: opt(r.short_name),
+    type: r.type,
+    status: r.status,
+    era: r.era ?? 'fragmentation',
+    parties,
+    partyNames: parties.map((code, i) => names[i] ?? code),
+    partyNamesZh: parties.map((code, i) => namesZh[i] ?? names[i] ?? code),
+    keyDates: r.key_dates ?? {},
+    latestProgressDate: opt(r.latest_progress_date),
+    latestProgressNote: opt(r.latest_progress_note),
+    tradeVolume: opt(r.trade_volume),
+    description: r.description ?? '',
+    descriptionZh: r.description_zh ?? '',
+    keyProvisions: r.key_provisions ?? [],
+    tags: r.tags ?? [],
+    supersededBy: opt(r.superseded_by),
+    parentId: opt(r.parent_id),
+    relatedIds: r.related_ids?.length ? r.related_ids : undefined,
+    significance: opt(r.significance),
+    dataAsOf: opt(r.data_as_of),
+  };
+}
+
+function toDetail(r: any): AgreementDetail | null {
+  if (!r.latest_status && !r.indigo && !(r.source_docs?.length)) return null;
+  return {
+    latestStatus: opt(r.latest_status),
+    indigo: opt(r.indigo),
+    sourceDocs: r.source_docs?.length ? r.source_docs : undefined,
+  };
+}
+
+function toEvent(r: any): AgreementEvent {
+  const meta = r.new_value && typeof r.new_value === 'object' && !Array.isArray(r.new_value) ? r.new_value : {};
+  return {
+    id: r.id,
+    agreementId: r.agreement_id,
+    type: r.event_type,
+    eventDate: r.event_date,
+    summaryZh: r.summary_zh,
+    sourceId: r.source_id,
+    sourceUrl: r.source_url,
+    confidence: r.confidence,
+    byTool: r.by_tool,
+    detectedAt: r.detected_at,
+    oldValue: r.old_value,
+    newValue: r.new_value,
+    title: meta.title ?? undefined,
+    publisher: meta.publisher || undefined,
+    tier: meta.tier ?? (r.source_id && OFFICIAL_SOURCES.has(r.source_id) ? 'S' : undefined),
+    symbol: meta.symbol ?? undefined,
+  };
+}
+
+async function fetchLive(): Promise<DataSnapshot> {
+  const [agreementRows, eventRows, healthRows, sourceRows, runRows, settingRows] = await Promise.all([
+    sbSelect<any>(`agreements_full?select=${AGREEMENT_COLUMNS}&order=id`),
+    sbSelect<any>(
+      'events?select=id,agreement_id,event_type,event_date,old_value,new_value,summary_zh,source_id,source_url,confidence,by_tool,detected_at&order=detected_at.desc,id.desc',
+      { max: 3000 },
+    ),
+    sbSelect<any>('source_health?select=*'),
+    sbSelect<any>('sources?select=id,url,notes'),
+    sbSelect<any>('pipeline_runs?select=*&order=id.desc', { max: 30 }),
+    sbSelect<any>('update_settings?select=*&order=pipeline'),
+  ]);
+
+  const details: Record<string, AgreementDetail> = {};
+  for (const r of agreementRows) {
+    const d = toDetail(r);
+    if (d) details[r.id] = d;
   }
-  return merged;
+  const extra = new Map(sourceRows.map((s: any) => [s.id, s]));
+
+  return {
+    agreements: agreementRows.map(toAgreement),
+    details,
+    events: eventRows.map(toEvent),
+    sources: healthRows.map((h: any) => ({
+      sourceId: h.source_id, name: h.name, nameZh: h.name_zh, pipeline: h.pipeline, kind: h.kind,
+      tier: h.tier, enabled: h.enabled, lastRunAt: h.last_run_at, lastStatus: h.last_status,
+      consecutiveFailures: h.consecutive_failures, health: h.health,
+      url: extra.get(h.source_id)?.url ?? null, notes: extra.get(h.source_id)?.notes ?? null,
+    })),
+    runs: runRows.map((r: any) => ({
+      id: r.id, pipeline: r.pipeline, trigger: r.trigger, status: r.status, startedAt: r.started_at,
+      finishedAt: r.finished_at, llmItems: r.llm_items, eventsCount: r.events_count, error: r.error, runner: r.runner,
+    })),
+    settings: settingRows.map((s: any) => ({
+      pipeline: s.pipeline, autoEnabled: s.auto_enabled, scheduleCron: s.schedule_cron, maxLlmItems: s.max_llm_items,
+    })),
+    source: 'live',
+    fetchedAt: new Date().toISOString(),
+  };
 }
 
-async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T | null> {
-  if (url.includes('<USERNAME>')) return null;     // not configured yet
+const bundledSnapshot = (error?: string): DataSnapshot => ({
+  agreements: bundledAgreements,
+  details: {},
+  events: [],
+  sources: [],
+  runs: [],
+  settings: [],
+  source: 'bundled',
+  fetchedAt: new Date().toISOString(),
+  error,
+});
+
+async function readCache(): Promise<{ data: DataSnapshot; ts: number } | null> {
   try {
-    const r = await fetch(url, { signal });
-    if (!r.ok) return null;
-    return (await r.json()) as T;
+    const raw = await AsyncStorage.getItem(CACHE_KEY);
+    return raw ? (JSON.parse(raw) as { data: DataSnapshot; ts: number }) : null;
   } catch {
     return null;
   }
 }
 
-async function readCache<T>(key: string): Promise<{ data: T; ts: number } | null> {
+async function writeCache(data: DataSnapshot): Promise<void> {
   try {
-    const raw = await AsyncStorage.getItem(key);
-    if (!raw) return null;
-    return JSON.parse(raw) as { data: T; ts: number };
-  } catch {
-    return null;
-  }
-}
-
-async function writeCache<T>(key: string, data: T): Promise<void> {
-  try {
-    await AsyncStorage.setItem(key, JSON.stringify({ data, ts: Date.now() }));
+    await AsyncStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
   } catch {}
 }
 
-const seedAsSnapshot = (): DataSnapshot => ({
-  agreements: bundledAgreements,
-  events: [],
-  meta: null,
-  source: 'bundled',
-  fetchedAt: new Date().toISOString(),
-});
-
 export async function loadData(opts: { force?: boolean } = {}): Promise<DataSnapshot> {
-  const force = opts.force ?? false;
-
-  // 1. Try fresh remote (always when force, else only if cache stale)
-  if (force) return await fetchRemoteOrFallback();
-
-  // 2. Try cache
-  const [aCache, eCache, mCache] = await Promise.all([
-    readCache<{ agreements: TradeAgreement[] }>(CACHE_KEY_AGREEMENTS),
-    readCache<{ events: ChangeEvent[] }>(CACHE_KEY_EVENTS),
-    readCache<Meta>(CACHE_KEY_META),
-  ]);
-  if (aCache && Date.now() - aCache.ts < CACHE_TTL_MS) {
-    return {
-      agreements: aCache.data.agreements,
-      events: eCache?.data.events ?? [],
-      meta: mCache?.data ?? null,
-      source: 'cache',
-      fetchedAt: new Date(aCache.ts).toISOString(),
-    };
+  const cached = await readCache();
+  if (!opts.force && cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+    return { ...cached.data, source: 'cache', fetchedAt: new Date(cached.ts).toISOString() };
   }
-
-  // 3. Cache stale or missing → remote
-  return await fetchRemoteOrFallback(aCache?.data.agreements);
-}
-
-async function fetchRemoteOrFallback(staleAgreements?: TradeAgreement[]): Promise<DataSnapshot> {
-  const [agreementsResp, eventsResp, metaResp] = await Promise.all([
-    fetchJson<{ agreements: TradeAgreement[] }>(REMOTE_AGREEMENTS_URL),
-    fetchJson<{ events: ChangeEvent[] }>(REMOTE_EVENTS_URL),
-    fetchJson<Meta>(REMOTE_META_URL),
-  ]);
-
-  if (agreementsResp?.agreements) {
-    const merged = mergeWithBundled(agreementsResp.agreements);
-    // Cache, then return
-    await Promise.all([
-      writeCache(CACHE_KEY_AGREEMENTS, { agreements: merged }),
-      writeCache(CACHE_KEY_EVENTS, { events: eventsResp?.events ?? [] }),
-      writeCache(CACHE_KEY_META, metaResp ?? null),
-    ]);
-    return {
-      agreements: merged,
-      events: eventsResp?.events ?? [],
-      meta: metaResp ?? null,
-      source: 'remote',
-      fetchedAt: new Date().toISOString(),
-    };
+  if (!supabaseConfigured) return bundledSnapshot('尚未設定資料庫連線');
+  try {
+    const live = await fetchLive();
+    await writeCache(live);
+    return live;
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    if (cached) return { ...cached.data, source: 'cache', fetchedAt: new Date(cached.ts).toISOString(), error };
+    return bundledSnapshot(error);
   }
-
-  // Remote failed: stale cache (if any), else bundled
-  if (staleAgreements) {
-    return {
-      agreements: staleAgreements,
-      events: [],
-      meta: null,
-      source: 'cache',
-      fetchedAt: new Date().toISOString(),
-    };
-  }
-  return seedAsSnapshot();
 }
 
 /** Mark "now" as the user's last-seen timestamp. Used to compute unread events. */
 export async function markSeen(): Promise<void> {
-  await AsyncStorage.setItem(CACHE_KEY_LAST_SEEN, new Date().toISOString());
+  try {
+    await AsyncStorage.setItem(CACHE_KEY_LAST_SEEN, new Date().toISOString());
+  } catch {}
 }
 
 export async function getLastSeen(): Promise<string | null> {
-  return await AsyncStorage.getItem(CACHE_KEY_LAST_SEEN);
+  try {
+    return await AsyncStorage.getItem(CACHE_KEY_LAST_SEEN);
+  } catch {
+    return null;
+  }
 }
 
+/** Database-import bookkeeping ("new agreement added to the dataset") is not news. */
+export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement';
+
+/** Newest real-world date first (falls back to when it was detected). */
+export const eventSortDate = (e: AgreementEvent) => e.eventDate ?? e.detectedAt.slice(0, 10);
+export const byEventDateDesc = (a: AgreementEvent, b: AgreementEvent) =>
+  eventSortDate(b).localeCompare(eventSortDate(a)) || b.id - a.id;
+
 /** Events the user hasn't acknowledged yet. */
-export function unseenEvents(events: ChangeEvent[], lastSeen: string | null): ChangeEvent[] {
-  if (!lastSeen) return events.slice(0, 20);
-  return events.filter(e => e.detected_at > lastSeen);
+export function unseenEvents(events: AgreementEvent[], lastSeen: string | null): AgreementEvent[] {
+  const news = events.filter(isNewsworthy);
+  if (!lastSeen) return news.slice(0, 20);
+  return news.filter(e => e.detectedAt > lastSeen);
 }

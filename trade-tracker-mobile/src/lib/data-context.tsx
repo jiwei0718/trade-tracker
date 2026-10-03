@@ -1,16 +1,21 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import type { TradeAgreement } from '@/data/types';
+import type { AgreementDetail, TradeAgreement } from '@/data/types';
 import {
-  ChangeEvent, DataSnapshot, Meta, loadData, markSeen, getLastSeen, unseenEvents,
+  AgreementEvent, DataSnapshot, PipelineRun, SourceHealth, UpdateSetting,
+  loadData, markSeen, getLastSeen, unseenEvents,
 } from './data-source';
 
 interface DataContextValue {
   agreements: TradeAgreement[];
-  events: ChangeEvent[];
-  meta: Meta | null;
+  details: Record<string, AgreementDetail>;
+  events: AgreementEvent[];
+  sources: SourceHealth[];
+  runs: PipelineRun[];
+  settings: UpdateSetting[];
   source: DataSnapshot['source'];
   fetchedAt: string;
+  error?: string;
   loading: boolean;
   refresh: () => Promise<void>;
   unseenCount: number;
@@ -43,10 +48,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const value: DataContextValue = {
     agreements: snap?.agreements ?? [],
+    details: snap?.details ?? {},
     events: snap?.events ?? [],
-    meta: snap?.meta ?? null,
+    sources: snap?.sources ?? [],
+    runs: snap?.runs ?? [],
+    settings: snap?.settings ?? [],
     source: snap?.source ?? 'bundled',
     fetchedAt: snap?.fetchedAt ?? '',
+    error: snap?.error,
     loading,
     refresh,
     unseenCount: unseenEvents(snap?.events ?? [], lastSeen).length,

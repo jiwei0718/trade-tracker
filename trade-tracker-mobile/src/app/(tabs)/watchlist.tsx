@@ -7,7 +7,9 @@ import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
 import { useWatchlist } from '@/lib/watchlist';
 import { useData } from '@/lib/data-context';
+import { isNewsworthy } from '@/lib/data-source';
 import { STATUS_LABELS } from '@/data/types';
+import EventRow from '@/components/event-row';
 
 export default function WatchlistTab() {
   const scheme = useColorScheme();
@@ -19,7 +21,7 @@ export default function WatchlistTab() {
   // Local snapshot diffs (legacy "mark as seen" mechanism)
   const localChanges = list.filter(a => snapshots[a.id] && snapshots[a.id] !== a.status);
   // Server-side detected events for this user's watched agreements
-  const serverEvents = events.filter(e => ids.has(e.agreement_id));
+  const serverEvents = events.filter(e => isNewsworthy(e) && !!e.agreementId && ids.has(e.agreementId));
 
   const simulateChange = () => {
     if (list.length === 0) {
@@ -70,36 +72,16 @@ export default function WatchlistTab() {
           <View style={[styles.changesCard, { backgroundColor: '#dcfce7', borderColor: '#16a34a' }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
               <Ionicons name="cloud-done" size={16} color="#14532d" />
-              <Text style={{ fontWeight: '800', color: '#14532d' }}>後端偵測到的變動</Text>
+              <Text style={{ fontWeight: '800', color: '#14532d' }}>追蹤協定的最新動態</Text>
               {unseenCount > 0 && (
                 <View style={{ backgroundColor: '#dc2626', borderRadius: 999, paddingHorizontal: 6 }}>
                   <Text style={{ color: '#fff', fontSize: 11, fontWeight: '800' }}>{unseenCount}</Text>
                 </View>
               )}
             </View>
-            {serverEvents.slice(0, 8).map(e => {
-              const a = agreements.find(x => x.id === e.agreement_id);
-              return (
-                <Pressable key={e.id} onPress={() => a && router.push(`/agreement/${a.id}`)}>
-                  <Text style={{ color: '#14532d', fontSize: 13, lineHeight: 18 }}>
-                    • {a?.nameZh ?? e.agreement_id}：
-                    {e.kind === 'status_change' && (
-                      <>
-                        <Text style={{ textDecorationLine: 'line-through' }}>
-                          {STATUS_LABELS[e.from_value as keyof typeof STATUS_LABELS] ?? e.from_value ?? '?'}
-                        </Text>
-                        {' → '}
-                        <Text style={{ fontWeight: '700' }}>
-                          {STATUS_LABELS[e.to_value as keyof typeof STATUS_LABELS] ?? e.to_value}
-                        </Text>
-                      </>
-                    )}
-                    {e.kind === 'new_agreement' && <Text style={{ fontWeight: '700' }}>新加入追蹤體系</Text>}
-                    {e.kind === 'date_added' && <Text style={{ fontWeight: '700' }}>新日期：{e.to_value}</Text>}
-                  </Text>
-                </Pressable>
-              );
-            })}
+            {serverEvents.slice(0, 8).map(e => (
+              <EventRow key={e.id} event={e} agreement={agreements.find(x => x.id === e.agreementId)} />
+            ))}
             <Pressable onPress={acknowledgeAll} style={{ alignSelf: 'flex-start', marginTop: 4 }}>
               <Text style={{ color: '#14532d', fontSize: 12, fontWeight: '700', textDecorationLine: 'underline' }}>
                 標記為已讀

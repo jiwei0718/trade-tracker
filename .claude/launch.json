@@ -2,10 +2,22 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "trade-tracker-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "trade-tracker-mobile", "--", "--port", "8082"],
+      "port": 8082
+    },
+    {
       "name": "trade-tracker",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "trade-tracker"],
       "port": 5173
+    },
+    {
+      "name": "survey-app",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-c", "import os,sys; os.chdir(r'C:\\Users\\jiwei\\OneDrive\\Desktop\\claude code\\調查資料分析自動化'); from streamlit.web import cli; sys.argv=['streamlit','run','app.py','--server.port','8502','--server.headless','true']; cli.main()"],
+      "port": 8502
     }
   ]
 }

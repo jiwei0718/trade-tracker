@@ -7,46 +7,46 @@ import { getRecentlyChanged, getStats } from '@/lib/selectors';
 import { ERA_INFO } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
+import EventRow from '@/components/event-row';
 import { useWatchlist } from '@/lib/watchlist';
 import { useData } from '@/lib/data-context';
-
-function timeAgo(iso: string): string {
-  if (!iso) return '尚未更新';
-  const diff = (Date.now() - new Date(iso).getTime()) / 1000;
-  if (diff < 60) return '剛剛';
-  if (diff < 3600) return `${Math.floor(diff / 60)} 分鐘前`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} 小時前`;
-  return `${Math.floor(diff / 86400)} 天前`;
-}
+import { byEventDateDesc, isNewsworthy } from '@/lib/data-source';
+import { timeAgo } from '@/lib/format';
+import { usePageWidth } from '@/hooks/use-desktop';
 
 export default function Home() {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
-  const { agreements, events, meta, source, loading, refresh, unseenCount } = useData();
+  const page = usePageWidth();
+  const { agreements, events, runs, source, fetchedAt, error, loading, refresh, unseenCount } = useData();
   const recent = getRecentlyChanged(6, agreements);
   const stats = getStats(agreements);
   const { snapshots, hasItem } = useWatchlist();
+  const latestNews = events.filter(isNewsworthy).sort(byEventDateDesc).slice(0, 6);
+  const byId = new Map(agreements.map(a => [a.id, a]));
 
   const watchlistChanges = agreements.filter(a => hasItem(a.id) && snapshots[a.id] && snapshots[a.id] !== a.status);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
       <ScrollView
-        contentContainerStyle={styles.scroll}
+        contentContainerStyle={[styles.scroll, page]}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} tintColor={c.textSecondary} />}>
         <View style={styles.header}>
           <Text style={[styles.appTitle, { color: c.text }]}>全球貿易協定追蹤</Text>
           <Text style={[styles.appSub, { color: c.textSecondary }]}>
             1860 — 2026 · {agreements.length} 個協定
           </Text>
-          <View style={styles.dataStatus}>
-            <View style={[styles.dataDot, { backgroundColor: source === 'remote' ? '#16a34a' : source === 'cache' ? '#f59e0b' : '#9ca3af' }]} />
+          <Pressable onPress={() => router.push('/(tabs)/data-status')} style={styles.dataStatus}>
+            <View style={[styles.dataDot, { backgroundColor: source === 'live' ? '#16a34a' : source === 'cache' ? '#f59e0b' : '#9ca3af' }]} />
             <Text style={{ color: c.textSecondary, fontSize: 11 }}>
-              {source === 'remote' ? '即時資料' : source === 'cache' ? '快取資料' : '內建範例資料'}
-              {meta?.last_run_at ? ` · 後端 ${timeAgo(meta.last_run_at)}` : ''}
+              {source === 'live' ? '資料庫即時資料' : source === 'cache' ? '暫存資料' : '內建資料(未連線)'}
+              {` · 讀取於 ${timeAgo(fetchedAt)}`}
+              {runs[0] ? ` · 上次更新流程 ${timeAgo(runs[0].startedAt)}` : ''}
               {unseenCount > 0 ? ` · 有 ${unseenCount} 則新動態` : ''}
+              {error ? ` · 連線問題:${error}` : ''}
             </Text>
-          </View>
+          </Pressable>
         </View>
 
         <View style={styles.statsGrid}>
@@ -84,7 +84,22 @@ export default function Home() {
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: c.text }]}>最近動態</Text>
+          <Text style={[styles.sectionTitle, { color: c.text }]}>最新動態</Text>
+          <Pressable onPress={() => router.push('/(tabs)/updates')}>
+            <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
+          </Pressable>
+        </View>
+        <View>
+          {latestNews.map(e => (
+            <EventRow key={e.id} event={e} agreement={e.agreementId ? byId.get(e.agreementId) : undefined} />
+          ))}
+          {latestNews.length === 0 && (
+            <Text style={{ color: c.textSecondary, fontSize: 13 }}>{loading ? '載入中…' : '目前沒有新動態。'}</Text>
+          )}
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { color: c.text }]}>最近有進展的協定</Text>
           <Pressable onPress={() => router.push('/(tabs)/explore')}>
             <Text style={{ color: '#2563eb', fontSize: 12 }}>查看全部 →</Text>
           </Pressable>

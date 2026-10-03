@@ -14,6 +14,8 @@ import { tagLabel, tagCategory, TAG_CATEGORY_LABELS, TAG_CATEGORY_ORDER } from '
 import type { TagCategory } from '@/data/tags';
 import { getAgreementTags } from '@/lib/issue-tags';
 import { ORGANIZATIONS, ORG_CATEGORY_LABELS } from '@/data/organizations';
+import { useIsDesktop } from '@/hooks/use-desktop';
+import AgreementDetailView from '@/components/agreement-detail-view';
 
 type Mode = 'agreements' | 'orgs' | 'countries' | 'tags';
 type SortKey = 'newest' | 'oldest' | 'volume' | 'name';
@@ -45,6 +47,9 @@ export default function Explore() {
   const [eraFilter, setEraFilter] = useState<EraKey | null>(null);
   const [tagFilters, setTagFilters] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>('newest');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const desktop = useIsDesktop();
+  const split = desktop && mode === 'agreements';
 
   const parties = useMemo(() => getAllParties(agreements), [agreements]);
 
@@ -112,8 +117,13 @@ export default function Explore() {
     return { groups, total };
   }, [agreements, query]);
 
+  // Desktop: keep the selection if it is still in the filtered list, else show the first result.
+  const activeId = selectedId && filtered.some(a => a.id === selectedId) ? selectedId : filtered[0]?.id;
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
+     <View style={{ flex: 1, flexDirection: split ? 'row' : 'column' }}>
+      <View style={split ? [styles.listPane, { borderRightColor: c.backgroundElement }] : { flex: 1 }}>
       <View style={[styles.header, { borderBottomColor: c.backgroundElement }]}>
         <Text style={[styles.title, { color: c.text }]}>瀏覽</Text>
 
@@ -225,7 +235,10 @@ export default function Explore() {
           data={filtered}
           keyExtractor={a => a.id}
           contentContainerStyle={{ padding: 16, gap: 10 }}
-          renderItem={({ item }) => <AgreementCard agreement={item} />}
+          renderItem={({ item }) =>
+            split
+              ? <AgreementCard agreement={item} onPress={() => setSelectedId(item.id)} selected={item.id === activeId} />
+              : <AgreementCard agreement={item} />}
           ListHeaderComponent={
             <View style={{ marginBottom: 4, gap: 8 }}>
               {tagFilters.size > 0 && (
@@ -342,6 +355,15 @@ export default function Explore() {
           }
         />
       )}
+      </View>
+      {split && (
+        <View style={{ flex: 1 }}>
+          {activeId
+            ? <AgreementDetailView id={activeId} embedded />
+            : <Text style={{ color: c.textSecondary, textAlign: 'center', marginTop: 40 }}>沒有符合條件的協定</Text>}
+        </View>
+      )}
+     </View>
     </SafeAreaView>
   );
 }
@@ -379,6 +401,7 @@ function StatusChip({ status, active, onPress }: { status: AgreementStatus; acti
 }
 
 const styles = StyleSheet.create({
+  listPane: { width: 460, borderRightWidth: 1 },
   header: { paddingHorizontal: 16, paddingVertical: 10, gap: 10, borderBottomWidth: 1 },
   title: { fontSize: 22, fontWeight: '800' },
   tabs: { flexDirection: 'row', padding: 3, borderRadius: 10 },

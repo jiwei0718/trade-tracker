@@ -12,9 +12,12 @@ import { Colors } from '@/constants/theme';
 interface Props {
   agreement: TradeAgreement;
   compact?: boolean;
+  /** Override navigation (desktop side panel selects instead of opening a page). */
+  onPress?: () => void;
+  selected?: boolean;
 }
 
-export default function AgreementCard({ agreement: a, compact }: Props) {
+export default function AgreementCard({ agreement: a, compact, onPress, selected }: Props) {
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const { hasItem, toggle } = useWatchlist();
@@ -23,10 +26,11 @@ export default function AgreementCard({ agreement: a, compact }: Props) {
 
   return (
     <Pressable
-      onPress={() => router.push(`/agreement/${a.id}`)}
+      onPress={onPress ?? (() => router.push(`/agreement/${a.id}`))}
       style={({ pressed }) => [
         styles.card,
-        { backgroundColor: c.background, borderColor: c.backgroundElement, opacity: pressed ? 0.7 : 1 },
+        { backgroundColor: c.background, borderColor: selected ? '#2563eb' : c.backgroundElement, opacity: pressed ? 0.7 : 1 },
+        selected && { borderWidth: 2, padding: 13 },
       ]}>
       <View style={styles.row}>
         <View style={{ flex: 1 }}>

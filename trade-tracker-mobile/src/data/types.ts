@@ -105,6 +105,44 @@ export interface ArticleGroup {
   articles: Article[];
 }
 
+// ─── 資料出處與信心系統(Phase 1 地基)──────────────────────────────
+//   每筆資料都帶來源分級、信心係數、抽取時間,讓後續自動化、UI 信心顯示、
+//   爭議解決、Golden Set 健檢都有共同地基。
+// ─────────────────────────────────────────────────────────────────────
+
+/**
+ * 來源信任分級
+ *   S — 官方文件(WTO、EU 執委會、USTR、經濟部、外交部、各國貿易部會):0.95
+ *   A — 學術資料庫(DESTA、OECD、智庫):0.85
+ *   B — 一線財經媒體(Reuters、FT、Bloomberg、Nikkei、中央社):0.70
+ *   C — 一般媒體與其他公開來源:0.40
+ *   U — 未指定/未知(預設):0.30
+ */
+export type SourceTier = 'S' | 'A' | 'B' | 'C' | 'U';
+
+/** 欄位驗證狀態(隔離區與衰退機制使用)*/
+export type ProvenanceStatus =
+  | 'active'      // 已採信、對外可見
+  | 'pending'     // 隔離區,等待跨來源確認
+  | 'disputed'    // 多來源衝突,暫時保留舊值
+  | 'retracted';  // 已被反證,僅保留稽核記錄
+
+export interface FieldProvenance {
+  confidence: number;             // 0.0–1.0
+  sourceTier: SourceTier;
+  sourceLabel: string;            // 'WTO RTA-IS' / 'Reuters' / 'gemini-2.5-flash'
+  sourceUrl?: string;
+  extractedAt: string;            // ISO 8601
+  byTool?: string;                // 若為 AI 抽取:模型名稱,例如 'gemini-2.5-flash'
+  byToolVersion?: string;
+  confirmedBy?: string[];         // 額外佐證來源的 label
+  promotedAt?: string;            // 由 pending → active 的時間
+  status?: ProvenanceStatus;      // 預設 active
+}
+
+/** 每筆協定欄位 → FieldProvenance 的對應表 */
+export type ProvenanceMap = Partial<Record<string, FieldProvenance>>;
+
 export interface TradeAgreement {
   id: string;
   name: string;
@@ -130,6 +168,12 @@ export interface TradeAgreement {
   relatedIds?: string[];    // related agreements / sub-instruments shown in the detail
   significance?: string;    // brief Chinese-language "why it matters"
   articleStructure?: ArticleGroup[];  // detailed clause breakdown
+
+  // ─── Phase 1 出處與信心 ───
+  /** 此筆資料整體最後更新時間(ISO 8601),app 顯示「最後更新」用 */
+  dataAsOf?: string;
+  /** 每個欄位的出處與信心,鍵為欄位名(status / parties / keyDates 等)*/
+  _provenance?: ProvenanceMap;
 }
 
 export const STATUS_LABELS: Record<AgreementStatus, string> = {
