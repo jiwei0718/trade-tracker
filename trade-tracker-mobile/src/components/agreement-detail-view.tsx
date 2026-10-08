@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAgreementById } from '@/lib/selectors';
 import { useData } from '@/lib/data-context';
 import { byEventDateDesc, isNewsworthy } from '@/lib/data-source';
+import { formatDateTime } from '@/lib/format';
 import EventRow from '@/components/event-row';
 import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS, ERA_INFO } from '@/data/types';
 import type { ArticleGroup, Article, IndigoScore, AgreementDetail } from '@/data/types';
@@ -288,6 +289,12 @@ export default function AgreementDetailView({ id, embedded }: Props) {
           <Text style={[styles.sectionTitle, { color: c.text }]}>說明</Text>
           <Text style={[styles.body, { color: c.text }]}>{a.descriptionZh}</Text>
           <Text style={[styles.bodyEn, { color: c.textSecondary }]}>{a.description}</Text>
+          {!!a.dataAsOf && (
+            <Text style={{ color: c.textSecondary, fontSize: 11, marginTop: 6 }}>
+              資料查核於 {formatDateTime(a.dataAsOf)}
+              {a.tags?.includes('wto-notified') ? '(WTO 區域貿易協定資料庫)' : ''}
+            </Text>
+          )}
         </View>
 
         {/* Provisions */}

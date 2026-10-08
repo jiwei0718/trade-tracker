@@ -1,11 +1,100 @@
 # 全球貿易協定追蹤工具
 
-一個 **自動更新** 的全球雙邊/多邊/特殊性質貿易協定追蹤系統。
+追蹤全球雙邊、多邊與特殊性質貿易協定(含 WTO 聯合聲明倡議、聯合聲明、備忘錄)的狀態與最新動態。
 
-> 目的：解決「想驗證某條貿易協定相關說法時，要一個一個國家查」的問題。
-> 設計目標：你每天打開 App，就能看到全球所有協定（含 WTO JSI、聯合聲明、備忘錄等）的最新狀態變化，不需自己找資料。
+> 目的:想驗證某條貿易協定相關說法時,不必一個一個國家查。
 
-## 架構總覽
+## 架構(2026-10 起)
+
+```
+┌──────────── 這台電腦(Docker,只開放 localhost)────────────┐
+│  n8n  http://localhost:5678                                   │
+│   ├─ WTO 區域貿易協定資料庫同步 ──呼叫──▶ worker(Python)       │
+│   └─ WTO 電子商務 JSI 追蹤      ──呼叫──▶ Gemini               │
+└───────────────┬───────────────────────────────────────────────┘
+                │ 寫入(secret key,只有 n8n 和匯入腳本持有)
+                ▼
+         Supabase(Postgres,東京)
+                │ 讀取(publishable key,唯讀)
+                ▼
+   網頁版 http://localhost:8082(Expo;之後打包成 Android App)
+```
+
+兩條資料管線:
+
+- **協定資料庫**:結構化的官方資料(目前是 WTO RTA-IS)。比對資料庫後寫入協定的狀態、日期、締約方,每項變動都產生一則事件。
+- **新聞動態**:官方文件、WTO 新聞、Google 新聞。AI 只負責分類與摘要,產生的是事件,不會改協定本身的狀態。
+
+**更新控制**:所有流程目前只能手動執行。自動更新開關(`update_settings.auto_enabled`)預設關閉,要使用者同意才會打開。
+
+## 目錄
+
+```
+協定追蹤工具/
+├── infra/docker-compose.yml   ← n8n + worker(只綁 127.0.0.1)
+├── n8n/workflows/             ← n8n 流程:build_*.py 產生 JSON,再匯入 n8n
+│   ├── n8n_build.py           ← 共用工具(節點、便利貼、版面)
+│   ├── build_wto_rta_sync.py  → wto-rta-sync.json  協定資料庫同步
+│   └── build_jsi_ecom.py      → jsi-ecom.json      電子商務 JSI 追蹤
+├── backend/
+│   ├── worker/app.py          ← n8n 呼叫的 Python 服務(只抓取、整理,不寫資料庫)
+│   ├── scrapers/              ← 各來源爬蟲(wto_rta.py 等)
+│   ├── import_to_supabase.py  ← 初次匯入既有資料
+│   └── run.py                 ← (舊)GitHub Actions pipeline
+├── supabase/migrations/       ← 資料表、權限、來源設定
+├── trade-tracker-mobile/      ← (主)Expo App,目前先做網頁版
+├── scripts/export-curated.ts  ← 匯出 App 內人工整理的協定,給匯入腳本用
+└── data/                      ← (舊)GitHub Actions 產出的 JSON
+```
+
+## 本機啟動
+
+```bash
+docker compose -f infra/docker-compose.yml up -d
+```
+
+```bash
+npm run start --prefix trade-tracker-mobile -- --port 8082
+```
+
+改了 `backend/` 的程式後要重建 worker:
+
+```bash
+docker compose -f infra/docker-compose.yml up -d --build worker
+```
+
+改了 `n8n/workflows/build_*.py` 後,重新產生 JSON 並匯入 n8n(以協定資料庫同步為例):
+
+```bash
+python n8n/workflows/build_wto_rta_sync.py
+```
+
+```bash
+docker cp n8n/workflows/wto-rta-sync.json trade-tracker-n8n-1:/tmp/w.json
+```
+
+```bash
+docker exec trade-tracker-n8n-1 n8n import:workflow --input=/tmp/w.json
+```
+
+流程畫面上的每個區段和節點都有中文便利貼說明。要只看差異、不寫入,把流程裡「設定」節點的 `dryRun` 改成 `true`。
+
+## 資料原則
+
+- 人工整理過的協定(`origin = curated`)流程一律不覆蓋。
+- 每項變動都記成事件(`events`),並記下欄位出處(`field_provenance`)與來源等級:S 官方、A 學術智庫、B 一線媒體、C 一般。
+- 非官方來源宣稱「已簽署/已生效」一律列為待確認,不直接顯示。
+- 協定資料庫同步有熔斷:一次變動太多筆(例如狀態變更超過 35 筆)就整批不寫入,資料狀態頁亮黃燈。
+- WTO 不再列出的協定(多半是改名前的舊名稱)只加 `wto-delisted` 標記,網頁隱藏,資料不刪除。
+- 網頁版只在本機執行,不放到公開網路。
+
+---
+
+# 舊版說明(GitHub Actions 版,已停用)
+
+> 以下是 2026-10 之前的架構,保留參考。`.github/workflows/update-data.yml` 只在手動觸發或 repo 變數 `AUTO_UPDATE=on` 時執行,目前不會自動跑。
+
+## 架構總覽(舊)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -35,7 +124,7 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 目錄
+## 目錄(舊)
 
 ```
 協定追蹤工具/

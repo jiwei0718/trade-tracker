@@ -1,0 +1,1112 @@
+{
+  "id": "TtWtoRtaSync0001",
+  "name": "WTO 區域貿易協定資料庫同步",
+  "active": false,
+  "nodes": [
+    {
+      "id": "84b711ed-8294-5a16-940b-5c8e0f429e41",
+      "name": "手動執行",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {},
+      "notes": "從這裡開始執行",
+      "notesInFlow": true
+    },
+    {
+      "id": "b39cbe22-b824-5677-b28e-7049fc19b039",
+      "name": "讀取來源設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/sources",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "eq.wto-rta-is"
+            },
+            {
+              "name": "select",
+              "value": "id,enabled,tier,url"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "來源是否停用",
+      "notesInFlow": true
+    },
+    {
+      "id": "6f998e81-54bd-594d-8e15-c09182a301ab",
+      "name": "設定",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 流程設定。要「只比對、不寫入」就把 dryRun 改成 true。\nreturn [{ json: {\n  dryRun: false,\n  sourceId: 'wto-rta-is',\n  // 安全檢查(熔斷):任何一項超過上限,這次就整批不寫入,資料狀態頁會亮黃燈。\n  // [最少筆數, 比例]:上限 = 兩者取大。例如資料庫有 690 筆時,狀態變更上限是 max(20, 35) = 35 筆。\n  guard: {\n    minFetchRatio: 0.9,           // WTO 清單筆數至少要是資料庫現有筆數的 90%(防止下載不完整)\n    maxStatusChanges: [20, 0.05], // 狀態變更\n    maxDateFixes: [20, 0.05],     // 日期被更正或移除\n    maxNew: [50, 0.1],            // 新協定\n    maxDelisted: [50, 0.1],       // WTO 不再列出的協定\n  },\n} }];"
+      },
+      "notes": "試跑開關、安全上限",
+      "notesInFlow": true
+    },
+    {
+      "id": "ac303623-3ee0-552e-a269-b702740b5626",
+      "name": "呼叫 Python 整理程式",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        940,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://worker:8000/sources/wto-rta-is/fetch",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput",
+      "notes": "下載並整理 WTO 清單",
+      "notesInFlow": true
+    },
+    {
+      "id": "a879fcd0-abf2-5ee7-aecd-7b81f687671c",
+      "name": "讀取現有協定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreements_full",
+        "options": {
+          "timeout": 60000,
+          "pagination": {
+            "pagination": {
+              "paginationMode": "updateAParameterInEachRequest",
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "qs",
+                    "name": "offset",
+                    "value": "={{ $pageCount * 1000 }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ $response.body.length < 1000 }}",
+              "limitPagesFetched": true,
+              "maxRequests": 20
+            }
+          }
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,origin,status,key_dates,name,name_zh,type,era,tags,data_as_of,parties"
+            },
+            {
+              "name": "id",
+              "value": "like.wto-rta-*"
+            },
+            {
+              "name": "order",
+              "value": "id"
+            },
+            {
+              "name": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "每次 1000 筆,讀到完",
+      "notesInFlow": true
+    },
+    {
+      "id": "8dd614a1-caaf-5dea-872d-3a53a9f3bbad",
+      "name": "比對差異",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 比對 WTO 最新清單和資料庫:算出要寫入的資料、要產生的事件,並做安全檢查\nconst cfg = $('設定').first().json;\nconst src = $('讀取來源設定').first().json;\nconst res = $('呼叫 Python 整理程式').first().json;\nconst db = $('讀取現有協定').all().map((i) => i.json).filter((r) => r && r.id);\n\nconst STATUS = { in_force: '已生效', signed: '已簽署', concluded: '談判完成', negotiating: '談判中', suspended: '已暫停',\n                 cancelled: '已取消', proposed: '提議中', superseded: '已被取代', expired: '已失效' };\nconst DATE = { proposed: '提議', started: '啟動談判', concluded: '完成談判', signed: '簽署', in_force: '生效',\n               suspended: '暫停', cancelled: '取消', expired: '失效', superseded: '被取代' };\nconst DELISTED = 'wto-delisted';\nconst NONE = 'eq.__none__';    // 沒有東西要刪時用的條件(不會符合任何一筆)\n\nconst finish = (status, error, extra = {}) => [{ json: {\n  status, error, canWrite: false, blocked: [], fetched: 0,\n  newRows: [], updateRows: [], partyResetFilter: NONE, partyRows: [], provenance: [], events: [],\n  counts: {}, ...extra,\n  report: { 模式: cfg.dryRun ? '試跑(只比對,不寫入)' : '正式執行', 結果: error ?? status, ...(extra.report ?? {}) },\n} }];\n\nif (!src.id || !src.enabled) return finish('skipped', null, { report: { 結果: '來源已停用,略過' } });\nif (res.error || !Array.isArray(res.agreements)) {\n  return finish('error', `Python 整理程式失敗:${String(res.error?.message ?? res.error ?? '沒有資料').slice(0, 300)}`);\n}\n\nconst fetchedAt = res.fetched_at;\nconst urls = res.source_urls ?? {};\nconst byId = new Map(db.map((r) => [r.id, r]));\nconst partiesOf = {};\nfor (const p of res.parties) (partiesOf[p.agreement_id] ??= []).push(p);\n\nconst newRows = [], updateRows = [], partyResetIds = [], partyRows = [], provenance = [], events = [], delistedIds = [];\nconst counts = { 新協定: 0, 狀態變更: 0, 新增日期: 0, 更正日期: 0, 移除日期: 0, 締約方變更: 0, 名稱或類型更新: 0,\n                 WTO不再列出: 0, 重新列出: 0, 人工整理略過: 0 };\n\n// 每一筆都帶齊所有欄位:Supabase 一次寫入多筆時,欄位要一致\nconst ev = (id, type, summary, extra = {}) => events.push({\n  agreement_id: id, event_type: type, event_date: null, field: null, old_value: null, new_value: null,\n  summary_zh: summary, source_id: cfg.sourceId, source_url: urls[id] ?? src.url, confidence: 0.95, status: 'active',\n  ...extra,\n});\nconst prov = (id, field) => provenance.push({\n  agreement_id: id, field, confidence: 0.95, source_tier: 'S', source_label: 'WTO RTA-IS',\n  source_url: urls[id] ?? src.url, extracted_at: fetchedAt, status: 'active',\n});\nconst st = (s) => STATUS[s] ?? s;\nconst dt = (k) => DATE[k] ?? k;\n\nconst fetchedIds = new Set();\nfor (const a of res.agreements) {\n  fetchedIds.add(a.id);\n  const old = byId.get(a.id);\n  const name = a.name_zh || a.name;\n  const dates = a.key_dates ?? {};\n\n  if (!old) {\n    counts.新協定++;\n    newRows.push(a);\n    partyRows.push(...(partiesOf[a.id] ?? []));\n    ['status', 'key_dates', 'parties'].forEach((f) => prov(a.id, f));\n    ev(a.id, 'new_agreement', `WTO 區域貿易協定資料庫新增「${name}」(${st(a.status)})。`,\n       { event_date: dates.in_force ?? dates.signed ?? null, new_value: a.status });\n    continue;\n  }\n  if (old.origin === 'curated') { counts.人工整理略過++; continue; }   // 人工整理過的協定,一律不覆蓋\n\n  if (old.status !== a.status) {\n    counts.狀態變更++;\n    prov(a.id, 'status');\n    ev(a.id, 'status_change', `「${name}」狀態由「${st(old.status)}」變為「${st(a.status)}」。`,\n       { event_date: dates[a.status] ?? null, field: 'status', old_value: old.status, new_value: a.status });\n  }\n\n  const oldDates = old.key_dates ?? {};\n  let datesChanged = false;\n  for (const [k, v] of Object.entries(dates)) {\n    if (!(k in oldDates)) {\n      counts.新增日期++; datesChanged = true;\n      ev(a.id, 'date_added', `「${name}」新增${dt(k)}日期:${v}。`, { event_date: v, field: `key_dates.${k}`, new_value: v });\n    } else if (oldDates[k] !== v) {\n      counts.更正日期++; datesChanged = true;\n      ev(a.id, 'field_update', `「${name}」的${dt(k)}日期由 ${oldDates[k]} 更正為 ${v}。`,\n         { event_date: v, field: `key_dates.${k}`, old_value: oldDates[k], new_value: v });\n    }\n  }\n  for (const k of Object.keys(oldDates)) {\n    if (k in dates) continue;\n    counts.移除日期++; datesChanged = true;\n    ev(a.id, 'field_update', `WTO 資料已不再列出「${name}」的${dt(k)}日期(原為 ${oldDates[k]}),已移除。`,\n       { field: `key_dates.${k}`, old_value: oldDates[k] });\n  }\n  if (datesChanged) prov(a.id, 'key_dates');\n\n  const codes = (partiesOf[a.id] ?? []).map((p) => p.party_code);\n  if ([...(old.parties ?? [])].sort().join() !== [...codes].sort().join()) {\n    counts.締約方變更++;\n    partyResetIds.push(a.id);\n    partyRows.push(...(partiesOf[a.id] ?? []));\n    prov(a.id, 'parties');\n    ev(a.id, 'field_update', `「${name}」締約方更新為:${(partiesOf[a.id] ?? []).map((p) => p.party_name_zh ?? p.party_code).join('、')}。`,\n       { field: 'parties', old_value: old.parties ?? [], new_value: codes });\n  }\n\n  if (old.name !== a.name || old.name_zh !== a.name_zh || old.type !== a.type) counts.名稱或類型更新++;\n  if ((old.tags ?? []).includes(DELISTED)) counts.重新列出++;\n  const tags = [...new Set([...(old.tags ?? []).filter((t) => t !== DELISTED), ...(a.tags ?? [])])];\n  updateRows.push({ id: a.id, name: a.name, name_zh: a.name_zh, type: a.type, status: a.status, era: a.era,\n                    key_dates: dates, tags, data_as_of: fetchedAt });\n}\n\n// 資料庫有、WTO 清單已經沒有的(多半是 WTO 改名留下的舊名稱):加上標記並在網頁隱藏,不刪除\nfor (const r of db) {\n  if (r.origin !== 'scraped' || fetchedIds.has(r.id) || (r.tags ?? []).includes(DELISTED)) continue;\n  counts.WTO不再列出++;\n  delistedIds.push(r.id);\n  updateRows.push({ id: r.id, name: r.name, name_zh: r.name_zh, type: r.type, status: r.status, era: r.era,\n                    key_dates: r.key_dates ?? {}, tags: [...(r.tags ?? []), DELISTED], data_as_of: r.data_as_of });\n}\n\n// 安全檢查(熔斷)\nconst g = cfg.guard;\nconst base = db.filter((r) => r.origin === 'scraped' && !(r.tags ?? []).includes(DELISTED)).length;\nconst cap = ([min, pct]) => Math.max(min, Math.ceil(base * pct));\nconst blocked = [];\nif (res.agreements.length < base * g.minFetchRatio)\n  blocked.push(`WTO 清單只有 ${res.agreements.length} 筆,不到資料庫 ${base} 筆的 ${g.minFetchRatio * 100}%`);\nconst over = (label, n, rule) => { if (n > cap(rule)) blocked.push(`${label} ${n} 筆,超過上限 ${cap(rule)} 筆`); };\nover('狀態變更', counts.狀態變更, g.maxStatusChanges);\nover('日期更正或移除', counts.更正日期 + counts.移除日期, g.maxDateFixes);\nover('新協定', counts.新協定, g.maxNew);\nover('WTO 不再列出', counts.WTO不再列出, g.maxDelisted);\n\nreturn [{ json: {\n  status: 'ok', error: null, canWrite: blocked.length === 0, blocked, fetched: res.agreements.length,\n  newRows, updateRows, partyRows, provenance, events,\n  partyResetFilter: partyResetIds.length ? `in.(${partyResetIds.join(',')})` : NONE,\n  counts,\n  report: {\n    模式: cfg.dryRun ? '試跑(只比對,不寫入)' : '正式執行',\n    WTO清單筆數: res.agreements.length,\n    資料庫現有筆數: base,\n    ...counts,\n    安全檢查: blocked.length ? `未通過:${blocked.join(';')}` : '通過',\n    事件預覽: events.slice(0, 60).map((e) => e.summary_zh),\n    WTO不再列出的協定: delistedIds,\n    警告: res.warnings ?? {},\n  },\n} }];"
+      },
+      "notes": "算出變動,做安全檢查",
+      "notesInFlow": true
+    },
+    {
+      "id": "e064b4f9-283e-53f1-9280-1308e8003676",
+      "name": "只是試跑?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1720,
+        700
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed8cf1b9-7599-565e-86a0-92e43aac69ef",
+              "leftValue": "={{ $('設定').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "notes": "上:試跑 → 只看報告;下:正式寫入",
+      "notesInFlow": true
+    },
+    {
+      "id": "3f744f93-4aa5-5238-bbaf-ef30c59a4026",
+      "name": "試跑報告",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2190,
+        420
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{ json: $('比對差異').first().json.report }];"
+      },
+      "notes": "點我看會改哪些資料",
+      "notesInFlow": true
+    },
+    {
+      "id": "0ecc639b-9160-5eb2-9b67-1cdade966198",
+      "name": "建立執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2660,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ pipeline: \"database\", trigger: \"manual\", runner: \"n8n\", status: \"running\" }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "notes": "資料庫記一筆「執行中」",
+      "notesInFlow": true
+    },
+    {
+      "id": "f772f8c0-2146-5d3e-9912-e07e7ef3c221",
+      "name": "通過安全檢查?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2920,
+        700
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5a843d49-1e3e-54b4-ac2e-e5e0a5b6ab0e",
+              "leftValue": "={{ $('比對差異').first().json.canWrite }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "notes": "上:通過 → 寫入;下:擋下 → 收尾",
+      "notesInFlow": true
+    },
+    {
+      "id": "b23e6ac6-9777-5b23-b414-4088589f9ec8",
+      "name": "寫入新協定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3260,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreements",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('比對差異').first().json.newRows) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "WTO 新列出的協定",
+      "notesInFlow": true
+    },
+    {
+      "id": "ff807242-600c-5487-9fb3-d647d95e5c1e",
+      "name": "更新現有協定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3520,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreements",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('比對差異').first().json.updateRows) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "狀態、日期、查核時間",
+      "notesInFlow": true
+    },
+    {
+      "id": "7db9c777-b6cd-52f2-b41e-db98937d6d71",
+      "name": "清除變動的締約方",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3780,
+        420
+      ],
+      "parameters": {
+        "method": "DELETE",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreement_parties",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "agreement_id",
+              "value": "={{ $('比對差異').first().json.partyResetFilter }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "只清締約方有變的協定",
+      "notesInFlow": true
+    },
+    {
+      "id": "0a002271-93aa-5d5c-a442-329af79029f9",
+      "name": "寫入締約方",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4040,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreement_parties",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "agreement_id,party_code"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('比對差異').first().json.partyRows) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "新協定與變動的締約方",
+      "notesInFlow": true
+    },
+    {
+      "id": "bd5bea55-8189-5169-9e8f-fbed0fb91f43",
+      "name": "寫入欄位出處",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4300,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/field_provenance",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "agreement_id,field"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('比對差異').first().json.provenance) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "記下資料出處",
+      "notesInFlow": true
+    },
+    {
+      "id": "8a04670c-013e-5476-b45f-dffd901f7610",
+      "name": "寫入事件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4560,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('比對差異').first().json.events.map((e) => ({ ...e, run_id: $('建立執行紀錄').first().json.id }))) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "onError": "continueErrorOutput",
+      "notes": "動態頁會顯示",
+      "notesInFlow": true
+    },
+    {
+      "id": "e33e4965-2935-55ca-945c-0a7af144e69d",
+      "name": "收尾整理",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4980,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 整理這次執行的結果:成功、被安全檢查擋下、或某個寫入步驟失敗\nconst run = $('建立執行紀錄').first().json;\nconst d = $('比對差異').first().json;\nconst WRITES = [\"寫入新協定\", \"更新現有協定\", \"清除變動的締約方\", \"寫入締約方\", \"寫入欄位出處\", \"寫入事件\"];\nconst done = WRITES.filter((n) => $(n).isExecuted);\nconst err = done.length ? $input.first().json.error : null;      // 從某個寫入步驟的「失敗」出口進來\nconst failedAt = err ? done[done.length - 1] : null;\nconst wrote = d.status === 'ok' && d.canWrite && !failedAt;\n\nlet error = d.error;\nif (d.status === 'ok' && !d.canWrite) error = `安全檢查未通過,這次沒有寫入:${d.blocked.join(';')}`;\nif (failedAt) error = `「${failedAt}」失敗,後面的步驟沒有執行:${String(err.message ?? JSON.stringify(err)).slice(0, 300)}`;\n\nreturn [{ json: {\n  sourceRun: {\n    run_id: run.id, source_id: 'wto-rta-is', items_fetched: d.fetched, items_new: wrote ? d.newRows.length : 0, error,\n    status: d.status === 'skipped' ? 'skipped' : wrote ? 'ok' : 'error',\n  },\n  runPatch: {\n    status: d.status === 'skipped' || wrote ? 'success' : 'failed', finished_at: new Date().toISOString(),\n    events_count: wrote ? d.events.length : 0, error,\n  },\n  report: { ...d.report, 結果: wrote ? `已寫入:${d.events.length} 則事件、更新 ${d.updateRows.length} 筆協定` : (error ?? '未寫入') },\n} }];"
+      },
+      "notes": "判斷成功或失敗",
+      "notesInFlow": true
+    },
+    {
+      "id": "4db3775a-d778-568d-8c22-fb3f0ea47c43",
+      "name": "寫入來源結果",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5240,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.sourceRun) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "健康燈號的依據",
+      "notesInFlow": true
+    },
+    {
+      "id": "9614210b-b487-5401-89ea-292e0c7f15ac",
+      "name": "完成執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5500,
+        700
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "=eq.{{ $('建立執行紀錄').first().json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.runPatch) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "標記成功或失敗",
+      "notesInFlow": true
+    },
+    {
+      "id": "1f9a1e4e-b85d-57b4-87cf-bbbc77cbb407",
+      "name": "執行摘要",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5760,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{ json: $('收尾整理').first().json.report }];"
+      },
+      "notes": "點我看中文報告",
+      "notesInFlow": true
+    },
+    {
+      "id": "436b78a6-f547-5e4b-a023-5a38594a2d6d",
+      "name": "① 讀取設定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        452
+      ],
+      "parameters": {
+        "content": "## ① 讀取設定\n- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。沒有排程,不會自己跑。\n- **讀取來源設定**:確認「WTO RTA-IS」來源沒有被停用(停用就整條略過)。\n- **設定**:\n  - dryRun(試跑):改成 true 時只比對、不寫入\n  - 安全上限:一次變動太多筆就不寫入",
+        "width": 700,
+        "height": 438,
+        "color": 4
+      }
+    },
+    {
+      "id": "773be9d0-1b20-52f7-b686-ff8a94657c22",
+      "name": "② 抓取與比對",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        900,
+        428
+      ],
+      "parameters": {
+        "content": "## ② 抓取 WTO 清單並和資料庫比對\n- **呼叫 Python 整理程式**:請 Docker 裡的 Python 程式(worker)下載 WTO 區域貿易協定資料庫(RTA-IS)的完整清單,整理成資料庫格式。約 660 筆,要幾秒鐘。\n- **讀取現有協定**:從資料庫讀出目前所有 WTO 協定。Supabase 每次最多回傳 1000 筆,所以設定成自動翻頁讀到完。\n- **比對差異**:一筆筆比對,找出:新協定、狀態變更、日期新增/更正/移除、締約方變更、WTO 已不再列出的協定。人工整理過的協定一律略過。每項變動都會產生一則「事件」。最後做安全檢查。\n- **只是試跑?**:試跑 → 往上只產生報告;正式執行 → 往右下。",
+        "width": 960,
+        "height": 462,
+        "color": 6
+      }
+    },
+    {
+      "id": "3859cfaa-0ecd-5cab-b730-a31f8ef60ef5",
+      "name": "試跑",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        232
+      ],
+      "parameters": {
+        "content": "## 試跑模式\n- **試跑報告**:列出「如果正式執行,會改哪些資料」,包括每一則事件的內容。\n\n資料庫完全不會被改動,也不會留下執行紀錄。",
+        "width": 440,
+        "height": 378,
+        "color": 5
+      }
+    },
+    {
+      "id": "973eb05b-c789-5f13-90fb-3e309102c6c6",
+      "name": "③ 安全檢查",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        476
+      ],
+      "parameters": {
+        "content": "## ③ 安全檢查(熔斷)\n- **建立執行紀錄**:在資料庫新增一筆「執行中」。\n- **通過安全檢查?**:任何一項變動超過上限(例如狀態變更超過 35 筆),代表 WTO 網站格式可能改了、或下載不完整,這次就整批不寫入,直接到 ⑤ 收尾並記為「失敗」,資料狀態頁亮黃燈。",
+        "width": 440,
+        "height": 414,
+        "color": 3
+      }
+    },
+    {
+      "id": "e9443ac2-3e0d-5a73-9b83-7a2fa2e00520",
+      "name": "④ 寫入資料庫",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3220,
+        172
+      ],
+      "parameters": {
+        "content": "## ④ 寫入資料庫\n只有通過安全檢查時才會執行。每一步失敗都會從節點下方的「失敗」出口跳到 ⑤,後面的步驟不會執行。\n- **寫入新協定**:WTO 新列出的協定。\n- **更新現有協定**:更新狀態、日期、名稱和「資料查核時間」。WTO 已不再列出的協定加上 wto-delisted 標記(網頁會隱藏,資料不刪除)。\n- **清除變動的締約方** → **寫入締約方**:只重寫締約方有變動的協定。\n- **寫入欄位出處**:記下每個變動欄位的來源(WTO RTA-IS,S 級)與時間。\n- **寫入事件**:每項變動一則事件,會出現在網頁「動態」頁;事件附有 WTO 該協定頁面的連結。",
+        "width": 1480,
+        "height": 438,
+        "color": 7
+      }
+    },
+    {
+      "id": "f132cee2-bd3b-5a6d-b7b0-5631e6b0afe1",
+      "name": "⑤ 收尾與紀錄",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4940,
+        500
+      ],
+      "parameters": {
+        "content": "## ⑤ 收尾與紀錄\n- **收尾整理**:判斷這次是成功、被安全檢查擋下、還是某個寫入步驟失敗。\n- **寫入來源結果**:資料狀態頁健康燈號的依據。\n- **完成執行紀錄**:標記成功或失敗,失敗時記下原因。\n- **執行摘要**:點開就能看到這次的中文報告。",
+        "width": 960,
+        "height": 390,
+        "color": 4
+      }
+    },
+    {
+      "id": "7e2ffe09-3e65-51cd-ac7f-be8b6b4024e2",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -328
+      ],
+      "parameters": {
+        "content": "## WTO 區域貿易協定資料庫同步\n**怎麼執行**:按畫面下方「Execute workflow」。沒有排程,只會在你手動執行時跑(自動更新預設關閉)。\n\n**流程**:① 讀取設定 → ② 抓 WTO 清單並比對 → ③ 安全檢查 → ④ 寫入資料庫 → ⑤ 收尾與紀錄\n\n**原則**\n- 人工整理過的協定絕對不覆蓋;WTO 已不再列出的協定只加標記、不刪除\n- 每項變動都留下事件和出處,可以追查\n- 一次變動太多筆時自動停止,不寫入\n\n**怎麼看結果**:點「執行摘要」看中文報告;網頁 http://localhost:8082 的「動態」和「資料狀態」頁會顯示新結果。\n\n**注意**:這個流程由程式檔 n8n/workflows/build_wto_rta_sync.py 產生。如果在畫面上修改,請告訴我,我會同步回程式檔。",
+        "width": 1240,
+        "height": 460,
+        "color": 1
+      }
+    }
+  ],
+  "connections": {
+    "手動執行": {
+      "main": [
+        [
+          {
+            "node": "讀取來源設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取來源設定": {
+      "main": [
+        [
+          {
+            "node": "設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "設定": {
+      "main": [
+        [
+          {
+            "node": "呼叫 Python 整理程式",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "呼叫 Python 整理程式": {
+      "main": [
+        [
+          {
+            "node": "讀取現有協定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取現有協定": {
+      "main": [
+        [
+          {
+            "node": "比對差異",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "比對差異": {
+      "main": [
+        [
+          {
+            "node": "只是試跑?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "只是試跑?": {
+      "main": [
+        [
+          {
+            "node": "試跑報告",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "建立執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "建立執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "通過安全檢查?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "通過安全檢查?": {
+      "main": [
+        [
+          {
+            "node": "寫入新協定",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入新協定": {
+      "main": [
+        [
+          {
+            "node": "更新現有協定",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "更新現有協定": {
+      "main": [
+        [
+          {
+            "node": "清除變動的締約方",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "清除變動的締約方": {
+      "main": [
+        [
+          {
+            "node": "寫入締約方",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入締約方": {
+      "main": [
+        [
+          {
+            "node": "寫入欄位出處",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入欄位出處": {
+      "main": [
+        [
+          {
+            "node": "寫入事件",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入事件": {
+      "main": [
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "收尾整理": {
+      "main": [
+        [
+          {
+            "node": "寫入來源結果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入來源結果": {
+      "main": [
+        [
+          {
+            "node": "完成執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "完成執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "執行摘要",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

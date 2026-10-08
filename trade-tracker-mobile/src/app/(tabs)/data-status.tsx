@@ -119,10 +119,14 @@ export default function Status() {
                 <Text style={{ color: c.textSecondary, fontSize: 12, width: 36 }}>#{r.id}</Text>
                 <Text style={{ color: c.text, fontSize: 12, width: 130 }}>{formatDateTime(r.startedAt)}</Text>
                 <Text style={{ color: st.color, fontSize: 12, fontWeight: '700', width: 64 }}>{st.label}</Text>
-                <Text style={{ color: c.textSecondary, fontSize: 12, flex: 1 }}>
-                  {r.trigger === 'manual' ? '手動' : '排程'} · {PIPELINE_LABELS[r.pipeline] ?? r.pipeline}
-                  {' · '}AI 處理 {r.llmItems} 則 · 新事件 {r.eventsCount} 筆{r.runner ? ` · ${r.runner}` : ''}
-                </Text>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+                    {r.trigger === 'manual' ? '手動' : '排程'} · {PIPELINE_LABELS[r.pipeline] ?? r.pipeline}
+                    {r.pipeline !== 'database' && ` · AI 處理 ${r.llmItems} 則`} · 新事件 {r.eventsCount} 筆
+                    {r.runner ? ` · ${r.runner}` : ''}
+                  </Text>
+                  {!!r.error && <Text style={{ color: '#dc2626', fontSize: 12 }}>{r.error}</Text>}
+                </View>
               </View>
             );
           })}

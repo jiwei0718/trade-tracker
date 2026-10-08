@@ -8,70 +8,15 @@ The workflow has NO schedule trigger: it only runs when started manually
 """
 from __future__ import annotations
 
-import json
-import uuid
 from pathlib import Path
 
+from n8n_build import FETCH, GEMINI_CRED, PAD, SB, STEP, UA, Workflow, xs
+
 OUT = Path(__file__).with_name("jsi-ecom.json")
-WORKFLOW_ID = "TtJsiEcomFlow001"
-SB = "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1"
-SB_CRED = {"httpHeaderAuth": {"id": "TtSupabaseSecret", "name": "Supabase secret key (trade-tracker)"}}
-GEMINI_CRED = {"httpHeaderAuth": {"id": "TtGeminiApiKey01", "name": "Gemini API key"}}
-UA = {"name": "User-Agent", "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"}
 SOURCE_IDS = ["wto-docs-ecom", "wto-news-rss", "gnews-wto-ecom"]
 
-nodes: list[dict] = []
-connections: dict[str, dict] = {}
-
-
-def node(name, type_, version, pos, params, note=None, **extra):
-    """note: one-line description shown under the node on the canvas."""
-    if note:
-        extra |= {"notes": note, "notesInFlow": True}
-    nodes.append({
-        "id": str(uuid.uuid5(uuid.NAMESPACE_URL, f"{WORKFLOW_ID}/{name}")),
-        "name": name, "type": type_, "typeVersion": version, "position": pos,
-        "parameters": params, **extra,
-    })
-    return name
-
-
-def link(src, dst, out=0):
-    outs = connections.setdefault(src, {"main": []})["main"]
-    while len(outs) <= out:
-        outs.append([])
-    outs[out].append({"node": dst, "type": "main", "index": 0})
-
-
-def http(name, pos, method, url, *, cred=SB_CRED, query=None, headers=None, body=None,
-         text=False, timeout=60000, note=None, **settings):
-    params = {"method": method, "url": url, "options": {"timeout": timeout}}
-    if cred:
-        params |= {"authentication": "genericCredentialType", "genericAuthType": "httpHeaderAuth"}
-    if query:
-        params |= {"sendQuery": True, "queryParameters": {"parameters": query}}
-    if headers:
-        params |= {"sendHeaders": True, "headerParameters": {"parameters": headers}}
-    if body is not None:
-        params |= {"sendBody": True, "contentType": "json", "specifyBody": "json", "jsonBody": body}
-    if text:
-        params["options"]["response"] = {"response": {"responseFormat": "text", "outputPropertyName": "data"}}
-    extra = {"credentials": cred} if cred else {}
-    return node(name, "n8n-nodes-base.httpRequest", 4.2, pos, params, note=note, **extra, **settings)
-
-
-def code(name, pos, js, note=None):
-    return node(name, "n8n-nodes-base.code", 2, pos, {"mode": "runOnceForAllItems", "jsCode": js.strip()}, note=note)
-
-
-def sticky(name, pos, width, height, color, content):
-    """A note on the canvas. Placed behind nodes, so it can frame a group of them."""
-    return node(name, "n8n-nodes-base.stickyNote", 1, pos,
-                {"content": content, "width": width, "height": height, "color": color})
-
-
-FETCH = dict(executeOnce=True, retryOnFail=True, maxTries=3, waitBetweenTries=3000,
-             onError="continueRegularOutput")
+wf = Workflow("TtJsiEcomFlow001", "WTO 電子商務 JSI 追蹤")
+node, http, code, sticky, section = wf.node, wf.http, wf.code, wf.sticky, wf.section
 
 # ─── JavaScript snippets ──────────────────────────────────────────────────
 
@@ -364,43 +309,6 @@ return [{ json: {
 
 MAIN_Y = 700        # main row
 AI_Y = 420          # the AI branch sits above the main row; the "nothing for AI" path runs underneath
-STEP = 260          # horizontal distance between nodes
-NODE_H = 100        # node box height
-NOTE_H = 50         # room for the one-line note under a node
-PAD = 40
-
-
-def xs(start, n):
-    return [start + i * STEP for i in range(n)]
-
-
-def text_height(content, width):
-    """Generous estimate of how tall a sticky's text is (CJK ~14px wide, ~24px per line)."""
-    per_line = max(10, int((width - 40) / 14))
-    h = 30
-    for line in content.split("\n"):
-        if line.startswith("## "):
-            h += 44
-        elif not line.strip():
-            h += 12
-        else:
-            h += 24 * max(1, -(-len(line) // per_line))
-    return h + 10
-
-
-sections = []
-
-
-def section(name, xs_, y, color, content):
-    """Sticky note framing nodes placed at x positions xs_ on row y: text on top, nodes below."""
-    x = xs_[0] - PAD
-    width = xs_[-1] - xs_[0] + 100 + 2 * PAD
-    th = text_height(content, width)
-    top = y - th - 20
-    height = th + 20 + NODE_H + NOTE_H + PAD
-    sticky(name, [x, top], width, height, color, content)
-    sections.append((name, x, top, width, height, y, xs_))
-
 
 S1 = xs(0, 5)
 S2 = xs(S1[-1] + STEP + 160, 6)
@@ -455,15 +363,8 @@ pending = http("讀取待處理項目", [S3[2], MAIN_Y], "GET", f"{SB}/source_it
                       {"name": "limit", "value": "1000"}],
                executeOnce=True, alwaysOutputData=True, note="所有還沒處理的項目")
 plan = code("規劃 AI 批次", [S3[3], MAIN_Y], JS_PLAN, note="近 120 天、每批 10 則")
-gate = node("有要給 AI 的項目?", "n8n-nodes-base.if", 2.2, [S3[4], MAIN_Y], {
-    "conditions": {
-        "options": {"caseSensitive": True, "leftValue": "", "typeValidation": "strict", "version": 2},
-        "conditions": [{"id": str(uuid.uuid5(uuid.NAMESPACE_URL, "gate")), "leftValue": "={{ $json.hasBatch }}",
-                        "rightValue": "", "operator": {"type": "boolean", "operation": "true", "singleValue": True}}],
-        "combinator": "and",
-    },
-    "options": {},
-}, note="上:有 → AI;下:沒有 → 收尾")
+gate = wf.if_true("有要給 AI 的項目?", [S3[4], MAIN_Y], "={{ $json.hasBatch }}",
+                  note="上:有 → AI;下:沒有 → 收尾", cond_key="gate")
 
 llm = http("AI 分類與摘要", [S4[0], AI_Y], "POST",
            "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('設定').first().json.model }}:generateContent",
@@ -538,7 +439,7 @@ section("⑤ 收尾與紀錄", S5, MAIN_Y, 7, """## ⑤ 收尾與紀錄
 - **完成執行紀錄**:把這次執行標記為「成功」或「部分失敗」,記下 AI 處理數和新事件數。
 - **執行摘要**:點開這個節點,就能看到這次的中文報告。""")
 
-top = min(s[2] for s in sections)
+top = min(s[2] for s in wf.sections)
 sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 JSI 追蹤(第一條流程)
 **怎麼執行**:按畫面下方「Execute workflow」。這條流程沒有排程,只會在你手動執行時跑(自動更新預設關閉)。
 
@@ -551,26 +452,10 @@ sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 
 
 **注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。""")
 
-for a, b in [(trigger, settings), (settings, srcs), (srcs, config), (config, run), (run, f_docs),
-             (f_docs, p_docs), (p_docs, f_news), (f_news, p_news), (p_news, f_gn), (f_gn, p_gn),
-             (p_gn, collect), (collect, store), (store, pending), (pending, plan), (plan, gate),
-             (llm, validate), (validate, write), (write, finish),
-             (finish, mark), (mark, sruns), (sruns, done), (done, report)]:
-    link(a, b)
-link(gate, llm, 0)
-link(gate, finish, 1)
+wf.chain(trigger, settings, srcs, config, run, f_docs, p_docs, f_news, p_news, f_gn, p_gn,
+         collect, store, pending, plan, gate)
+wf.chain(llm, validate, write, finish, mark, sruns, done, report)
+wf.link(gate, llm, 0)
+wf.link(gate, finish, 1)
 
-workflow = {
-    "id": WORKFLOW_ID,
-    "name": "WTO 電子商務 JSI 追蹤",
-    "active": False,
-    "nodes": nodes,
-    "connections": connections,
-    "settings": {"executionOrder": "v1", "timezone": "Asia/Taipei", "saveManualExecutions": True,
-                 "saveDataSuccessExecution": "all", "saveDataErrorExecution": "all"},
-    "pinData": {},
-    "meta": {"templateCredsSetupCompleted": True},
-}
-
-OUT.write_text(json.dumps(workflow, ensure_ascii=False, indent=2), encoding="utf-8")
-print(f"wrote {OUT.name}: {len(nodes)} nodes")
+wf.save(OUT)

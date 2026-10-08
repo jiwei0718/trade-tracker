@@ -1,0 +1,14 @@
+# Python worker called by n8n (see backend/worker/app.py).
+# Built from the repo root by infra/docker-compose.yml.
+FROM python:3.12-slim
+
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+
+COPY backend/requirements.txt backend/requirements-worker.txt backend/
+RUN pip install --no-cache-dir -r backend/requirements.txt -r backend/requirements-worker.txt
+
+COPY backend ./backend
+
+EXPOSE 8000
+CMD ["uvicorn", "backend.worker.app:app", "--host", "0.0.0.0", "--port", "8000"]

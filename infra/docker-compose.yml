@@ -10,6 +10,9 @@
 # - 只綁定 127.0.0.1:這台電腦以外(同網段其他裝置)連不進來。
 # - 新建或匯入的流程預設都是「未啟用」,排程不會自己跑;自動更新一律等使用者同意才開。
 # - 版本固定在 2.41.6,升級時改這裡的版本號再重新 up -d。
+# - worker:Python 整理程式(WTO 解析、國名對照),n8n 用 http://worker:8000 呼叫它。
+#   它只抓資料、整理格式,不寫資料庫。改了 backend/ 的程式後要重建:
+#   docker compose -f infra/docker-compose.yml up -d --build worker
 
 name: trade-tracker
 
@@ -25,6 +28,15 @@ services:
       - N8N_DIAGNOSTICS_ENABLED=false
     volumes:
       - n8n_data:/home/node/.n8n
+
+  worker:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile.worker
+    image: trade-tracker-worker:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8000"
 
 volumes:
   n8n_data:

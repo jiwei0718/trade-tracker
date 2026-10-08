@@ -45,6 +45,7 @@ def _parse_parties(rta_name: str, signatories: str) -> tuple[list[str], list[str
 
 EXPORT_URL = "https://rtais.wto.org/UI/ExportAllRTAList.aspx"
 LIST_URL = "https://rtais.wto.org/"
+CARD_URL = "https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid="  # one page per RTA
 
 # RTA ids curated by hand in the app seed (with correct status, Chinese names,
 # descriptions). The scraper skips them so it does not overwrite curated data.
@@ -174,9 +175,12 @@ def fetch() -> list[dict[str, Any]]:
             region = str(col(row, "Region") or "")
 
             name_zh = "–".join(party_zh) if party_zh else name
+            rta_id = col(row, "RTA ID", None)
 
             out.append({
                 "id": _slugify(name),
+                "rtaId": int(rta_id) if isinstance(rta_id, (int, float)) else None,
+                "sourceUrl": f"{CARD_URL}{int(rta_id)}" if isinstance(rta_id, (int, float)) else LIST_URL,
                 "name": name,
                 "nameZh": name_zh,
                 "status": status,
@@ -196,5 +200,33 @@ def fetch() -> list[dict[str, Any]]:
             log.debug("WTO row failed: %s", e)
             continue
 
+    _disambiguate(out)
     log.info("WTO RTA-IS: %d records", len(out))
     return out
+
+
+def _disambiguate(rows: list[dict[str, Any]]) -> None:
+    """Give renegotiated agreements that reuse a name their own id.
+
+    The WTO lists a modernised agreement under the same name as the inactive original
+    (e.g. "Canada - Ukraine": RTA 694 from 2016 and RTA 1270 from 2023), so both slug
+    to the same id. The earliest-signed version keeps the plain id, which is what the
+    database already holds; later versions get the signature year appended.
+    """
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        groups.setdefault(r["id"], []).append(r)
+    taken = set(groups)
+    for base, group in groups.items():
+        if len(group) < 2:
+            continue
+        group.sort(key=lambda r: (r["keyDates"].get("signed") or "9999", r["rtaId"] or 0))
+        for r in group[1:]:
+            year = (r["keyDates"].get("signed") or "")[:4]
+            new_id = f"{base}-{year}" if year else ""
+            if not new_id or new_id in taken:
+                new_id = f"{base}-rta{r['rtaId']}"
+            taken.add(new_id)
+            r["id"] = new_id
+            if year:
+                r["nameZh"] = f"{r['nameZh']}({year} 年版)"

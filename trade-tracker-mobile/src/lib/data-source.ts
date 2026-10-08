@@ -12,10 +12,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { AgreementDetail, SourceTier, TradeAgreement } from '@/data/types';
 import { agreements as bundledAgreements } from '@/data/agreements';
+import { taipeiDate } from './format';
 import { sbSelect, supabaseConfigured } from './supabase';
 
 // Bump the version whenever the mapped snapshot shape changes, so stale caches are ignored.
-const CACHE_KEY = 'tt:snapshot-v3';
+const CACHE_KEY = 'tt:snapshot-v4';
 const CACHE_KEY_LAST_SEEN = 'tt:last-seen-at';
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
@@ -164,7 +165,9 @@ function toEvent(r: any): AgreementEvent {
 
 async function fetchLive(): Promise<DataSnapshot> {
   const [agreementRows, eventRows, healthRows, sourceRows, runRows, settingRows] = await Promise.all([
-    sbSelect<any>(`agreements_full?select=${AGREEMENT_COLUMNS}&order=id`),
+    // Agreements the WTO no longer lists (mostly old names of renamed RTAs) are kept in the
+    // database with this tag but not shown.
+    sbSelect<any>(`agreements_full?select=${AGREEMENT_COLUMNS}&tags=not.cs.%7Bwto-delisted%7D&order=id`),
     sbSelect<any>(
       'events?select=id,agreement_id,event_type,event_date,old_value,new_value,summary_zh,source_id,source_url,confidence,by_tool,detected_at&order=detected_at.desc,id.desc',
       { max: 3000 },
@@ -267,7 +270,7 @@ export async function getLastSeen(): Promise<string | null> {
 export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement';
 
 /** Newest real-world date first (falls back to when it was detected). */
-export const eventSortDate = (e: AgreementEvent) => e.eventDate ?? e.detectedAt.slice(0, 10);
+export const eventSortDate = (e: AgreementEvent) => e.eventDate ?? taipeiDate(e.detectedAt);
 export const byEventDateDesc = (a: AgreementEvent, b: AgreementEvent) =>
   eventSortDate(b).localeCompare(eventSortDate(a)) || b.id - a.id;
 

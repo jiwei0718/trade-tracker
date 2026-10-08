@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import type { TradeAgreement } from '@/data/types';
 import { STATUS_LABELS } from '@/data/types';
-import type { AgreementEvent } from '@/lib/data-source';
+import { eventSortDate, type AgreementEvent } from '@/lib/data-source';
+import { useData } from '@/lib/data-context';
 import { Colors } from '@/constants/theme';
 import TierChip from './tier-chip';
 
@@ -58,8 +59,10 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const typeColor = EVENT_TYPE_COLORS[e.type] ?? '#64748b';
-  const date = e.eventDate ?? e.detectedAt.slice(0, 10);
-  const sourceText = e.symbol ?? e.publisher ?? e.sourceId ?? '';
+  const { sources } = useData();
+  const date = eventSortDate(e);
+  const sourceName = sources.find(s => s.sourceId === e.sourceId)?.nameZh;
+  const sourceText = e.symbol ?? e.publisher ?? sourceName ?? e.sourceId ?? '';
 
   return (
     <View style={[styles.row, { borderColor: c.backgroundElement }]}>

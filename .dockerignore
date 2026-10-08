@@ -1,0 +1,6 @@
+# Only the Python backend goes into the worker image.
+*
+!backend/
+backend/**/__pycache__
+backend/.cache
+backend/output

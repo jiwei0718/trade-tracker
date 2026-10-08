@@ -17,6 +17,16 @@ export function formatDateTime(iso: string | null | undefined): string {
   return iso ? DATE_TIME.format(new Date(iso)) : '—';
 }
 
+const DATE_PARTS = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit',
+});
+
+/** "2026-10-09": the calendar date in Taipei (a UTC timestamp's own date can be a day behind). */
+export function taipeiDate(iso: string): string {
+  const p = Object.fromEntries(DATE_PARTS.formatToParts(new Date(iso)).map(x => [x.type, x.value]));
+  return `${p.year}-${p.month}-${p.day}`;
+}
+
 /** Human-readable version of the few cron expressions the control panel uses. */
 export function describeCron(cron: string): string {
   const m = cron.match(/^(\d+) (\d+) \* \* \*$/);
