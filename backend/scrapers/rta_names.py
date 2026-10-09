@@ -49,7 +49,7 @@ PARTIES: dict[str, tuple[str, str]] = {
     "yugoslavia, socialist federal republic of": ("YU", "南斯拉夫"),
     "upper volta": ("BF", "上伏塔(今布吉納法索)"),
     "southern rhodesia": ("ZW", "南羅德西亞(今辛巴威)"),
-    "us": ("US", "美國"), "syria": ("SY", "敘利亞"), "cefta": ("CEFTA", "中歐自由貿易協定"),
+    "us": ("US", "美國"), "au-cont": ("AU-CONT", "非洲聯盟"), "syria": ("SY", "敘利亞"), "cefta": ("CEFTA", "中歐自由貿易協定"),
 }
 
 # Agreements whose name is not a list of parties: English name → (Chinese name, party codes)
@@ -58,7 +58,7 @@ WHOLE: dict[str, tuple[str, list[str]]] = {
     "ASEAN Free Trade Area (AFTA) - Inactive": ("東協自由貿易區 (AFTA)(舊版)", ["ASEAN"]),
     "ASEAN Trade in Services Agreement (ATISA)": ("東協服務貿易協定 (ATISA)", ["ASEAN"]),
     "African Common Market": ("非洲共同市場", ["African Common Market"]),
-    "African Continental Free Trade Area (AfCFTA)": ("非洲大陸自由貿易區 (AfCFTA)", ["AfCFTA"]),
+    "African Continental Free Trade Area (AfCFTA)": ("非洲大陸自由貿易區 (AfCFTA)", ["AU-CONT"]),
     "Agadir Agreement": ("阿加迪爾協定(埃及、約旦、摩洛哥、突尼西亞)", ["EG", "JO", "MA", "TN"]),
     "Andean Community (CAN)": ("安地斯共同體 (CAN)", ["CAN"]),
     "Arab Common Market": ("阿拉伯共同市場", ["Arab Common Market"]),
@@ -81,7 +81,7 @@ WHOLE: dict[str, tuple[str, list[str]]] = {
     "Common Market for Eastern and Southern Africa (COMESA)": ("東南非共同市場 (COMESA)", ["COMESA"]),
     "Commonwealth of Independent States (CIS)": ("獨立國家國協 (CIS)", ["CIS"]),
     "Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)":
-        ("跨太平洋夥伴全面進步協定 (CPTPP)", ["CPTPP"]),
+        ("跨太平洋夥伴全面進步協定 (CPTPP)", ["AU", "BN", "CA", "CL", "JP", "MY", "MX", "NZ", "PE", "SG", "VN"]),
     "Dominican Republic - Central America - United States Free Trade Agreement (CAFTA-DR)":
         ("多明尼加–中美洲–美國自由貿易協定 (CAFTA-DR)", ["DO", "CENTRAL-AMERICA", "US"]),
     "EC – Overseas Countries and Territories 1 (OCT)": ("歐洲共同體–海外國家與領地 (OCT)", ["EU", "OCT"]),
