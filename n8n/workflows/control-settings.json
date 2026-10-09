@@ -1,0 +1,195 @@
+{
+  "id": "TtSettingsFlow01",
+  "name": "自動更新設定(網頁開關)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "1742e87e-c16b-5f8d-93a9-54735e3a7b1d",
+      "name": "網頁開關",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tt-settings",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "options": {
+          "allowedOrigins": "http://localhost:8080,http://localhost:8082"
+        },
+        "responseData": "firstEntryJson"
+      },
+      "webhookId": "3537fd8d-61f4-5d72-b8c3-c8a680633545",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "資料狀態頁的開關",
+      "notesInFlow": true
+    },
+    {
+      "id": "ddba121a-de8f-5f19-8ef8-5344eee2a56d",
+      "name": "檢查內容",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 只接受兩種流程與 true/false,其他內容一律拒絕\nconst body = $input.first().json.body ?? {};\nconst pipeline = body.pipeline;\nconst enabled = body.auto_enabled;\nif (!['database', 'news'].includes(pipeline) || typeof enabled !== 'boolean') {\n  throw new Error('pipeline 必須是 database 或 news,auto_enabled 必須是 true 或 false');\n}\nreturn [{ json: { pipeline, patch: { auto_enabled: enabled, updated_by: 'web' } } }];"
+      },
+      "notes": "只接受合法的值",
+      "notesInFlow": true
+    },
+    {
+      "id": "c8bda10a-3084-537b-9ae0-1494b27704a7",
+      "name": "寫入設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        700
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/update_settings",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "pipeline",
+              "value": "=eq.{{ $json.pipeline }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.patch) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "notes": "更新 update_settings",
+      "notesInFlow": true
+    },
+    {
+      "id": "24f9bde6-b712-5de7-8d4f-e9211add6da2",
+      "name": "回覆網頁",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const s = $input.first().json;\nreturn [{ json: { ok: true, pipeline: s.pipeline, auto_enabled: s.auto_enabled } }];"
+      },
+      "notes": "告訴網頁結果",
+      "notesInFlow": true
+    },
+    {
+      "id": "ce14bcca-f15a-5def-98f8-e796422362fa",
+      "name": "設定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        464
+      ],
+      "parameters": {
+        "content": "## 自動更新開關(網頁呼叫)\n- **網頁開關**:網頁「資料狀態」頁切換「自動更新」時呼叫這裡。要帶金鑰,而且只接受這台電腦上的網頁。\n- **檢查內容**:只接受「協定資料庫/新聞動態」與「開/關」,其他內容一律拒絕。\n- **寫入設定**:更新資料庫的 update_settings。\n- **回覆網頁**:把新的開關狀態回傳給網頁。\n\n這條流程只改開關,不會抓任何資料;真正依排程執行的是「自動更新排程器」。",
+        "width": 960,
+        "height": 426,
+        "color": 4
+      }
+    },
+    {
+      "id": "ce4d6315-cd08-5210-a50c-960f7efeabdb",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        164
+      ],
+      "parameters": {
+        "content": "## 自動更新設定(網頁開關)\n網頁「資料狀態」頁的「自動更新」開關會呼叫這條流程。兩個開關預設都是關閉。\n\n**注意**:這個流程由程式檔 n8n/workflows/build_control.py 產生。如果在畫面上修改,請告訴我,我會同步回程式檔。",
+        "width": 1000,
+        "height": 260,
+        "color": 1
+      }
+    }
+  ],
+  "connections": {
+    "網頁開關": {
+      "main": [
+        [
+          {
+            "node": "檢查內容",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "檢查內容": {
+      "main": [
+        [
+          {
+            "node": "寫入設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入設定": {
+      "main": [
+        [
+          {
+            "node": "回覆網頁",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

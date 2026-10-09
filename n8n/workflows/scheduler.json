@@ -1,0 +1,190 @@
+{
+  "id": "TtSchedulerFlw01",
+  "name": "自動更新排程器",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c384ae4a-deee-5430-af9b-92fef0acefb5",
+      "name": "每小時整點",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 * * * *"
+            }
+          ]
+        }
+      },
+      "notes": "只是檢查,不抓資料",
+      "notesInFlow": true
+    },
+    {
+      "id": "79a13079-b972-5f5e-9ce7-d440b344b1fa",
+      "name": "讀取開關",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/update_settings",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "pipeline,auto_enabled,schedule_cron"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "notes": "兩個開關與時間",
+      "notesInFlow": true
+    },
+    {
+      "id": "112ceea7-9cc5-536f-a3e1-4f05f4d53338",
+      "name": "到時間了嗎?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 每小時整點檢查:開關打開、而且現在是設定的時間(臺北時間),才觸發該流程。開關都關閉時什麼都不做。\nconst FLOWS = {\"database\": \"tt-run-wto-rta-sync\", \"news\": \"tt-run-jsi-ecom\"};\nconst hour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Taipei', hour: 'numeric', hourCycle: 'h23' }).format(new Date()));\nconst due = [];\nfor (const s of $input.all().map((i) => i.json)) {\n  if (!s.auto_enabled || !FLOWS[s.pipeline]) continue;\n  const m = String(s.schedule_cron ?? '').match(/^(\\d+) (\\d+) \\* \\* \\*$/);   // 每天固定時間,例如 \"0 21 * * *\"\n  if (m && Number(m[2]) === hour) due.push({ json: { pipeline: s.pipeline, path: FLOWS[s.pipeline] } });\n}\nreturn due;"
+      },
+      "notes": "開關關閉 → 到此為止",
+      "notesInFlow": true
+    },
+    {
+      "id": "f190f7a1-4d5e-57d0-8372-b3850ef7eec5",
+      "name": "啟動流程",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:5678/webhook/{{ $json.path }}",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ trigger: \"scheduled\" }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "和網頁按鈕一樣的入口",
+      "notesInFlow": true
+    },
+    {
+      "id": "1c1d40ae-e81b-5c9b-971a-e6d75d8f4def",
+      "name": "排程",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        476
+      ],
+      "parameters": {
+        "content": "## 自動更新排程器\n- **每小時整點**:每小時檢查一次。只是讀開關,不會抓任何資料。\n- **讀取開關**:讀資料庫的 update_settings:「協定資料庫」與「新聞動態」兩個開關,以及各自的執行時間(預設臺北時間每天 21:00)。\n- **到時間了嗎?**:開關打開、而且現在是設定的時間,才往下走;開關關閉時流程到這裡就結束。\n- **啟動流程**:呼叫該流程的入口(和網頁「立即更新」按鈕相同),執行紀錄會記為「排程」。",
+        "width": 960,
+        "height": 414,
+        "color": 7
+      }
+    },
+    {
+      "id": "bfe36d09-f082-5781-82a6-515c83169780",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        176
+      ],
+      "parameters": {
+        "content": "## 自動更新排程器\n**自動更新預設關閉**。只有在網頁「資料狀態」頁把開關打開後,才會在設定的時間自動執行對應流程。\n\n**注意**:這個流程由程式檔 n8n/workflows/build_control.py 產生。如果在畫面上修改,請告訴我,我會同步回程式檔。",
+        "width": 1000,
+        "height": 260,
+        "color": 1
+      }
+    }
+  ],
+  "connections": {
+    "每小時整點": {
+      "main": [
+        [
+          {
+            "node": "讀取開關",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取開關": {
+      "main": [
+        [
+          {
+            "node": "到時間了嗎?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "到時間了嗎?": {
+      "main": [
+        [
+          {
+            "node": "啟動流程",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

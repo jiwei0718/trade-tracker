@@ -13,7 +13,35 @@
         700
       ],
       "parameters": {},
-      "notes": "從這裡開始執行",
+      "notes": "在 n8n 畫面按執行",
+      "notesInFlow": true
+    },
+    {
+      "id": "f58fbb01-45de-5439-b769-f7c037cf03cb",
+      "name": "網頁或排程觸發",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        900
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tt-run-jsi-ecom",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "allowedOrigins": "http://localhost:8080,http://localhost:8082"
+        }
+      },
+      "webhookId": "b467a076-4880-5b43-99f3-17670be68daa",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "網頁按鈕或排程呼叫",
       "notesInFlow": true
     },
     {
@@ -142,7 +170,7 @@
         "sendBody": true,
         "contentType": "json",
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ pipeline: \"all\", trigger: \"manual\", runner: \"n8n\", status: \"running\" }) }}"
+        "jsonBody": "={{ JSON.stringify({ pipeline: \"news\", trigger: ($(\"網頁或排程觸發\").isExecuted && $(\"網頁或排程觸發\").first().json.body?.trigger === \"scheduled\" ? \"scheduled\" : \"manual\"), runner: \"n8n\", status: \"running\" }) }}"
       },
       "credentials": {
         "httpHeaderAuth": {
@@ -858,12 +886,12 @@
       "typeVersion": 1,
       "position": [
         -40,
-        476
+        452
       ],
       "parameters": {
-        "content": "## ① 讀取設定(準備工作)\n- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。這條流程沒有排程,不會自己跑。\n- **讀取更新設定**:從資料庫讀「每次最多送幾則給 AI」,目前是 30 則。\n- **讀取來源設定**:讀這條流程用到的 3 個來源,以及有沒有被停用(停用的會跳過)。\n- **設定**:模型名稱、回溯天數(120 天)、搜尋關鍵字等參數都集中在這裡。要調整就改這個節點。\n- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。",
+        "content": "## ① 讀取設定(準備工作)\n- **手動執行**:在 n8n 畫面按下方「Execute workflow」就從這裡開始。\n- **網頁或排程觸發**:網頁「資料狀態」頁的「立即更新」按鈕,或自動更新排程(預設關閉)從這裡啟動。要帶金鑰才能呼叫,而且只接受這台電腦上的網頁。\n- **讀取更新設定**:從資料庫讀「每次最多送幾則給 AI」,目前是 30 則。\n- **讀取來源設定**:讀這條流程用到的 3 個來源,以及有沒有被停用(停用的會跳過)。\n- **設定**:模型名稱、回溯天數(120 天)、搜尋關鍵字等參數都集中在這裡。要調整就改這個節點。\n- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。",
         "width": 1220,
-        "height": 414,
+        "height": 638,
         "color": 4
       }
     },
@@ -941,7 +969,7 @@
         -432
       ],
       "parameters": {
-        "content": "## WTO 電子商務 JSI 追蹤(第一條流程)\n**怎麼執行**:按畫面下方「Execute workflow」。這條流程沒有排程,只會在你手動執行時跑(自動更新預設關閉)。\n\n**流程**:① 讀取設定 → ② 抓三個來源 → ③ 判斷哪些是新的 → ④ AI 摘要與品質檢查 → ⑤ 收尾與紀錄\n\n**怎麼看結果**\n- 點任何一個節點,右側會顯示它收到的資料(輸入)和產出的資料(輸出)\n- 最右邊的「執行摘要」是這次的中文報告\n- 網頁版 http://localhost:8082 的「動態」和「資料狀態」頁會顯示新結果(按重新整理)\n\n**注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。",
+        "content": "## WTO 電子商務 JSI 追蹤(第一條流程)\n**怎麼執行**:按畫面下方「Execute workflow」,或在網頁「資料狀態」頁按「立即更新」。自動更新預設關閉,要在網頁上打開開關才會依排程執行。\n\n**流程**:① 讀取設定 → ② 抓三個來源 → ③ 判斷哪些是新的 → ④ AI 摘要與品質檢查 → ⑤ 收尾與紀錄\n\n**怎麼看結果**\n- 點任何一個節點,右側會顯示它收到的資料(輸入)和產出的資料(輸出)\n- 最右邊的「執行摘要」是這次的中文報告\n- 網頁版 http://localhost:8082 的「動態」和「資料狀態」頁會顯示新結果(按重新整理)\n\n**注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。",
         "width": 1120,
         "height": 420,
         "color": 1
@@ -949,6 +977,17 @@
     }
   ],
   "connections": {
+    "網頁或排程觸發": {
+      "main": [
+        [
+          {
+            "node": "讀取更新設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "手動執行": {
       "main": [
         [

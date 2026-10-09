@@ -21,7 +21,7 @@ import json
 import sys
 from pathlib import Path
 
-from n8n_build import PAD, SB, STEP, Workflow, xs
+from n8n_build import PAD, RUN_PATHS, SB, STEP, Workflow, xs
 
 DRY_RUN = "--dry-run" in sys.argv
 OUT = Path(__file__).with_name("wto-rta-sync.json")
@@ -253,7 +253,8 @@ DIFF = "$('比對差異').first().json"
 
 # ─── Nodes ────────────────────────────────────────────────────────────────
 
-trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {}, note="從這裡開始執行")
+trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {}, note="在 n8n 畫面按執行")
+hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], RUN_PATHS["database"], note="網頁按鈕或排程呼叫")
 srcs = http("讀取來源設定", [S1[1], MAIN_Y], "GET", f"{SB}/sources",
             query=[{"name": "id", "value": "eq.wto-rta-is"}, {"name": "select", "value": "id,enabled,tier,url"}],
             executeOnce=True, alwaysOutputData=True, note="來源是否停用")
@@ -284,7 +285,7 @@ dry_report = code("試跑報告", [SD[0] + STEP // 2, UP_Y], f"return [{{ json: 
 
 run = http("建立執行紀錄", [S3[0], MAIN_Y], "POST", f"{SB}/pipeline_runs",
            headers=[{"name": "Prefer", "value": "return=representation"}],
-           body='={{ JSON.stringify({ pipeline: "database", trigger: "manual", runner: "n8n", status: "running" }) }}',
+           body='={{ JSON.stringify({ pipeline: "database", trigger: ($("網頁或排程觸發").isExecuted && $("網頁或排程觸發").first().json.body?.trigger === "scheduled" ? "scheduled" : "manual"), runner: "n8n", status: "running" }) }}',
            executeOnce=True, note="資料庫記一筆「執行中」")
 gate = wf.if_true("通過安全檢查?", [S3[1], MAIN_Y], f"={{{{ {DIFF}.canWrite }}}}",
                   note="上:通過 → 寫入;下:擋下 → 收尾")
@@ -326,11 +327,12 @@ report = code("執行摘要", [S5[3], MAIN_Y], "return [{ json: $('收尾整理'
 # ─── Sticky notes ─────────────────────────────────────────────────────────
 
 section("① 讀取設定", S1, MAIN_Y, 4, """## ① 讀取設定
-- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。沒有排程,不會自己跑。
+- **手動執行**:在 n8n 畫面按下方「Execute workflow」就從這裡開始。
+- **網頁或排程觸發**:網頁「資料狀態」頁的「立即更新」按鈕,或自動更新排程(預設關閉)從這裡啟動。要帶金鑰才能呼叫,而且只接受這台電腦上的網頁。
 - **讀取來源設定**:確認「WTO RTA-IS」來源沒有被停用(停用就整條略過)。
 - **設定**:
   - dryRun(試跑):改成 true 時只比對、不寫入
-  - 安全上限:一次變動太多筆就不寫入""")
+  - 安全上限:一次變動太多筆就不寫入""", below=200)
 
 section("② 抓取與比對", S2, MAIN_Y, 6, """## ② 抓取 WTO 清單並和資料庫比對
 - **呼叫 Python 整理程式**:請 Docker 裡的 Python 程式(worker)下載 WTO 區域貿易協定資料庫(RTA-IS)的完整清單,整理成資料庫格式。約 660 筆,要幾秒鐘。
@@ -363,7 +365,7 @@ section("⑤ 收尾與紀錄", S5, MAIN_Y, 4, """## ⑤ 收尾與紀錄
 
 top = min(s[2] for s in wf.sections)
 wf.sticky("說明", [S1[0] - PAD, top - 500], 1240, 460, 1, """## WTO 區域貿易協定資料庫同步
-**怎麼執行**:按畫面下方「Execute workflow」。沒有排程,只會在你手動執行時跑(自動更新預設關閉)。
+**怎麼執行**:按畫面下方「Execute workflow」,或在網頁「資料狀態」頁按「立即更新」。自動更新預設關閉,要在網頁上打開開關才會依排程執行。
 
 **流程**:① 讀取設定 → ② 抓 WTO 清單並比對 → ③ 安全檢查 → ④ 寫入資料庫 → ⑤ 收尾與紀錄
 
@@ -379,6 +381,7 @@ wf.sticky("說明", [S1[0] - PAD, top - 500], 1240, 460, 1, """## WTO 區域貿�
 # ─── Connections ──────────────────────────────────────────────────────────
 
 wf.chain(trigger, srcs, config, fetch, existing, diff, is_dry)
+wf.link(hook, srcs)
 wf.link(is_dry, dry_report, 0)
 wf.link(is_dry, run, 1)
 wf.link(run, gate)

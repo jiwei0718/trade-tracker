@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from n8n_build import FETCH, GEMINI_CRED, PAD, SB, STEP, UA, Workflow, xs
+from n8n_build import FETCH, GEMINI_CRED, PAD, RUN_PATHS, SB, STEP, UA, Workflow, xs
 
 OUT = Path(__file__).with_name("jsi-ecom.json")
 SOURCE_IDS = ["wto-docs-ecom", "wto-news-rss", "gnews-wto-ecom"]
@@ -352,7 +352,8 @@ S5 = xs(S4[-1] + STEP + 160, 5)
 # ─── Nodes ────────────────────────────────────────────────────────────────
 
 trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {},
-               note="從這裡開始執行")
+               note="在 n8n 畫面按執行")
+hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], RUN_PATHS["news"], note="網頁按鈕或排程呼叫")
 settings = http("讀取更新設定", [S1[1], MAIN_Y], "GET", f"{SB}/update_settings",
                 query=[{"name": "pipeline", "value": "eq.news"}, {"name": "select", "value": "max_llm_items,auto_enabled"}],
                 note="讀「每次最多送幾則給 AI」")
@@ -363,7 +364,7 @@ srcs = http("讀取來源設定", [S1[2], MAIN_Y], "GET", f"{SB}/sources",
 config = code("設定", [S1[3], MAIN_Y], JS_CONFIG, note="流程參數集中在這裡")
 run = http("建立執行紀錄", [S1[4], MAIN_Y], "POST", f"{SB}/pipeline_runs",
            headers=[{"name": "Prefer", "value": "return=representation"}],
-           body='={{ JSON.stringify({ pipeline: "all", trigger: "manual", runner: "n8n", status: "running" }) }}',
+           body='={{ JSON.stringify({ pipeline: "news", trigger: ($("網頁或排程觸發").isExecuted && $("網頁或排程觸發").first().json.body?.trigger === "scheduled" ? "scheduled" : "manual"), runner: "n8n", status: "running" }) }}',
            note="資料庫記一筆「執行中」")
 
 f_docs = http("抓 WTO 官方文件", [S2[0], MAIN_Y], "GET",
@@ -438,11 +439,12 @@ report = code("執行摘要", [S5[4], MAIN_Y], "return [{ json: $('收尾整理'
 # ─── Sticky notes ─────────────────────────────────────────────────────────
 
 section("① 讀取設定", S1, MAIN_Y, 4, """## ① 讀取設定(準備工作)
-- **手動執行**:按畫面下方「Execute workflow」就從這裡開始。這條流程沒有排程,不會自己跑。
+- **手動執行**:在 n8n 畫面按下方「Execute workflow」就從這裡開始。
+- **網頁或排程觸發**:網頁「資料狀態」頁的「立即更新」按鈕,或自動更新排程(預設關閉)從這裡啟動。要帶金鑰才能呼叫,而且只接受這台電腦上的網頁。
 - **讀取更新設定**:從資料庫讀「每次最多送幾則給 AI」,目前是 30 則。
 - **讀取來源設定**:讀這條流程用到的 3 個來源,以及有沒有被停用(停用的會跳過)。
 - **設定**:模型名稱、回溯天數(120 天)、搜尋關鍵字等參數都集中在這裡。要調整就改這個節點。
-- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。""")
+- **建立執行紀錄**:在資料庫新增一筆「執行中」,這次的所有結果都會記在它底下。""", below=200)
 
 section("② 抓取資料來源", S2, MAIN_Y, 6, """## ② 抓取三個資料來源
 - **抓 WTO 官方文件**:向 WTO 官方文件庫查詢電子商務 JSI 相關文件(INF/ECOM、WT/GC/283、WT/MIN(26)/42 等),目前約 119 份。
@@ -484,7 +486,7 @@ section("⑤ 收尾與紀錄", S5, MAIN_Y, 7, """## ⑤ 收尾與紀錄
 
 top = min(s[2] for s in wf.sections)
 sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 JSI 追蹤(第一條流程)
-**怎麼執行**:按畫面下方「Execute workflow」。這條流程沒有排程,只會在你手動執行時跑(自動更新預設關閉)。
+**怎麼執行**:按畫面下方「Execute workflow」,或在網頁「資料狀態」頁按「立即更新」。自動更新預設關閉,要在網頁上打開開關才會依排程執行。
 
 **流程**:① 讀取設定 → ② 抓三個來源 → ③ 判斷哪些是新的 → ④ AI 摘要與品質檢查 → ⑤ 收尾與紀錄
 
@@ -495,6 +497,7 @@ sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 
 
 **注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。""")
 
+wf.link(hook, settings)
 wf.chain(trigger, settings, srcs, config, run, f_docs, p_docs, f_news, p_news, f_gn, p_gn,
          collect, store, pending, recent, plan, gate)
 wf.chain(llm, validate, write, finish, mark, sruns, done, report)

@@ -15,6 +15,13 @@ SB = "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1"
 SB_CRED = {"httpHeaderAuth": {"id": "TtSupabaseSecret", "name": "Supabase secret key (trade-tracker)"}}
 GEMINI_CRED = {"httpHeaderAuth": {"id": "TtGeminiApiKey01", "name": "Gemini API key"}}
 UA = {"name": "User-Agent", "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"}
+# Key the web app sends (header X-TT-Key) when it starts a flow or changes a setting.
+WEBHOOK_CRED = {"httpHeaderAuth": {"id": "TtWebhookKey0001", "name": "Webhook key (trade-tracker)"}}
+# Pages allowed to call the webhooks: the desktop app and the dev preview (both local only).
+WEB_ORIGINS = "http://localhost:8080,http://localhost:8082"
+# Webhook paths the web app and the scheduler call (http://localhost:5678/webhook/<path>).
+RUN_PATHS = {"database": "tt-run-wto-rta-sync", "news": "tt-run-jsi-ecom"}
+SETTINGS_PATH = "tt-settings"
 
 # Settings for fetch nodes: run once, retry, and let the flow carry on when a source is down.
 FETCH = dict(executeOnce=True, retryOnFail=True, maxTries=3, waitBetweenTries=3000,
@@ -97,6 +104,20 @@ class Workflow:
         return self.node(name, "n8n-nodes-base.code", 2, pos,
                          {"mode": "runOnceForAllItems", "jsCode": js.strip()}, note=note, **settings)
 
+    def webhook(self, name, pos, path, note=None, respond="onReceived"):
+        """POST webhook guarded by the X-TT-Key header; only the local web app may call it (CORS).
+
+        respond="onReceived" answers at once (long flows); "lastNode" answers with the last node's output.
+        Production webhooks only work while the workflow is published (n8n publish:workflow).
+        """
+        params = {"httpMethod": "POST", "path": path, "authentication": "headerAuth",
+                  "responseMode": respond, "options": {"allowedOrigins": WEB_ORIGINS}}
+        if respond == "lastNode":
+            params["responseData"] = "firstEntryJson"
+        return self.node(name, "n8n-nodes-base.webhook", 2, pos, params, note=note,
+                         webhookId=str(uuid.uuid5(uuid.NAMESPACE_URL, f"{self.id}/{path}")),
+                         credentials=WEBHOOK_CRED)
+
     def if_true(self, name, pos, expr, note=None, cond_key=None):
         """IF node: output 0 when `expr` is true, output 1 otherwise."""
         cond_id = str(uuid.uuid5(uuid.NAMESPACE_URL, cond_key or f"{self.id}/{name}/cond"))
@@ -115,17 +136,19 @@ class Workflow:
         return self.node(name, "n8n-nodes-base.stickyNote", 1, pos,
                          {"content": content, "width": width, "height": height, "color": color})
 
-    def section(self, name, xs_, y, color, content):
-        """Sticky note framing nodes placed at x positions xs_ on row y: text on top, nodes below."""
+    def section(self, name, xs_, y, color, content, below=0):
+        """Sticky note framing nodes placed at x positions xs_ on row y: text on top, nodes below.
+
+        below: extra height under the row, for nodes placed lower (e.g. a second trigger)."""
         x = xs_[0] - PAD
         width = xs_[-1] - xs_[0] + 100 + 2 * PAD
         th = text_height(content, width)
         top = y - th - 20
-        height = th + 20 + NODE_H + NOTE_H + PAD
+        height = th + 20 + NODE_H + NOTE_H + PAD + below
         self.sticky(name, [x, top], width, height, color, content)
         self.sections.append((name, x, top, width, height, y, xs_))
 
-    def save(self, path: Path):
+    def save(self, path: Path, **settings):
         workflow = {
             "id": self.id,
             "name": self.name,
@@ -133,7 +156,7 @@ class Workflow:
             "nodes": self.nodes,
             "connections": self.connections,
             "settings": {"executionOrder": "v1", "timezone": "Asia/Taipei", "saveManualExecutions": True,
-                         "saveDataSuccessExecution": "all", "saveDataErrorExecution": "all"},
+                         "saveDataSuccessExecution": "all", "saveDataErrorExecution": "all"} | settings,
             "pinData": {},
             "meta": {"templateCredsSetupCompleted": True},
         }

@@ -8,6 +8,8 @@ import type { SourceHealth } from '@/lib/data-source';
 import { describeCron, formatDateTime, timeAgo } from '@/lib/format';
 import { usePageWidth } from '@/hooks/use-desktop';
 import TierChip from '@/components/tier-chip';
+import UpdateControls from '@/components/update-controls';
+import { controlsAvailable } from '@/lib/n8n';
 
 const PIPELINE_LABELS: Record<string, string> = { database: '協定資料庫', news: '新聞動態', all: '全部' };
 
@@ -60,21 +62,27 @@ export default function Status() {
         <View style={[styles.card, { backgroundColor: c.backgroundElement }]}>
           <Text style={[styles.cardTitle, { color: c.text }]}>更新方式</Text>
           {settings.map(s => (
-            <View key={s.pipeline} style={styles.settingRow}>
-              <Text style={[styles.settingName, { color: c.text }]}>{PIPELINE_LABELS[s.pipeline]}</Text>
-              <View style={[styles.pill, { backgroundColor: s.autoEnabled ? '#dcfce7' : '#f1f5f9' }]}>
-                <Text style={{ color: s.autoEnabled ? '#15803d' : '#475569', fontSize: 12, fontWeight: '700' }}>
-                  自動更新:{s.autoEnabled ? '開啟' : '關閉'}
+            <View key={s.pipeline} style={[styles.settingBlock, { borderTopColor: c.backgroundSelected }]}>
+              <View style={styles.settingRow}>
+                <Text style={[styles.settingName, { color: c.text }]}>{PIPELINE_LABELS[s.pipeline]}</Text>
+                <View style={[styles.pill, { backgroundColor: s.autoEnabled ? '#dcfce7' : '#f1f5f9' }]}>
+                  <Text style={{ color: s.autoEnabled ? '#15803d' : '#475569', fontSize: 12, fontWeight: '700' }}>
+                    自動更新:{s.autoEnabled ? '開啟' : '關閉'}
+                  </Text>
+                </View>
+                <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+                  {s.autoEnabled ? describeCron(s.scheduleCron) : '只在手動執行時更新'}
+                  {s.pipeline === 'news' ? ` · 每次最多送 ${s.maxLlmItems} 則給 AI` : ''}
                 </Text>
               </View>
-              <Text style={{ color: c.textSecondary, fontSize: 12 }}>
-                {s.autoEnabled ? describeCron(s.scheduleCron) : '只在手動執行時更新'} · 每次最多送 {s.maxLlmItems} 則給 AI
-              </Text>
+              {controlsAvailable && <UpdateControls setting={s} runs={runs} refresh={refresh} />}
             </View>
           ))}
           {settings.length === 0 && <Text style={{ color: c.textSecondary, fontSize: 12 }}>尚未讀到設定。</Text>}
           <Text style={{ color: c.textSecondary, fontSize: 12, marginTop: 4, lineHeight: 18 }}>
-            目前請在 n8n(http://localhost:5678)手動執行流程。這裡的開關與「立即更新」按鈕,會在加上登入功能後開放,只有管理者能操作。
+            {controlsAvailable
+              ? '「立即更新」與自動更新開關只在這台電腦上可用(需要 Docker 與 n8n 在執行)。自動更新預設關閉。'
+              : '請在電腦上的協定追蹤 App 按「立即更新」,或在 n8n(http://localhost:5678)手動執行流程。'}
           </Text>
         </View>
 
@@ -143,6 +151,7 @@ const styles = StyleSheet.create({
   button: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8 },
   card: { borderRadius: 12, padding: 14, gap: 8 },
   cardTitle: { fontSize: 15, fontWeight: '800' },
+  settingBlock: { gap: 8, paddingTop: 10, borderTopWidth: 1 },
   settingRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 8 },
   settingName: { fontSize: 14, fontWeight: '700', width: 80 },
   pill: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
