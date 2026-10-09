@@ -17,32 +17,10 @@ import re
 from typing import Any
 
 from .base import http_get, make_source
-from .country_names import normalize_party
+from . import rta_names
 
 log = logging.getLogger(__name__)
 
-
-def _parse_parties(rta_name: str, signatories: str) -> tuple[list[str], list[str], list[str]]:
-    """Return (codes, en_names, zh_names).
-
-    Parse from the RTA name by splitting on ' - ' (hyphen with surrounding
-    spaces). We avoid splitting the signatories column on commas because many
-    official names contain commas ("Korea, Republic of").
-    """
-    # Split RTA name on ' - ' (hyphen with surrounding spaces)
-    raw = [p.strip() for p in re.split(r"\s+-\s+", rta_name) if p.strip()]
-
-    codes, ens, zhs = [], [], []
-    seen = set()
-    for p in raw:
-        code, en, zh = normalize_party(p)
-        if code in seen:
-            continue
-        seen.add(code)
-        codes.append(code)
-        ens.append(en)
-        zhs.append(zh)
-    return codes, ens, zhs
 
 EXPORT_URL = "https://rtais.wto.org/UI/ExportAllRTAList.aspx"
 LIST_URL = "https://rtais.wto.org/"
@@ -160,8 +138,7 @@ def fetch() -> list[dict[str, Any]]:
             # NB: "RTA Composition" = Bilateral/Plurilateral (a TYPE), not parties.
             composition = str(col(row, "RTA Composition") or "")
             wtype = _wto_type(composition) if composition else _wto_type(str(col(row, "Type")))
-            signatories = str(col(row, "Current signatories") or col(row, "Original signatories") or "")
-            codes, party_en, party_zh = _parse_parties(name, signatories)
+            codes, party_en, party_zh, name_zh = rta_names.parse(name)
 
             key_dates: dict[str, str] = {}
             sig = _fmt_date(col(row, "Date of Signature (G)")) or _fmt_date(col(row, "Date of Signature (S)"))
@@ -181,7 +158,6 @@ def fetch() -> list[dict[str, Any]]:
             coverage = str(col(row, "Coverage") or "")
             region = str(col(row, "Region") or "")
 
-            name_zh = "–".join(party_zh) if party_zh else name
             rta_id = col(row, "RTA ID", None)
 
             out.append({

@@ -34,7 +34,8 @@ export default function Status() {
   const page = usePageWidth(1000);
   const { settings, sources, runs, source, fetchedAt, error, loading, refresh, agreements, events } = useData();
 
-  const sortedSources = [...sources].sort((a, b) =>
+  // 「人工查證」不是自動抓取的來源,沒有健康燈號可言
+  const sortedSources = sources.filter(s => s.kind !== 'manual').sort((a, b) =>
     HEALTH_ORDER.indexOf(a.health) - HEALTH_ORDER.indexOf(b.health) || a.pipeline.localeCompare(b.pipeline));
 
   return (
@@ -79,7 +80,7 @@ export default function Status() {
 
         {/* Source health */}
         <View style={[styles.card, { backgroundColor: c.backgroundElement }]}>
-          <Text style={[styles.cardTitle, { color: c.text }]}>資料來源({sources.length})</Text>
+          <Text style={[styles.cardTitle, { color: c.text }]}>資料來源({sortedSources.length})</Text>
           {sortedSources.map(s => {
             const h = HEALTH[s.health];
             return (

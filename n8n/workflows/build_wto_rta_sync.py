@@ -45,6 +45,7 @@ return [{ json: {
     maxDateFixes: [20, 0.05],     // 日期被更正或移除
     maxNew: [50, 0.1],            // 新協定
     maxDelisted: [50, 0.1],       // WTO 不再列出的協定
+    maxPartyChanges: [20, 0.05],  // 締約方變更(大量變動多半是解析程式改了,不是真的有國家加入)
   },
 } }];
 """
@@ -181,6 +182,7 @@ over('狀態變更', counts.狀態變更, g.maxStatusChanges);
 over('日期更正或移除', counts.更正日期 + counts.移除日期, g.maxDateFixes);
 over('新協定', counts.新協定, g.maxNew);
 over('WTO 不再列出', counts.WTO不再列出, g.maxDelisted);
+over('締約方變更', counts.締約方變更, g.maxPartyChanges);
 
 return [{ json: {
   status: 'ok', error: null, canWrite: blocked.length === 0, blocked, fetched: res.agreements.length,
