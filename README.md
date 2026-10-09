@@ -60,7 +60,7 @@
 **桌面 App**:雙擊桌面的「協定追蹤」圖示。它會確認 Docker 有在執行(沒有就自動啟動並等待),再用 Edge 的 App 模式開啟 http://localhost:8080。只在這台電腦執行,區網其他裝置連不進來。
 
 - 第一次建立捷徑:執行 `desktop/install-shortcut.ps1`
-- 改了網頁程式後更新桌面 App:執行 `desktop/update-app.ps1`。網頁打包到 `%LOCALAPPDATA%	rade-tracker\web`(不放 OneDrive:同步中的檔案會被鎖住,Docker 讀不到),web 容器直接讀這個資料夾
+- 改了網頁程式後更新桌面 App:執行 `desktop/update-app.ps1`。網頁打包到 `%LOCALAPPDATA%\trade-tracker\web`(不放 OneDrive:同步中的檔案會被鎖住,Docker 讀不到),web 容器直接讀這個資料夾
 - 圖示由 `desktop/make_icons.py` 產生
 
 ```bash
