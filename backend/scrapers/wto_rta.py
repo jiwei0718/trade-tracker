@@ -10,6 +10,7 @@ This replaced the old ASP.NET GridView scrape (which needed __VIEWSTATE).
 """
 from __future__ import annotations
 
+import datetime as dt
 import io
 import logging
 import re
@@ -58,17 +59,19 @@ SKIP_IDS = {
     "wto-rta-el-salvador-honduras-chinese-taipei",
 }
 
-# WTO status strings → our internal vocab
+# WTO status strings → our internal vocab. Values seen in the 2026 export:
+# "In Force", "In force for at least one Party", "Inactive",
+# "Early announcement-Signed", "Early announcement-Under negotiation".
 def _normalize_status(s: str) -> str:
     s = (s or "").strip().lower()
     if "in force" in s or "entered into force" in s:
         return "in_force"
-    if "early announcement" in s or "under negotiation" in s or "proposed" in s:
-        return "negotiating"
-    if "signed" in s and "not" not in s:
-        return "signed"
     if "inactive" in s or "terminated" in s:
         return "expired"
+    if "signed" in s:
+        return "signed"
+    if "negotiation" in s or "early announcement" in s or "proposed" in s:
+        return "negotiating"
     return "in_force"  # default: most notified RTAs are in force
 
 
@@ -167,6 +170,10 @@ def fetch() -> list[dict[str, Any]]:
             if sig:      key_dates["signed"] = sig
             if eif:      key_dates["in_force"] = eif
             if inactive: key_dates["expired"] = inactive
+            # Early announcements stay "signed" in the WTO list even after entry into
+            # force (e.g. ECFA, in force since 2010-09).
+            if status == "signed" and eif and eif <= dt.date.today().isoformat()[:7]:
+                status = "in_force"
             # NB: we deliberately do NOT map "Date of Notification" — it is often
             # recent (re-notifications) and would pollute "latest progress" sorting.
 

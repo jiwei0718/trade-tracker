@@ -3,7 +3,14 @@
 Run from repo root:
     npx tsx scripts/export-curated.ts            # refresh backend/.cache/curated.json
     python backend/import_to_supabase.py --dry-run
-    python backend/import_to_supabase.py
+    python backend/import_to_supabase.py         # curated data only (the usual case)
+
+Scope
+- curated (default): countries, organizations and the hand-curated agreements. Use this
+  after editing the app's curated data. Scraped agreements are left alone: since
+  2026-10-09 the n8n flow "WTO 區域貿易協定資料庫同步" owns them, and data/agreements.json
+  is an older snapshot that would undo its updates.
+- all: the one-time bootstrap that also loads data/agreements.json and data/events.json.
 
 Inputs
 - backend/.cache/curated.json  curated agreements, details, article structures,
@@ -137,7 +144,7 @@ def party_rows(a: dict) -> list[dict]:
     return rows
 
 
-def build(report: Counter):
+def build(report: Counter, scope: str = "curated"):
     curated = json.loads(CURATED.read_text(encoding="utf-8"))
     live = json.loads(LIVE.read_text(encoding="utf-8"))["agreements"]
     legacy_events = json.loads(EVENTS.read_text(encoding="utf-8"))["events"]
@@ -157,6 +164,8 @@ def build(report: Counter):
 
     for a in live:
         if a["id"] in curated_ids:
+            continue
+        if scope != "all" and a["id"] not in CORRECTIONS:
             continue
         names = source_names(a)
         if names == {LLM_SOURCE} or not names:
@@ -186,8 +195,9 @@ def build(report: Counter):
         report[f"agreements scraped:{source_id}"] += 1
 
     ids = {r["id"] for r in agreements}
+    known_ids = ids | {a["id"] for a in live}   # scraped rows already in the database
     for r in agreements:
-        if r["parent_id"] and r["parent_id"] not in ids:
+        if r["parent_id"] and r["parent_id"] not in known_ids:
             report[f"dropped unknown parent_id {r['id']}->{r['parent_id']}"] += 1
             r["parent_id"] = None
     agreements.sort(key=lambda r: r["parent_id"] is not None)  # parents first
@@ -195,7 +205,7 @@ def build(report: Counter):
 
     protected = curated_ids | set(CORRECTIONS)
     events = []
-    for e in legacy_events:
+    for e in (legacy_events if scope == "all" else []):
         names = {s.get("name") for s in e.get("sources", [])}
         is_llm = LLM_SOURCE in names
         known = e["agreement_id"] in ids
@@ -270,23 +280,87 @@ class Rest:
         return int(r.headers.get("content-range", "*/0").split("/")[-1])
 
 
+STATUS_ZH = {"in_force": "已生效", "signed": "已簽署", "concluded": "談判完成", "negotiating": "談判中",
+             "suspended": "已暫停", "cancelled": "已取消", "proposed": "提議中", "superseded": "已被取代",
+             "expired": "已失效"}
+DATE_ZH = {"proposed": "提議", "started": "啟動談判", "concluded": "完成談判", "signed": "簽署", "in_force": "生效",
+           "suspended": "暫停", "cancelled": "取消", "expired": "失效", "superseded": "被取代"}
+
+
+def curation_events(db: "Rest", rows: list[dict]) -> list[dict]:
+    """One event per status/date change between the curated rows and the database.
+
+    Curated edits are real-world updates checked by hand (e.g. a signature the pipelines
+    missed), so they belong in the 動態 feed like any other change.
+    """
+    existing: dict[str, dict] = {}
+    ids = [r["id"] for r in rows]
+    for i in range(0, len(ids), 100):
+        chunk = ",".join(f'"{x}"' for x in ids[i:i + 100])
+        r = db.s.get(f"{db.base}/agreements", params={"select": "id,status,key_dates", "id": f"in.({chunk})"},
+                     timeout=60)
+        r.raise_for_status()
+        existing |= {x["id"]: x for x in r.json()}
+
+    events = []
+
+    def ev(row, type_, summary, date=None, field=None, old=None, new=None):
+        note = row.get("latest_progress_note")
+        events.append({
+            "agreement_id": row["id"], "event_type": type_, "event_date": date, "field": field,
+            "old_value": old, "new_value": new,
+            "summary_zh": f"{summary}{note}" if note and type_ == "status_change" else summary,
+            "source_id": "manual-curation", "source_url": None, "confidence": 0.9, "status": "active",
+        })
+
+    for row in rows:
+        name, dates, old = row["name_zh"] or row["name"], row["key_dates"], existing.get(row["id"])
+        if not old:
+            ev(row, "new_agreement", f"新增「{name}」({STATUS_ZH[row['status']]})。",
+               date=dates.get("in_force") or dates.get("signed"), new=row["status"])
+            continue
+        if old["status"] != row["status"]:
+            ev(row, "status_change",
+               f"「{name}」狀態由「{STATUS_ZH.get(old['status'], old['status'])}」更新為「{STATUS_ZH[row['status']]}」。",
+               date=dates.get(row["status"]), field="status", old=old["status"], new=row["status"])
+        old_dates = old.get("key_dates") or {}
+        for k, v in dates.items():
+            if k not in old_dates:
+                ev(row, "date_added", f"「{name}」新增{DATE_ZH.get(k, k)}日期:{v}。", date=v,
+                   field=f"key_dates.{k}", new=v)
+            elif old_dates[k] != v:
+                ev(row, "field_update", f"「{name}」的{DATE_ZH.get(k, k)}日期由 {old_dates[k]} 更正為 {v}。", date=v,
+                   field=f"key_dates.{k}", old=old_dates[k], new=v)
+        for k in old_dates.keys() - dates.keys():
+            ev(row, "field_update", f"「{name}」移除{DATE_ZH.get(k, k)}日期(原為 {old_dates[k]})。",
+               field=f"key_dates.{k}", old=old_dates[k])
+    return events
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--dry-run", action="store_true", help="build and report, do not write")
+    p.add_argument("--scope", choices=["curated", "all"], default="curated",
+                   help="curated: hand-curated data only (default); all: one-time bootstrap incl. scraped rows")
     args = p.parse_args(argv)
 
     report: Counter = Counter()
-    data = build(report)
+    data = build(report, args.scope)
     print("── import plan ──")
     for k, v in sorted(report.items()):
         print(f"  {v:5d}  {k}")
     print("  excluded LLM-only ids:", ", ".join(data["excluded_llm"]))
+
+    env = load_env()
+    db = Rest(env["SUPABASE_URL"], env["SUPABASE_SECRET_KEY"])
+    changes = curation_events(db, data["agreements"])
+    print(f"── changes vs database: {len(changes)} events ──")
+    for e in changes:
+        print(f"  {e['event_type']:14} {e['summary_zh']}")
     if args.dry_run:
         print("dry run: nothing written")
         return 0
 
-    env = load_env()
-    db = Rest(env["SUPABASE_URL"], env["SUPABASE_SECRET_KEY"])
     db.upsert("countries", data["countries"], "code")
     db.upsert("organizations", data["organizations"], "code")
     db.upsert("agreements", data["agreements"], "id")
@@ -294,7 +368,12 @@ def main(argv: list[str] | None = None) -> int:
     db.upsert("agreement_parties", data["parties"], "agreement_id,party_code")
     db.delete_for("field_provenance", "agreement_id", data["ids"])
     db.upsert("field_provenance", data["provenance"], "agreement_id,field")
-    db.upsert("events", data["events"], "legacy_id")
+    if data["events"]:
+        db.upsert("events", data["events"], "legacy_id")
+    if changes:
+        r = db.s.post(f"{db.base}/events", json=changes, headers={"Prefer": "return=minimal"}, timeout=60)
+        if r.status_code >= 300:
+            raise SystemExit(f"events insert failed ({r.status_code}): {r.text[:400]}")
 
     print("── written (row counts in Supabase) ──")
     for table in ("countries", "organizations", "agreements", "agreement_parties",
