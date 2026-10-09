@@ -1,5 +1,6 @@
 ﻿# 改了網頁程式(trade-tracker-mobile)後執行:重新打包網頁,並重建桌面 App 的 web 容器。
-$ErrorActionPreference = 'Stop'
+# Native tools (npx, docker) print progress to stderr; judge success by exit code only.
+$ErrorActionPreference = 'Continue'
 $root = Split-Path $PSScriptRoot -Parent
 
 Push-Location (Join-Path $root 'trade-tracker-mobile')

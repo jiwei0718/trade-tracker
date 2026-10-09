@@ -83,6 +83,9 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
           <Text style={styles.agreement} numberOfLines={1}>{agreement?.nameZh ?? e.agreementId}</Text>
         </Pressable>
       )}
+      {!hideAgreement && !e.agreementId && !!e.proposedName && (
+        <Text style={[styles.agreement, { color: c.text }]} numberOfLines={1}>新協定:{e.proposedName}</Text>
+      )}
 
       <Text style={[styles.summary, { color: c.text }]}>{e.summaryZh ?? legacyText(e)}</Text>
 

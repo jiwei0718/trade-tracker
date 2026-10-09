@@ -21,7 +21,7 @@ import json
 import sys
 from pathlib import Path
 
-from n8n_build import PAD, RUN_PATHS, SB, STEP, Workflow, xs
+from n8n_build import FLOW_PATHS, PAD, SB, STEP, Workflow, xs
 
 DRY_RUN = "--dry-run" in sys.argv
 OUT = Path(__file__).with_name("wto-rta-sync.json")
@@ -254,7 +254,7 @@ DIFF = "$('比對差異').first().json"
 # ─── Nodes ────────────────────────────────────────────────────────────────
 
 trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {}, note="在 n8n 畫面按執行")
-hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], RUN_PATHS["database"], note="網頁按鈕或排程呼叫")
+hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], FLOW_PATHS["wto_rta_sync"], note="網頁按鈕或排程呼叫")
 srcs = http("讀取來源設定", [S1[1], MAIN_Y], "GET", f"{SB}/sources",
             query=[{"name": "id", "value": "eq.wto-rta-is"}, {"name": "select", "value": "id,enabled,tier,url"}],
             executeOnce=True, alwaysOutputData=True, note="來源是否停用")

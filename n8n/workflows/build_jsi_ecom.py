@@ -10,7 +10,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from n8n_build import FETCH, GEMINI_CRED, PAD, RUN_PATHS, SB, STEP, UA, Workflow, xs
+from n8n_build import (FETCH, GEMINI_CRED, JS_DECODE as DECODE, JS_PARSE_RSS as PARSE_RSS, JS_TIERS, PAD,
+                       FLOW_PATHS, SB, STEP, UA, Workflow, xs)
 
 OUT = Path(__file__).with_name("jsi-ecom.json")
 SOURCE_IDS = ["wto-docs-ecom", "wto-news-rss", "gnews-wto-ecom"]
@@ -19,27 +20,6 @@ wf = Workflow("TtJsiEcomFlow001", "WTO 電子商務 JSI 追蹤")
 node, http, code, sticky, section = wf.node, wf.http, wf.code, wf.sticky, wf.section
 
 # ─── JavaScript snippets ──────────────────────────────────────────────────
-
-DECODE = r"""
-const decode = (s) => String(s ?? '')
-  .replace(/<!\[CDATA\[|\]\]>/g, '')
-  .replace(/<[^>]+>/g, ' ')
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
-  .replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
-  .replace(/\s+/g, ' ').trim();
-"""
-
-PARSE_RSS = DECODE + r"""
-const parseRss = (xml) => (String(xml).match(/<item[\s>][\s\S]*?<\/item>/g) || []).map((it) => {
-  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };
-  const sourceUrl = (it.match(/<source[^>]*url="([^"]+)"/) || [])[1] || '';
-  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),
-           pubDate: get('pubDate'), source: get('source'), sourceUrl };
-});
-const isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };
-// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域
-const host = (u) => String(u || '').replace(/^[a-z]+:\/\//i, '').split(/[/?#:]/)[0].replace(/^www\./, '').toLowerCase();
-"""
 
 JS_CONFIG = r"""
 // 流程設定。最多送幾則給 AI 讀資料庫的 update_settings(news),在控制台調整。
@@ -203,26 +183,7 @@ const runId = $('建立執行紀錄').first().json.id;
 const plans = $('規劃 AI 批次').all().map((i) => i.json).filter((p) => p.hasBatch);
 const responses = $input.all().map((i) => i.json);
 
-const TIER = {
-  'wto.org': 'S', 'ustr.gov': 'S', 'trade.gov.tw': 'S', 'europa.eu': 'S', 'gov.uk': 'S', 'mfat.govt.nz': 'S',
-  'dfat.gov.au': 'S', 'mti.gov.sg': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S', 'mofa.gov.tw': 'S',
-  'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',
-  'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A',
-  'ecipe.org': 'A', 'bruegel.org': 'A', 'chathamhouse.org': 'A', 'carnegieendowment.org': 'A', 'lowyinstitute.org': 'A',
-  'eastasiaforum.org': 'A', 'digitalpolicyalert.org': 'A', 'wita.org': 'A',
-  'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'cna.com.tw': 'B',
-  'economictimes.com': 'B', 'thehindubusinessline.com': 'B', 'thehindu.com': 'B', 'livemint.com': 'B',
-  'business-standard.com': 'B', 'financialexpress.com': 'B', 'indianexpress.com': 'B', 'hindustantimes.com': 'B',
-  'euractiv.com': 'B', 'borderlex.net': 'B', 'insidetrade.com': 'B', 'ip-watch.org': 'B', 'devex.com': 'B',
-  'economist.com': 'B', 'scmp.com': 'B', 'politico.eu': 'B', 'politico.com': 'B', 'theguardian.com': 'B',
-  'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'apnews.com': 'B',
-};
-const tierOf = (d) => {
-  const p = String(d || '').split('.');
-  for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }
-  return 'C';
-};
-const DATE = /^\d{4}-\d{2}(-\d{2})?$/;
+__TIERS__const DATE = /^\d{4}-\d{2}(-\d{2})?$/;
 const today = new Date().toISOString().slice(0, 10);
 const okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;
 const TYPES = ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'];
@@ -295,6 +256,8 @@ for (const e of events) {
 return [{ json: { events, handledIds, failedIds, rejected, corroborated } }];
 """
 
+JS_VALIDATE = JS_VALIDATE.replace("__TIERS__", JS_TIERS.strip() + "\n")
+
 JS_FINISH = r"""
 // 整理這次執行的結果:哪些項目標記為已處理、各來源狀態、執行紀錄
 const run = $('建立執行紀錄').first().json;
@@ -353,7 +316,7 @@ S5 = xs(S4[-1] + STEP + 160, 5)
 
 trigger = node("手動執行", "n8n-nodes-base.manualTrigger", 1, [S1[0], MAIN_Y], {},
                note="在 n8n 畫面按執行")
-hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], RUN_PATHS["news"], note="網頁按鈕或排程呼叫")
+hook = wf.webhook("網頁或排程觸發", [S1[0], MAIN_Y + 200], FLOW_PATHS["jsi_ecom"], note="網頁按鈕或排程呼叫")
 settings = http("讀取更新設定", [S1[1], MAIN_Y], "GET", f"{SB}/update_settings",
                 query=[{"name": "pipeline", "value": "eq.news"}, {"name": "select", "value": "max_llm_items,auto_enabled"}],
                 note="讀「每次最多送幾則給 AI」")

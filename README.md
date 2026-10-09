@@ -11,7 +11,9 @@
 │  web  http://localhost:8080  桌面 App(打包好的網頁)           │
 │  n8n  http://localhost:5678                                   │
 │   ├─ WTO 區域貿易協定資料庫同步 ──呼叫──▶ worker(Python)       │
-│   └─ WTO 電子商務 JSI 追蹤      ──呼叫──▶ Gemini               │
+│   ├─ WTO 電子商務 JSI 追蹤      ──呼叫──▶ Gemini               │
+│   ├─ 全球協定新聞追蹤           ──呼叫──▶ Gemini               │
+│   └─ 自動更新開關、排程器、待確認事件審核                      │
 └───────────────┬───────────────────────────────────────────────┘
                 │ 寫入(secret key,只有 n8n 和匯入腳本持有)
                 ▼
@@ -24,7 +26,7 @@
 兩條資料管線:
 
 - **協定資料庫**:結構化的官方資料(目前是 WTO RTA-IS)。比對資料庫後寫入協定的狀態、日期、締約方,每項變動都產生一則事件。
-- **新聞動態**:官方文件、WTO 新聞、Google 新聞。AI 只負責分類與摘要,產生的是事件,不會改協定本身的狀態。
+- **新聞動態**:兩條流程。「WTO 電子商務 JSI 追蹤」讀官方文件、WTO 新聞與 Google 新聞;「全球協定新聞追蹤」用英文與中文 Google 新聞搜尋所有協定的進展(簽署、生效、完成或啟動談判),先依新聞提到的國家與組織找出候選協定,再由 AI 判斷是哪一個,或標記為資料庫還沒有的新協定。AI 只負責分類與摘要,產生的是事件,不會改協定本身的狀態。
 
 **更新控制**:在 n8n 或桌面 App 手動執行。自動更新開關(`update_settings.auto_enabled`)預設關閉,只有使用者在網頁上打開才會依排程執行。
 
@@ -38,7 +40,8 @@
 │   ├── n8n_build.py           ← 共用工具(節點、便利貼、版面)
 │   ├── build_wto_rta_sync.py  → wto-rta-sync.json  協定資料庫同步
 │   ├── build_jsi_ecom.py      → jsi-ecom.json      電子商務 JSI 追蹤
-│   └── build_control.py       → control-settings.json、scheduler.json  自動更新開關與排程器
+│   ├── build_global_news.py   → global-news.json   全球協定新聞追蹤
+│   └── build_control.py       → control-settings.json、scheduler.json、review.json  開關、排程器、審核
 ├── backend/
 │   ├── worker/app.py          ← n8n 呼叫的 Python 服務(只抓取、整理,不寫資料庫)
 │   ├── scrapers/              ← 各來源爬蟲(wto_rta.py 等)
@@ -100,7 +103,7 @@ docker exec trade-tracker-n8n-1 n8n publish:workflow --id=TtWtoRtaSync0001
 docker restart trade-tracker-n8n-1
 ```
 
-流程 id:`TtWtoRtaSync0001`(協定資料庫同步)、`TtJsiEcomFlow001`(電子商務 JSI)、`TtSettingsFlow01`(自動更新開關)、`TtSchedulerFlw01`(自動更新排程器)。
+流程 id:`TtWtoRtaSync0001`(協定資料庫同步)、`TtJsiEcomFlow001`(電子商務 JSI)、`TtGlobalNews0001`(全球協定新聞)、`TtSettingsFlow01`(自動更新開關)、`TtSchedulerFlw01`(自動更新排程器)、`TtReviewFlow0001`(待確認事件審核)。
 
 流程畫面上的每個區段和節點都有中文便利貼說明。要只看差異、不寫入,把流程裡「設定」節點的 `dryRun` 改成 `true`。
 
@@ -108,8 +111,10 @@ docker restart trade-tracker-n8n-1
 
 桌面 App 的「資料狀態」頁,每條管線都有:
 
-- **立即更新**:馬上執行一次,完成後顯示新事件數。
+- **立即更新**:馬上執行一次,完成後顯示新事件數。新聞動態會同時執行 JSI 追蹤與全球協定新聞兩條流程。
 - **自動更新開關**:預設關閉。打開前會先確認;打開後,排程器在設定的時間(預設臺北時間每天 21:00)執行。排程器每小時只讀一次開關,開關關閉時不會抓任何資料。
+
+**待確認事件**:「資料狀態」頁的「待確認事件」列出還沒顯示的事件:一般媒體的報導、非官方來源宣稱的狀態改變、資料庫還沒有的新協定。同一件事的報導放在一起,按「採用」就出現在「動態」頁,按「不採用」就撤回。新協定採用後,要再人工加進協定資料(`trade-tracker-mobile/src/data/agreements.ts`)。
 
 這些控制透過本機 n8n 的 webhook,要帶金鑰(`trade-tracker-mobile/.env` 的 `EXPO_PUBLIC_N8N_RUN_KEY`,與 n8n 憑證 `Webhook key (trade-tracker)` 相同),而且只接受 localhost 的網頁。
 

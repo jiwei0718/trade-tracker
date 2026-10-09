@@ -50,6 +50,10 @@ export default function RootLayout() {
                 options={{ presentation: 'card', headerShown: true, title: '名詞對照' }}
               />
               <Stack.Screen
+                name="review"
+                options={{ presentation: 'card', headerShown: true, title: '待確認事件' }}
+              />
+              <Stack.Screen
                 name="indigo-methodology"
                 options={{ presentation: 'card', headerShown: true, title: 'INDIGO 方法論' }}
               />

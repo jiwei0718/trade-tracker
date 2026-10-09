@@ -20,12 +20,79 @@ WEBHOOK_CRED = {"httpHeaderAuth": {"id": "TtWebhookKey0001", "name": "Webhook ke
 # Pages allowed to call the webhooks: the desktop app and the dev preview (both local only).
 WEB_ORIGINS = "http://localhost:8080,http://localhost:8082"
 # Webhook paths the web app and the scheduler call (http://localhost:5678/webhook/<path>).
-RUN_PATHS = {"database": "tt-run-wto-rta-sync", "news": "tt-run-jsi-ecom"}
+FLOW_PATHS = {"wto_rta_sync": "tt-run-wto-rta-sync", "jsi_ecom": "tt-run-jsi-ecom", "global_news": "tt-run-global-news"}
+# 「立即更新」and the scheduler start every flow of a pipeline.
+RUN_PATHS = {"database": [FLOW_PATHS["wto_rta_sync"]],
+             "news": [FLOW_PATHS["jsi_ecom"], FLOW_PATHS["global_news"]]}
 SETTINGS_PATH = "tt-settings"
+REVIEW_PATHS = {"list": "tt-review-list", "decide": "tt-review-decide"}
 
 # Settings for fetch nodes: run once, retry, and let the flow carry on when a source is down.
 FETCH = dict(executeOnce=True, retryOnFail=True, maxTries=3, waitBetweenTries=3000,
              onError="continueRegularOutput")
+
+# ─── JavaScript shared by the news flows ──────────────────────────────────
+
+JS_DECODE = r"""
+const decode = (s) => String(s ?? '')
+  .replace(/<!\[CDATA\[|\]\]>/g, '')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+  .replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
+  .replace(/\s+/g, ' ').trim();
+"""
+
+JS_PARSE_RSS = JS_DECODE + r"""
+const parseRss = (xml) => (String(xml).match(/<item[\s>][\s\S]*?<\/item>/g) || []).map((it) => {
+  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };
+  const sourceUrl = (it.match(/<source[^>]*url="([^"]+)"/) || [])[1] || '';
+  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),
+           pubDate: get('pubDate'), source: get('source'), sourceUrl };
+});
+const isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };
+// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域
+const host = (u) => String(u || '').replace(/^[a-z]+:\/\//i, '').split(/[/?#:]/)[0].replace(/^www\./, '').toLowerCase();
+"""
+
+JS_TIERS = r"""
+// 來源信任等級:S 官方、A 學術智庫、B 一線媒體;其他一律 C。比對網域尾端(例如 asia.nikkei.com → nikkei.com)
+const TIER = {
+  // 官方:國際組織與各國貿易主管機關
+  'wto.org': 'S', 'efta.int': 'S', 'asean.org': 'S', 'mercosur.int': 'S', 'europa.eu': 'S', 'admin.ch': 'S',
+  'ustr.gov': 'S', 'commerce.gov': 'S', 'whitehouse.gov': 'S', 'gov.uk': 'S', 'international.gc.ca': 'S',
+  'dfat.gov.au': 'S', 'mfat.govt.nz': 'S', 'mti.gov.sg': 'S', 'miti.gov.my': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S',
+  'motie.go.kr': 'S', 'mofcom.gov.cn': 'S', 'commerce.gov.in': 'S', 'pib.gov.in': 'S', 'gob.mx': 'S', 'gov.br': 'S',
+  'trade.gov.tw': 'S', 'moea.gov.tw': 'S', 'ey.gov.tw': 'S', 'mofa.gov.tw': 'S', 'president.gov.tw': 'S',
+  // 學術與智庫
+  'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',
+  'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A', 'ecipe.org': 'A', 'bruegel.org': 'A', 'chathamhouse.org': 'A',
+  'carnegieendowment.org': 'A', 'lowyinstitute.org': 'A', 'eastasiaforum.org': 'A', 'digitalpolicyalert.org': 'A',
+  'wita.org': 'A', 'cier.edu.tw': 'A', 'tier.org.tw': 'A',
+  // 一線媒體與通訊社
+  'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'economist.com': 'B',
+  'apnews.com': 'B', 'afp.com': 'B', 'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'theguardian.com': 'B',
+  'politico.eu': 'B', 'politico.com': 'B', 'euractiv.com': 'B', 'borderlex.net': 'B', 'insidetrade.com': 'B',
+  'ip-watch.org': 'B', 'devex.com': 'B', 'dw.com': 'B', 'france24.com': 'B', 'aljazeera.com': 'B',
+  'scmp.com': 'B', 'straitstimes.com': 'B', 'kyodonews.net': 'B', 'yna.co.kr': 'B', 'koreaherald.com': 'B',
+  'bernama.com': 'B', 'antaranews.com': 'B', 'abc.net.au': 'B', 'rnz.co.nz': 'B', 'cbc.ca': 'B',
+  'theglobeandmail.com': 'B', 'mercopress.com': 'B', 'batimes.com.ar': 'B',
+  'economictimes.com': 'B', 'thehindubusinessline.com': 'B', 'thehindu.com': 'B', 'livemint.com': 'B',
+  'business-standard.com': 'B', 'financialexpress.com': 'B', 'indianexpress.com': 'B', 'hindustantimes.com': 'B',
+  'cna.com.tw': 'B', 'focustaiwan.tw': 'B', 'taipeitimes.com': 'B', 'udn.com': 'B', 'ltn.com.tw': 'B',
+  'chinatimes.com': 'B', 'cw.com.tw': 'B', 'rti.org.tw': 'B', 'pts.org.tw': 'B', 'ftvnews.com.tw': 'B',
+  'tvbs.com.tw': 'B', 'setn.com': 'B', 'ettoday.net': 'B', 'storm.mg': 'B', 'businessweekly.com.tw': 'B',
+  'wealth.com.tw': 'B', 'ctee.com.tw': 'B', 'moneydj.com': 'B', 'technews.tw': 'B',
+  'gmanetwork.com': 'B', 'inquirer.net': 'B', 'philstar.com': 'B', 'bangkokpost.com': 'B', 'nationthailand.com': 'B',
+  'vnexpress.net': 'B', 'thejakartapost.com': 'B', 'thestar.com.my': 'B', 'channelnewsasia.com': 'B',
+  'arabnews.com': 'B', 'thenationalnews.com': 'B', 'gulfnews.com': 'B', 'khaleejtimes.com': 'B', 'zawya.com': 'B',
+  'wam.ae': 'B', 'spa.gov.sa': 'B', 'japantimes.co.jp': 'B', 'asahi.com': 'B', 'mainichi.jp': 'B', 'nhk.or.jp': 'B',
+};
+const tierOf = (d) => {
+  const p = String(d || '').split('.');
+  for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }
+  return 'C';
+};
+"""
 
 # ─── Layout ───────────────────────────────────────────────────────────────
 

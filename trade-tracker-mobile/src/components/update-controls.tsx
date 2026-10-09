@@ -38,18 +38,21 @@ export default function UpdateControls({ setting, runs, refresh }: Props) {
     setMessage({ text: '已送出,流程執行中…', ok: true });
     const before = latest?.id ?? 0;
     try {
-      await startPipeline(setting.pipeline);
+      const flows = await startPipeline(setting.pipeline);
       const deadline = Date.now() + MAX_WAIT_MS;
-      let done: PipelineRun | undefined;
+      let started: PipelineRun[] = [];
       while (Date.now() < deadline) {
         await sleep(POLL_MS);
         await refresh();
-        done = runsRef.current.find(r => r.pipeline === setting.pipeline && r.id > before && r.status !== 'running');
-        if (done) break;
+        started = runsRef.current.filter(r => r.pipeline === setting.pipeline && r.id > before);
+        if (started.length >= flows && started.every(r => r.status !== 'running')) break;
       }
-      if (!done) setMessage({ text: '流程還在執行,稍後按「重新整理」查看結果。', ok: true });
-      else if (done.status === 'success') setMessage({ text: `完成:新事件 ${done.eventsCount} 筆。`, ok: true });
-      else setMessage({ text: `未完成:${done.error ?? done.status}`, ok: false });
+      const finished = started.filter(r => r.status !== 'running');
+      const events = finished.reduce((n, r) => n + r.eventsCount, 0);
+      const failed = finished.filter(r => r.status !== 'success');
+      if (finished.length < flows) setMessage({ text: '流程還在執行,稍後按「重新整理」查看結果。', ok: true });
+      else if (!failed.length) setMessage({ text: `完成:新事件 ${events} 筆。`, ok: true });
+      else setMessage({ text: `部分未完成(新事件 ${events} 筆):${failed.map(r => r.error ?? r.status).join(';')}`, ok: false });
     } catch (e) {
       setMessage({ text: `無法啟動:${e instanceof Error ? e.message : String(e)}`, ok: false });
     } finally {

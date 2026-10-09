@@ -1,0 +1,336 @@
+{
+  "id": "TtReviewFlow0001",
+  "name": "待確認事件審核(網頁)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "11b4807e-6581-5d85-bb08-ccca6948bd67",
+      "name": "讀取待確認",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tt-review-list",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "options": {
+          "allowedOrigins": "http://localhost:8080,http://localhost:8082"
+        },
+        "responseData": "firstEntryJson"
+      },
+      "webhookId": "ebe64e7a-7706-575c-a2f7-3c3d401eaba3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "待確認頁開啟時",
+      "notesInFlow": true
+    },
+    {
+      "id": "3936bd15-17ef-5f17-bdb6-dd72e971195a",
+      "name": "查詢待確認事件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,agreement_id,event_type,event_date,summary_zh,source_id,source_url,story_key,new_value,detected_at"
+            },
+            {
+              "name": "status",
+              "value": "eq.pending"
+            },
+            {
+              "name": "detected_at",
+              "value": "=gte.{{ new Date(Date.now() - 120 * 86400000).toISOString() }}"
+            },
+            {
+              "name": "order",
+              "value": "detected_at.desc"
+            },
+            {
+              "name": "limit",
+              "value": "300"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "alwaysOutputData": true,
+      "notes": "近 120 天",
+      "notesInFlow": true
+    },
+    {
+      "id": "364dc721-0ef6-55fc-97e4-767df1140177",
+      "name": "整理清單",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 只回傳網頁需要的欄位\nconst events = $input.all().map((i) => i.json).filter((e) => e && e.id);\nreturn [{ json: { events } }];"
+      },
+      "notes": "回傳給網頁",
+      "notesInFlow": true
+    },
+    {
+      "id": "fd48aa5d-71e7-5faf-9c99-de283edcd3bb",
+      "name": "審核決定",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        1120
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tt-review-decide",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "options": {
+          "allowedOrigins": "http://localhost:8080,http://localhost:8082"
+        },
+        "responseData": "firstEntryJson"
+      },
+      "webhookId": "251da55a-988d-556c-83a8-e786a110a459",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "按採用/不採用時",
+      "notesInFlow": true
+    },
+    {
+      "id": "24883f6b-a236-5083-a537-a134b61da557",
+      "name": "檢查內容",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1120
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 只接受事件 id 清單與「採用/不採用」;只改仍在待確認的事件\nconst body = $input.first().json.body ?? {};\nconst ids = Array.isArray(body.ids) ? body.ids.map(Number).filter((n) => Number.isInteger(n) && n > 0) : [];\nif (!ids.length || ids.length > 100 || !['approve', 'reject'].includes(body.decision)) {\n  throw new Error('ids 必須是 1–100 個事件 id,decision 必須是 approve 或 reject');\n}\nreturn [{ json: { filter: `in.(${ids.join(',')})`, patch: { status: body.decision === 'approve' ? 'active' : 'retracted' } } }];"
+      },
+      "notes": "只接受合法的值",
+      "notesInFlow": true
+    },
+    {
+      "id": "8d9f47ec-9d9a-54a2-b656-03b4186e7526",
+      "name": "更新事件狀態",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        1120
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $json.filter }}"
+            },
+            {
+              "name": "status",
+              "value": "eq.pending"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.patch) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "alwaysOutputData": true,
+      "notes": "待確認 → 顯示或撤回",
+      "notesInFlow": true
+    },
+    {
+      "id": "fa39edaa-a731-5346-847d-85739df03b6d",
+      "name": "回覆網頁",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        1120
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const rows = $input.all().map((i) => i.json).filter((r) => r && r.id);\nreturn [{ json: { ok: true, updated: rows.length } }];"
+      },
+      "notes": "告訴網頁結果",
+      "notesInFlow": true
+    },
+    {
+      "id": "ce9a5ba3-9dbd-58f5-bbb5-8c475f06cc06",
+      "name": "讀取",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        500
+      ],
+      "parameters": {
+        "content": "## 讀取待確認事件\n- **讀取待確認**:網頁「待確認」頁開啟時呼叫這裡。要帶金鑰,只接受這台電腦上的網頁。\n- **查詢待確認事件**:讀出近 120 天、狀態為「待確認」的事件(一般媒體的報導、非官方來源宣稱的狀態改變、資料庫還沒有的新協定)。\n- **整理清單**:回傳給網頁,網頁會把同一件事的報導放在一起。",
+        "width": 700,
+        "height": 390,
+        "color": 5
+      }
+    },
+    {
+      "id": "3299fc2a-b1b4-579f-a418-bbf4671d735e",
+      "name": "決定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        896
+      ],
+      "parameters": {
+        "content": "## 採用或不採用\n- **審核決定**:在網頁按「採用」或「不採用」時呼叫這裡。\n- **檢查內容**:只接受事件 id 與「採用/不採用」。\n- **更新事件狀態**:採用 → 改為「顯示」,出現在網頁「動態」頁;不採用 → 改為「撤回」,不會再出現。只會改仍在待確認的事件。\n- **回覆網頁**:回傳更新了幾筆。",
+        "width": 960,
+        "height": 414,
+        "color": 6
+      }
+    },
+    {
+      "id": "3e78bd28-e480-557a-b9d3-83eb98389bc0",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        200
+      ],
+      "parameters": {
+        "content": "## 待確認事件審核(網頁)\n網頁「資料狀態」→「待確認事件」頁會呼叫這條流程。所有決定都由你在網頁上按下,流程本身不會自動採用任何事件。\n\n**注意**:這個流程由程式檔 n8n/workflows/build_control.py 產生。如果在畫面上修改,請告訴我,我會同步回程式檔。",
+        "width": 1100,
+        "height": 260,
+        "color": 1
+      }
+    }
+  ],
+  "connections": {
+    "讀取待確認": {
+      "main": [
+        [
+          {
+            "node": "查詢待確認事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查詢待確認事件": {
+      "main": [
+        [
+          {
+            "node": "整理清單",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "審核決定": {
+      "main": [
+        [
+          {
+            "node": "檢查內容",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "檢查內容": {
+      "main": [
+        [
+          {
+            "node": "更新事件狀態",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "更新事件狀態": {
+      "main": [
+        [
+          {
+            "node": "回覆網頁",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

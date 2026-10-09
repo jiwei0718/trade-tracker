@@ -37,6 +37,8 @@ export interface AgreementEvent {
   publisher?: string;
   tier?: SourceTier;
   symbol?: string;
+  /** An agreement the database does not have yet, as named by the news flow. */
+  proposedName?: string;
   /** Events reporting the same development share a story key (set by the n8n flows). */
   storyKey?: string;
   /** On the story's most trustworthy event: the other reports of the same development. */
@@ -167,6 +169,7 @@ function toEvent(r: any): AgreementEvent {
     tier: meta.tier ?? (r.source_id && OFFICIAL_SOURCES.has(r.source_id) ? 'S' : undefined),
     symbol: meta.symbol ?? undefined,
     storyKey: r.story_key ?? undefined,
+    proposedName: meta.proposed_name ?? undefined,
   };
 }
 

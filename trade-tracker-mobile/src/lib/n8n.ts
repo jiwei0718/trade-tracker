@@ -9,7 +9,11 @@ import { Platform } from 'react-native';
 const N8N_URL = process.env.EXPO_PUBLIC_N8N_URL;
 const RUN_KEY = process.env.EXPO_PUBLIC_N8N_RUN_KEY;
 
-const RUN_PATHS: Record<string, string> = { database: 'tt-run-wto-rta-sync', news: 'tt-run-jsi-ecom' };
+// 「立即更新」starts every flow of the pipeline (news = e-commerce JSI tracking + global agreement news).
+const RUN_PATHS: Record<string, string[]> = {
+  database: ['tt-run-wto-rta-sync'],
+  news: ['tt-run-jsi-ecom', 'tt-run-global-news'],
+};
 
 export const controlsAvailable =
   Platform.OS === 'web' &&
@@ -28,11 +32,40 @@ async function post(path: string, body: object): Promise<any> {
   return res.json().catch(() => ({}));
 }
 
-/** Start a pipeline now (the run is recorded as manual). Returns once n8n has accepted it. */
-export function startPipeline(pipeline: string) {
-  const path = RUN_PATHS[pipeline];
-  if (!path) throw new Error(`沒有這條流程:${pipeline}`);
-  return post(path, { trigger: 'manual' });
+/** Start a pipeline now (runs are recorded as manual). Resolves to the number of flows started. */
+export async function startPipeline(pipeline: string): Promise<number> {
+  const paths = RUN_PATHS[pipeline];
+  if (!paths) throw new Error(`沒有這條流程:${pipeline}`);
+  await Promise.all(paths.map(p => post(p, { trigger: 'manual' })));
+  return paths.length;
+}
+
+export interface PendingEvent {
+  id: number;
+  agreement_id: string | null;
+  event_type: string;
+  event_date: string | null;
+  summary_zh: string | null;
+  source_id: string | null;
+  source_url: string | null;
+  story_key: string | null;
+  detected_at: string;
+  new_value: {
+    title?: string; publisher?: string; tier?: 'S' | 'A' | 'B' | 'C'; proposed_name?: string | null;
+    // events kept from the old pipeline's unverified AI extraction (see import_to_supabase.py)
+    proposed_agreement_id?: string; value?: unknown;
+  } | null;
+}
+
+/** Events waiting for review (status pending, last 120 days). */
+export async function listPending(): Promise<PendingEvent[]> {
+  const res = await post('tt-review-list', {});
+  return Array.isArray(res?.events) ? res.events : [];
+}
+
+/** Approve (shown in 動態) or reject (retracted) pending events. */
+export function decideEvents(ids: number[], decision: 'approve' | 'reject') {
+  return post('tt-review-decide', { ids, decision });
 }
 
 /** Turn scheduled updates for a pipeline on or off (update_settings.auto_enabled). */

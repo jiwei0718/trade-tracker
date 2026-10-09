@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -9,7 +11,7 @@ import { describeCron, formatDateTime, timeAgo } from '@/lib/format';
 import { usePageWidth } from '@/hooks/use-desktop';
 import TierChip from '@/components/tier-chip';
 import UpdateControls from '@/components/update-controls';
-import { controlsAvailable } from '@/lib/n8n';
+import { controlsAvailable, listPending } from '@/lib/n8n';
 
 const PIPELINE_LABELS: Record<string, string> = { database: '協定資料庫', news: '新聞動態', all: '全部' };
 
@@ -35,6 +37,11 @@ export default function Status() {
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const page = usePageWidth(1000);
   const { settings, sources, runs, source, fetchedAt, error, loading, refresh, agreements, events } = useData();
+
+  const [pendingCount, setPendingCount] = useState<number | null>(null);
+  useEffect(() => {
+    if (controlsAvailable) listPending().then(e => setPendingCount(e.length)).catch(() => setPendingCount(null));
+  }, [runs]);
 
   // 「人工查證」不是自動抓取的來源,沒有健康燈號可言
   const sortedSources = sources.filter(s => s.kind !== 'manual').sort((a, b) =>
@@ -85,6 +92,19 @@ export default function Status() {
               : '請在電腦上的協定追蹤 App 按「立即更新」,或在 n8n(http://localhost:5678)手動執行流程。'}
           </Text>
         </View>
+
+        {/* Pending review */}
+        {controlsAvailable && (
+          <Pressable onPress={() => router.push('/review')} style={[styles.card, styles.reviewCard, { backgroundColor: c.backgroundElement }]}>
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text style={[styles.cardTitle, { color: c.text }]}>待確認事件{pendingCount !== null ? `(${pendingCount})` : ''}</Text>
+              <Text style={{ color: c.textSecondary, fontSize: 12 }}>
+                一般媒體的報導、非官方來源宣稱的狀態改變、資料庫還沒有的新協定,需要你決定是否採用。
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={c.textSecondary} />
+          </Pressable>
+        )}
 
         {/* Source health */}
         <View style={[styles.card, { backgroundColor: c.backgroundElement }]}>
@@ -152,6 +172,7 @@ const styles = StyleSheet.create({
   card: { borderRadius: 12, padding: 14, gap: 8 },
   cardTitle: { fontSize: 15, fontWeight: '800' },
   settingBlock: { gap: 8, paddingTop: 10, borderTopWidth: 1 },
+  reviewCard: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   settingRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 8 },
   settingName: { fontSize: 14, fontWeight: '700', width: 80 },
   pill: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
