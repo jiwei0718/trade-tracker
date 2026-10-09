@@ -9,8 +9,11 @@ import { getAgreementsForOrg } from '@/lib/selectors';
 import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
+import { usePageWidth } from '@/hooks/use-desktop';
+import CardGrid from '@/components/card-grid';
 
 export default function OrgProfile() {
+  const page = usePageWidth(1000);
   const { code } = useLocalSearchParams<{ code: string }>();
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
@@ -33,7 +36,7 @@ export default function OrgProfile() {
   return (
     <>
       <Stack.Screen options={{ title: org.abbrZh ?? org.nameZh }} />
-      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 16 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
         {/* Hero */}
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 }}>
@@ -92,9 +95,9 @@ export default function OrgProfile() {
           {related.length === 0 ? (
             <Text style={{ color: c.textSecondary, fontSize: 13 }}>本組織未直接作為任何協定的締約方。</Text>
           ) : (
-            <View style={{ gap: 10 }}>
+            <CardGrid gap={10}>
               {related.map(a => <AgreementCard key={a.id} agreement={a} compact />)}
-            </View>
+            </CardGrid>
           )}
         </View>
 

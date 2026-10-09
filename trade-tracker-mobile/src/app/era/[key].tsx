@@ -7,8 +7,11 @@ import { Colors } from '@/constants/theme';
 import { getAgreementsByEra, getEffectiveDate } from '@/lib/selectors';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
+import { usePageWidth } from '@/hooks/use-desktop';
+import CardGrid from '@/components/card-grid';
 
 export default function EraDetail() {
+  const page = usePageWidth(1000);
   const { key } = useLocalSearchParams<{ key: EraKey }>();
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
@@ -25,7 +28,7 @@ export default function EraDetail() {
   return (
     <>
       <Stack.Screen options={{ title: info.label }} />
-      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 16 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
         {/* Hero */}
         <View style={[styles.heroCard, { backgroundColor: '#2563eb15', borderColor: '#2563eb40' }]}>
           <Text style={[styles.range, { color: '#2563eb' }]}>{info.range}</Text>
@@ -36,9 +39,9 @@ export default function EraDetail() {
 
         <Text style={[styles.sectionTitle, { color: c.text }]}>本時期協定（{list.length}）</Text>
 
-        <View style={{ gap: 10 }}>
+        <CardGrid gap={10}>
           {list.map(a => <AgreementCard key={a.id} agreement={a} />)}
-        </View>
+        </CardGrid>
 
         <View style={{ height: 32 }} />
       </ScrollView>

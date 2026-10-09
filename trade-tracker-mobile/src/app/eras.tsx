@@ -6,8 +6,10 @@ import { ERA_INFO } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import { getAgreementsByEra } from '@/lib/selectors';
 import { useData } from '@/lib/data-context';
+import { usePageWidth } from '@/hooks/use-desktop';
 
 export default function Eras() {
+  const page = usePageWidth(860);
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const { agreements } = useData();
@@ -15,7 +17,7 @@ export default function Eras() {
   const eras = Object.entries(ERA_INFO);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 12 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 12 }, page]}>
       <Text style={[styles.intro, { color: c.text }]}>
         全球貿易協定的歷史可分為六個時期。每個時期反映當時的政治經濟氛圍與制度創新。
       </Text>

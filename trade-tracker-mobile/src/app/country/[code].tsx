@@ -11,8 +11,11 @@ import { Colors } from '@/constants/theme';
 import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { countryDisplay } from '@/data/countries';
+import { usePageWidth } from '@/hooks/use-desktop';
+import CardGrid from '@/components/card-grid';
 
 export default function CountryProfile() {
+  const page = usePageWidth(1000);
   const { code } = useLocalSearchParams<{ code: string }>();
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
@@ -47,7 +50,7 @@ export default function CountryProfile() {
   return (
     <>
       <Stack.Screen options={{ title: String(countryName) }} />
-      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 16 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
         {/* Hero */}
         <View>
           <Text style={[styles.countryName, { color: c.text }]}>{countryName}</Text>
@@ -101,10 +104,12 @@ export default function CountryProfile() {
               <Text style={[styles.yearLabel, { color: c.text }]}>{year}</Text>
               <View style={[styles.yearLine, { backgroundColor: c.backgroundElement }]} />
             </View>
-            <View style={{ gap: 10, marginLeft: 18 }}>
-              {byYear[year].map(a => (
-                <AgreementCard key={a.id} agreement={a} compact />
-              ))}
+            <View style={{ marginLeft: 18 }}>
+              <CardGrid gap={10}>
+                {byYear[year].map(a => (
+                  <AgreementCard key={a.id} agreement={a} compact />
+                ))}
+              </CardGrid>
             </View>
           </View>
         ))}

@@ -1,6 +1,7 @@
 import { ScrollView, Text, View, StyleSheet, Pressable, useColorScheme, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/theme';
+import { usePageWidth } from '@/hooks/use-desktop';
 
 const DOMAINS = [
   { code: 'A', name: '促進電子商務', en: 'Facilitating Electronic Commerce', issues: 7 },
@@ -11,11 +12,12 @@ const DOMAINS = [
 ];
 
 export default function IndigoMethodology() {
+  const page = usePageWidth(860);
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 16 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
       <View style={[styles.hero, { backgroundColor: '#2563eb15', borderColor: '#2563eb40' }]}>
         <Text style={[styles.title, { color: c.text }]}>INDIGO 數位貿易整合與開放指數</Text>
         <Text style={[styles.sub, { color: c.textSecondary }]}>

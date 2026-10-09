@@ -1,5 +1,6 @@
 import { ScrollView, Text, View, StyleSheet, useColorScheme } from 'react-native';
 import { Colors } from '@/constants/theme';
+import { usePageWidth } from '@/hooks/use-desktop';
 
 interface Entry {
   zh: string;
@@ -142,11 +143,12 @@ const INSTITUTIONS: Entry[] = [
 ];
 
 export default function Glossary() {
+  const page = usePageWidth(860);
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={{ padding: 16, gap: 18 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 18 }, page]}>
       <Text style={[styles.intro, { color: c.text }]}>
         本應用使用的中文用語對照。半形括號 (...) 內為原文。
       </Text>

@@ -10,8 +10,11 @@ import { useData } from '@/lib/data-context';
 import { isNewsworthy } from '@/lib/data-source';
 import { STATUS_LABELS } from '@/data/types';
 import EventRow from '@/components/event-row';
+import { usePageWidth } from '@/hooks/use-desktop';
+import CardGrid from '@/components/card-grid';
 
 export default function WatchlistTab() {
+  const page = usePageWidth(1000);
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const { ids, snapshots, setSnapshot } = useWatchlist();
@@ -54,7 +57,7 @@ export default function WatchlistTab() {
       </View>
 
       <ScrollView
-        contentContainerStyle={{ padding: 16, gap: 12 }}
+        contentContainerStyle={[{ padding: 16, gap: 12 }, page]}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} tintColor={c.textSecondary} />}>
         {/* Empty state */}
         {list.length === 0 && (
@@ -114,7 +117,9 @@ export default function WatchlistTab() {
         )}
 
         {/* All watched */}
-        {list.map(a => <AgreementCard key={a.id} agreement={a} />)}
+        <CardGrid gap={10}>
+          {list.map(a => <AgreementCard key={a.id} agreement={a} />)}
+        </CardGrid>
 
         <View style={{ height: 32 }} />
       </ScrollView>

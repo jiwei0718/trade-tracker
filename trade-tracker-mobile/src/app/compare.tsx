@@ -8,8 +8,10 @@ import { useData } from '@/lib/data-context';
 import { STATUS_LABELS, TYPE_LABELS } from '@/data/types';
 import { Colors } from '@/constants/theme';
 import StatusBadge from '@/components/status-badge';
+import { usePageWidth } from '@/hooks/use-desktop';
 
 export default function Compare() {
+  const page = usePageWidth(1100);
   const { seed } = useLocalSearchParams<{ seed?: string }>();
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
@@ -38,7 +40,7 @@ export default function Compare() {
 
   return (
     <View style={{ flex: 1, backgroundColor: c.background }}>
-      <ScrollView contentContainerStyle={{ padding: 16, gap: 14 }} horizontal={false}>
+      <ScrollView contentContainerStyle={[{ padding: 16, gap: 14 }, page]} horizontal={false}>
         <Text style={[styles.intro, { color: c.textSecondary }]}>
           選擇 2-3 個協定，並列比較它們的狀態、覆蓋範圍、貿易量。
         </Text>
