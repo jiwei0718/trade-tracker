@@ -8,6 +8,7 @@
 
 ```
 ┌──────────── 這台電腦(Docker,只開放 localhost)────────────┐
+│  web  http://localhost:8080  桌面 App(打包好的網頁)           │
 │  n8n  http://localhost:5678                                   │
 │   ├─ WTO 區域貿易協定資料庫同步 ──呼叫──▶ worker(Python)       │
 │   └─ WTO 電子商務 JSI 追蹤      ──呼叫──▶ Gemini               │
@@ -31,7 +32,8 @@
 
 ```
 協定追蹤工具/
-├── infra/docker-compose.yml   ← n8n + worker(只綁 127.0.0.1)
+├── infra/docker-compose.yml   ← n8n + worker + web(只綁 127.0.0.1)
+├── desktop/                   ← 桌面捷徑、啟動腳本、圖示
 ├── n8n/workflows/             ← n8n 流程:build_*.py 產生 JSON,再匯入 n8n
 │   ├── n8n_build.py           ← 共用工具(節點、便利貼、版面)
 │   ├── build_wto_rta_sync.py  → wto-rta-sync.json  協定資料庫同步
@@ -39,7 +41,9 @@
 ├── backend/
 │   ├── worker/app.py          ← n8n 呼叫的 Python 服務(只抓取、整理,不寫資料庫)
 │   ├── scrapers/              ← 各來源爬蟲(wto_rta.py 等)
-│   ├── import_to_supabase.py  ← 初次匯入既有資料
+│   ├── import_to_supabase.py  ← 匯入人工整理的協定(每項修正都會產生事件)
+│   ├── audit_agreements.py    ← 檢查狀態與日期是否矛盾
+│   ├── refresh_wto_derived.py ← 改了名稱解析後,重寫中文名稱與締約方(不產生事件)
 │   └── run.py                 ← (舊)GitHub Actions pipeline
 ├── supabase/migrations/       ← 資料表、權限、來源設定
 ├── trade-tracker-mobile/      ← (主)Expo App,目前先做網頁版
@@ -49,9 +53,17 @@
 
 ## 本機啟動
 
+**桌面 App**:雙擊桌面的「協定追蹤」圖示。它會確認 Docker 有在執行(沒有就自動啟動並等待),再用 Edge 的 App 模式開啟 http://localhost:8080。只在這台電腦執行,區網其他裝置連不進來。
+
+- 第一次建立捷徑:執行 `desktop/install-shortcut.ps1`
+- 改了網頁程式後更新桌面 App:執行 `desktop/update-app.ps1`(重新打包網頁並重建 web 容器)
+- 圖示由 `desktop/make_icons.py` 產生
+
 ```bash
 docker compose -f infra/docker-compose.yml up -d
 ```
+
+開發時的即時預覽(改程式會自動重新載入):
 
 ```bash
 npm run start --prefix trade-tracker-mobile -- --port 8082

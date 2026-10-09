@@ -1,0 +1,4 @@
+# Only the exported web build goes into the desktop app image (Dockerfile.web).
+*
+!dist/
+!nginx.conf

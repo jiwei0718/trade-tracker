@@ -13,6 +13,8 @@
 # - worker:Python 整理程式(WTO 解析、國名對照),n8n 用 http://worker:8000 呼叫它。
 #   它只抓資料、整理格式,不寫資料庫。改了 backend/ 的程式後要重建:
 #   docker compose -f infra/docker-compose.yml up -d --build worker
+# - web:桌面 App(http://localhost:8080),提供打包好的網頁。改了網頁程式後執行
+#   desktop/update-app.ps1 重新打包並重建。桌面捷徑由 desktop/install-shortcut.ps1 建立。
 
 name: trade-tracker
 
@@ -37,6 +39,15 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:8001:8000"
+
+  web:
+    build:
+      context: ../trade-tracker-mobile
+      dockerfile: Dockerfile.web
+    image: trade-tracker-web:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
 
 volumes:
   n8n_data:

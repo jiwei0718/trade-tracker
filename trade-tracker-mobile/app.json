@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "trade-tracker-mobile",
+    "name": "協定追蹤",
     "slug": "trade-tracker-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,8 +20,12 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "name": "協定追蹤",
+      "shortName": "協定追蹤",
+      "themeColor": "#2563eb",
+      "backgroundColor": "#ffffff"
     },
     "plugins": [
       "expo-router",
