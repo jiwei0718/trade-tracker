@@ -1,6 +1,7 @@
-# Desktop app: serves the exported web build (npx expo export -p web → dist/) on the local
-# machine only. Built by infra/docker-compose.yml; rebuild with desktop/update-app.ps1.
+# Desktop app: nginx serving the exported web build on this computer only.
+# The build itself is not baked into the image: desktop/update-app.ps1 exports it to
+# %LOCALAPPDATA%\trade-tracker\web (outside OneDrive, whose syncing locks fresh files),
+# and infra/docker-compose.yml mounts that folder read-only.
 FROM nginx:1.27-alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY dist /usr/share/nginx/html
