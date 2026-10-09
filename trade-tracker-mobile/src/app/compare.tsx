@@ -67,8 +67,8 @@ export default function Compare() {
                   <Ionicons name="close-circle" size={20} color={c.textSecondary} />
                 </Pressable>
                 <Text style={[styles.colTitle, { color: c.text }]} numberOfLines={3}>{a.nameZh}</Text>
-                {a.shortName && (
-                  <Text style={[styles.colSub, { color: c.textSecondary }]}>{a.shortName}</Text>
+                {!!a.name && (
+                  <Text style={[styles.colSub, { color: c.textSecondary }]} numberOfLines={2}>{a.name}</Text>
                 )}
                 <View style={{ marginTop: 4 }}><StatusBadge status={a.status} size="s" /></View>
 
@@ -135,6 +135,7 @@ export default function Compare() {
                 <View style={{ flex: 1 }}>
                   <Text style={{ color: c.text, fontWeight: '600', fontSize: 14 }} numberOfLines={1}>
                     {item.nameZh}
+                    <Text style={{ color: c.textSecondary, fontWeight: '400', fontSize: 12 }}>  {item.name}</Text>
                   </Text>
                   <Text style={{ color: c.textSecondary, fontSize: 11, marginTop: 2 }}>
                     {STATUS_LABELS[item.status]} · {item.partyNamesZh.slice(0, 3).join('、')}

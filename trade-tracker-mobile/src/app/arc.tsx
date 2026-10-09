@@ -280,6 +280,7 @@ export default function ArcDiagram() {
                 <Text style={{ color: c.text, fontWeight: '700', fontSize: 14 }} numberOfLines={2}>
                   {a.nameZh}
                 </Text>
+                <Text style={{ color: c.textSecondary, fontSize: 11 }} numberOfLines={1}>{a.name}</Text>
                 <Text style={{ color: c.textSecondary, fontSize: 11 }} numberOfLines={1}>
                   {a.partyNamesZh.slice(0, 3).join(' · ')}
                   {a.partyNamesZh.length > 3 ? ` +${a.partyNamesZh.length - 3}` : ''} · {STATUS_LABELS[a.status]}

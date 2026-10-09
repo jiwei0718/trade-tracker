@@ -2,7 +2,7 @@ import type { TradeAgreement } from './types';
 
 /**
  * 中文翻譯優先序（適用於所有 nameZh / fullNameZh / 內文）：
- *   1. 台灣官方（外交部、經濟部國際貿易署、條約協定查詢系統）
+ *   1. 臺灣官方（外交部、經濟部國際貿易署、條約協定查詢系統）
  *   2. 研究／學術機構（如中經院 WTO 及 RTA 中心）
  *   3. 媒體
  *   4. 以上皆無 → 由本工具翻譯（並於原文後以半形括號標註原文）
@@ -277,7 +277,7 @@ export const agreements: TradeAgreement[] = [
     keyDates: { signed: '1967-08', in_force: '1967-08' },
     tradeVolume: 3800,
     description: 'Founding declaration of the Association of Southeast Asian Nations. Started as political body; became major economic integration platform.',
-    descriptionZh: '東南亞國家協會的創立宣言，最初為政治組織，後發展為區域最重要的經濟整合平台。',
+    descriptionZh: '東南亞國家協會的創立宣言，最初為政治組織，後發展為區域最重要的經濟整合平臺。',
     keyProvisions: ['Political cooperation', 'Economic cooperation', 'Cultural exchange'],
     tags: ['regional-integration', 'mile-stone'],
     significance: '亞洲最成功的區域整合組織，旗下衍生AFTA、東協加一系列FTA、RCEP等。',

@@ -66,7 +66,7 @@ export default function Home() {
               <Text style={{ fontWeight: '700', color: '#92400e' }}>你的追蹤協定有變動</Text>
             </View>
             {watchlistChanges.slice(0, 3).map(a => (
-              <Text key={a.id} style={{ color: '#78350f', fontSize: 13 }}>• {a.nameZh} → 新狀態</Text>
+              <Text key={a.id} style={{ color: '#78350f', fontSize: 13 }}>• {a.nameZh} ({a.name}) → 新狀態</Text>
             ))}
           </View>
         )}
