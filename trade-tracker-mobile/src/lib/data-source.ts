@@ -16,7 +16,7 @@ import { taipeiDate } from './format';
 import { sbSelect, supabaseConfigured } from './supabase';
 
 // Bump the version whenever the mapped snapshot shape changes, so stale caches are ignored.
-const CACHE_KEY = 'tt:snapshot-v4';
+const CACHE_KEY = 'tt:snapshot-v5';
 const CACHE_KEY_LAST_SEEN = 'tt:last-seen-at';
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
@@ -37,6 +37,12 @@ export interface AgreementEvent {
   publisher?: string;
   tier?: SourceTier;
   symbol?: string;
+  /** Events reporting the same development share a story key (set by the n8n flows). */
+  storyKey?: string;
+  /** On the story's most trustworthy event: the other reports of the same development. */
+  related?: AgreementEvent[];
+  /** Another report of a story whose main event is shown instead. */
+  isRelated?: boolean;
 }
 
 export interface SourceHealth {
@@ -160,6 +166,7 @@ function toEvent(r: any): AgreementEvent {
     publisher: meta.publisher || undefined,
     tier: meta.tier ?? (r.source_id && OFFICIAL_SOURCES.has(r.source_id) ? 'S' : undefined),
     symbol: meta.symbol ?? undefined,
+    storyKey: r.story_key ?? undefined,
   };
 }
 
@@ -169,7 +176,7 @@ async function fetchLive(): Promise<DataSnapshot> {
     // database with this tag but not shown.
     sbSelect<any>(`agreements_full?select=${AGREEMENT_COLUMNS}&tags=not.cs.%7Bwto-delisted%7D&order=id`),
     sbSelect<any>(
-      'events?select=id,agreement_id,event_type,event_date,old_value,new_value,summary_zh,source_id,source_url,confidence,by_tool,detected_at&order=detected_at.desc,id.desc',
+      'events?select=id,agreement_id,event_type,event_date,old_value,new_value,summary_zh,source_id,source_url,confidence,by_tool,detected_at,story_key&order=detected_at.desc,id.desc',
       { max: 3000 },
     ),
     sbSelect<any>('source_health?select=*'),
@@ -188,7 +195,7 @@ async function fetchLive(): Promise<DataSnapshot> {
   return {
     agreements: agreementRows.map(toAgreement),
     details,
-    events: eventRows.map(toEvent),
+    events: linkStories(eventRows.map(toEvent)),
     sources: healthRows.map((h: any) => ({
       sourceId: h.source_id, name: h.name, nameZh: h.name_zh, pipeline: h.pipeline, kind: h.kind,
       tier: h.tier, enabled: h.enabled, lastRunAt: h.last_run_at, lastStatus: h.last_status,
@@ -267,7 +274,36 @@ export async function getLastSeen(): Promise<string | null> {
 }
 
 /** Database-import bookkeeping ("new agreement added to the dataset") is not news. */
-export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement';
+export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement' && !e.isRelated;
+
+const TIER_RANK: Record<string, number> = { S: 0, A: 1, B: 2, C: 3 };
+
+/**
+ * Group events that report the same development. The most trustworthy one (official
+ * first, then documents before news, then the earliest) stays in the lists and carries
+ * the others in `related`; the others are marked `isRelated` and skipped by the lists.
+ */
+export function linkStories(events: AgreementEvent[]): AgreementEvent[] {
+  const groups = new Map<string, AgreementEvent[]>();
+  for (const e of events) {
+    if (!e.storyKey) continue;
+    const g = groups.get(e.storyKey);
+    if (g) g.push(e);
+    else groups.set(e.storyKey, [e]);
+  }
+  const rank = (e: AgreementEvent) => TIER_RANK[e.tier ?? 'C'] ?? 4;
+  for (const g of groups.values()) {
+    if (g.length < 2) continue;
+    const [main, ...rest] = [...g].sort((a, b) =>
+      rank(a) - rank(b)
+      || Number(a.type === 'news') - Number(b.type === 'news')
+      || eventSortDate(a).localeCompare(eventSortDate(b))
+      || a.id - b.id);
+    main.related = rest.sort(byEventDateDesc);
+    for (const r of rest) r.isRelated = true;
+  }
+  return events;
+}
 
 /** Newest real-world date first (falls back to when it was detected). */
 export const eventSortDate = (e: AgreementEvent) => e.eventDate ?? taipeiDate(e.detectedAt);

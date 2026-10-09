@@ -77,7 +77,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
   // Database content first; bundled curated content as fallback.
   const detail: AgreementDetail | undefined = details[a.id] ?? AGREEMENT_DETAILS[a.id];
   const newsEvents = agreementEvents.filter(isNewsworthy);
-  const importEvents = agreementEvents.filter(e => !isNewsworthy(e));
+  const importEvents = agreementEvents.filter(e => !isNewsworthy(e) && !e.isRelated);
 
   const star = (
     <Pressable onPress={() => toggle(a.id)} hitSlop={10} style={embedded ? undefined : { marginRight: 10 }}>

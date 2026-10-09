@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -63,6 +64,8 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
   const date = eventSortDate(e);
   const sourceName = sources.find(s => s.sourceId === e.sourceId)?.nameZh;
   const sourceText = e.symbol ?? e.publisher ?? sourceName ?? e.sourceId ?? '';
+  const [showRelated, setShowRelated] = useState(false);
+  const related = e.related ?? [];
 
   return (
     <View style={[styles.row, { borderColor: c.backgroundElement }]}>
@@ -91,6 +94,22 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
           </Text>
         </Pressable>
       )}
+
+      {related.length > 0 && (
+        <View style={styles.related}>
+          <Pressable onPress={() => setShowRelated(v => !v)} hitSlop={6} style={styles.relatedToggle}>
+            <Ionicons name={showRelated ? 'chevron-down' : 'chevron-forward'} size={12} color={c.textSecondary} />
+            <Text style={[styles.relatedText, { color: c.textSecondary }]}>另有 {related.length} 則報導</Text>
+          </Pressable>
+          {showRelated && related.map(r => (
+            <Pressable key={r.id} onPress={() => r.sourceUrl && Linking.openURL(r.sourceUrl)} style={styles.relatedItem} hitSlop={4}>
+              <Text style={[styles.relatedText, { color: c.textSecondary }]} numberOfLines={1}>
+                {r.eventDate ?? ''} · {r.publisher ?? r.sourceId ?? ''}{r.title ? ` · ${r.title}` : ''}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
     </View>
   );
 }
@@ -106,4 +125,8 @@ const styles = StyleSheet.create({
   summary: { fontSize: 14, lineHeight: 20 },
   source: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   sourceText: { fontSize: 11, flexShrink: 1 },
+  related: { gap: 3, marginTop: 2 },
+  relatedToggle: { flexDirection: 'row', alignItems: 'center', gap: 4, alignSelf: 'flex-start' },
+  relatedItem: { paddingLeft: 16 },
+  relatedText: { fontSize: 11 },
 });

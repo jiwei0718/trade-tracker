@@ -49,7 +49,8 @@ return [{ json: {
   model: 'gemini-2.5-flash',
   lookbackDays: 120,          // 第一次看到的項目,只有發布在近 120 天內的才送 AI;更早的只記為已看過
   maxLlmItems: settings.max_llm_items ?? 30,
-  batchSize: 10,              // 每次呼叫 AI 處理幾則
+  batchSize: 30,              // 每次呼叫 AI 處理幾則(一次送完,同一件事的報導才能放在一起比對)
+  storyLookbackDays: 60,      // 判斷「是不是同一件事」時,參考近 60 天的已知事件
   sources,
   agreementIds: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium'],
   keywords: ['e-commerce', 'electronic commerce', 'electronic transmission', 'moratorium',
@@ -146,6 +147,8 @@ JS_PLAN = r"""
 // 決定這次要送 AI 的項目:尚未處理、且在回溯期間內的,依新到舊、最多 maxLlmItems 則
 const cfg = $('設定').first().json;
 const pending = $('讀取待處理項目').all().map((i) => i.json).filter((r) => r && r.id);
+const known = $('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)
+  .map((e) => ({ id: e.id, agreement_id: e.agreement_id, date: e.event_date, summary: e.summary_zh }));
 const cutoff = Date.now() - cfg.lookbackDays * 86400000;
 const old = pending.filter((r) => r.published_at && Date.parse(r.published_at) < cutoff);
 const recent = pending.filter((r) => !r.published_at || Date.parse(r.published_at) >= cutoff)
@@ -163,6 +166,8 @@ const system = `你是國際貿易協定研究助理,負責追蹤「WTO 電子�
 4. event_date:事件發生日期 YYYY-MM-DD;不確定就用項目的發布日期;都沒有就留空字串。
 5. summary_zh:臺灣繁體中文摘要,80 字以內。只能根據提供的內容,不可推測或補充原文沒有的資訊。專有名詞第一次出現時,用半形括號附英文原文。
 6. confidence:0 到 1,你對以上判斷的把握。
+7. story:用英文小寫與連字號寫一個簡短代號,描述這則項目報導的「具體事件」,例如 india-questions-interim-arrangements。同一批裡報導同一件事的項目,story 必須完全相同;不同的事要用不同代號。
+8. same_as:如果這則項目和 known_events 裡某一則報導的是同一件事(同一份文件、同一場會議、同一個決定),填那則事件的 id;否則填 0。只是主題相近不算同一件事。
 譯名:Agreement=協定、Arrangement=協議、Treaty=條約、Convention=公約、Covenant=盟約、MOU=備忘錄、Joint Statement / Joint Declaration=聯合聲明、Joint Statement Initiative=聯合聲明倡議、Pilot Project=先導計畫、WTO=世界貿易組織、General Council=總理事會、Ministerial Conference=部長會議、interim arrangements=過渡性安排。報導裡用 deal、pact 指稱電子商務協定時,一律寫「電子商務協定」,不可寫成「協議」。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
 每一則都要回傳,key 必須和輸入完全相同。`;
 
@@ -171,7 +176,8 @@ const schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {
   agreement_id: { type: 'STRING', enum: ['wto-jsi-ecommerce', 'wt-gc-283-moratorium', 'none'] },
   event_type: { type: 'STRING', enum: ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'] },
   event_date: { type: 'STRING' }, summary_zh: { type: 'STRING' }, confidence: { type: 'NUMBER' },
-}, required: ['key', 'relevant', 'agreement_id', 'event_type', 'event_date', 'summary_zh', 'confidence'] } };
+  story: { type: 'STRING' }, same_as: { type: 'INTEGER' },
+}, required: ['key', 'relevant', 'agreement_id', 'event_type', 'event_date', 'summary_zh', 'confidence', 'story', 'same_as'] } };
 
 const batches = [];
 for (let i = 0; i < forLlm.length; i += cfg.batchSize) batches.push(forLlm.slice(i, i + cfg.batchSize));
@@ -184,7 +190,7 @@ return batches.map((batch) => {
   }));
   return { json: { hasBatch: true, batch, summary, request: {
     systemInstruction: { parts: [{ text: system }] },
-    contents: [{ role: 'user', parts: [{ text: JSON.stringify(payload) }] }],
+    contents: [{ role: 'user', parts: [{ text: JSON.stringify({ items: payload, known_events: known }) }] }],
     generationConfig: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.2 },
   } } };
 });
@@ -202,7 +208,12 @@ const TIER = {
   'dfat.gov.au': 'S', 'mti.gov.sg': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S', 'mofa.gov.tw': 'S',
   'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',
   'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A',
+  'ecipe.org': 'A', 'bruegel.org': 'A', 'chathamhouse.org': 'A', 'carnegieendowment.org': 'A', 'lowyinstitute.org': 'A',
+  'eastasiaforum.org': 'A', 'digitalpolicyalert.org': 'A', 'wita.org': 'A',
   'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'cna.com.tw': 'B',
+  'economictimes.com': 'B', 'thehindubusinessline.com': 'B', 'thehindu.com': 'B', 'livemint.com': 'B',
+  'business-standard.com': 'B', 'financialexpress.com': 'B', 'indianexpress.com': 'B', 'hindustantimes.com': 'B',
+  'euractiv.com': 'B', 'borderlex.net': 'B', 'insidetrade.com': 'B', 'ip-watch.org': 'B', 'devex.com': 'B',
   'economist.com': 'B', 'scmp.com': 'B', 'politico.eu': 'B', 'politico.com': 'B', 'theguardian.com': 'B',
   'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'apnews.com': 'B',
 };
@@ -216,11 +227,17 @@ const today = new Date().toISOString().slice(0, 10);
 const okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;
 const TYPES = ['new_document', 'ministerial', 'accession', 'signed', 'in_force', 'news'];
 const STATE_CHANGING = ['signed', 'in_force', 'accession'];
+const OFFICIAL = ['wto-docs-ecom', 'wto-news-rss', 'wto-rta-is'];
 // 譯名規則的最後防線(AI 偶爾不遵守):只改明確的詞,不碰「平台」這類一般用字
 const fixTerms = (s) => s
   .replace(/電子商務協議/g, '電子商務協定')
   .replace(/台灣/g, '臺灣')
   .replace(/中華民國（臺灣）/g, '中華民國(臺灣)');
+
+// 近期已知事件:判斷「同一件事」用。沒有 story_key 的事件,自己就是一個 story(event-<id>)
+const known = Object.fromEntries($('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)
+  .map((e) => [e.id, { ...e, story_key: e.story_key || `event-${e.id}`, tier: e.new_value?.tier ?? (OFFICIAL.includes(e.source_id) ? 'S' : 'C') }]));
+const slug = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 
 const events = [], handledIds = [], failedIds = [], rejected = [];
 plans.forEach((plan, idx) => {
@@ -252,15 +269,30 @@ plans.forEach((plan, idx) => {
     if (tier === 'S' && conf >= 0.7) status = 'active';
     else if (STATE_CHANGING.includes(type)) status = 'pending';      // 非官方來源宣稱狀態改變:待交叉確認
     else if ((tier === 'A' || tier === 'B') && conf >= 0.6) status = 'active';
+    // 同一件事:AI 指認的已知事件 → 沿用它的 story;否則用「協定/月份/代號」
+    const same = known[Number(o.same_as)];
+    const storyKey = same && same.agreement_id === agreementId
+      ? same.story_key
+      : `${agreementId}/${(eventDate || today).slice(0, 7)}/${slug(o.story) || `item-${item.id}`}`;
     events.push({
       agreement_id: agreementId, event_type: type, event_date: eventDate, summary_zh: summary,
       source_id: item.source_id, source_url: item.url, source_item_id: item.id, confidence: conf,
-      status, by_tool: cfg.model, run_id: runId,
+      status, by_tool: cfg.model, run_id: runId, story_key: storyKey,
       new_value: { title: item.title, publisher: domain, tier, symbol: item.raw?.symbol ?? null },
     });
   }
 });
-return [{ json: { events, handledIds, failedIds, rejected } }];
+// 交叉確認:同一個 story 已有可信來源(S/A/B)且已顯示的事件時,一般媒體的報導也一併顯示,
+// 網頁上會列在那則事件底下的「另有 N 則報導」,不會單獨成為一則動態
+const trusted = new Set([
+  ...Object.values(known).filter((e) => e.status === 'active' && e.tier !== 'C').map((e) => e.story_key),
+  ...events.filter((e) => e.status === 'active' && e.new_value.tier !== 'C').map((e) => e.story_key),
+]);
+let corroborated = 0;
+for (const e of events) {
+  if (e.status === 'pending' && trusted.has(e.story_key)) { e.status = 'active'; corroborated++; }
+}
+return [{ json: { events, handledIds, failedIds, rejected, corroborated } }];
 """
 
 JS_FINISH = r"""
@@ -271,7 +303,7 @@ const plan = $('規劃 AI 批次').first().json.summary;
 const fresh = $('存入新項目').all().map((i) => i.json).filter((r) => r && r.id);
 const v = $('驗證並產生事件').isExecuted
   ? $('驗證並產生事件').first().json
-  : { events: [], handledIds: [], failedIds: [], rejected: [] };
+  : { events: [], handledIds: [], failedIds: [], rejected: [], corroborated: 0 };
 const writeFailed = $('寫入事件').isExecuted && !!$('寫入事件').first().json.error;
 
 const processed = [...plan.baselineIds, ...v.handledIds];
@@ -292,6 +324,7 @@ const report = {
   新事件: written,
   其中直接顯示: writeFailed ? 0 : v.events.filter((e) => e.status === 'active').length,
   其中待確認: writeFailed ? 0 : v.events.filter((e) => e.status === 'pending').length,
+  其中因交叉確認而顯示: writeFailed ? 0 : (v.corroborated ?? 0),
 };
 return [{ json: {
   processedFilter: processed.length ? `in.(${processed.join(',')})` : 'eq.-1',
@@ -312,7 +345,7 @@ AI_Y = 420          # the AI branch sits above the main row; the "nothing for AI
 
 S1 = xs(0, 5)
 S2 = xs(S1[-1] + STEP + 160, 6)
-S3 = xs(S2[-1] + STEP + 160, 5)
+S3 = xs(S2[-1] + STEP + 160, 6)
 S4 = xs(S3[-1] + STEP + 80, 3)
 S5 = xs(S4[-1] + STEP + 160, 5)
 
@@ -362,8 +395,15 @@ pending = http("讀取待處理項目", [S3[2], MAIN_Y], "GET", f"{SB}/source_it
                       {"name": "order", "value": "published_at.desc.nullslast"},
                       {"name": "limit", "value": "1000"}],
                executeOnce=True, alwaysOutputData=True, note="所有還沒處理的項目")
-plan = code("規劃 AI 批次", [S3[3], MAIN_Y], JS_PLAN, note="近 120 天、每批 10 則")
-gate = wf.if_true("有要給 AI 的項目?", [S3[4], MAIN_Y], "={{ $json.hasBatch }}",
+recent = http("讀取近期事件", [S3[3], MAIN_Y], "GET", f"{SB}/events",
+              query=[{"name": "select", "value": "id,agreement_id,event_date,summary_zh,story_key,status,source_id,new_value"},
+                     {"name": "agreement_id", "value": "in.(wto-jsi-ecommerce,wt-gc-283-moratorium)"},
+                     {"name": "detected_at", "value": "=gte.{{ new Date(Date.now() - $('設定').first().json.storyLookbackDays * 86400000).toISOString() }}"},
+                     {"name": "order", "value": "detected_at.desc"},
+                     {"name": "limit", "value": "80"}],
+              executeOnce=True, alwaysOutputData=True, note="判斷是否同一件事用")
+plan = code("規劃 AI 批次", [S3[4], MAIN_Y], JS_PLAN, note="近 120 天、一次最多 30 則")
+gate = wf.if_true("有要給 AI 的項目?", [S3[5], MAIN_Y], "={{ $json.hasBatch }}",
                   note="上:有 → AI;下:沒有 → 收尾", cond_key="gate")
 
 llm = http("AI 分類與摘要", [S4[0], AI_Y], "POST",
@@ -418,18 +458,21 @@ section("③ 判斷哪些是新的", S3, MAIN_Y, 5, """## ③ 判斷哪些是新
 - **合併與初篩**:把三個來源合在一起。新聞要含關鍵字(e-commerce、moratorium 等)才保留;官方文件全部保留。
 - **存入新項目**:存進資料庫的「已看過項目」清單,已經存過的會自動略過。判斷新舊就是靠這一步。
 - **讀取待處理項目**:讀出所有「還沒處理過」的項目,包括上次超過上限、還沒輪到的。
-- **規劃 AI 批次**:只挑近 120 天內的項目,依新到舊、最多送「上限」則給 AI,每 10 則一批。更舊的只記為已看過,不送 AI。
+- **讀取近期事件**:讀出近 60 天已記錄的事件,讓 AI 判斷新項目是不是在報導「同一件事」。
+- **規劃 AI 批次**:只挑近 120 天內的項目,依新到舊、最多送「上限」則給 AI,一次送完(同一件事的報導才能一起比對)。更舊的只記為已看過,不送 AI。
 - **有要給 AI 的項目?**:有 → 往上走到 ④;沒有新東西 → 直接往右到 ⑤ 收尾,不花 AI 額度。""")
 
 section("④ AI 處理與品質檢查", S4, AI_Y, 3, """## ④ AI 處理與品質檢查
 只有在有新項目時才會執行。
-- **AI 分類與摘要**:把一批項目送給 Gemini,請它判斷是否相關、事件類型、日期,並寫繁體中文摘要(附譯名對照表)。失敗會自動重試 3 次。
+- **AI 分類與摘要**:把一批項目送給 Gemini,請它判斷是否相關、事件類型、日期,寫繁體中文摘要(附譯名對照表),並標出哪些項目報導的是同一件事。失敗會自動重試 3 次。
 - **驗證並產生事件**:品質檢查:
   - 官方文件的分類由規則決定,AI 只負責摘要
   - 檢查協定代碼和日期格式
   - 官方、學術、一線媒體 → 直接顯示;一般媒體 → 待確認
   - 非官方來源宣稱「已簽署/已生效」→ 一律待確認
   - 自動修正譯名(電子商務協議→協定、台→臺)
+  - 同一件事的報導串成一個「故事」:網頁只顯示最可信的一則,其餘列為「另有 N 則報導」
+  - 交叉確認:同一件事已有可信來源時,一般媒體的報導也一併列出
 - **寫入事件**:把通過檢查的事件寫進資料庫。只新增事件,不會改協定本身的狀態。""")
 
 section("⑤ 收尾與紀錄", S5, MAIN_Y, 7, """## ⑤ 收尾與紀錄
@@ -453,7 +496,7 @@ sticky("說明", [S1[0] - PAD, top - 460], 1120, 420, 1, """## WTO 電子商務 
 **注意**:這個流程是由程式檔 n8n/workflows/build_jsi_ecom.py 產生的。如果在畫面上修改,請告訴我,我會同步回程式檔,避免下次更新時被覆蓋。""")
 
 wf.chain(trigger, settings, srcs, config, run, f_docs, p_docs, f_news, p_news, f_gn, p_gn,
-         collect, store, pending, plan, gate)
+         collect, store, pending, recent, plan, gate)
 wf.chain(llm, validate, write, finish, mark, sruns, done, report)
 wf.link(gate, llm, 0)
 wf.link(gate, finish, 1)

@@ -31,7 +31,7 @@ export default function Updates() {
   const list = useMemo(() => {
     const match = FILTERS.find(f => f.key === filter)!.match;
     return events
-      .filter(e => (includeImports || isNewsworthy(e)) && match(e))
+      .filter(e => !e.isRelated && (includeImports || isNewsworthy(e)) && match(e))
       .sort(byEventDateDesc);
   }, [events, filter, includeImports]);
 
