@@ -8,6 +8,7 @@ import { useData } from '@/lib/data-context';
 import { byEventDateDesc, isNewsworthy } from '@/lib/data-source';
 import { formatDateTime } from '@/lib/format';
 import EventRow from '@/components/event-row';
+import TermText, { TermScope } from '@/components/term-text';
 import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS, ERA_INFO } from '@/data/types';
 import type { ArticleGroup, Article, IndigoScore, AgreementDetail } from '@/data/types';
 import { ARTICLE_STRUCTURES } from '@/data/article-structures';
@@ -86,7 +87,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
   );
 
   return (
-    <>
+    <TermScope resetKey={id}>
       {!embedded && (
         <Stack.Screen options={{ title: a.shortName ?? a.nameZh, headerRight: () => star }} />
       )}
@@ -136,9 +137,9 @@ export default function AgreementDetailView({ id, embedded }: Props) {
                 <View style={styles.toolBadge}><Text style={styles.toolBadgeText}>AI 摘要</Text></View>
               )}
             </View>
-            <Text style={{ color: '#164e63', fontSize: 13, lineHeight: 19 }}>
+            <TermText style={{ color: '#164e63', fontSize: 13, lineHeight: 19 }}>
               {detail.latestStatus.summary}
-            </Text>
+            </TermText>
             {detail.latestStatus.detail && (
               <Pressable onPress={() => setStatusOpen(true)} style={styles.detailLink}>
                 <Text style={{ color: '#0891b2', fontSize: 12, fontWeight: '700' }}>看詳細全文 →</Text>
@@ -228,7 +229,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
               <Ionicons name="bulb" size={14} color="#92400e" />
               <Text style={{ fontSize: 11, fontWeight: '800', color: '#92400e' }}>歷史意義</Text>
             </View>
-            <Text style={{ color: '#78350f', fontSize: 13, lineHeight: 18 }}>{a.significance}</Text>
+            <TermText style={{ color: '#78350f', fontSize: 13, lineHeight: 18 }}>{a.significance}</TermText>
           </View>
         )}
 
@@ -279,7 +280,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
           </View>
           {a.latestProgressNote && (
             <Text style={{ color: c.textSecondary, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
-              ⓘ {a.latestProgressNote}
+              ⓘ <TermText>{a.latestProgressNote}</TermText>
             </Text>
           )}
         </View>
@@ -287,7 +288,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
         {/* Description */}
         <View>
           <Text style={[styles.sectionTitle, { color: c.text }]}>說明</Text>
-          <Text style={[styles.body, { color: c.text }]}>{a.descriptionZh}</Text>
+          <TermText style={[styles.body, { color: c.text }]}>{a.descriptionZh}</TermText>
           <Text style={[styles.bodyEn, { color: c.textSecondary }]}>{a.description}</Text>
           {!!a.dataAsOf && (
             <Text style={{ color: c.textSecondary, fontSize: 11, marginTop: 6 }}>
@@ -369,9 +370,11 @@ export default function AgreementDetailView({ id, embedded }: Props) {
                 <Text style={styles.toolBadgeText}>AI 摘要整理（非官方文件）</Text>
               </View>
             )}
-            <Text style={{ color: c.text, fontSize: 14, lineHeight: 24 }}>
-              {detail?.latestStatus?.detail}
-            </Text>
+            <TermScope resetKey={`${id}-detail`}>
+              <TermText style={{ color: c.text, fontSize: 14, lineHeight: 24 }}>
+                {detail?.latestStatus?.detail}
+              </TermText>
+            </TermScope>
             <View style={{ height: 40 }} />
           </ScrollView>
         </View>
@@ -438,7 +441,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
           </ScrollView>
         </View>
       </Modal>
-    </>
+    </TermScope>
   );
 }
 

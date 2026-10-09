@@ -13,6 +13,7 @@ import { useData } from '@/lib/data-context';
 import { byEventDateDesc, isNewsworthy } from '@/lib/data-source';
 import { timeAgo } from '@/lib/format';
 import { useIsDesktop, usePageWidth } from '@/hooks/use-desktop';
+import { TermScope } from '@/components/term-text';
 
 export default function Home() {
   const scheme = useColorScheme();
@@ -30,6 +31,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
+      <TermScope resetKey={fetchedAt}>
       <ScrollView
         contentContainerStyle={[styles.scroll, page]}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} tintColor={c.textSecondary} />}>
@@ -154,6 +156,7 @@ export default function Home() {
 
         <View style={{ height: 32 }} />
       </ScrollView>
+      </TermScope>
     </SafeAreaView>
   );
 }

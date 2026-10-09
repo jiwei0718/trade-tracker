@@ -9,6 +9,7 @@ import { eventSortDate, type AgreementEvent } from '@/lib/data-source';
 import { useData } from '@/lib/data-context';
 import { Colors } from '@/constants/theme';
 import TierChip from './tier-chip';
+import TermText from './term-text';
 
 export const EVENT_TYPE_LABELS: Record<string, string> = {
   new_agreement: '新增協定',
@@ -80,14 +81,19 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
 
       {!hideAgreement && e.agreementId && (
         <Pressable onPress={() => router.push(`/agreement/${e.agreementId}`)}>
-          <Text style={styles.agreement} numberOfLines={1}>{agreement?.nameZh ?? e.agreementId}</Text>
+          <Text style={styles.agreement} numberOfLines={1}>
+            {agreement?.nameZh ?? e.agreementId}
+            {!!agreement?.name && agreement.name !== agreement.nameZh && (
+              <Text style={{ color: c.textSecondary, fontWeight: '400', fontSize: 12 }}>  {agreement.name}</Text>
+            )}
+          </Text>
         </Pressable>
       )}
       {!hideAgreement && !e.agreementId && !!e.proposedName && (
         <Text style={[styles.agreement, { color: c.text }]} numberOfLines={1}>新協定:{e.proposedName}</Text>
       )}
 
-      <Text style={[styles.summary, { color: c.text }]}>{e.summaryZh ?? legacyText(e)}</Text>
+      <TermText style={[styles.summary, { color: c.text }]}>{e.summaryZh ?? legacyText(e)}</TermText>
 
       {!!e.sourceUrl && (
         <Pressable onPress={() => Linking.openURL(e.sourceUrl!)} style={styles.source} hitSlop={6}>

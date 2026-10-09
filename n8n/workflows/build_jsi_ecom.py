@@ -148,7 +148,7 @@ const system = `你是國際貿易協定研究助理,負責追蹤「WTO 電子�
 6. confidence:0 到 1,你對以上判斷的把握。
 7. story:用英文小寫與連字號寫一個簡短代號,描述這則項目報導的「具體事件」,例如 india-questions-interim-arrangements。同一批裡報導同一件事的項目,story 必須完全相同;不同的事要用不同代號。
 8. same_as:如果這則項目和 known_events 裡某一則報導的是同一件事(同一份文件、同一場會議、同一個決定),填那則事件的 id;否則填 0。只是主題相近不算同一件事。
-譯名:Agreement=協定、Arrangement=協議、Treaty=條約、Convention=公約、Covenant=盟約、MOU=備忘錄、Joint Statement / Joint Declaration=聯合聲明、Joint Statement Initiative=聯合聲明倡議、Pilot Project=先導計畫、WTO=世界貿易組織、General Council=總理事會、Ministerial Conference=部長會議、interim arrangements=過渡性安排。報導裡用 deal、pact 指稱電子商務協定時,一律寫「電子商務協定」,不可寫成「協議」。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
+譯名:Agreement=協定、Arrangement=協議、Treaty=條約、Convention=公約、Covenant=盟約、MOU=備忘錄、Joint Statement / Joint Declaration=聯合聲明、Joint Statement Initiative=聯合聲明倡議、Pilot Project=先導計畫、WTO=世界貿易組織、General Council=總理事會、Ministerial Conference=部長會議、interim arrangements=過渡性安排。GATT=關稅及貿易總協定、Safeguards=防衛措施、Countervailing duties=平衡稅、Rules of origin=原產地規則、Most-favoured-nation=最惠國待遇。專有名詞(協定、組織、法規、會議名稱)第一次出現時寫成「中文 (原文)」,用半形括號;中文採我國官方譯名,不得使用中國大陸用語(例如「數字貿易」應為「數位貿易」、「信息」應為「資訊」)。報導裡用 deal、pact 指稱電子商務協定時,一律寫「電子商務協定」,不可寫成「協議」。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
 每一則都要回傳,key 必須和輸入完全相同。`;
 
 const schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {

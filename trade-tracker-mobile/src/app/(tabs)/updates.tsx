@@ -9,6 +9,7 @@ import { byEventDateDesc, isNewsworthy, type AgreementEvent } from '@/lib/data-s
 import { timeAgo } from '@/lib/format';
 import { usePageWidth } from '@/hooks/use-desktop';
 import EventRow from '@/components/event-row';
+import { TermScope } from '@/components/term-text';
 
 type Filter = 'all' | 'documents' | 'news' | 'changes';
 
@@ -37,6 +38,7 @@ export default function Updates() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
+      <TermScope resetKey={fetchedAt}>
       <View style={[styles.header, { borderBottomColor: c.backgroundElement }]}>
         <View style={page}>
           <View style={styles.titleRow}>
@@ -84,6 +86,7 @@ export default function Updates() {
           </Text>
         }
       />
+      </TermScope>
     </SafeAreaView>
   );
 }

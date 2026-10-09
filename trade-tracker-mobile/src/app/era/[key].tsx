@@ -9,6 +9,7 @@ import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { usePageWidth } from '@/hooks/use-desktop';
 import CardGrid from '@/components/card-grid';
+import TermText, { TermScope } from '@/components/term-text';
 
 export default function EraDetail() {
   const page = usePageWidth(1000);
@@ -26,7 +27,7 @@ export default function EraDetail() {
   }
 
   return (
-    <>
+    <TermScope resetKey={key}>
       <Stack.Screen options={{ title: info.label }} />
       <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
         {/* Hero */}
@@ -34,7 +35,7 @@ export default function EraDetail() {
           <Text style={[styles.range, { color: '#2563eb' }]}>{info.range}</Text>
           <Text style={[styles.label, { color: c.text }]}>{info.label}</Text>
           <Text style={[styles.tagline, { color: '#2563eb' }]}>{info.tagline}</Text>
-          <Text style={[styles.summary, { color: c.text }]}>{info.summaryZh}</Text>
+          <TermText style={[styles.summary, { color: c.text }]}>{info.summaryZh}</TermText>
         </View>
 
         <Text style={[styles.sectionTitle, { color: c.text }]}>本時期協定（{list.length}）</Text>
@@ -45,7 +46,7 @@ export default function EraDetail() {
 
         <View style={{ height: 32 }} />
       </ScrollView>
-    </>
+    </TermScope>
   );
 }
 

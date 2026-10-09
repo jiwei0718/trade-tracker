@@ -35,9 +35,10 @@ export default function AgreementCard({ agreement: a, compact, onPress, selected
       <View style={styles.row}>
         <View style={{ flex: 1 }}>
           <Text style={[styles.title, { color: c.text }]} numberOfLines={2}>{a.nameZh}</Text>
-          {a.shortName && (
-            <Text style={[styles.subtitle, { color: c.textSecondary }]}>{a.shortName}</Text>
-          )}
+          {/* 協定名稱:中文與原文 */}
+          <Text style={[styles.subtitle, { color: c.textSecondary }]} numberOfLines={1}>
+            {a.name}{a.shortName && !a.name.includes(a.shortName) && !a.nameZh.includes(a.shortName) ? ` · ${a.shortName}` : ''}
+          </Text>
         </View>
         <Pressable
           onPress={(e) => {

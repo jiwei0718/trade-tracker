@@ -12,13 +12,14 @@ import { STATUS_LABELS } from '@/data/types';
 import EventRow from '@/components/event-row';
 import { usePageWidth } from '@/hooks/use-desktop';
 import CardGrid from '@/components/card-grid';
+import { TermScope } from '@/components/term-text';
 
 export default function WatchlistTab() {
   const page = usePageWidth(1000);
   const scheme = useColorScheme();
   const c = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const { ids, snapshots, setSnapshot } = useWatchlist();
-  const { agreements, events, loading, refresh, unseenCount, acknowledgeAll } = useData();
+  const { agreements, events, loading, refresh, unseenCount, acknowledgeAll, fetchedAt } = useData();
 
   const list = agreements.filter(a => ids.has(a.id));
   // Local snapshot diffs (legacy "mark as seen" mechanism)
@@ -44,6 +45,7 @@ export default function WatchlistTab() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
+      <TermScope resetKey={fetchedAt}>
       <View style={[styles.header, { borderBottomColor: c.backgroundElement }]}>
         <View>
           <Text style={[styles.title, { color: c.text }]}>追蹤清單</Text>
@@ -123,6 +125,7 @@ export default function WatchlistTab() {
 
         <View style={{ height: 32 }} />
       </ScrollView>
+      </TermScope>
     </SafeAreaView>
   );
 }

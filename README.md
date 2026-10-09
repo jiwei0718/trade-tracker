@@ -118,6 +118,14 @@ docker restart trade-tracker-n8n-1
 
 這些控制透過本機 n8n 的 webhook,要帶金鑰(`trade-tracker-mobile/.env` 的 `EXPO_PUBLIC_N8N_RUN_KEY`,與 n8n 憑證 `Webhook key (trade-tracker)` 相同),而且只接受 localhost 的網頁。
 
+## 專有名詞資料庫
+
+App 的「名詞資料庫」(名詞頁 `/glossary`、說明頁 `/term/<id>`):
+
+- **常用名詞**(`trade-tracker-mobile/src/data/terms.ts`):約 50 個,每個都有中文名稱、原文、解釋與 APA 格式的來源。來源優先序為官方與國際組織 → 研究或學術機構 → 企業 → 其他,不使用簡體中文或中國大陸的來源。找不到來源而由 AI 翻譯或撰寫的部分會標示並說明方法。
+- **WTO 小辭典**(`trade-tracker-mobile/src/data/wto-glossary.json`):經濟部國際貿易署的官方資料(539 個詞條),由 `backend/build_wto_glossary.py` 從政府資料開放平臺的 CSV 產生。
+- **自動連結**:協定、動態、組織、時期等頁面的文字中,常用名詞、國際組織與協定簡稱會變成可點的連結。同一頁第一次出現時寫成「中文 (原文)」,之後只寫中文(`<TermText>`、`<TermScope>`)。
+
 ## 資料原則
 
 - 人工整理過的協定(`origin = curated`)流程一律不覆蓋。

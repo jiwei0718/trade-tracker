@@ -47,7 +47,11 @@ export default function RootLayout() {
               />
               <Stack.Screen
                 name="glossary"
-                options={{ presentation: 'card', headerShown: true, title: '名詞對照' }}
+                options={{ presentation: 'card', headerShown: true, title: '名詞資料庫' }}
+              />
+              <Stack.Screen
+                name="term/[id]"
+                options={{ presentation: 'card', headerShown: true, title: '名詞說明' }}
               />
               <Stack.Screen
                 name="review"

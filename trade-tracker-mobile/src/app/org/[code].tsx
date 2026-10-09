@@ -11,6 +11,7 @@ import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { usePageWidth } from '@/hooks/use-desktop';
 import CardGrid from '@/components/card-grid';
+import TermText, { TermScope } from '@/components/term-text';
 
 export default function OrgProfile() {
   const page = usePageWidth(1000);
@@ -34,7 +35,7 @@ export default function OrgProfile() {
   }
 
   return (
-    <>
+    <TermScope resetKey={code} self={`org:${code}`}>
       <Stack.Screen options={{ title: org.abbrZh ?? org.nameZh }} />
       <ScrollView style={{ flex: 1, backgroundColor: c.background }} contentContainerStyle={[{ padding: 16, gap: 16 }, page]}>
         {/* Hero */}
@@ -59,7 +60,7 @@ export default function OrgProfile() {
         </View>
 
         {/* Description */}
-        <Text style={{ color: c.text, fontSize: 14, lineHeight: 22 }}>{org.descriptionZh}</Text>
+        <TermText style={{ color: c.text, fontSize: 14, lineHeight: 22 }}>{org.descriptionZh}</TermText>
 
         {/* Source link */}
         {!!org.sourceUrl && (
@@ -103,7 +104,7 @@ export default function OrgProfile() {
 
         <View style={{ height: 32 }} />
       </ScrollView>
-    </>
+    </TermScope>
   );
 }
 

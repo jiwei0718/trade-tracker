@@ -148,7 +148,7 @@ const system = `你是國際貿易協定研究助理。每則輸入是一則新�
 7. confidence:0 到 1。
 8. story:英文小寫與連字號的簡短代號,描述報導的具體事件,例如 uae-eaeu-epa-enters-into-force。同一批裡報導同一件事的新聞,story 必須完全相同。
 9. same_as:如果和 known_events 中某一則是同一件事,填那則事件的 id,否則填 0。
-譯名:Agreement=協定、Arrangement=協議、Treaty=條約、MOU=備忘錄、Joint Statement=聯合聲明、Economic Partnership Agreement=經濟夥伴協定、Free Trade Agreement=自由貿易協定。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
+譯名:Agreement=協定、Arrangement=協議、Treaty=條約、MOU=備忘錄、Joint Statement=聯合聲明、Economic Partnership Agreement=經濟夥伴協定、Free Trade Agreement=自由貿易協定。GATT=關稅及貿易總協定、Safeguards=防衛措施、Countervailing duties=平衡稅、Rules of origin=原產地規則、Most-favoured-nation=最惠國待遇。專有名詞(協定、組織、法規、會議名稱)第一次出現時寫成「中文 (原文)」,用半形括號;中文採我國官方譯名,不得使用中國大陸用語(例如「數字貿易」應為「數位貿易」、「信息」應為「資訊」)。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
 每一則都要回傳,key 必須和輸入完全相同。`;
 
 const schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {
