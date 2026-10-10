@@ -55,6 +55,13 @@ export default function AppTabs() {
         }}
       />
       <Tabs.Screen
+        name="globe"
+        options={{
+          title: '地球儀',
+          tabBarIcon: ({ color, size }) => <Ionicons name="earth" color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
         name="watchlist"
         options={{
           title: '追蹤',

@@ -126,6 +126,17 @@ App 的「名詞資料庫」(名詞頁 `/glossary`、說明頁 `/term/<id>`):
 - **WTO 小辭典**(`trade-tracker-mobile/src/data/wto-glossary.json`):經濟部國際貿易署的官方資料(539 個詞條),由 `backend/build_wto_glossary.py` 從政府資料開放平臺的 CSV 產生。
 - **自動連結**:協定、動態、組織、時期等頁面的文字中,常用名詞、國際組織與協定簡稱會變成可點的連結。同一頁第一次出現時寫成「中文 (原文)」,之後只寫中文(`<TermText>`、`<TermScope>`)。
 
+## 3D 地球儀
+
+側邊欄「地球儀」分頁用可拖拉、縮放的 3D 地球畫出協定:
+
+- **弧線**:兩方協定畫在兩國之間,同一對國家的協定合併成一條,越粗代表越多;顏色依狀態(綠:已生效、藍:已簽署、橘:談判中、灰:已失效)。三方以上的協定從各締約方連到協定中心點。
+- **集團**(紫色標籤):畫在總部或成員國中心;點選後成員國標黃,並以虛線連到成員國。點國家則直接連到它的每個協定夥伴,包含透過所屬集團簽署的協定。
+- **時間軸**:播放 1947 年到今天,依生效年(可切換為簽署年)顯示每一年有效的協定。
+- **其他**:依協定數為國家上色、最近 30 天有動態的地方顯示光圈、臺灣視角、依協定類型篩選。全球性的多邊協定沒有單一位置,列在「沒有畫在地球上的協定」。
+
+全部使用免費資源:globe.gl、three.js(MIT 授權);國界與國家標示點來自 Natural Earth(公有領域,經 `world-atlas` 套件)。國家標示點由 `trade-tracker-mobile/scripts/build-geo-points.mjs` 產生到 `src/data/geo-points.json`,集團位置在 `src/data/geo.ts`;`backend/fill_country_points.py` 把國家座標寫進資料庫的 `countries.lat/lng`。地球在 Expo DOM 元件裡執行,之後 Android 版可直接沿用。規劃與後續項目見 `docs/globe-plan.md`。
+
 ## 資料原則
 
 - 人工整理過的協定(`origin = curated`)流程一律不覆蓋。
