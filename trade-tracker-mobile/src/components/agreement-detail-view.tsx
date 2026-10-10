@@ -215,6 +215,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
                     <Ionicons name="git-branch-outline" size={16} color="#7c3aed" />
                     <View style={{ flex: 1 }}>
                       <Text style={{ color: c.text, fontSize: 13, fontWeight: '600' }}>{r.nameZh}</Text>
+                      {r.name !== r.nameZh && <Text style={{ color: c.textSecondary, fontSize: 11 }}>{r.name}</Text>}
                       <Text style={{ color: c.textSecondary, fontSize: 11 }}>
                         {r.partyNamesZh.length} 個締約方{r.parties.includes('TW') ? '（含我國）' : ''}
                       </Text>

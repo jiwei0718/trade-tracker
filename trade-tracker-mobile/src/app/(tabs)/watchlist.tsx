@@ -104,7 +104,7 @@ export default function WatchlistTab() {
             </View>
             {localChanges.map(a => (
               <Text key={a.id} style={{ color: '#78350f', fontSize: 13 }}>
-                • {a.nameZh}：
+                • {a.nameZh}({a.name})：
                 <Text style={{ textDecorationLine: 'line-through' }}>{STATUS_LABELS[snapshots[a.id] as keyof typeof STATUS_LABELS]}</Text>
                 {' → '}
                 <Text style={{ fontWeight: '700' }}>{STATUS_LABELS[a.status]}</Text>

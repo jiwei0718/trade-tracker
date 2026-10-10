@@ -15,7 +15,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'cobden-chevalier',
     name: 'Cobden–Chevalier Treaty',
-    nameZh: '英法商務條約 (Cobden–Chevalier Treaty)',
+    nameZh: '英法商務條約',
     shortName: 'Cobden–Chevalier',
     type: 'bilateral',
     status: 'expired',
@@ -34,7 +34,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'mckinley-tariff',
     name: 'McKinley Tariff Act',
-    nameZh: '麥金利關稅法 (McKinley Tariff Act)',
+    nameZh: '麥金利關稅法',
     shortName: 'McKinley Tariff',
     type: 'bilateral',
     status: 'expired',
@@ -51,7 +51,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'imperial-preference',
     name: 'Imperial Preference (Ottawa Agreements)',
-    nameZh: '帝國優惠制 (Imperial Preference) — 渥太華協定 (Ottawa Agreements)',
+    nameZh: '帝國優惠制 — 渥太華協定',
     shortName: 'Imperial Preference',
     type: 'regional',
     status: 'superseded',
@@ -70,7 +70,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'hawley-smoot',
     name: 'Hawley–Smoot Tariff Act',
-    nameZh: '霍利–斯姆特關稅法 (Hawley–Smoot Tariff Act)',
+    nameZh: '霍利–斯姆特關稅法',
     shortName: 'Hawley–Smoot',
     type: 'bilateral',
     status: 'expired',
@@ -87,7 +87,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'rtaa-1934',
     name: 'Reciprocal Trade Agreements Act',
-    nameZh: '美國互惠貿易協定法 (Reciprocal Trade Agreements Act, RTAA)',
+    nameZh: '美國互惠貿易協定法 (RTAA)',
     shortName: 'RTAA',
     type: 'bilateral',
     status: 'superseded',
@@ -104,7 +104,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'us-uk-1938',
     name: 'US–UK Trade Agreement (1938)',
-    nameZh: '1938年美英貿易協定 (US–UK Trade Agreement 1938)',
+    nameZh: '1938年美英貿易協定',
     shortName: 'US–UK 1938',
     type: 'bilateral',
     status: 'superseded',
@@ -125,7 +125,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'gatt-1947',
     name: 'General Agreement on Tariffs and Trade',
-    nameZh: '關稅暨貿易總協定 (General Agreement on Tariffs and Trade, GATT)',
+    nameZh: '關稅暨貿易總協定 (GATT)',
     shortName: 'GATT 1947',
     type: 'multilateral',
     status: 'superseded',
@@ -195,7 +195,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'eec-rome',
     name: 'Treaty of Rome (EEC)',
-    nameZh: '羅馬條約 (Treaty of Rome) — 歐洲經濟共同體 (EEC)',
+    nameZh: '羅馬條約 — 歐洲經濟共同體 (EEC)',
     shortName: 'EEC',
     type: 'regional',
     status: 'superseded',
@@ -215,7 +215,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'efta-1960',
     name: 'European Free Trade Association',
-    nameZh: '歐洲自由貿易聯盟 (European Free Trade Association, EFTA)',
+    nameZh: '歐洲自由貿易聯盟 (EFTA)',
     shortName: 'EFTA',
     type: 'regional',
     status: 'in_force',
@@ -233,7 +233,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'lafta',
     name: 'Latin American Free Trade Association',
-    nameZh: '拉丁美洲自由貿易聯盟 (Latin American Free Trade Association, LAFTA)',
+    nameZh: '拉丁美洲自由貿易聯盟 (LAFTA)',
     shortName: 'LAFTA',
     type: 'regional',
     status: 'superseded',
@@ -250,7 +250,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'aladi',
     name: 'Latin American Integration Association',
-    nameZh: '拉丁美洲整合聯盟 (Latin American Integration Association, ALADI)',
+    nameZh: '拉丁美洲整合聯盟 (ALADI)',
     shortName: 'ALADI',
     type: 'regional',
     status: 'in_force',
@@ -266,7 +266,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'asean-founding',
     name: 'ASEAN Declaration (Bangkok Declaration)',
-    nameZh: '東協宣言 (ASEAN Declaration) — 曼谷宣言 (Bangkok Declaration)',
+    nameZh: '東協宣言 — 曼谷宣言',
     shortName: 'ASEAN',
     type: 'regional',
     status: 'in_force',
@@ -285,7 +285,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'caricom-1973',
     name: 'Caribbean Community',
-    nameZh: '加勒比共同體 (Caribbean Community, CARICOM)',
+    nameZh: '加勒比共同體 (CARICOM)',
     shortName: 'CARICOM',
     type: 'regional',
     status: 'in_force',
@@ -301,7 +301,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'andean-community',
     name: 'Andean Community',
-    nameZh: '安第斯共同體 (Andean Community, CAN)',
+    nameZh: '安第斯共同體 (CAN)',
     shortName: 'CAN',
     type: 'regional',
     status: 'in_force',
@@ -318,7 +318,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'auto-pact-1965',
     name: 'Canada–US Automotive Products Agreement',
-    nameZh: '加美汽車產品協定 (Canada–US Auto Pact)',
+    nameZh: '加美汽車產品協定',
     shortName: 'Auto Pact',
     type: 'sectoral',
     status: 'superseded',
@@ -336,7 +336,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'lome-convention',
     name: 'Lomé Convention',
-    nameZh: '洛美協定 (Lomé Convention)',
+    nameZh: '洛美協定',
     shortName: 'Lomé',
     type: 'multilateral',
     status: 'superseded',
@@ -353,7 +353,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'cotonou',
     name: 'Cotonou Agreement',
-    nameZh: '科托努協定 (Cotonou Agreement)',
+    nameZh: '科托努協定',
     shortName: 'Cotonou',
     type: 'multilateral',
     status: 'superseded',
@@ -387,7 +387,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'cer-anzcerta',
     name: 'Australia–NZ Closer Economic Relations',
-    nameZh: '澳紐更緊密經濟關係協定 (Australia–NZ Closer Economic Relations, ANZCERTA)',
+    nameZh: '澳紐更緊密經濟關係協定 (ANZCERTA)',
     shortName: 'ANZCERTA',
     type: 'bilateral',
     status: 'in_force',
@@ -405,7 +405,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'mercosur-1991',
     name: 'Mercosur (Treaty of Asunción)',
-    nameZh: '南方共同市場 (Mercosur) — 亞松森條約 (Treaty of Asunción)',
+    nameZh: '南方共同市場 (Mercosur) — 亞松森條約',
     shortName: 'Mercosur',
     type: 'regional',
     status: 'in_force',
@@ -422,7 +422,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'apec-1989',
     name: 'Asia-Pacific Economic Cooperation',
-    nameZh: '亞太經濟合作 (Asia-Pacific Economic Cooperation, APEC)',
+    nameZh: '亞太經濟合作 (APEC)',
     shortName: 'APEC',
     type: 'multilateral',
     status: 'in_force',
@@ -438,7 +438,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'afta-1992',
     name: 'ASEAN Free Trade Area',
-    nameZh: '東協自由貿易區 (ASEAN Free Trade Area, AFTA)',
+    nameZh: '東協自由貿易區 (AFTA)',
     shortName: 'AFTA',
     type: 'regional',
     status: 'in_force',
@@ -475,7 +475,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'eea',
     name: 'European Economic Area',
-    nameZh: '歐洲經濟區 (European Economic Area, EEA)',
+    nameZh: '歐洲經濟區 (EEA)',
     shortName: 'EEA',
     type: 'regional',
     status: 'in_force',
@@ -492,7 +492,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'maastricht',
     name: 'Treaty of Maastricht (EU founding)',
-    nameZh: '馬斯垂克條約 (Treaty of Maastricht) — 歐盟成立',
+    nameZh: '馬斯垂克條約 — 歐盟成立',
     shortName: 'Maastricht',
     type: 'regional',
     status: 'in_force',
@@ -513,7 +513,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'wto',
     name: 'World Trade Organization',
-    nameZh: '世界貿易組織 (World Trade Organization, WTO)',
+    nameZh: '世界貿易組織 (WTO)',
     shortName: 'WTO',
     type: 'multilateral',
     status: 'in_force',
@@ -586,7 +586,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'china-wto',
     name: 'China WTO Accession',
-    nameZh: '中國加入WTO (China WTO Accession)',
+    nameZh: '中國加入WTO',
     shortName: 'China WTO',
     type: 'multilateral',
     status: 'in_force',
@@ -1229,7 +1229,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'afcfta',
     name: 'African Continental Free Trade Area',
-    nameZh: '非洲大陸自由貿易區 (African Continental Free Trade Area, AfCFTA)',
+    nameZh: '非洲大陸自由貿易區 (AfCFTA)',
     shortName: 'AfCFTA',
     type: 'regional',
     status: 'in_force',
@@ -1266,7 +1266,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'us-taiwan-21st',
     name: 'US–Taiwan Initiative on 21st-Century Trade',
-    nameZh: '美國–臺灣21世紀貿易倡議 (US–Taiwan Initiative on 21st-Century Trade)',
+    nameZh: '美國–臺灣21世紀貿易倡議',
     shortName: 'US–Taiwan Trade',
     type: 'bilateral',
     status: 'in_force',
@@ -1343,7 +1343,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'samoa-agreement',
     name: 'Samoa Agreement (EU–OACPS)',
-    nameZh: '薩摩亞協定 (Samoa Agreement) — 歐盟–OACPS',
+    nameZh: '薩摩亞協定 — 歐盟–OACPS',
     shortName: 'Samoa Agreement',
     type: 'multilateral',
     status: 'in_force',
@@ -1740,7 +1740,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'us-japan-dta',
     name: 'US–Japan Digital Trade Agreement',
-    nameZh: '美日數位貿易協定 (US–Japan Digital Trade Agreement, USJDTA)',
+    nameZh: '美日數位貿易協定 (USJDTA)',
     shortName: 'USJDTA',
     type: 'sectoral',
     status: 'in_force',
@@ -1819,7 +1819,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'singapore-australia-dea',
     name: 'Singapore–Australia Digital Economy Agreement',
-    nameZh: '星澳數位經濟協定 (Singapore–Australia Digital Economy Agreement, SADEA)',
+    nameZh: '星澳數位經濟協定 (SADEA)',
     shortName: 'SADEA',
     type: 'sectoral',
     status: 'in_force',
@@ -1837,7 +1837,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'uk-singapore-dea',
     name: 'UK–Singapore Digital Economy Agreement',
-    nameZh: '英國–新加坡數位經濟協定 (UK–Singapore Digital Economy Agreement, UKSDEA)',
+    nameZh: '英國–新加坡數位經濟協定 (UKSDEA)',
     shortName: 'UKSDEA',
     type: 'sectoral',
     status: 'in_force',
@@ -1855,7 +1855,7 @@ export const agreements: TradeAgreement[] = [
   {
     id: 'korea-singapore-dpa',
     name: 'Korea–Singapore Digital Partnership Agreement',
-    nameZh: '韓星數位夥伴協定 (Korea–Singapore Digital Partnership Agreement, KSDPA)',
+    nameZh: '韓星數位夥伴協定 (KSDPA)',
     shortName: 'KSDPA',
     type: 'sectoral',
     status: 'in_force',
