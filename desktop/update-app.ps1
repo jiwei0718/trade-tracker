@@ -10,6 +10,20 @@ finally { Pop-Location }
 
 $docker = (Get-Command docker -ErrorAction SilentlyContinue).Source
 if (-not $docker) { $docker = "$env:LOCALAPPDATA\Programs\DockerDesktop\resources\bin\docker.exe" }
+
+# Docker Desktop may not be running (e.g. after a restart): start it and wait for the engine.
+& $docker info --format '{{.ServerVersion}}' *> $null
+if ($LASTEXITCODE -ne 0) {
+    $app = @("$env:LOCALAPPDATA\Programs\DockerDesktop\Docker Desktop.exe", "$env:ProgramFiles\Docker\Docker\Docker Desktop.exe") |
+        Where-Object { Test-Path $_ } | Select-Object -First 1
+    if ($app) { Start-Process -FilePath $app }
+    for ($i = 0; $i -lt 90; $i++) {
+        Start-Sleep -Seconds 2
+        & $docker info --format '{{.ServerVersion}}' *> $null
+        if ($LASTEXITCODE -eq 0) { break }
+    }
+}
+
 & $docker compose -f (Join-Path $root 'infra\docker-compose.yml') up -d --build web
 if ($LASTEXITCODE -ne 0) { throw 'docker compose 失敗' }
 Write-Output '完成:重新開啟協定追蹤即可看到新版。'
