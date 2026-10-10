@@ -70,6 +70,11 @@ const BOFT_FTA_PORTAL: TermSource = {
   apa: '經濟部國際貿易署(無日期)。臺灣ECA/FTA總入口網。https://fta.trade.gov.tw/',
   url: 'https://fta.trade.gov.tw/', tier: 'official',
 };
+const GAC_FIPA: TermSource = {
+  apa: 'Global Affairs Canada. (2021, May 11). Canada\'s 2021 Foreign Investment Promotion and Protection Agreement (FIPA) model. https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/fipa-apie/index.aspx?lang=eng',
+  url: 'https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/fipa-apie/index.aspx?lang=eng',
+  tier: 'official',
+};
 const TREATY_ACT: TermSource = {
   apa: '條約締結法(2015年7月1日)。總統府公報,7200。https://www.president.gov.tw/PORTALS/0/BULLETINS/PAPER/PDF/7200-1.PDF',
   url: 'https://www.president.gov.tw/PORTALS/0/BULLETINS/PAPER/PDF/7200-1.PDF', tier: 'official',
@@ -191,6 +196,16 @@ export const TERMS: Term[] = [
     definition: '區域貿易協定的一種名稱。範圍通常比自由貿易協定廣,除關稅外還涵蓋投資、服務、政府採購等;名稱雖不同,本質上仍屬區域貿易協定。',
     sources: [MOA_RTA], related: ['rta', 'fta'],
     aiNote: '「名稱不同、本質上屬區域貿易協定」出自所列來源;「範圍通常較廣」為本工具整理(AI 撰寫)。',
+  },
+  {
+    id: 'bit', zh: '雙邊投資條約', original: 'Bilateral Investment Treaty', abbr: 'BIT', category: 'agreement-type',
+    aliases: [
+      { zh: '投資促進及保障協議', original: 'Foreign Investment Promotion and Protection Agreement' },
+      { zh: '投資促進及保障協定', original: 'Foreign Investment Promotion and Protection Agreement' },
+    ],
+    definition: '兩國之間保障與促進投資的協定,美國以此稱呼它的投資促進及保護協定。典型內容包括最惠國待遇與國民待遇、公平公正待遇、投資設立許可、徵收須依程序、資金自由移轉、法規透明與有效救濟等權利義務。加拿大的同類協定稱為投資促進及保障協議(FIPA)。',
+    sources: [BOFT, GAC_FIPA], wtoGlossaryEn: 'Bilateral investment treaties', related: ['fta'],
+    aiNote: '前兩句依經濟部國際貿易署 WTO 小辭典的「雙邊投資條約」條目改寫;「加拿大的同類協定稱為 FIPA」依加拿大全球事務部頁面整理(AI 撰寫)。',
   },
   {
     id: 'eca', zh: '經濟合作協定', original: 'Economic Cooperation Agreement', abbr: 'ECA', category: 'agreement-type',
