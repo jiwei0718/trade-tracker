@@ -39,7 +39,6 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [
-      { label: 'USTR — U.S.-Taiwan Initiative on 21st-Century Trade', url: 'https://ustr.gov/countries-regions/china-mongolia-taiwan/taiwan', lang: 'en' },
       { label: '行政院經貿談判辦公室 — 臺美21世紀貿易倡議首批協定正式生效(2024-12-10)', url: 'https://www.ey.gov.tw/otn/B21909C369053525/5e9e6ce0-cf1e-4901-8a57-497dd9d9eb6b', lang: 'zh' },
     ],
   },
@@ -202,7 +201,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-05',
     },
     sourceDocs: [
-      { label: '新加坡 MTI — KSDPA 官方頁面', url: 'https://www.mti.gov.sg/Trade/Digital-Economy-Agreements/The-Korea-Singapore-Digital-Partnership-Agreement', lang: 'en' },
+      { label: 'Ministry of Trade and Industry Singapore — Korea-Singapore Digital Partnership Agreement (KSDPA)', url: 'https://www.mti.gov.sg/trade-international-economic-relations/agreements/digital-economy-agreements-dea/ksdpa/', lang: 'en' },
     ],
   },
 
@@ -217,7 +216,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     },
     sourceDocs: [
       { label: 'New Zealand MFAT — CPTPP（存放國官方頁面）', url: 'https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/cptpp', lang: 'en' },
-      { label: 'UK DBT — CPTPP accession', url: 'https://www.gov.uk/government/collections/the-uks-accession-to-cptpp', lang: 'en' },
+      { label: 'GOV.UK — The UK\'s accession to the Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)', url: 'https://www.gov.uk/government/collections/the-uks-accession-to-the-comprehensive-and-progressive-agreement-for-trans-pacific-partnership-cptpp', lang: 'en' },
     ],
   },
 
@@ -328,7 +327,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '臺馬紹爾經濟合作協定於 2019 年 10 月 25 日簽署,行政院於 2020 年 4 月 9 日通過並函送立法院審議,2025 年 1 月 15 日生效。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'Embassy of the Republic of the Marshall Islands in Taiwan — 台馬經濟合作協定(台馬ECA)於114年1月15日生效(2025-01-15)', url: 'https://www.rmiembassytw.com/post/台馬經濟合作協定-台馬eca-於114年1月15日生效-eca-between-taiwan-marshall-islands-takes-effect', lang: 'zh' }, { label: '行政院 — 院會通過臺馬經濟合作協定(2020-04-09)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/be0eb5d2-c4a0-4200-ac6e-afec8bb43011', lang: 'zh' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'Embassy of the Republic of the Marshall Islands in Taiwan — 台馬經濟合作協定(台馬ECA)於114年1月15日生效(2025-01-15)', url: 'https://www.rmiembassytw.com/post/%E5%8F%B0%E9%A6%AC%E7%B6%93%E6%BF%9F%E5%90%88%E4%BD%9C%E5%8D%94%E5%AE%9A-%E5%8F%B0%E9%A6%ACeca-%E6%96%BC114%E5%B9%B41%E6%9C%8815%E6%97%A5%E7%94%9F%E6%95%88-eca-between-taiwan-marshall-islands-takes-effect', lang: 'zh' }, { label: '行政院 — 院會通過臺馬經濟合作協定(2020-04-09)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/be0eb5d2-c4a0-4200-ac6e-afec8bb43011', lang: 'zh' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }],
   },
   'taiwan-belize-eca': {
     latestStatus: {
@@ -392,7 +391,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [
-      { label: 'UK DBT — UK-India trade deal', url: 'https://www.gov.uk/government/collections/uk-india-free-trade-agreement', lang: 'en' },
+      { label: 'GOV.UK — Comprehensive Economic and Trade Agreement between the United Kingdom of Great Britain and Northern Ireland and India', url: 'https://www.gov.uk/government/collections/comprehensive-economic-and-trade-agreement-between-the-united-kingdom-of-great-britain-and-northern-ireland-and-india', lang: 'en' },
     ],
   },
 
@@ -405,7 +404,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'India Ministry of Commerce — India-UAE CEPA', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: India - United Arab Emirates (RTA ID 1198)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=1198', lang: 'en' },
     ],
   },
 
@@ -604,7 +603,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2000-06', byTool: true,
     },
     sourceDocs: [
-      { label: 'European Commission — ACP', url: 'https://international-partnerships.ec.europa.eu/countries/african-caribbean-and-pacific-countries_en', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: First Convention of Lomé (RTA ID 368)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=368', lang: 'en' },
     ],
   },
   'cotonou': {
@@ -616,7 +615,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2023-11', byTool: true,
     },
     sourceDocs: [
-      { label: 'European Commission — Post-Cotonou', url: 'https://international-partnerships.ec.europa.eu/policies/post-cotonou_en', lang: 'en' },
+      { label: 'Council of the EU — EU-ACP partnership agreement', url: 'https://www.consilium.europa.eu/en/policies/eu-acp-partnership-agreement/', lang: 'en' },
     ],
   },
   'samoa-agreement': {
@@ -963,7 +962,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印韓《全面經濟夥伴協定》（India-Korea CEPA）自 2006 年啟動談判，2009 年 8 月 7 日簽署、2010 年 1 月 1 日生效。\n\n【主要承諾】(1) 韓方對印 75% 工業品 8 年內降至零；(2) 印方對韓 85% 工業品 8 年內降至零，但對汽車、鋼鐵等敏感品設較長過渡或排除；(3) 服務：韓方對印 70 個次部門開放、印方對韓 65 個次部門；含 IT 人才簽證便捷化條款；(4) 投資：含 ISDS。\n\n【升級談判】2016 年啟動 CEPA 升級談判，至 2025 年已舉行多輪會談，主要爭議：\n  - 印方對韓方鋼鐵、石化、汽車零組件出口造成國內衝擊\n  - 原產地規則被韓方利用以「轉口」中國產品至印度（印方關切）\n  - 服務貿易：印方要求擴大 IT 與專業人員流動\n  - 投資保護章節：印方 2017 年單方終止舊雙邊投資條約，要求重新談判\n\n升級協商因多項分歧進展緩慢，截至 2025 年仍未完成。\n\n【經濟成果】2010 年生效時雙邊貿易 170 億美元，2024 年達 290 億美元；韓對印出口主要為石化、鋼鐵、汽車零件、半導體；印對韓主要為石油產品、紡織、農產。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Korea, Republic of - India (RTA ID 715)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=715', lang: 'en' }],
   },
   'india-japan': {
     latestStatus: {
@@ -972,7 +971,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印日 CEPA 自 2007 年啟動談判、歷經 14 輪會談，2011 年 2 月 16 日簽署、同年 8 月 1 日生效。\n\n【主要承諾】(1) 10 年內消除約 94% 雙邊貿易品的關稅（按金額）；(2) 服務：互開金融、IT、運輸、零售；(3) 投資：含 ISDS；(4) 自然人移動：印方護理師、廚師赴日的便捷化安排；(5) 智財：採高標準。\n\n【特色】(1) 印度首個與東亞已開發國家的全面 FTA；(2) 是 RCEP 之前印方主要的亞洲 FTA；(3) 涵蓋從製造業（汽車、藥品、機械）到服務業（IT 服務）的廣度。\n\n【經濟成果】2011 年雙邊貿易約 145 億美元，2024 年約 220 億美元；日方對印汽車零件、機械、半導體、化學品出口為主；印方對日成衣、海產、藥品、IT 服務為主。\n\n【升級談判與供應鏈合作】2024–2025 雙方就 CEPA 升級、製造業合作（特別是半導體與電動車供應鏈）多次高層磋商；2024 年達成《關鍵礦產合作備忘錄》，2025 年啟動「印日供應鏈韌性倡議」工作小組。\n\n【背景】印度於 2019 年退出 RCEP 後，與日本（RCEP 成員）的雙邊 FTA 顯得更為關鍵；日方亦透過 Modi-岸田/石破政府的多次高峰會強化此關係，包括 2022 年「擴大全面戰略夥伴關係 5 年計畫」（USD 50B 投資承諾）。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: India - Japan (RTA ID 173)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=173', lang: 'en' }],
   },
   'india-australia': {
     latestStatus: {
@@ -990,7 +989,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印度—阿曼《全面經濟夥伴協定》（India-Oman CEPA）談判自 2023 年 11 月啟動，是印度在繼 2022 年印阿聯 CEPA 後與波斯灣國家的第二個 FTA 談判。\n\n【談判進度】至 2025 年中已完成多輪實質會談，核心條款已達成共識，待文本最終整理與雙方批准。雙方原計畫於 2024 年初完成簽署，因部分敏感品項（特別是石化、塑膠）關稅減讓談判延長至 2025–2026 年。\n\n【主要規畫內容】(1) 雙方對絕大多數工業品 10 年內降至零關稅；(2) 阿曼對印 96% 商品給予降稅，重點受惠：印度成衣、藥品、寶石珠寶、農產品、機械；(3) 印度對阿曼 90% 商品降稅，重點受惠：阿曼石油產品、塑膠、化學品；(4) 服務貿易：印方專業人員（IT、醫療、教育）赴阿便捷化；(5) 投資保護機制。\n\n【經濟意義】(1) 印阿曼雙邊貿易約 130 億美元（2024），阿曼為印度在波斯灣的第 4 大貿易夥伴；(2) 印度透過 CEPA 強化阿曼港口（如 Duqm 港）作為其進入波斯灣與東非的物流樞紐；(3) 補強印度與海合會（GCC）整體關係（GCC 整體 FTA 談判 2024 年重啟）。\n\n【戰略背景】Modi 政府推動「西亞戰略夥伴關係」，繼印阿聯（2022 CEPA）、印沙投資承諾（2023）後，印阿曼 CEPA 為此戰略的重要拼圖。\n\n【2026-10 查證】印度—阿曼《全面經濟夥伴協定》（CEPA）2025 年 12 月 18 日於馬斯喀特簽署，2026 年 6 月 1 日生效。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+    sourceDocs: [{ label: 'Ministry of Foreign Affairs of Oman — His Majesty and Indian Premier at signing of Economic Partnership Agreement (2025-12-18)', url: 'https://www.fm.gov.om/en/33758/', lang: 'en' }, { label: 'All India Radio News — India-Oman Comprehensive Economic Partnership Agreement comes into force', url: 'https://newsonair.gov.in/india-oman-comprehensive-economic-partnership-agreement-comes-into-force/', lang: 'en' }],
   },
   'india-nz': {
     latestStatus: {
@@ -1008,7 +1007,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印加《早期進展貿易協定》（India-Canada Early Progress Trade Agreement, EPTA）談判自 2010 年啟動，原計畫處理為《全面經濟夥伴協定》（CEPA）之早期收穫部分。\n\n【談判中斷時序】\n  - 2010：印加 CEPA 談判啟動，歷經多輪後因印方傳統 BIT 模式分歧、加方對開放服務市場關切而拖延\n  - 2022/3：雙方宣布暫停 CEPA、改先談 EPTA\n  - 2023/4：雙方完成 EPTA 第 9 輪會談，宣布加速完成\n  - 2023/6/18：加拿大錫克教領袖 Hardeep Singh Nijjar 在卑詩省遭暗殺\n  - 2023/9/18：加總理 Trudeau 於國會指控印度政府涉案；印方強烈否認\n  - 2023/9/22：印方宣布暫停所有印加 EPTA 談判（包含原訂 9 月底的部長級會議）\n  - 2024/10：加方驅逐 6 名印度外交官；印方對等驅逐加方外交官；雙邊關係降至冰點\n  - 2025：Carney 政府上臺後，雙方有低度技術接觸，但實質談判未恢復\n\n【EPTA 原規畫內容】(1) 印方對加 11–12 個產品類別降稅（含農產品、紙漿、機械）；(2) 加方對印 6–7 個類別降稅（含農產、IT 服務）；(3) 服務貿易部分章節；(4) 不含投資保護（另行談判）。\n\n【經濟影響】(1) 加印雙邊貿易約 100 億美元（2024），主要為加方鉀肥、紙漿、扁豆對印出口；印方紡織、藥品、IT 服務對加出口；(2) 政治緊張對既有貿易未造成大幅衝擊，但 EPTA 暫停使原本可預期的擴大效應消失。\n\n【前景】加方 Carney 政府（2025 上任）較為務實，雙邊溝通有改善跡象；但 Nijjar 案司法調查、印度國安局介入指控未解，預期短期內 EPTA 難實質重啟。\n\n【2026-10 查證】印度—加拿大 CEPA 談判 2023 年 9 月暫停，2025 年 11 月雙方同意重啟，2026 年 3 月 2 日簽署談判職權範圍；2026 年 10 月進行第五回合，目標年內完成。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'India Ministry of Commerce — Trade Agreements', url: 'https://commerce.gov.in/international-trade/trade-agreements/', lang: 'en' }],
+    sourceDocs: [{ label: 'Global Affairs Canada — Consulting Canadians on a potential Comprehensive Economic Partnership Agreement with India', url: 'https://international.canada.ca/en/global-affairs/consultations/trade/2025-12-15-india', lang: 'en' }],
   },
 
   // ── 東協對外 FTA（byTool）──
@@ -1315,7 +1314,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'USTR — IPEF', url: 'https://ustr.gov/trade-agreements/agreements-currently-under-negotiation/indo-pacific-economic-framework-prosperity-ipef', lang: 'en' },
+      { label: 'USTR — Fact sheet: President Biden and a dozen Indo-Pacific partners launch the Indo-Pacific Economic Framework for Prosperity (2022-05-23)', url: 'https://ustr.gov/about-us/policy-offices/press-office/press-releases/2022/may/fact-sheet-asia-president-biden-and-dozen-indo-pacific-partners-launch-indo-pacific-economic', lang: 'en' },
       { label: 'US Department of Commerce — IPEF', url: 'https://www.commerce.gov/ipef', lang: 'en' },
     ],
   },
@@ -1360,7 +1359,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [
-      { label: 'European Commission — Switzerland', url: 'https://commission.europa.eu/strategy-and-policy/relations-non-eu-countries/relations-switzerland_en', lang: 'en' },
+      { label: 'European Commission — Commission proposals concerning the broad package of agreements with Switzerland', url: 'https://commission.europa.eu/publications/commission-proposals-concerning-broad-package-agreements-switzerland_en', lang: 'en' },
       { label: 'Swiss FDFA — EU dossier', url: 'https://www.eda.admin.ch/europa/en/home.html', lang: 'en' },
     ],
   },
