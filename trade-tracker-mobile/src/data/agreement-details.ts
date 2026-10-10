@@ -35,7 +35,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     latestStatus: {
       summary: '臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
       detail:
-        '「臺美 21 世紀貿易倡議」（U.S.-Taiwan Initiative on 21st-Century Trade，21CT）於 2022 年 6 月 1 日由 USTR 與我駐美代表處宣布啟動，是美臺自 1979 年斷交以來最具實質意義的雙邊經貿安排。\n\n【架構】不是傳統 FTA，未涉關稅減讓，刻意避開美方對「FTA = 政治承認」之疑慮；採「議題分批達成」模式，分兩階段共 11 項議題。\n\n【第一批協定（2023/6/1 簽署）】涵蓋 5 項議題：\n  - 海關行政與貿易便捷化\n  - 良好法制作業\n  - 服務業國內規章\n  - 反貪腐\n  - 中小企業\n  首批協定於 2024 年 12 月 10 日生效(行政院經貿談判辦公室)。\n\n【第二批談判（持續中）】另 6 項議題：勞動、環境、農業、數位貿易、標準、國營事業/非市場政策。其中數位貿易、勞動、環境章節雙方已多次互換文本。川普 2025 年再任後，是否延續 21CT 模式抑或轉向其他形式安排仍待觀察；美貿易代表 Greer 於 2025 年國會聽證會表示將「持續對臺貿易接觸」但未明確承諾繼續 21CT。\n\n【意義】21CT 是我國在無 FTA 情況下，與美國建立的最高層級雙邊經貿制度安排；與美日數位貿易協定、CPTPP 等相互呼應，是我國融入區域數位通商規則的重要支柱。\n\n【2026-10 查證】臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
+        '「臺美 21 世紀貿易倡議」（U.S.-Taiwan Initiative on 21st-Century Trade，21CT）於 2022 年 6 月 1 日由 USTR 與我駐美代表處宣布啟動。\n\n【架構】不是傳統 FTA，未涉關稅減讓，刻意避開美方對「FTA = 政治承認」之疑慮；採「議題分批達成」模式，分兩階段共 11 項議題。\n\n【第一批協定（2023/6/1 簽署）】涵蓋 5 項議題：\n  - 海關行政與貿易便捷化\n  - 良好法制作業\n  - 服務業國內規章\n  - 反貪腐\n  - 中小企業\n  首批協定於 2024 年 12 月 10 日生效(行政院經貿談判辦公室)。\n\n【第二批談判（持續中）】另 6 項議題：勞動、環境、農業、數位貿易、標準、國營事業/非市場政策。其中數位貿易、勞動、環境章節雙方已多次互換文本。\n\n【意義】21CT 是我國在無 FTA 情況下，與美國建立的最高層級雙邊經貿制度安排；與美日數位貿易協定、CPTPP 等相互呼應，是我國融入區域數位通商規則的重要支柱。\n\n【2026-10 查證】臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [
@@ -361,6 +361,14 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [{ label: '行政院 — 中國以政治因素片面中止ECFA早收134項產品關稅減讓(2024-05-31)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/d5bccb42-8481-4eb4-8c4c-6467099018ad', lang: 'zh' }, { label: '公視新聞網 — 中國商務部稱研究進一步中止ECFA早收關稅減讓,經濟部與陸委會回應(2024-01-10)', url: 'https://news.pts.org.tw/article/675724', lang: 'zh' }, { label: '公視新聞網 — 中國9月25日起停止34項臺灣農產品免徵進口關稅(2024-09-19)', url: 'https://news.pts.org.tw/article/715481', lang: 'zh' }, { label: 'WTO — Regional Trade Agreements Database: The Cross-Straits Economic Cooperation Framework Agreement (ECFA) (RTA ID 713)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=713', lang: 'en' }],
+  },
+  'us-taiwan-art': {
+    latestStatus: {
+      summary:
+        '臺美對等貿易協定於 2026 年 2 月 12 日與美國貿易代表署完成簽署。行政院經貿談判辦公室表示,美方將我國的對等關稅調降至 15% 且不疊加,並對部分品項提供對等關稅豁免;協定將依《條約締結法》與「臺美投資 MOU」一併送立法院審議。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院經貿談判辦公室 — 臺美對等貿易協定與投資MOU內容不同,已多次說明將依法併送國會(2026-02-15)', url: 'https://www.ey.gov.tw/otn/3C2A5B02FE10DE06/acce9636-b048-4504-a1f3-81071d9d71dd', lang: 'zh' }],
   },
   'eu-mercosur': {
     latestStatus: {
