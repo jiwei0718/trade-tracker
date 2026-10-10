@@ -310,14 +310,26 @@ def curation_events(db: "Rest", rows: list[dict]) -> list[dict]:
             "agreement_id": row["id"], "event_type": type_, "event_date": date, "field": field,
             "old_value": old, "new_value": new,
             "summary_zh": f"{summary}{note}" if note and type_ == "status_change" else summary,
-            "source_id": "manual-curation", "source_url": None, "confidence": 0.9, "status": "active",
+            "source_id": "manual-curation", "source_url": ((row.get("source_docs") or [{}])[0]).get("url"),
+            "confidence": 0.9, "status": "active",
         })
 
     for row in rows:
         name, dates, old = row["name_zh"] or row["name"], row["key_dates"], existing.get(row["id"])
         if not old:
-            ev(row, "new_agreement", f"新增「{name}」({STATUS_ZH[row['status']]})。",
-               date=dates.get("in_force") or dates.get("signed"), new=row["status"])
+            # A newly curated agreement usually records a real development (a signature, an
+            # entry into force), so the event takes that type and shows in the 動態 feed.
+            note = row.get("latest_progress_note")
+            milestone = {"signed": "signed", "in_force": "in_force", "concluded": "concluded"}.get(row["status"])
+            kind = milestone or ("news" if note else "new_agreement")
+            events.append({
+                "agreement_id": row["id"], "event_type": kind,
+                "event_date": (dates.get(row["status"]) if milestone else row.get("latest_progress_date")) or dates.get("signed"),
+                "field": None, "old_value": None, "new_value": row["status"],
+                "summary_zh": f"新增「{name}」({STATUS_ZH[row['status']]})。{note or ''}",
+                "source_id": "manual-curation", "source_url": ((row.get("source_docs") or [{}])[0]).get("url"),
+                "confidence": 0.9, "status": "active",
+            })
             continue
         if old["status"] != row["status"]:
             ev(row, "status_change",

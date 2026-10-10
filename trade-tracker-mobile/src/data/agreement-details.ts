@@ -280,6 +280,38 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     ],
   },
 
+  'us-jordan-art': {
+    latestStatus: {
+      summary:
+        '美國–約旦對等貿易協定於 2026 年 7 月 21 日在華盛頓簽署,由美國貿易代表 Greer 與約旦工業、貿易暨供應部長 Qudah 簽署;美方新聞稿未說明生效時間。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: 'USTR — Ambassador Greer Signs the U.S.-Jordan Agreement on Reciprocal Trade (2026-07-21)', url: 'https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-signs-us-jordan-agreement-reciprocal-trade', lang: 'en' }],
+  },
+  'us-uzbekistan-arti': {
+    latestStatus: {
+      summary:
+        '美國與烏茲別克於 2026 年 6 月 25 日宣布貿易「早期收穫」,並加速對等貿易與投資協定談判;美方表示將在數週內以文件確認早期收穫,協定尚未簽署。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: 'USTR — The United States and Uzbekistan Announce Early Harvest on Trade, Accelerate Agreement on Reciprocal Trade and Investment Talks (2026-06-25)', url: 'https://ustr.gov/about/policy-offices/press-office/press-releases/2026/june/united-states-and-uzbekistan-announce-early-harvest-trade-accelerate-agreement-reciprocal-trade-and', lang: 'en' }],
+  },
+  'wto-fisheries-subsidies': {
+    latestStatus: {
+      summary:
+        'WTO 漁業補貼協定於 2022 年 6 月 17 日第 12 屆部長會議通過,2025 年 9 月 15 日生效,是 WTO 成立以來第二個多邊協定;涵蓋產能補貼的進一步談判仍在進行。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: 'Global Affairs Canada — WTO Agreement on Fisheries Subsidies and Negotiations (modified 2025-10-08)', url: 'https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/wto-omc/fisheries-peche.aspx?lang=eng', lang: 'en' }, { label: 'World Resources Institute — Statement: WTO Agreement to Tackle Harmful Fisheries Enters into Force (2025-09-15)', url: 'https://www.wri.org/news/statement-wto-agreement-tackle-harmful-fisheries-enters-force', lang: 'en' }],
+  },
+  'wto-gpa-2012': {
+    latestStatus: {
+      summary:
+        '政府採購協定修正版於 2012 年 3 月 30 日由 WTO 政府採購委員會採認,2014 年 4 月 6 日生效;目前有 22 個締約方、涵蓋 49 個 WTO 會員。我國自 2009 年 7 月起為締約方。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院 — 行政院院會通過世界貿易組織(WTO)政府採購委員會採認通過修正之「政府採購協定」(GPA)法律文件(2012-05-24)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/f1291723-646d-469c-b9d1-e1e0268e2fd1', lang: 'zh' }, { label: '莊亞婷、白茹穗 — 試析紐西蘭加入政府採購協定(經貿法訊第169期,2014-12-10)', url: 'https://tradelaw.nccu.edu.tw/epaper/no169/6.pdf', lang: 'zh' }, { label: 'Germany Trade & Invest — Einführung in das GPA (Recht kompakt: WTO)', url: 'https://www.gtai.de/de/trade/wto/recht/einfuehrung-in-das-gpa-749384', lang: 'de' }],
+  },
   'eu-mercosur': {
     latestStatus: {
       summary:
