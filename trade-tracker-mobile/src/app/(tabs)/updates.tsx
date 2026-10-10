@@ -64,7 +64,7 @@ export default function Updates() {
             ))}
             <Pressable onPress={() => setIncludeImports(v => !v)} style={styles.toggle}>
               <Ionicons name={includeImports ? 'checkbox' : 'square-outline'} size={16} color={c.textSecondary} />
-              <Text style={{ color: c.textSecondary, fontSize: 12 }}>包含資料庫匯入紀錄</Text>
+              <Text style={{ color: c.textSecondary, fontSize: 12 }}>包含資料庫匯入與更正紀錄</Text>
             </Pressable>
           </View>
         </View>

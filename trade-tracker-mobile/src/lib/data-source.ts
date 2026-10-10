@@ -276,8 +276,12 @@ export async function getLastSeen(): Promise<string | null> {
   }
 }
 
-/** Database-import bookkeeping ("new agreement added to the dataset") is not news. */
-export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement' && !e.isRelated;
+/** A fix of the tool's own data (「資料更正」), kept for transparency but not a development. */
+export const isCorrection = (e: AgreementEvent) =>
+  e.sourceId === 'manual-curation' && (e.summaryZh ?? '').startsWith('資料更正');
+
+/** Database bookkeeping ("new agreement added to the dataset", corrections) is not news. */
+export const isNewsworthy = (e: AgreementEvent) => e.type !== 'new_agreement' && !e.isRelated && !isCorrection(e);
 
 const TIER_RANK: Record<string, number> = { S: 0, A: 1, B: 2, C: 3 };
 

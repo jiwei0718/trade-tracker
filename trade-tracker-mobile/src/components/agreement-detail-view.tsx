@@ -161,7 +161,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
             {importEvents.length > 0 && (
               <Pressable onPress={() => setShowImportLog(v => !v)} style={{ marginTop: 6 }}>
                 <Text style={{ color: c.textSecondary, fontSize: 12 }}>
-                  {showImportLog ? '隱藏' : '顯示'}資料庫匯入紀錄({importEvents.length})
+                  {showImportLog ? '隱藏' : '顯示'}資料庫匯入與更正紀錄({importEvents.length})
                 </Text>
               </Pressable>
             )}

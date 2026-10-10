@@ -38,7 +38,7 @@ export default function Home() {
         <View style={styles.header}>
           <Text style={[styles.appTitle, { color: c.text }]}>全球貿易協定追蹤</Text>
           <Text style={[styles.appSub, { color: c.textSecondary }]}>
-            1860 — 2026 · {agreements.length} 個協定
+            1860 — {new Date().getFullYear()} · {stats.total} 個協定
           </Text>
           <Pressable onPress={() => router.push('/(tabs)/data-status')} style={styles.dataStatus}>
             <View style={[styles.dataDot, { backgroundColor: source === 'live' ? '#16a34a' : source === 'cache' ? '#f59e0b' : '#9ca3af' }]} />
