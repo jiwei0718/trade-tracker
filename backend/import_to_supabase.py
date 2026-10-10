@@ -320,13 +320,23 @@ def curation_events(db: "Rest", rows: list[dict], corrections: frozenset[str] = 
         if old and row["id"] in corrections:
             # Fixing our own wrong data is not a real-world development: log it as a correction
             # (no event date, so it is not filed as a milestone in the agreement's history).
-            changed = old["status"] != row["status"] or (old.get("key_dates") or {}) != dates
-            if changed:
-                before = STATUS_ZH.get(old["status"], old["status"])
+            old_dates = old.get("key_dates") or {}
+            parts = []
+            if old["status"] != row["status"]:
+                parts.append(f"狀態原記為「{STATUS_ZH.get(old['status'], old['status'])}」,更正為「{STATUS_ZH[row['status']]}」")
+            for k in sorted(old_dates.keys() | dates.keys()):
+                if old_dates.get(k) != dates.get(k):
+                    label = DATE_ZH.get(k, k) + "日期"
+                    parts.append(f"{label}原記為 {old_dates[k]},更正為 {dates[k]}" if k in old_dates and k in dates
+                                 else f"移除{label}(原為 {old_dates[k]})" if k in old_dates
+                                 else f"補上{label} {dates[k]}")
+            if parts:
                 events.append({
                     "agreement_id": row["id"], "event_type": "field_update", "event_date": None,
-                    "field": "status", "old_value": old["status"], "new_value": row["status"],
-                    "summary_zh": f"資料更正:「{name}」原記為「{before}」,依官方資料更正為「{STATUS_ZH[row['status']]}」。",
+                    "field": "status" if old["status"] != row["status"] else "key_dates",
+                    "old_value": old["status"] if old["status"] != row["status"] else old_dates,
+                    "new_value": row["status"] if old["status"] != row["status"] else dates,
+                    "summary_zh": f"資料更正:「{name}」{';'.join(parts)}(依官方資料)。",
                     "source_id": "manual-curation", "source_url": ((row.get("source_docs") or [{}])[0]).get("url"),
                     "confidence": 0.95, "status": "active",
                 })

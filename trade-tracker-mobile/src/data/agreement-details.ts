@@ -628,7 +628,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '中國—東協自由貿易區（China-ASEAN FTA, CAFTA）是中國最早、規模最大的 FTA，分階段建構：\n  - 2002/11：簽署《全面經濟合作架構協定》\n  - 2004/11：《貨品貿易協定》簽署，2005/7 生效（先行降稅）\n  - 2007/1：《服務貿易協定》簽署，2007/7 生效\n  - 2009/8：《投資協定》簽署，2010/2 生效\n  - 2010/1/1：對東協 6 國（汶、印尼、馬、菲、新、泰）全面降稅至零；2015 對柬、寮、緬、越全面降稅\n  - 2015/11：「2.0 版」升級議定書簽署，2019 對全體成員生效\n  - 2022/11：啟動「3.0 版」升級談判\n  - 2024/10：3.0 版實質完成\n  - 2025/5：簽署 3.0 版升級議定書\n\n【3.0 版重點】新增 9 個領域章節：數位經濟（含跨境資料、電子發票、AI）、綠色經濟（再生能源、碳市場）、供應鏈互聯（無紙化通關、互通互聯）、競爭、消費者保護、中小企業、海關程序簡化、衛生與植物防疫，以及標準與符合性評鑑升級。\n\n【規模】CAFTA 涵蓋約 21 億人口、合計 GDP 約 24 兆美元，是全球最大的開發中國家 FTA。2024 年雙邊貿易達 9,824 億美元，中國連續 16 年為東協最大貿易夥伴，東協自 2020 年起為中國最大貿易夥伴。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: ASEAN - China (RTA ID 42)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=42', lang: 'en' }, 
       { label: 'ASEAN — ASEAN-China FTA', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' },
     ],
   },
@@ -896,7 +896,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '歐土關稅同盟由 1963 年《安卡拉協定》設想，1995 年 12 月經歐盟-土耳其聯合委員會（CCA）第 1/95 號決定實施，1996 年 1 月 1 日生效。土耳其為非歐盟成員國中唯一深度參與歐盟單一市場（工業品部分）的國家。\n\n【涵蓋】(1) 工業品（含加工農產品）：雙方間零關稅、共同對外關稅；(2) 不含：未加工農產品、服務、政府採購；(3) 土方接受歐盟工業品相關法規（產品標準、競爭、智財）。\n\n【規模】2024 年雙邊貿易約 2,000 億歐元，歐盟為土耳其最大貿易夥伴、土方為歐盟第 5 大貿易夥伴。\n\n【現代化談判】2014 年起雙方啟動關稅同盟現代化談判，目標納入：(1) 農產品；(2) 服務貿易；(3) 政府採購；(4) 強化爭端解決。但因 2016 年土耳其政變後人權狀況惡化、難民議題、土耳其入歐盟申請凍結等政治因素，談判實質停滯。\n\n【近年動向】(1) 2024–2025 雙方在貿易便捷化、海關現代化等技術層面有小幅進展；(2) 土耳其新冠與烏俄戰爭後的經濟困境（高通膨、里拉貶值）使現代化重要性提升；(3) 然政治氣氛仍不利全面突破，預計短期內維持現狀。\n\n【特殊安排】土耳其雖為關稅同盟成員，但**不參與**歐盟對外 FTA 談判，且**自動**受歐盟對外 FTA 約束（接受第三國享受歐盟市場進入、但無對等談判地位），長期被批評為「不對稱」。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: EU - Türkiye (RTA ID 118)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=118', lang: 'en' }, 
       { label: 'European Commission — EU-Türkiye', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/turkiye_en', lang: 'en' },
     ],
   },
@@ -1226,7 +1226,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '美以 FTA 於 1985 年 4 月 22 日簽署、9 月 1 日生效，為美國史上第一個自由貿易協定，亦是以色列首個全面性 FTA。\n\n【談判動機】(1) 美方：戰略夥伴關係深化、創設 FTA 範本；(2) 以方：突破阿拉伯國家經濟封鎖、進入美國市場。\n\n【主要承諾】10 年內逐步消除所有貨品關稅，1995 年 1 月 1 日達成全面零關稅。涵蓋反傾銷、原產地規則、政府採購；服務貿易、智財、投資未列入原協定。\n\n【補充協定】\n  - 1985 同時簽署《農業協定》（QIZ 機制）；\n  - 1996 《貿易便捷化》：簡化通關；\n  - 2004 修訂《農業協定》延長、規範新增農產品；\n  - 1996 美國通過《合格工業區》（QIZ）擴大方案，使約旦、埃及部分工業區產品（含一定比例以色列原料）得免稅進入美國，間接擴大協定效益。\n\n【經濟成果】1985 雙邊貨品貿易約 49 億美元，2023 達 440 億美元（近 9 倍成長）；以色列為美國第 23 大貿易夥伴，美方為以色列最大貿易夥伴；半導體、製藥、軟體、農業科技為主要受惠領域。\n\n【歷史意義】開啟美國「以 FTA 為外交工具」時代，奠定 NAFTA（1994）、約旦 FTA（2001）等後續協定基礎；其「全面零關稅 + 簡單機制」模式雖未被後續複雜化的美方 FTA 完全沿用，但仍為現代 FTA 雛形。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'USTR — Israel FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/israel-fta', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: United States - Israel (RTA ID 133)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=133', lang: 'en' }, { label: 'USTR — Israel FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/israel-fta', lang: 'en' }],
   },
   'cer-anzcerta': {
     latestStatus: {
