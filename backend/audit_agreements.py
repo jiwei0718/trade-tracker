@@ -12,6 +12,9 @@ Rules
   it is in force, and the signature, entry-into-force and inactive months. Pairs that are
   different agreements between the same parties go in DIFFERENT_AGREEMENTS; accepted
   differences in KNOWN_EXCEPTIONS.
+- The latest-status texts (often AI-written) do not contradict the key dates: a phrase like
+  「2024 年 1 月生效」 within a year of the agreement's own entry into force must name the same
+  month. Phrases about another instrument (a services chapter, a pillar) go in KNOWN_EXCEPTIONS.
 
 Some exceptions are real (CER entered into force before it was signed); list them in
 KNOWN_EXCEPTIONS with the reason so they stop showing up.
@@ -20,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import re
 import sys
 from collections import defaultdict
 
@@ -40,6 +44,9 @@ KNOWN_EXCEPTIONS = {
     ("asean-korea", "in_force 2007-06 vs WTO 2010-01"),   # goods agreement applied from June 2007
     ("cer-anzcerta", "signed 1983-03 vs WTO 1982-12"),
     ("eu-uk-tca", "in_force 2021-05 vs WTO 2021-01"),     # provisional 2021-01, in force 2021-05
+    # Narrative dates about another instrument of the same agreement:
+    ("asean-korea", "text says signed 2007-11, key date 2006-08"),   # services agreement
+    ("ipef", "text says signed 2024-06, key date 2023-11"),          # pillars III and IV
 }
 
 # Curated agreement vs WTO row with the same parties that is a different agreement.
@@ -91,6 +98,24 @@ def check(a: dict, today: str) -> list[str]:
     return [p for p in out if (a["id"], p) not in KNOWN_EXCEPTIONS]
 
 
+# 「2024 年 1 月 15 日生效」, 「2004 年 8 月簽署」: a date directly followed by the event.
+NARRATIVE_DATE = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*月(?:\s*\d{1,2}\s*日)?\s*(簽署|生效)")
+
+
+def narrative_dates(a: dict) -> list[str]:
+    """Dates in the latest-status texts that contradict the agreement's own key dates."""
+    d, ls = a.get("key_dates") or {}, a.get("latest_status") or {}
+    text = f"{ls.get('summary') or ''}\n{ls.get('detail') or ''}"
+    out = []
+    for y, mo, kind in NARRATIVE_DATE.findall(text):
+        key = "signed" if kind == "簽署" else "in_force"
+        mine = d.get(key)
+        said = f"{y}-{int(mo):02d}"
+        if mine and month(mine) != said and abs(int(y) - int(mine[:4])) <= 1:
+            out.append(f"text says {key.replace('in_force', 'in force')} {said}, key date {mine}")
+    return [p for p in dict.fromkeys(out) if (a["id"], p) not in KNOWN_EXCEPTIONS]
+
+
 def compare_with_wto(curated: dict, wto: dict) -> list[str]:
     """Differences between a curated agreement and the WTO row with the same parties."""
     c, w = curated.get("key_dates") or {}, wto.get("key_dates") or {}
@@ -113,7 +138,7 @@ def main(argv: list[str] | None = None) -> int:
     rows = []
     for start in range(0, 10000, 1000):
         r = db.s.get(f"{db.base}/agreements_full", params={
-            "select": "id,name_zh,origin,status,key_dates,parties", "tags": "not.cs.{wto-delisted}",
+            "select": "id,name_zh,origin,status,key_dates,parties,latest_status", "tags": "not.cs.{wto-delisted}",
             "order": "id", "limit": 1000, "offset": start}, timeout=60)
         r.raise_for_status()
         rows += r.json()
@@ -125,7 +150,7 @@ def main(argv: list[str] | None = None) -> int:
     for a in rows:
         if args.curated and a["origin"] != "curated":
             continue
-        for problem in check(a, today):
+        for problem in check(a, today) + narrative_dates(a):
             found[a["origin"]].append((a["id"], a.get("name_zh") or "", a["status"], a.get("key_dates"), problem))
 
     # Curated agreements against the official WTO record of the same parties.
