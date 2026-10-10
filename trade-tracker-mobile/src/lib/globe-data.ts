@@ -84,7 +84,8 @@ export type GlobeFocus = { kind: 'node' | 'link' | 'agreement'; id: string };
 /** Where the camera should fly; a new `seq` repeats the same move. */
 export interface GlobeCamera { lat: number; lng: number; altitude: number; seq: number }
 
-const ENDED: AgreementStatus[] = ['expired', 'superseded', 'cancelled'];
+// Agreements no longer operating: hidden from today's picture unless asked for, and ended on the timeline.
+const ENDED: AgreementStatus[] = ['expired', 'superseded', 'cancelled', 'suspended'];
 const STATUS_RANK: AgreementStatus[] = [
   'in_force', 'signed', 'concluded', 'negotiating', 'proposed', 'suspended', 'superseded', 'expired', 'cancelled',
 ];
@@ -142,7 +143,7 @@ export function buildGlobeModel(list: TradeAgreement[]): GlobeModel {
     agreements[a.id] = {
       id: a.id, nameZh: a.nameZh, name: a.name, status: a.status, type: a.type,
       inForce: year(k.in_force), signed: year(k.signed),
-      end: year(k.expired ?? k.superseded ?? k.cancelled),
+      end: year(k.expired ?? k.superseded ?? k.cancelled ?? k.suspended),
       parties: a.parties,
       reach: [...reach],
       nodes: [],

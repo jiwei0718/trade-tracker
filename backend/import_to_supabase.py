@@ -287,11 +287,12 @@ DATE_ZH = {"proposed": "提議", "started": "啟動談判", "concluded": "完成
            "suspended": "暫停", "cancelled": "取消", "expired": "失效", "superseded": "被取代"}
 
 
-def curation_events(db: "Rest", rows: list[dict]) -> list[dict]:
+def curation_events(db: "Rest", rows: list[dict], corrections: frozenset[str] = frozenset()) -> list[dict]:
     """One event per status/date change between the curated rows and the database.
 
     Curated edits are real-world updates checked by hand (e.g. a signature the pipelines
-    missed), so they belong in the 動態 feed like any other change.
+    missed), so they belong in the 動態 feed like any other change. Ids in `corrections`
+    are fixes of our own wrong data instead, logged as one 「資料更正」 event each.
     """
     existing: dict[str, dict] = {}
     ids = [r["id"] for r in rows]
@@ -316,6 +317,20 @@ def curation_events(db: "Rest", rows: list[dict]) -> list[dict]:
 
     for row in rows:
         name, dates, old = row["name_zh"] or row["name"], row["key_dates"], existing.get(row["id"])
+        if old and row["id"] in corrections:
+            # Fixing our own wrong data is not a real-world development: log it as a correction
+            # (no event date, so it is not filed as a milestone in the agreement's history).
+            changed = old["status"] != row["status"] or (old.get("key_dates") or {}) != dates
+            if changed:
+                before = STATUS_ZH.get(old["status"], old["status"])
+                events.append({
+                    "agreement_id": row["id"], "event_type": "field_update", "event_date": None,
+                    "field": "status", "old_value": old["status"], "new_value": row["status"],
+                    "summary_zh": f"資料更正:「{name}」原記為「{before}」,依官方資料更正為「{STATUS_ZH[row['status']]}」。",
+                    "source_id": "manual-curation", "source_url": ((row.get("source_docs") or [{}])[0]).get("url"),
+                    "confidence": 0.95, "status": "active",
+                })
+            continue
         if not old:
             # A newly curated agreement usually records a real development (a signature, an
             # entry into force), so the event takes that type and shows in the 動態 feed.
@@ -354,6 +369,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--dry-run", action="store_true", help="build and report, do not write")
     p.add_argument("--scope", choices=["curated", "all"], default="curated",
                    help="curated: hand-curated data only (default); all: one-time bootstrap incl. scraped rows")
+    p.add_argument("--correction", default="",
+                   help="comma-separated agreement ids whose changes fix wrong data (logged as 資料更正)")
     args = p.parse_args(argv)
 
     report: Counter = Counter()
@@ -365,7 +382,8 @@ def main(argv: list[str] | None = None) -> int:
 
     env = load_env()
     db = Rest(env["SUPABASE_URL"], env["SUPABASE_SECRET_KEY"])
-    changes = curation_events(db, data["agreements"])
+    corrections = frozenset(x.strip() for x in args.correction.split(",") if x.strip())
+    changes = curation_events(db, data["agreements"], corrections)
     print(f"── changes vs database: {len(changes)} events ──")
     for e in changes:
         print(f"  {e['event_type']:14} {e['summary_zh']}")

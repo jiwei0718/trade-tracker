@@ -31,8 +31,8 @@ const NO_PULSE: string[] = [];
 const PLAY_STEP_MS = 450;
 const LIST_LIMIT = 30;
 const HOME: Omit<GlobeCamera, 'seq'> = { lat: 22, lng: 121, altitude: 2.3 };
-const LEGEND: AgreementStatus[] = ['in_force', 'signed', 'concluded', 'negotiating', 'expired', 'superseded'];
-const ENDED: (AgreementStatus | undefined)[] = ['expired', 'superseded', 'cancelled'];
+const LEGEND: AgreementStatus[] = ['in_force', 'signed', 'concluded', 'negotiating', 'suspended', 'expired', 'superseded', 'cancelled'];
+const ENDED: (AgreementStatus | undefined)[] = ['expired', 'superseded', 'cancelled', 'suspended'];
 
 type Palette = (typeof Colors)['light' | 'dark'];
 
@@ -198,7 +198,7 @@ export default function GlobeTab() {
 
           {/* Layers and filters */}
           <View style={[styles.card, { backgroundColor: c.backgroundElement }]}>
-            <Toggle c={c} label="顯示已失效或被取代的協定" value={historic} onChange={setHistoric} disabled={year != null} />
+            <Toggle c={c} label="顯示已失效、暫停或被取代的協定" value={historic} onChange={setHistoric} disabled={year != null} />
             <Toggle c={c} label="依協定數量為國家上色" value={choropleth} onChange={setChoropleth} />
             <Toggle c={c} label={`最近 ${PULSE_DAYS} 天有動態的地方(${pulse.length} 處)`} value={pulseOn} onChange={setPulseOn} />
             <View style={styles.chips}>

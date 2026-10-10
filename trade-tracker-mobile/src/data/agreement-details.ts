@@ -72,30 +72,27 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   },
   'wto-rta-panama-chinese-taipei': {
     latestStatus: {
-      summary: '本協定（我國史上首個 FTA，2004 年生效）已實質終止。巴拿馬於 2017 年 6 月與我斷交、轉與中華人民共和國建交，雙邊優惠關稅安排隨之失效。',
-      detail:
-        '《中華民國與巴拿馬共和國自由貿易協定》於 2003 年 8 月 21 日簽署、2004 年 1 月 1 日生效，是我國史上**第一個自由貿易協定**。\n\n【歷史意義】(1) 開啟我國對外簽署 FTA 之先河；(2) 為其後臺瓜（2006）、臺薩宏（2008）、臺尼（2008）等中美洲 FTA 鋪路；(3) 雖規模有限（2016 雙邊貿易約 1 億美元），但戰略象徵意義重大。\n\n【主要承諾】(1) 雙方對絕大多數工業品 10 年內降至零關稅；(2) 我方對巴方咖啡、糖、香蕉、海產等農產品給予優惠；(3) 含服務、政府採購、爭端解決、智財等章節。\n\n【斷交與失效】2017 年 6 月 13 日，巴拿馬時任總統 Varela 宣布與我斷交、改與中華人民共和國建交，雙方 FTA 隨之實質失效：\n  - 6/13 巴方宣布斷交\n  - 6/14 我國外交部即發表聲明，宣布終止與巴方所有合作關係（含 FTA）\n  - 巴方雖未正式以條約程序終止 FTA，但因關稅同盟與經貿關係轉移，協定實質停止運作\n\n【後續】此事件揭開 2016 年起對我邦交國斷交潮：聖多美普林西比（2016/12）、巴拿馬（2017/6）、多明尼加（2018/5）、布吉納法索（2018/5）、薩爾瓦多（2018/8）、所羅門群島（2019/9）、吉里巴斯（2019/9）、尼加拉瓜（2021/12）、宏都拉斯（2023/3）、諾魯（2024/1）。其中與我有 FTA 之巴拿馬、薩爾瓦多、宏都拉斯、尼加拉瓜均隨斷交失效。',
-      asOf: '2017-06', byTool: true,
+      summary:
+        '依 WTO 區域貿易協定資料庫,本協定仍列為生效(2003 年 8 月 21 日簽署、2004 年 1 月 1 日生效,未登錄失效日期);經濟部國際貿易署的臺灣 ECA/FTA 總入口網也仍列出本協定,財政部的進口貨品通關作業要點仍公布於法規資料庫。2017 年 6 月巴拿馬與我國斷交後巴方的實際執行情形,本工具未找到官方說明。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Panama - Chinese Taipei (RTA ID 425)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=425', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與巴拿馬共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL028861', lang: 'zh' }],
   },
   'wto-rta-nicaragua-chinese-taipei': {
     latestStatus: {
-      summary: '本協定已終止。尼加拉瓜於 2021 年 12 月與我斷交、轉與中國建交後，雙邊 FTA 失效。',
-      detail:
-        '《中華民國與尼加拉瓜共和國自由貿易協定》於 2006 年 6 月 16 日簽署、2008 年 1 月 1 日生效，是我國第三個 FTA（繼巴拿馬、瓜地馬拉之後）。\n\n【主要承諾】(1) 雙方絕大多數工業品 10 年內降至零；(2) 我方對尼方咖啡、糖、肉品給予優惠；(3) 含服務、政府採購、原產地、爭端解決、智財等章節。\n\n【斷交與終止】2021 年 12 月 9 日，尼加拉瓜時任總統 Ortega 宣布與我斷交、改與中華人民共和國建交。我國外交部 12/10 宣布終止與尼方所有外交、合作關係：\n  - 我駐尼大使館於 12/12 撤館\n  - 尼方 2022 年 7 月 28 日正式通知 WTO 終止與我之 FTA\n  - 雙邊優惠關稅安排自此完全失效\n\n【經濟影響】生效 14 年期間，雙邊貿易由 0.5 億美元成長至 2 億美元（2020 高峰）；終止後我國對尼出口大幅萎縮。\n\n【歷史地位】尼國斷交為 2016 年以來與我斷交潮的第 8 個案例，但相對其他斷交國而言（多為印太或加勒比小國），尼國斷交對我國中美洲布局衝擊最大；後續宏都拉斯（2023/3）斷交更使中美洲僅餘瓜地馬拉為我邦交國。',
-      asOf: '2022-07', byTool: true,
+      summary:
+        '本協定於 2006 年 6 月 16 日簽署、2008 年 1 月 1 日生效。尼加拉瓜於 2021 年 12 月與我國斷交後,本協定自 2022 年 7 月 1 日起暫停實施;WTO 區域貿易協定資料庫將其列為不再運作,並註明暫停依據為 WTO 文件 WT/REG267/N/2。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Nicaragua - Chinese Taipei (RTA ID 671)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=671', lang: 'en' }],
   },
   'wto-rta-el-salvador-honduras-chinese-taipei': {
     latestStatus: {
-      summary: '本三方協定已終止。薩爾瓦多（2018）與宏都拉斯（2023）相繼與我斷交、轉與中國建交，協定失效。',
-      detail:
-        '《中華民國與薩爾瓦多共和國及宏都拉斯共和國自由貿易協定》於 2007 年 5 月 7 日簽署，2008 年 3 月 1 日對宏都拉斯生效、2008 年 3 月 21 日對薩爾瓦多生效，是我國唯一三方 FTA，亦是中美洲三角邦交（臺、薩、宏）的制度核心。\n\n【主要承諾】(1) 雙方對絕大多數工業品 10 年內降至零；(2) 我方對薩宏咖啡、糖、紡織品優惠；薩宏方對我電子、機械、塑膠製品開放；(3) 含服務、政府採購、爭端解決、智財等章節。\n\n【兩階段斷交與終止】\n  - 2018/8/21：薩爾瓦多時任總統 Sánchez Cerén 宣布與我斷交、轉與中華人民共和國建交。協定對薩部分實質失效。\n  - 2023/3/26：宏都拉斯時任總統 Xiomara Castro 宣布與我斷交、轉與中華人民共和國建交。協定對宏部分隨之失效，三方協定完全終止。\n\n【經濟影響】生效 15 年期間，三方貿易由 1.5 億美元成長至約 3 億美元（2017 高峰），主要受惠者為薩宏咖啡與成衣產業；我方則對中美洲整合佈局受重大挫折。\n\n【後續】中美洲整合體系（SICA）9 國（含哥斯大黎加 2007 早已斷交、巴拿馬 2017 斷交、薩爾瓦多 2018 斷交、宏都拉斯 2023 斷交、尼加拉瓜 2021 斷交）僅餘瓜地馬拉、貝里斯、多明尼克為我邦交國，瓜地馬拉為我國中美洲僅存的 FTA 夥伴。',
-      asOf: '2023-12', byTool: true,
+      summary:
+        '本協定於 2007 年 5 月 7 日簽署,2008 年 3 月 1 日對薩爾瓦多生效、2008 年 7 月 15 日對宏都拉斯生效。我國與薩爾瓦多間的實施於 2023 年 5 月 15 日暫停,與宏都拉斯間於 2023 年 12 月 6 日暫停(WTO 文件 WT/REG283 系列)。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署（歷史協定）', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: El Salvador - Honduras - Chinese Taipei (RTA ID 527)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=527', lang: 'en' }],
   },
 
   'taiwan-japan-dta': {
@@ -311,6 +308,54 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [{ label: '行政院 — 行政院院會通過世界貿易組織(WTO)政府採購委員會採認通過修正之「政府採購協定」(GPA)法律文件(2012-05-24)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/f1291723-646d-469c-b9d1-e1e0268e2fd1', lang: 'zh' }, { label: '莊亞婷、白茹穗 — 試析紐西蘭加入政府採購協定(經貿法訊第169期,2014-12-10)', url: 'https://tradelaw.nccu.edu.tw/epaper/no169/6.pdf', lang: 'zh' }, { label: 'Germany Trade & Invest — Einführung in das GPA (Recht kompakt: WTO)', url: 'https://www.gtai.de/de/trade/wto/recht/einfuehrung-in-das-gpa-749384', lang: 'de' }],
+  },
+  'taiwan-paraguay-eca': {
+    latestStatus: {
+      summary:
+        '臺巴拉圭經濟合作協定於 2017 年 7 月 12 日簽署、2018 年 2 月 28 日生效,之後由聯合委員會以決議文調整雙方的關稅優惠。財政部訂有本協定的進口貨品通關作業要點(2018 年 2 月 27 日發布)。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: 'Organization of American States, SICE — Paraguay - Taiwan (Republic of China) agreement', url: 'https://sice.oas.org/TPD/PAR_TWN/PAR_TWN_e.ASP', lang: 'en' }, { label: '財政部 — 中華民國（臺灣）與巴拉圭共和國經濟合作協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL010408', lang: 'zh' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }],
+  },
+  'taiwan-eswatini-eca': {
+    latestStatus: {
+      summary:
+        '臺史瓦帝尼經濟合作協定於 2018 年 6 月簽署,行政院於 2018 年 7 月 12 日通過並函送立法院審議;雙方完成國內程序、相互通知後,於 2018 年 12 月 27 日生效。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院經貿談判辦公室 — 中華民國(臺灣)政府與史瓦帝尼王國政府經濟合作協定(2018-07-12)', url: 'https://www.ey.gov.tw/otn/8E7CF7585049FAB6/16443a4d-d7fe-4642-9cb6-f851ce39d51c', lang: 'zh' }, { label: '中央通訊社 — 台史經濟合作協定27日生效 助經貿合作(2018-12-25)', url: 'https://www.cna.com.tw/news/aipl/201812250292.aspx', lang: 'zh' }, { label: '財政部 — 中華民國（臺灣）政府與史瓦帝尼王國政府經濟合作協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL010550', lang: 'zh' }],
+  },
+  'taiwan-marshall-islands-eca': {
+    latestStatus: {
+      summary:
+        '臺馬紹爾經濟合作協定於 2019 年 10 月 25 日簽署,行政院於 2020 年 4 月 9 日通過並函送立法院審議,2025 年 1 月 15 日生效。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: 'Embassy of the Republic of the Marshall Islands in Taiwan — 台馬經濟合作協定(台馬ECA)於114年1月15日生效(2025-01-15)', url: 'https://www.rmiembassytw.com/post/台馬經濟合作協定-台馬eca-於114年1月15日生效-eca-between-taiwan-marshall-islands-takes-effect', lang: 'zh' }, { label: '行政院 — 院會通過臺馬經濟合作協定(2020-04-09)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/be0eb5d2-c4a0-4200-ac6e-afec8bb43011', lang: 'zh' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }],
+  },
+  'taiwan-belize-eca': {
+    latestStatus: {
+      summary:
+        '臺貝里斯經濟合作協定由經濟部長與貝里斯投資、貿易及商務部長以異地方式簽署,行政院於 2020 年 11 月 5 日通過並函送立法院審議;協定於 2022 年 1 月生效。第 1 號決議文(行政管理委員會議事規則)於 2024 年 12 月 28 日生效。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院 — 院會通過臺貝經濟合作協定(2020-11-05)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/9d92f537-e3a3-4332-b1d0-5cd9924c32d9', lang: 'zh' }, { label: '中央通訊社 — 台貝ECA決議文生效(經濟部說明,2024-12-28)', url: 'https://www.cna.com.tw/news/afe/202412280027.aspx', lang: 'zh' }, { label: 'Organization of American States, SICE — Belize - Taiwan trade agreement', url: 'https://sice.oas.org/TPD/BLZ_TWN/BLZ_TWN_e.ASP', lang: 'en' }, { label: '財政部 — 中華民國（臺灣）政府與貝里斯政府經濟合作協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL011133', lang: 'zh' }],
+  },
+  'uk-taiwan-etp': {
+    latestStatus: {
+      summary:
+        '臺英提升貿易夥伴關係協議於 2023 年 11 月 8 日以視訊方式簽署。雙方依此談判,於 2025 年 6 月 30 日在臺北簽署數位貿易、能源與淨零排放、投資三項領域協議;官方新聞稿未說明生效時間。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院經貿談判辦公室 — 臺英提升貿易夥伴關係協議(ETP)及三項領域協議(2025-06-30)', url: 'https://www.ey.gov.tw/otn/D3081C46327E96E4/3f05fb30-e569-4d36-8ba9-3fde0383056a', lang: 'zh' }, { label: '行政院 — 臺英簽署ETP三項領域協議(2025-06-30)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/0c9f004b-72c9-4b65-b51e-3a98feaf59f1', lang: 'zh' }],
+  },
+  'canada-taiwan-fipa': {
+    latestStatus: {
+      summary:
+        '臺加投資促進及保障協議於 2023 年 2 月 7 日啟動談判、2023 年 10 月完成談判,2023 年 12 月 22 日由駐加拿大代表與加拿大駐台貿易辦事處代表簽署;本工具未找到生效日期的官方公告。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院經貿談判辦公室 — 臺加啟動投資促進及保障協議談判(2023-02-07)', url: 'https://www.ey.gov.tw/otn/8E7CF7585049FAB6/738e90e8-5c0f-41eb-b053-f98bfdac47df', lang: 'zh' }, { label: 'Taipei Economic and Cultural Office in Canada — Taiwan and Canada signed the Foreign Investment Promotion and Protection Agreement (FIPA)', url: 'https://roc-taiwan.org/ca_en/post/17000.html', lang: 'en' }],
   },
   'eu-mercosur': {
     latestStatus: {
