@@ -48,7 +48,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '《紐西蘭與臺灣、澎湖、金門、馬祖個別關稅領域經濟合作協定》(ANZTEC)於 2013 年 7 月 10 日簽署、2013 年 12 月 1 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部於 2013 年 11 月 29 日發布進口貨物通關作業要點。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: New Zealand - Chinese Taipei (RTA ID 874)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=874', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 紐西蘭與臺灣、澎湖、金門、馬祖個別關稅領域經濟合作協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009620', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: New Zealand - Chinese Taipei (RTA ID 874)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=874', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 紐西蘭與臺灣、澎湖、金門、馬祖個別關稅領域經濟合作協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009620', lang: 'zh' }],
   },
   'wto-rta-singapore-chinese-taipei': {
     latestStatus: {
@@ -56,7 +56,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '《新加坡與臺灣、澎湖、金門、馬祖個別關稅領域經濟夥伴協定》(ASTEP)於 2013 年 11 月 7 日簽署、2014 年 4 月 19 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部於 2014 年 4 月 18 日發布進口貨物通關作業要點。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Singapore - Chinese Taipei (RTA ID 890)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=890', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 新加坡與臺灣、澎湖、金門、馬祖個別關稅領域經濟夥伴協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009764', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Singapore - Chinese Taipei (RTA ID 890)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=890', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 新加坡與臺灣、澎湖、金門、馬祖個別關稅領域經濟夥伴協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009764', lang: 'zh' }],
   },
   'wto-rta-guatemala-chinese-taipei': {
     latestStatus: {
@@ -64,7 +64,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '《中華民國與瓜地馬拉共和國自由貿易協定》於 2005 年 9 月 22 日簽署、2006 年 7 月 1 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部的進口貨品通關作業要點最近一次修正於 2018 年 6 月 11 日。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Guatemala - Chinese Taipei (RTA ID 424)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=424', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與瓜地馬拉共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL039792', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Guatemala - Chinese Taipei (RTA ID 424)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=424', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與瓜地馬拉共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL039792', lang: 'zh' }],
   },
   'wto-rta-panama-chinese-taipei': {
     latestStatus: {
@@ -72,7 +72,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '依 WTO 區域貿易協定資料庫,本協定仍列為生效(2003 年 8 月 21 日簽署、2004 年 1 月 1 日生效,未登錄失效日期);經濟部國際貿易署的臺灣 ECA/FTA 總入口網也仍列出本協定,財政部的進口貨品通關作業要點仍公布於法規資料庫。2017 年 6 月巴拿馬與我國斷交後巴方的實際執行情形,本工具未找到官方說明。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Panama - Chinese Taipei (RTA ID 425)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=425', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與巴拿馬共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL028861', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Panama - Chinese Taipei (RTA ID 425)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=425', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與巴拿馬共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL028861', lang: 'zh' }],
   },
   'wto-rta-nicaragua-chinese-taipei': {
     latestStatus: {
@@ -80,7 +80,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '本協定於 2006 年 6 月 16 日簽署、2008 年 1 月 1 日生效。尼加拉瓜於 2021 年 12 月與我國斷交後,本協定自 2022 年 7 月 1 日起暫停實施;WTO 區域貿易協定資料庫將其列為不再運作,並註明暫停依據為 WTO 文件 WT/REG267/N/2。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Nicaragua - Chinese Taipei (RTA ID 671)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=671', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Nicaragua - Chinese Taipei (RTA ID 671)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=671', lang: 'en' }],
   },
   'wto-rta-el-salvador-honduras-chinese-taipei': {
     latestStatus: {
@@ -88,7 +88,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '本協定於 2007 年 5 月 7 日簽署,2008 年 3 月 1 日對薩爾瓦多生效、2008 年 7 月 15 日對宏都拉斯生效。我國與薩爾瓦多間的實施於 2023 年 5 月 15 日暫停,與宏都拉斯間於 2023 年 12 月 6 日暫停(WTO 文件 WT/REG283 系列)。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: El Salvador - Honduras - Chinese Taipei (RTA ID 527)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=527', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: El Salvador - Honduras - Chinese Taipei (RTA ID 527)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=527', lang: 'en' }],
   },
 
   'taiwan-japan-dta': {
@@ -359,7 +359,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         'ECFA 於 2010 年 6 月 29 日簽署、9 月 12 日生效。中國自 2024 年 1 月起停止 12 項石化產品的早收關稅優惠,2024 年 5 月 31 日再宣布停止 134 項,並自 2024 年 9 月 25 日起停止 34 項農漁產品的免徵進口關稅。行政院表示中方以政治因素片面中止、違反 WTO 基本規範,提出嚴正抗議,評估衝擊在可控制範圍,並呼籲在 WTO 架構下協商。',
       asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '行政院 — 中國以政治因素片面中止ECFA早收134項產品關稅減讓(2024-05-31)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/d5bccb42-8481-4eb4-8c4c-6467099018ad', lang: 'zh' }, { label: '公視新聞網 — 中國商務部稱研究進一步中止ECFA早收關稅減讓,經濟部與陸委會回應(2024-01-10)', url: 'https://news.pts.org.tw/article/675724', lang: 'zh' }, { label: '公視新聞網 — 中國9月25日起停止34項臺灣農產品免徵進口關稅(2024-09-19)', url: 'https://news.pts.org.tw/article/715481', lang: 'zh' }, { label: 'WTO — Regional Trade Agreements Database: The Cross-Straits Economic Cooperation Framework Agreement (ECFA) (RTA ID 713)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=713', lang: 'en' }],
+    sourceDocs: [{ label: '行政院 — 中國以政治因素片面中止ECFA早收134項產品關稅減讓(2024-05-31)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/d5bccb42-8481-4eb4-8c4c-6467099018ad', lang: 'zh' }, { label: '公視新聞網 — 中國商務部稱研究進一步中止ECFA早收關稅減讓,經濟部與陸委會回應(2024-01-10)', url: 'https://news.pts.org.tw/article/675724', lang: 'zh' }, { label: '公視新聞網 — 中國9月25日起停止34項臺灣農產品免徵進口關稅(2024-09-19)', url: 'https://news.pts.org.tw/article/715481', lang: 'zh' }, { label: 'WTO — Regional Trade Agreements Database: The Cross-Straits Economic Cooperation Framework Agreement (ECFA) (RTA ID 713)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=713', lang: 'en' }],
   },
   'us-taiwan-art': {
     latestStatus: {
@@ -404,7 +404,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO — Regional Trade Agreements Database: India - United Arab Emirates (RTA ID 1198)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=1198', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: India - United Arab Emirates (RTA ID 1198)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=1198', lang: 'en' },
     ],
   },
 
@@ -603,7 +603,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2000-06', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO — Regional Trade Agreements Database: First Convention of Lomé (RTA ID 368)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=368', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: First Convention of Lomé (RTA ID 368)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=368', lang: 'en' },
     ],
   },
   'cotonou': {
@@ -640,7 +640,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '中國—東協自由貿易區（China-ASEAN FTA, CAFTA）是中國最早、規模最大的 FTA，分階段建構：\n  - 2002/11：簽署《全面經濟合作架構協定》\n  - 2004/11：《貨品貿易協定》簽署，2005/7 生效（先行降稅）\n  - 2007/1：《服務貿易協定》簽署，2007/7 生效\n  - 2009/8：《投資協定》簽署，2010/2 生效\n  - 2010/1/1：對東協 6 國（汶、印尼、馬、菲、新、泰）全面降稅至零；2015 對柬、寮、緬、越全面降稅\n  - 2015/11：「2.0 版」升級議定書簽署，2019 對全體成員生效\n  - 2022/11：啟動「3.0 版」升級談判\n  - 2024/10：3.0 版實質完成\n  - 2025/5：簽署 3.0 版升級議定書\n\n【3.0 版重點】新增 9 個領域章節：數位經濟（含跨境資料、電子發票、AI）、綠色經濟（再生能源、碳市場）、供應鏈互聯（無紙化通關、互通互聯）、競爭、消費者保護、中小企業、海關程序簡化、衛生與植物防疫，以及標準與符合性評鑑升級。\n\n【規模】CAFTA 涵蓋約 21 億人口、合計 GDP 約 24 兆美元，是全球最大的開發中國家 FTA。2024 年雙邊貿易達 9,824 億美元，中國連續 16 年為東協最大貿易夥伴，東協自 2020 年起為中國最大貿易夥伴。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: ASEAN - China (RTA ID 42)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=42', lang: 'en' }, 
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: ASEAN - China (RTA ID 42)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=42', lang: 'en' }, 
       { label: 'ASEAN — ASEAN-China FTA', url: 'https://asean.org/our-communities/economic-community/free-trade-agreements-with-dialogue-partners/', lang: 'en' },
     ],
   },
@@ -653,7 +653,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO — Regional Trade Agreements Database: Chile - China (RTA ID 8)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=8', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: Chile - China (RTA ID 8)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=8', lang: 'en' },
     ],
   },
   'china-pakistan': {
@@ -665,7 +665,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO — Regional Trade Agreements Database: Pakistan - China (RTA ID 153)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=153', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: Pakistan - China (RTA ID 153)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=153', lang: 'en' },
     ],
   },
   'china-nz': {
@@ -689,7 +689,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO — Regional Trade Agreements Database: China - Korea, Republic of (RTA ID 697)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=697', lang: 'en' },
+      { label: 'WTO — Regional Trade Agreements Database: China - Korea, Republic of (RTA ID 697)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=697', lang: 'en' },
     ],
   },
   'china-australia': {
@@ -762,7 +762,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         'CAFTA-DR（Dominican Republic-Central America-United States FTA）於 2004 年 8 月簽署、2005 年 7 月美國國會批准（眾議院僅以 2 票之差通過），自 2006 年起對各國分批生效：薩爾瓦多（2006/3）、宏都拉斯與尼加拉瓜（2006/4）、瓜地馬拉（2006/7）、多明尼加（2007/3）、哥斯大黎加（2009/1）。\n\n【涵蓋】美國 + 哥斯大黎加、薩爾瓦多、瓜地馬拉、宏都拉斯、尼加拉瓜、多明尼加共 7 國，總計近 5,000 萬人口。\n\n【內容】涵蓋貨品（10 年內近全面零關稅）、服務、投資（含 ISDS）、政府採購、智財、勞動、環境、爭端解決等 22 章。第 16 章「勞動」是其後美國 FTA 強化勞動標準之雛形（瓜地馬拉勞動案例 2010-2017 為里程碑）。\n\n【經濟成果】2024 年雙邊貿易超過 600 億美元；對美國而言，CAFTA-DR 國家為紡織、成衣、糖、咖啡、香蕉的主要進口來源；中美洲國家對美出口紡織與成衣大幅成長，是區域 maquila（加工出口）產業關鍵制度。\n\n【近期動態】2024–2025 川普政府上任後，雖未對 CAFTA-DR 國家加徵特別關稅，但對該區的移民壓力（特別是宏都拉斯、薩爾瓦多）與毒品管制成為談判槓桿；CAFTA-DR 國家擔憂未來檢視時可能面臨「USMCA 化」（汽車原產地、勞動 RRM）的壓力。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Dominican Republic - Central America - United States Free Trade Agreement (CAFTA-DR) (RTA ID 27)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=27', lang: 'en' }, 
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Dominican Republic - Central America - United States Free Trade Agreement (CAFTA-DR) (RTA ID 27)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=27', lang: 'en' }, 
       { label: 'USTR — CAFTA-DR', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/cafta-dr-dominican-republic-central-america-fta', lang: 'en' },
     ],
   },
@@ -908,7 +908,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '歐土關稅同盟由 1963 年《安卡拉協定》設想，1995 年 12 月經歐盟-土耳其聯合委員會（CCA）第 1/95 號決定實施，1996 年 1 月 1 日生效。土耳其為非歐盟成員國中唯一深度參與歐盟單一市場（工業品部分）的國家。\n\n【涵蓋】(1) 工業品（含加工農產品）：雙方間零關稅、共同對外關稅；(2) 不含：未加工農產品、服務、政府採購；(3) 土方接受歐盟工業品相關法規（產品標準、競爭、智財）。\n\n【規模】2024 年雙邊貿易約 2,000 億歐元，歐盟為土耳其最大貿易夥伴、土方為歐盟第 5 大貿易夥伴。\n\n【現代化談判】2014 年起雙方啟動關稅同盟現代化談判，目標納入：(1) 農產品；(2) 服務貿易；(3) 政府採購；(4) 強化爭端解決。但因 2016 年土耳其政變後人權狀況惡化、難民議題、土耳其入歐盟申請凍結等政治因素，談判實質停滯。\n\n【近年動向】(1) 2024–2025 雙方在貿易便捷化、海關現代化等技術層面有小幅進展；(2) 土耳其新冠與烏俄戰爭後的經濟困境（高通膨、里拉貶值）使現代化重要性提升；(3) 然政治氣氛仍不利全面突破，預計短期內維持現狀。\n\n【特殊安排】土耳其雖為關稅同盟成員，但**不參與**歐盟對外 FTA 談判，且**自動**受歐盟對外 FTA 約束（接受第三國享受歐盟市場進入、但無對等談判地位），長期被批評為「不對稱」。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: EU - Türkiye (RTA ID 118)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=118', lang: 'en' }, 
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: EU - Türkiye (RTA ID 118)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=118', lang: 'en' }, 
       { label: 'European Commission — EU-Türkiye', url: 'https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/turkiye_en', lang: 'en' },
     ],
   },
@@ -962,7 +962,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印韓《全面經濟夥伴協定》（India-Korea CEPA）自 2006 年啟動談判，2009 年 8 月 7 日簽署、2010 年 1 月 1 日生效。\n\n【主要承諾】(1) 韓方對印 75% 工業品 8 年內降至零；(2) 印方對韓 85% 工業品 8 年內降至零，但對汽車、鋼鐵等敏感品設較長過渡或排除；(3) 服務：韓方對印 70 個次部門開放、印方對韓 65 個次部門；含 IT 人才簽證便捷化條款；(4) 投資：含 ISDS。\n\n【升級談判】2016 年啟動 CEPA 升級談判，至 2025 年已舉行多輪會談，主要爭議：\n  - 印方對韓方鋼鐵、石化、汽車零組件出口造成國內衝擊\n  - 原產地規則被韓方利用以「轉口」中國產品至印度（印方關切）\n  - 服務貿易：印方要求擴大 IT 與專業人員流動\n  - 投資保護章節：印方 2017 年單方終止舊雙邊投資條約，要求重新談判\n\n升級協商因多項分歧進展緩慢，截至 2025 年仍未完成。\n\n【經濟成果】2010 年生效時雙邊貿易 170 億美元，2024 年達 290 億美元；韓對印出口主要為石化、鋼鐵、汽車零件、半導體；印對韓主要為石油產品、紡織、農產。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Korea, Republic of - India (RTA ID 715)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=715', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Korea, Republic of - India (RTA ID 715)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=715', lang: 'en' }],
   },
   'india-japan': {
     latestStatus: {
@@ -971,7 +971,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '印日 CEPA 自 2007 年啟動談判、歷經 14 輪會談，2011 年 2 月 16 日簽署、同年 8 月 1 日生效。\n\n【主要承諾】(1) 10 年內消除約 94% 雙邊貿易品的關稅（按金額）；(2) 服務：互開金融、IT、運輸、零售；(3) 投資：含 ISDS；(4) 自然人移動：印方護理師、廚師赴日的便捷化安排；(5) 智財：採高標準。\n\n【特色】(1) 印度首個與東亞已開發國家的全面 FTA；(2) 是 RCEP 之前印方主要的亞洲 FTA；(3) 涵蓋從製造業（汽車、藥品、機械）到服務業（IT 服務）的廣度。\n\n【經濟成果】2011 年雙邊貿易約 145 億美元，2024 年約 220 億美元；日方對印汽車零件、機械、半導體、化學品出口為主；印方對日成衣、海產、藥品、IT 服務為主。\n\n【升級談判與供應鏈合作】2024–2025 雙方就 CEPA 升級、製造業合作（特別是半導體與電動車供應鏈）多次高層磋商；2024 年達成《關鍵礦產合作備忘錄》，2025 年啟動「印日供應鏈韌性倡議」工作小組。\n\n【背景】印度於 2019 年退出 RCEP 後，與日本（RCEP 成員）的雙邊 FTA 顯得更為關鍵；日方亦透過 Modi-岸田/石破政府的多次高峰會強化此關係，包括 2022 年「擴大全面戰略夥伴關係 5 年計畫」（USD 50B 投資承諾）。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: India - Japan (RTA ID 173)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=173', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: India - Japan (RTA ID 173)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=173', lang: 'en' }],
   },
   'india-australia': {
     latestStatus: {
@@ -1238,7 +1238,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         '美以 FTA 於 1985 年 4 月 22 日簽署、9 月 1 日生效，為美國史上第一個自由貿易協定，亦是以色列首個全面性 FTA。\n\n【談判動機】(1) 美方：戰略夥伴關係深化、創設 FTA 範本；(2) 以方：突破阿拉伯國家經濟封鎖、進入美國市場。\n\n【主要承諾】10 年內逐步消除所有貨品關稅，1995 年 1 月 1 日達成全面零關稅。涵蓋反傾銷、原產地規則、政府採購；服務貿易、智財、投資未列入原協定。\n\n【補充協定】\n  - 1985 同時簽署《農業協定》（QIZ 機制）；\n  - 1996 《貿易便捷化》：簡化通關；\n  - 2004 修訂《農業協定》延長、規範新增農產品；\n  - 1996 美國通過《合格工業區》（QIZ）擴大方案，使約旦、埃及部分工業區產品（含一定比例以色列原料）得免稅進入美國，間接擴大協定效益。\n\n【經濟成果】1985 雙邊貨品貿易約 49 億美元，2023 達 440 億美元（近 9 倍成長）；以色列為美國第 23 大貿易夥伴，美方為以色列最大貿易夥伴；半導體、製藥、軟體、農業科技為主要受惠領域。\n\n【歷史意義】開啟美國「以 FTA 為外交工具」時代，奠定 NAFTA（1994）、約旦 FTA（2001）等後續協定基礎；其「全面零關稅 + 簡單機制」模式雖未被後續複雜化的美方 FTA 完全沿用，但仍為現代 FTA 雛形。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: United States - Israel (RTA ID 133)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=133', lang: 'en' }, { label: 'USTR — Israel FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/israel-fta', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: United States - Israel (RTA ID 133)', url: 'https://rtais.wto.org/UI/PublicShowRTAIDCard.aspx?rtaid=133', lang: 'en' }, { label: 'USTR — Israel FTA', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/israel-fta', lang: 'en' }],
   },
   'cer-anzcerta': {
     latestStatus: {
