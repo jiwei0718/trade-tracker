@@ -35,6 +35,7 @@ SKIP_IDS = {
     "wto-rta-panama-chinese-taipei",
     "wto-rta-nicaragua-chinese-taipei",
     "wto-rta-el-salvador-honduras-chinese-taipei",
+    "wto-rta-the-cross-straits-economic-cooperation-framework-agreement-ecfa",
 }
 
 # WTO status strings → our internal vocab. Values seen in the 2026 export:

@@ -357,6 +357,14 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     },
     sourceDocs: [{ label: '行政院經貿談判辦公室 — 臺加啟動投資促進及保障協議談判(2023-02-07)', url: 'https://www.ey.gov.tw/otn/8E7CF7585049FAB6/738e90e8-5c0f-41eb-b053-f98bfdac47df', lang: 'zh' }, { label: 'Taipei Economic and Cultural Office in Canada — Taiwan and Canada signed the Foreign Investment Promotion and Protection Agreement (FIPA)', url: 'https://roc-taiwan.org/ca_en/post/17000.html', lang: 'en' }],
   },
+  'wto-rta-the-cross-straits-economic-cooperation-framework-agreement-ecfa': {
+    latestStatus: {
+      summary:
+        'ECFA 於 2010 年 6 月 29 日簽署、9 月 12 日生效。中國自 2024 年 1 月起停止 12 項石化產品的早收關稅優惠,2024 年 5 月 31 日再宣布停止 134 項,並自 2024 年 9 月 25 日起停止 34 項農漁產品的免徵進口關稅。行政院表示中方以政治因素片面中止、違反 WTO 基本規範,提出嚴正抗議,評估衝擊在可控制範圍,並呼籲在 WTO 架構下協商。',
+      asOf: '2026-10', byTool: true,
+    },
+    sourceDocs: [{ label: '行政院 — 中國以政治因素片面中止ECFA早收134項產品關稅減讓(2024-05-31)', url: 'https://www.ey.gov.tw/Page/9277F759E41CCD91/d5bccb42-8481-4eb4-8c4c-6467099018ad', lang: 'zh' }, { label: '公視新聞網 — 中國商務部稱研究進一步中止ECFA早收關稅減讓,經濟部與陸委會回應(2024-01-10)', url: 'https://news.pts.org.tw/article/675724', lang: 'zh' }, { label: '公視新聞網 — 中國9月25日起停止34項臺灣農產品免徵進口關稅(2024-09-19)', url: 'https://news.pts.org.tw/article/715481', lang: 'zh' }, { label: 'WTO — Regional Trade Agreements Database: The Cross-Straits Economic Cooperation Framework Agreement (ECFA) (RTA ID 713)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=713', lang: 'en' }],
+  },
   'eu-mercosur': {
     latestStatus: {
       summary:
