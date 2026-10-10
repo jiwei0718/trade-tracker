@@ -144,7 +144,8 @@ App 的「名詞資料庫」(名詞頁 `/glossary`、說明頁 `/term/<id>`):
 - 非官方來源宣稱「已簽署/已生效」一律列為待確認,不直接顯示。
 - 不使用中國大陸的來源:新聞流程丟棄 .cn 網域與中國官方媒體的報導,人工整理的協定也不引用(改用 WTO 等國際組織或我國政府資料)。
 - 修正自己的錯誤資料時,用 `python backend/import_to_supabase.py --correction <協定代碼>`,動態頁記一筆「資料更正」,不會被當成新進展。
-- `python backend/audit_agreements.py` 檢查狀態與日期是否矛盾,並把人工整理的協定和 WTO 資料庫中同一組締約方的紀錄比對。
+- `python backend/audit_agreements.py` 檢查狀態與日期是否矛盾、AI 撰寫的進展說明有沒有寫錯日期,並把人工整理的協定和 WTO 資料庫中同一組締約方的紀錄比對。
+- `python backend/check_source_links.py`(先執行 `npx tsx scripts/export-curated.ts`)列出已失效的來源連結;`npx tsx scripts/check-terms.ts` 檢查名詞資料庫每個詞條都有中文名稱、原文、解釋與來源。
 - 協定資料庫同步有熔斷:一次變動太多筆(例如狀態變更超過 35 筆)就整批不寫入,資料狀態頁亮黃燈。
 - WTO 不再列出的協定(多半是改名前的舊名稱)只加 `wto-delisted` 標記,網頁隱藏,資料不刪除。
 - 網頁版只在本機執行,不放到公開網路。
