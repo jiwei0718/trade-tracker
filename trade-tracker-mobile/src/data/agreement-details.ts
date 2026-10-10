@@ -27,7 +27,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     },
     sourceDocs: [
       { label: 'WTO 電子商務聯合聲明倡議官方頁面', url: 'https://www.wto.org/english/tratop_e/ecom_e/joint_statement_e.htm', lang: 'en' },
-      { label: 'WT/MIN(26)/W/26 過渡性安排宣言（WTO 文件庫）', url: 'https://docs.wto.org/', lang: 'en' },
+      { label: 'WT/MIN(26)/W/26 過渡性安排宣言（WTO 文件庫）', url: 'https://docs.wto.org/dol2fe/Pages/SS/directdoc.aspx?filename=q:/WT/MIN26/W26.pdf&Open=True', lang: 'en' },
     ],
   },
 
@@ -40,7 +40,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     },
     sourceDocs: [
       { label: 'USTR — U.S.-Taiwan Initiative on 21st-Century Trade', url: 'https://ustr.gov/countries-regions/china-mongolia-taiwan/taiwan', lang: 'en' },
-      { label: '經濟部國際貿易署', url: 'https://www.trade.gov.tw/', lang: 'zh' },
+      { label: '行政院經貿談判辦公室 — 臺美21世紀貿易倡議首批協定正式生效(2024-12-10)', url: 'https://www.ey.gov.tw/otn/B21909C369053525/5e9e6ce0-cf1e-4901-8a57-497dd9d9eb6b', lang: 'zh' },
     ],
   },
   'wto-rta-new-zealand-chinese-taipei': {
@@ -112,8 +112,8 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12',
     },
     sourceDocs: [
-      { label: '臺灣日本關係協會（協議簽署新聞）', url: 'https://www.koryu.or.jp/', lang: 'ja' },
-      { label: '經濟部國際貿易署', url: 'https://www.trade.gov.tw/', lang: 'zh' },
+      { label: '行政院經貿談判辦公室 — 臺日簽署數位貿易協議,建構可信賴的供應鏈並強化合作(2025-12-04)', url: 'https://www.ey.gov.tw/otn/8E7CF7585049FAB6/bd8ff799-6b03-4a8a-bd94-d18e9e1f9710', lang: 'zh' },
+      { label: '日本台灣交流協會', url: 'https://www.koryu.or.jp/', lang: 'ja' },
     ],
   },
 
@@ -484,7 +484,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2026-04', byTool: true,
     },
     sourceDocs: [
-      { label: 'WTO Documents Online — WT/GC/283', url: 'https://docs.wto.org/', lang: 'en' },
+      { label: 'WTO Documents Online — WT/GC/283', url: 'https://docs.wto.org/dol2fe/Pages/SS/directdoc.aspx?filename=q:/WT/GC/283.pdf&Open=True', lang: 'en' },
     ],
   },
 
