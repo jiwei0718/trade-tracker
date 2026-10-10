@@ -212,6 +212,7 @@ plans.forEach((plan, idx) => {
     handledIds.push(item.id);
     const isDoc = item.source_id === 'wto-docs-ecom';
     const domain = item.raw?.publisher_domain || '';
+    if (!isDoc && isBlocked(domain)) { rejected.push({ id: item.id, reason: 'mainland Chinese source' }); continue; }
     const tier = isDoc ? 'S' : tierOf(domain);
     const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);
     let agreementId = o.agreement_id, type = o.event_type, conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));
@@ -432,6 +433,7 @@ section("④ AI 處理與品質檢查", S4, AI_Y, 3, """## ④ AI 處理與品�
 - **AI 分類與摘要**:把一批項目送給 Gemini,請它判斷是否相關、事件類型、日期,寫繁體中文摘要(附譯名對照表),並標出哪些項目報導的是同一件事。失敗會自動重試 3 次。
 - **驗證並產生事件**:品質檢查:
   - 官方文件的分類由規則決定,AI 只負責摘要
+  - 中國大陸的來源(.cn 網域、官方媒體)不採用,直接丟棄
   - 檢查協定代碼和日期格式
   - 官方、學術、一線媒體 → 直接顯示;一般媒體 → 待確認
   - 非官方來源宣稱「已簽署/已生效」→ 一律待確認

@@ -61,7 +61,7 @@ const TIER = {
   'wto.org': 'S', 'efta.int': 'S', 'asean.org': 'S', 'mercosur.int': 'S', 'europa.eu': 'S', 'admin.ch': 'S',
   'ustr.gov': 'S', 'commerce.gov': 'S', 'whitehouse.gov': 'S', 'gov.uk': 'S', 'international.gc.ca': 'S',
   'dfat.gov.au': 'S', 'mfat.govt.nz': 'S', 'mti.gov.sg': 'S', 'miti.gov.my': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S',
-  'motie.go.kr': 'S', 'mofcom.gov.cn': 'S', 'commerce.gov.in': 'S', 'pib.gov.in': 'S', 'gob.mx': 'S', 'gov.br': 'S',
+  'motie.go.kr': 'S', 'commerce.gov.in': 'S', 'pib.gov.in': 'S', 'gob.mx': 'S', 'gov.br': 'S',
   'trade.gov.tw': 'S', 'moea.gov.tw': 'S', 'ey.gov.tw': 'S', 'mofa.gov.tw': 'S', 'president.gov.tw': 'S',
   // 學術與智庫
   'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',
@@ -91,6 +91,14 @@ const tierOf = (d) => {
   const p = String(d || '').split('.');
   for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }
   return 'C';
+};
+// 本工具不採用中國大陸的來源:.cn 網域、官方媒體與入口網站的報導一律不寫入
+const BLOCKED = ['cn', 'xinhuanet.com', 'chinadaily.com.cn', 'cgtn.com', 'chinanews.com', 'huanqiu.com', 'cctv.com',
+  'caixin.com', 'yicai.com', 'sohu.com', '163.com', 'qq.com', 'ifeng.com', 'eastmoney.com', 'jiemian.com'];
+const isBlocked = (d) => {
+  const p = String(d || '').toLowerCase().split('.');
+  for (let i = 0; i < p.length; i++) if (BLOCKED.includes(p.slice(i).join('.'))) return true;
+  return false;
 };
 """
 

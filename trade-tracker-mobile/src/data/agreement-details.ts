@@ -646,7 +646,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'China FTA Network（中國自由貿易區服務網）', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+      { label: 'WTO — Regional Trade Agreements Database: Chile - China (RTA ID 8)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=8', lang: 'en' },
     ],
   },
   'china-pakistan': {
@@ -658,7 +658,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'China FTA Network', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+      { label: 'WTO — Regional Trade Agreements Database: Pakistan - China (RTA ID 153)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=153', lang: 'en' },
     ],
   },
   'china-nz': {
@@ -682,7 +682,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
       asOf: '2025-12', byTool: true,
     },
     sourceDocs: [
-      { label: 'China FTA Network', url: 'http://fta.mofcom.gov.cn/', lang: 'zh' },
+      { label: 'WTO — Regional Trade Agreements Database: China - Korea, Republic of (RTA ID 697)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=697', lang: 'en' },
     ],
   },
   'china-australia': {

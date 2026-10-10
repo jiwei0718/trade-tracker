@@ -43,7 +43,6 @@ export const SOURCE_TIERS: readonly SourceTierEntry[] = [
   { tier: 'S', baseConfidence: 0.95, domain: 'mti.gov.sg',                    label: 'Singapore MTI',                         labelZh: '新加坡貿工部' },
   { tier: 'S', baseConfidence: 0.95, domain: 'gov.uk',                        label: 'UK Government',                         labelZh: '英國政府' },
   { tier: 'S', baseConfidence: 0.95, domain: 'commerce.gov.in',               label: 'India Ministry of Commerce',            labelZh: '印度商工部' },
-  { tier: 'S', baseConfidence: 0.95, domain: 'fta.mofcom.gov.cn',             label: '中國自由貿易區服務網' },
   { tier: 'S', baseConfidence: 0.95, domain: 'fta.go.kr',                     label: 'Korea FTA',                             labelZh: '韓國 FTA 入口網' },
   { tier: 'S', baseConfidence: 0.95, domain: 'asean.org',                     label: 'ASEAN Secretariat',                     labelZh: '東協秘書處' },
   { tier: 'S', baseConfidence: 0.95, domain: 'apec.org',                      label: 'APEC',                                  labelZh: '亞太經濟合作會議' },

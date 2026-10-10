@@ -204,6 +204,7 @@ plans.forEach((plan, idx) => {
     const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);
     if (!summary) { rejected.push({ id: item.id, reason: 'empty summary' }); continue; }
     const domain = item.raw?.publisher_domain || '';
+    if (isBlocked(domain)) { rejected.push({ id: item.id, reason: 'mainland Chinese source' }); continue; }
     const tier = tierOf(domain);
     const type = TYPES.includes(o.event_type) ? o.event_type : 'news';
     const conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));
@@ -425,6 +426,7 @@ section("④ AI 判斷與品質檢查", S4, AI_Y, 3, """## ④ AI 判斷與品�
 - **AI 判斷與摘要**:Gemini 從候選協定中選出新聞報導的那一個(或標記為資料庫還沒有的新協定),判斷事件類型與日期,寫繁體中文摘要。
 - **驗證並產生事件**:
   - 協定代碼必須來自候選清單,否則丟棄
+  - 中國大陸的來源(.cn 網域、官方媒體)不採用,直接丟棄
   - 官方、學術、一線媒體 → 直接顯示;一般媒體 → 待確認
   - 非官方來源宣稱簽署、生效等狀態改變 → 待確認
   - 同一件事有兩家以上可信媒體報導,或已有官方事件 → 交叉確認後顯示
