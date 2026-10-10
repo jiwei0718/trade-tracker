@@ -45,30 +45,27 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
   },
   'wto-rta-new-zealand-chinese-taipei': {
     latestStatus: {
-      summary: 'ANZTEC 自 2013 年 12 月生效以來持續運作，逾 99% 我國輸紐產品及全部紐國輸我農產品已享零關稅，是我國對外經貿正常化的重要範例。',
-      detail:
-        '《臺澎金馬個別關稅領域與紐西蘭經濟合作協定》（ANZTEC）於 2013 年 7 月 10 日簽署、同年 12 月 1 日生效，是我國與非邦交國簽署的首個具 FTA 性質的全面性經濟合作協定，亦是我國加入 CPTPP 與全球高標準 FTA 體系的重要鋪墊。\n\n【規模與意義】(1) 為我國突破外交孤立、與非邦交先進國家深化經貿關係的指標；(2) 紐西蘭為我國第 36 大貿易夥伴（2024 年雙邊貿易約 17 億美元）；(3) 為後續臺星 ASTEP（2013/11 簽）打開政治空間。\n\n【主要承諾】\n  - 貨品：紐方對我國全部產品（含農產品）4 年內降至零關稅；我方對紐 88.6% 工業品立即降至零、其餘 12 年內降至零、約 35% 農產品立即降至零、共 88.5% 農產品逐年降至零\n  - 服務：互開金融、運輸、營建、專業服務；雙方亦開放教育、醫療、觀光等\n  - 投資：含「投資人對地主國」（ISDS）類似機制\n  - 全球首部 FTA 級「原住民族合作」專章（第 16 章），與紐方毛利傳統商業文化承認結合\n  - 含電影電視合製、勞動、環境章節（屬高標準 FTA 規範）\n\n【經濟成果】生效後雙邊貿易由 13 億美元（2013）成長至 17 億美元（2024）；我國乳製品、原木、奇異果、葡萄酒等紐方產品大幅進口；紐方則進口我國電子、機械、塑膠製品。\n\n【後續】紐方於 2024 年起積極支持我加入 CPTPP，雙方並於 ANZTEC 架構下成立工作小組探討升級議定書（含電子商務、永續發展、貿易便捷化等）。',
-      asOf: '2025-12', byTool: true,
+      summary:
+        '《紐西蘭與臺灣、澎湖、金門、馬祖個別關稅領域經濟合作協定》(ANZTEC)於 2013 年 7 月 10 日簽署、2013 年 12 月 1 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部於 2013 年 11 月 29 日發布進口貨物通關作業要點。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署 — ANZTEC', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: New Zealand - Chinese Taipei (RTA ID 874)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=874', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 紐西蘭與臺灣、澎湖、金門、馬祖個別關稅領域經濟合作協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009620', lang: 'zh' }],
   },
   'wto-rta-singapore-chinese-taipei': {
     latestStatus: {
-      summary: 'ASTEP 自 2014 年 4 月生效以來持續運作，雙方絕大多數貨品已達零關稅，並涵蓋服務、投資及電子商務合作。',
-      detail:
-        '《新加坡與臺澎金馬個別關稅領域經濟夥伴協定》（ASTEP）於 2013 年 11 月 7 日簽署、2014 年 4 月 19 日生效，是我國繼 ANZTEC 後簽署的第二個與非邦交先進國家的全面性經濟合作協定。\n\n【規模】新加坡為我國第 6 大貿易夥伴（2024 年雙邊貿易約 270 億美元），涵蓋範圍與重要性遠大於 ANZTEC。\n\n【主要承諾】\n  - 貨品：新加坡對我國 100% 工業品立即零關稅（新方原本即低關稅）；我方對新方約 83% 工業品立即降至零、其餘 15 年內降至零；農產品保留部分敏感品例外\n  - 服務：互開金融、電信、運輸、營建、專業服務；我方並承諾擴大新方金融機構（如華僑銀行）來臺營運便捷化\n  - 投資：採高標準保護機制\n  - 包含電子商務章節（第 13 章），是我國 FTA 首部數位章節\n  - 含貿易便捷化、海關程序、政府採購、競爭等完整章節\n\n【經濟成果】生效以來，雙邊貿易由 213 億美元（2014）成長至 270 億美元（2024）；我方對新加坡 IC、電子產品、機械為主出口；新方對我方化學品、機械、運輸設備為主出口。雙方亦透過 ASTEP 強化金融、人才合作。\n\n【意義】(1) 我國對東協國家的第一個 FTA，補上戰略缺口；(2) 為後續加入 CPTPP（新加坡為現有締約方）形成有利政治基礎；(3) 第 13 章電子商務為我國加入 DEPA、DEFA 等數位協定打下制度經驗。',
-      asOf: '2025-12', byTool: true,
+      summary:
+        '《新加坡與臺灣、澎湖、金門、馬祖個別關稅領域經濟夥伴協定》(ASTEP)於 2013 年 11 月 7 日簽署、2014 年 4 月 19 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部於 2014 年 4 月 18 日發布進口貨物通關作業要點。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署 — ASTEP', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Singapore - Chinese Taipei (RTA ID 890)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=890', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 新加坡與臺灣、澎湖、金門、馬祖個別關稅領域經濟夥伴協定進口貨物通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=GL009764', lang: 'zh' }],
   },
   'wto-rta-guatemala-chinese-taipei': {
     latestStatus: {
-      summary: '臺瓜 FTA 仍生效中。瓜地馬拉為我國中美洲重要邦交國，協定持續提供雙邊貨品優惠關稅。',
-      detail:
-        '《中華民國與瓜地馬拉共和國自由貿易協定》於 2005 年 9 月 22 日簽署、2006 年 7 月 1 日生效，是我國第二個 FTA（繼 2003 年臺巴拿馬 FTA 之後）。\n\n【主要承諾】(1) 我方對瓜方 87% 工業品立即降至零、其餘 10–15 年內逐步降稅；對其農產品設較長過渡與配額；(2) 瓜方對我方近全部工業品 10 年內降至零；(3) 服務、投資、政府採購條款；(4) 含原產地規則、爭端解決、智財等章節。\n\n【經濟意義】(1) 對我方而言，協定的戰略意義大於經濟規模（2024 雙邊貿易約 1.8 億美元）；(2) 鞏固我國在中美洲的邦交（瓜地馬拉迄今為我國少數重要邦交國，亦是中美洲僅存對我邦交國）；(3) 提供瓜方咖啡、糖、香蕉、紡織品優惠進入我市場。\n\n【近年動態】(1) 雙方於 2018、2023 年舉行 FTA 聯合委員會檢視協定運作；(2) 2025 年我方提供瓜方咖啡產業升級合作計畫；(3) 瓜地馬拉新政府 Arévalo（2024 上任）公開重申維持與我國邦交，協定運作不受影響。',
-      asOf: '2025-12', byTool: true,
+      summary:
+        '《中華民國與瓜地馬拉共和國自由貿易協定》於 2005 年 9 月 22 日簽署、2006 年 7 月 1 日生效,WTO 區域貿易協定資料庫列為生效中;經濟部國際貿易署的臺灣 ECA/FTA 總入口網列為我國已生效的協定,財政部的進口貨品通關作業要點最近一次修正於 2018 年 6 月 11 日。',
+      asOf: '2026-10', byTool: true,
     },
-    sourceDocs: [{ label: '經濟部國際貿易署', url: 'https://www.trade.gov.tw/', lang: 'zh' }],
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Guatemala - Chinese Taipei (RTA ID 424)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=424', lang: 'en' }, { label: '經濟部國際貿易署 — 臺灣ECA/FTA總入口網', url: 'https://fta.trade.gov.tw/', lang: 'zh' }, { label: '財政部 — 中華民國與瓜地馬拉共和國自由貿易協定進口貨品通關作業要點', url: 'https://law-out.mof.gov.tw/LawContent.aspx?id=FL039792', lang: 'zh' }],
   },
   'wto-rta-panama-chinese-taipei': {
     latestStatus: {
