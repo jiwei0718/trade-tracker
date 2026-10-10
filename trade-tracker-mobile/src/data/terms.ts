@@ -66,6 +66,10 @@ const MOA_RTA: TermSource = {
   apa: '劉凱翔(2014年5月23日)。WTO區域貿易協定(RTA)及農業相關議題之簡介。農政與農情,263。農業部。https://www.moa.gov.tw/ws.php?id=2501258',
   url: 'https://www.moa.gov.tw/ws.php?id=2501258', tier: 'official',
 };
+const BOFT_FTA_PORTAL: TermSource = {
+  apa: '經濟部國際貿易署(無日期)。臺灣ECA/FTA總入口網。https://fta.trade.gov.tw/',
+  url: 'https://fta.trade.gov.tw/', tier: 'official',
+};
 const TREATY_ACT: TermSource = {
   apa: '條約締結法(2015年7月1日)。總統府公報,7200。https://www.president.gov.tw/PORTALS/0/BULLETINS/PAPER/PDF/7200-1.PDF',
   url: 'https://www.president.gov.tw/PORTALS/0/BULLETINS/PAPER/PDF/7200-1.PDF', tier: 'official',
@@ -187,6 +191,12 @@ export const TERMS: Term[] = [
     definition: '區域貿易協定的一種名稱。範圍通常比自由貿易協定廣,除關稅外還涵蓋投資、服務、政府採購等;名稱雖不同,本質上仍屬區域貿易協定。',
     sources: [MOA_RTA], related: ['rta', 'fta'],
     aiNote: '「名稱不同、本質上屬區域貿易協定」出自所列來源;「範圍通常較廣」為本工具整理(AI 撰寫)。',
+  },
+  {
+    id: 'eca', zh: '經濟合作協定', original: 'Economic Cooperation Agreement', abbr: 'ECA', category: 'agreement-type',
+    definition: '區域貿易協定的一種名稱,本質上與自由貿易協定同屬區域貿易協定。我國與巴拉圭、史瓦帝尼、貝里斯、馬紹爾群島簽署的經貿協定採用這個名稱,內容以雙方給予部分貨品關稅優惠為主,另含投資、技術等合作事項。',
+    sources: [MOA_RTA, BOFT_FTA_PORTAL], related: ['rta', 'fta', 'epa'],
+    aiNote: '「屬區域貿易協定的一種名稱」出自農業部文章,「我國以此名稱簽署的協定」出自國際貿易署 ECA/FTA 總入口網;「內容以部分貨品關稅優惠為主,另含投資、技術等合作」為本工具依各協定的官方說明整理(AI 撰寫)。',
   },
   {
     id: 'plurilateral', zh: '複邊貿易協定', original: 'Plurilateral Trade Agreement', aliases: ['複邊協定', { zh: '複邊談判', original: 'Plurilateral Negotiations' }], category: 'agreement-type',

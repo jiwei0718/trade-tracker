@@ -49,6 +49,17 @@ function build() {
     const s = a.shortName;
     if (s && latin(s) && /^[A-Z][A-Z0-9-]{3,}$/.test(s)) entries.push({ text: s, target: { kind: 'agreement', id: a.id, original: null } });
   }
+  // Full Chinese agreement names link to the agreement (with its original name), so a glossary
+  // word inside a name — 「經濟合作協定」 in 「臺巴拉圭經濟合作協定」 — is not linked on its own.
+  // Names that are just a glossary term or an organisation (世界貿易組織 (WTO)) keep those links.
+  const taken = new Set(entries.map(e => e.text));
+  for (const a of bundledAgreements) {
+    const base = a.nameZh.replace(/\s*[(（][^()（）]*[)）]/g, '').trim();
+    if (a.parentId || base.length < 5 || !/[一-鿿]/.test(base) || taken.has(base)) continue;
+    const target: LinkTarget = { kind: 'agreement', id: a.id, original: a.name !== a.nameZh ? a.name : null };
+    entries.push({ text: a.nameZh, target });
+    if (base !== a.nameZh) entries.push({ text: base, target });
+  }
   // Longest first, so 「關稅及貿易總協定第24條」 wins over 「關稅及貿易總協定」.
   const seen = new Set<string>();
   const unique = entries.filter(e => !seen.has(e.text) && seen.add(e.text)).sort((x, y) => y.text.length - x.text.length);

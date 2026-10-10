@@ -27,6 +27,8 @@ interface Props {
   style?: StyleProp<TextStyle>;
   linkStyle?: StyleProp<TextStyle>;
   numberOfLines?: number;
+  /** Shown as plain text in this text only (e.g. "agreement:<id>" in a row that already names it). */
+  self?: string;
 }
 
 /** When the text itself is the abbreviation (「WTO」), the parentheses give only the full name. */
@@ -36,7 +38,7 @@ function originalFor(word: string, original: string) {
 }
 
 /** Text whose glossary terms, organisations and agreement abbreviations are links. */
-export default function TermText({ children, style, linkStyle, numberOfLines }: Props) {
+export default function TermText({ children, style, linkStyle, numberOfLines, self }: Props) {
   const scope = useContext(Scope);
   const seen = scope?.seen ?? null;
   const text = children ?? '';
@@ -59,7 +61,7 @@ export default function TermText({ children, style, linkStyle, numberOfLines }: 
   return (
     <Text style={style} numberOfLines={numberOfLines}>
       {segments.map((s, i) =>
-        s.type === 'text' || `${s.target.kind}:${s.target.id}` === scope?.self ? s.text : (
+        s.type === 'text' || [scope?.self, self].includes(`${s.target.kind}:${s.target.id}`) ? s.text : (
           <Text
             key={i}
             onPress={() => router.push(linkHref(s.target) as never)}

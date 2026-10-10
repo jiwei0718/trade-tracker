@@ -89,7 +89,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
   );
 
   return (
-    <TermScope resetKey={id}>
+    <TermScope resetKey={id} self={`agreement:${id}`}>
       {!embedded && (
         <Stack.Screen options={{ title: a.shortName ?? a.nameZh, headerRight: () => star }} />
       )}
@@ -376,7 +376,7 @@ export default function AgreementDetailView({ id, embedded }: Props) {
                 <Text style={styles.toolBadgeText}>AI 摘要整理（非官方文件）</Text>
               </View>
             )}
-            <TermScope resetKey={`${id}-detail`}>
+            <TermScope resetKey={`${id}-detail`} self={`agreement:${id}`}>
               <TermText style={{ color: c.text, fontSize: 14, lineHeight: 24 }}>
                 {detail?.latestStatus?.detail}
               </TermText>

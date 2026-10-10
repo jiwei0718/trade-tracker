@@ -93,7 +93,10 @@ export default function EventRow({ event: e, agreement, hideAgreement }: Props) 
         <Text style={[styles.agreement, { color: c.text }]} numberOfLines={1}>新協定:{e.proposedName}</Text>
       )}
 
-      <TermText style={[styles.summary, { color: c.text }]}>{e.summaryZh ?? legacyText(e)}</TermText>
+      {/* The row's header already names the agreement with its original. */}
+      <TermText style={[styles.summary, { color: c.text }]} self={e.agreementId ? `agreement:${e.agreementId}` : undefined}>
+        {e.summaryZh ?? legacyText(e)}
+      </TermText>
 
       {!!e.sourceUrl && (
         <Pressable onPress={() => Linking.openURL(e.sourceUrl!)} style={styles.source} hitSlop={6}>
