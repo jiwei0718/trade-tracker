@@ -60,8 +60,18 @@ const SPACE = '#020617';
 const LAND = 'rgba(51, 65, 85, 0.85)';
 const AUTO_ROTATE_RESUME_MS = 30_000;
 
-/** Narrow screens (phones) need the camera further out for the whole globe to fit. */
-const zoomOut = (width: number) => (width > 0 && width < 600 ? 1.5 : 1);
+const CAMERA_FOV = 50; // globe.gl's default vertical field of view, degrees
+
+/**
+ * Camera altitude (in globe radii) at which the whole globe fits the view with some margin.
+ * A narrow, tall view (phone, small window) needs the camera further out than a wide one.
+ */
+function fitAltitude(w: number, h: number): number {
+  if (!w || !h) return 0;
+  const half = ((CAMERA_FOV / 2) * Math.PI) / 180;
+  const horizontal = Math.atan(Math.tan(half) * (w / h));
+  return 1 / Math.sin(0.72 * Math.min(half, horizontal)) - 1;
+}
 
 /** '#16a34a' → 'rgba(22, 163, 74, a)': the globe's shaders do not read 8-digit hex colours. */
 function rgba(hex: string, a: number): string {
@@ -243,13 +253,13 @@ export default function GlobeView({ model, filter, focus, pulse, choropleth, cam
   }, [focus]);
 
   useEffect(() => {
-    if (camera) globe.current?.pointOfView({ lat: camera.lat, lng: camera.lng, altitude: camera.altitude * zoomOut(size.w) }, 1200);
+    if (camera) globe.current?.pointOfView({ lat: camera.lat, lng: camera.lng, altitude: Math.max(camera.altitude, fitAltitude(size.w, size.h)) }, 1200);
   }, [camera]);
 
   const onReady = () => {
     const g = globe.current;
     if (!g) return;
-    g.pointOfView({ lat: 22, lng: 121, altitude: 2.3 * zoomOut(size.w) });
+    g.pointOfView({ lat: 22, lng: 121, altitude: Math.max(2.2, fitAltitude(size.w, size.h)) });
     const c = g.controls() as any;
     c.autoRotateSpeed = 0.35;
     c.autoRotate = !focus;
