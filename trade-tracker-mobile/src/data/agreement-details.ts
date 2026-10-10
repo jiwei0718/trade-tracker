@@ -35,7 +35,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     latestStatus: {
       summary: '臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
       detail:
-        '「臺美 21 世紀貿易倡議」（U.S.-Taiwan Initiative on 21st-Century Trade，21CT）於 2022 年 6 月 1 日由 USTR 與我駐美代表處宣布啟動，是美臺自 1979 年斷交以來最具實質意義的雙邊經貿安排。\n\n【架構】不是傳統 FTA，未涉關稅減讓，刻意避開美方對「FTA = 政治承認」之疑慮；採「議題分批達成」模式，分兩階段共 11 項議題。\n\n【第一批協定（2023/6/1 簽署）】涵蓋 5 項議題：\n  - 海關行政與貿易便捷化\n  - 良好法制作業\n  - 服務業國內規章\n  - 反貪腐\n  - 中小企業\n  我國於 2023 年 8 月完成立法院審議，2024 年 1 月生效。\n\n【第二批談判（持續中）】另 6 項議題：勞動、環境、農業、數位貿易、標準、國營事業/非市場政策。其中數位貿易、勞動、環境章節雙方已多次互換文本。川普 2025 年再任後，是否延續 21CT 模式抑或轉向其他形式安排仍待觀察；美貿易代表 Greer 於 2025 年國會聽證會表示將「持續對臺貿易接觸」但未明確承諾繼續 21CT。\n\n【意義】21CT 是我國在無 FTA 情況下，與美國建立的最高層級雙邊經貿制度安排；與美日數位貿易協定、CPTPP 等相互呼應，是我國融入區域數位通商規則的重要支柱。\n\n【2026-10 查證】臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
+        '「臺美 21 世紀貿易倡議」（U.S.-Taiwan Initiative on 21st-Century Trade，21CT）於 2022 年 6 月 1 日由 USTR 與我駐美代表處宣布啟動，是美臺自 1979 年斷交以來最具實質意義的雙邊經貿安排。\n\n【架構】不是傳統 FTA，未涉關稅減讓，刻意避開美方對「FTA = 政治承認」之疑慮；採「議題分批達成」模式，分兩階段共 11 項議題。\n\n【第一批協定（2023/6/1 簽署）】涵蓋 5 項議題：\n  - 海關行政與貿易便捷化\n  - 良好法制作業\n  - 服務業國內規章\n  - 反貪腐\n  - 中小企業\n  首批協定於 2024 年 12 月 10 日生效(行政院經貿談判辦公室)。\n\n【第二批談判（持續中）】另 6 項議題：勞動、環境、農業、數位貿易、標準、國營事業/非市場政策。其中數位貿易、勞動、環境章節雙方已多次互換文本。川普 2025 年再任後，是否延續 21CT 模式抑或轉向其他形式安排仍待觀察；美貿易代表 Greer 於 2025 年國會聽證會表示將「持續對臺貿易接觸」但未明確承諾繼續 21CT。\n\n【意義】21CT 是我國在無 FTA 情況下，與美國建立的最高層級雙邊經貿制度安排；與美日數位貿易協定、CPTPP 等相互呼應，是我國融入區域數位通商規則的重要支柱。\n\n【2026-10 查證】臺美 21 世紀貿易倡議第一份協定 2023 年 6 月 1 日簽署、2024 年 12 月生效；第二階段（勞工、環境、農業）仍在談判。關稅議題另由 2026 年 2 月簽署的《臺美對等貿易協定》處理。',
       asOf: '2026-10', byTool: true,
     },
     sourceDocs: [
@@ -755,7 +755,7 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
         'CAFTA-DR（Dominican Republic-Central America-United States FTA）於 2004 年 8 月簽署、2005 年 7 月美國國會批准（眾議院僅以 2 票之差通過），自 2006 年起對各國分批生效：薩爾瓦多（2006/3）、宏都拉斯與尼加拉瓜（2006/4）、瓜地馬拉（2006/7）、多明尼加（2007/3）、哥斯大黎加（2009/1）。\n\n【涵蓋】美國 + 哥斯大黎加、薩爾瓦多、瓜地馬拉、宏都拉斯、尼加拉瓜、多明尼加共 7 國，總計近 5,000 萬人口。\n\n【內容】涵蓋貨品（10 年內近全面零關稅）、服務、投資（含 ISDS）、政府採購、智財、勞動、環境、爭端解決等 22 章。第 16 章「勞動」是其後美國 FTA 強化勞動標準之雛形（瓜地馬拉勞動案例 2010-2017 為里程碑）。\n\n【經濟成果】2024 年雙邊貿易超過 600 億美元；對美國而言，CAFTA-DR 國家為紡織、成衣、糖、咖啡、香蕉的主要進口來源；中美洲國家對美出口紡織與成衣大幅成長，是區域 maquila（加工出口）產業關鍵制度。\n\n【近期動態】2024–2025 川普政府上任後，雖未對 CAFTA-DR 國家加徵特別關稅，但對該區的移民壓力（特別是宏都拉斯、薩爾瓦多）與毒品管制成為談判槓桿；CAFTA-DR 國家擔憂未來檢視時可能面臨「USMCA 化」（汽車原產地、勞動 RRM）的壓力。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [
+    sourceDocs: [{ label: 'WTO — Regional Trade Agreements Database: Dominican Republic - Central America - United States Free Trade Agreement (CAFTA-DR) (RTA ID 27)', url: 'https://rtais.wto.org/UI/PublicShowMemberRTAIDCard.aspx?rtaid=27', lang: 'en' }, 
       { label: 'USTR — CAFTA-DR', url: 'https://ustr.gov/trade-agreements/free-trade-agreements/cafta-dr-dominican-republic-central-america-fta', lang: 'en' },
     ],
   },
@@ -1282,10 +1282,10 @@ export const AGREEMENT_DETAILS: Record<string, AgreementDetail> = {
     latestStatus: {
       summary: 'WTO《資訊科技協定》（ITA，1996）消除半導體、電腦、電信設備等資訊科技產品關稅，是少數成功的複邊降稅協定。2015 年達成擴大版（ITA-II），新增約 200 項產品，持續適用。',
       detail:
-        'WTO《資訊科技協定》（Information Technology Agreement, ITA）於 1996 年 12 月 13 日新加坡部長會議達成，1997 年 4 月 1 日生效，原由 29 個成員（含我國）簽署，現有 82 個 WTO 成員加入（涵蓋全球 ICT 貿易約 97%）。\n\n【ITA-I（1996）】消除約 200 項資訊科技產品關稅，包括：電腦、半導體、半導體製造設備、軟體、電信設備、計量儀器、儀表等。採「最惠國」（MFN）原則，受惠範圍及於所有 WTO 成員，不限於 ITA 締約方。\n\n【ITA-II（2015）】2015 年 7 月於奈洛比部長會議達成擴大協議，新增約 201 項產品（總值約每年 1.3 兆美元），含新世代產品：MRI、GPS、視訊遊戲機、印刷電路板、半導體新類別、觸控螢幕、雷射印表機、智慧手機等。2016 年 7 月 1 日起分階段降稅，2024 全面完成零關稅。54 個成員（含我國、中國）參與。\n\n【經濟影響】WTO 估計 ITA 累積降低全球 ICT 產品關稅成本約 1.3 兆美元；對臺、韓、日、新等 ICT 出口導向經濟體影響尤大。\n\n【我國地位】我國以「臺灣、澎湖、金門及馬祖個別關稅領域」（TPKM）名義為 ITA 創始與 ITA-II 成員，半導體、ICT 產業實質受惠。\n\n【未來】WTO 內部曾討論 ITA-III 但尚未正式啟動；新興項目（AI 晶片、量子計算設備、無人機等）的歸類與納入為核心議題。',
+        'WTO《資訊科技協定》（Information Technology Agreement, ITA）於 1996 年 12 月 13 日新加坡部長會議達成,1997 年 7 月 1 日前實施第一次降稅,原由 29 個成員（含我國）簽署，現有 82 個 WTO 成員加入（涵蓋全球 ICT 貿易約 97%）。\n\n【ITA-I（1996）】消除約 200 項資訊科技產品關稅，包括：電腦、半導體、半導體製造設備、軟體、電信設備、計量儀器、儀表等。採「最惠國」（MFN）原則，受惠範圍及於所有 WTO 成員，不限於 ITA 締約方。\n\n【ITA-II（2015）】2015 年 7 月於奈洛比部長會議達成擴大協議，新增約 201 項產品（總值約每年 1.3 兆美元），含新世代產品：MRI、GPS、視訊遊戲機、印刷電路板、半導體新類別、觸控螢幕、雷射印表機、智慧手機等。2016 年 7 月 1 日起分階段降稅，2024 全面完成零關稅。54 個成員（含我國、中國）參與。\n\n【經濟影響】WTO 估計 ITA 累積降低全球 ICT 產品關稅成本約 1.3 兆美元；對臺、韓、日、新等 ICT 出口導向經濟體影響尤大。\n\n【我國地位】我國以「臺灣、澎湖、金門及馬祖個別關稅領域」（TPKM）名義為 ITA 創始與 ITA-II 成員，半導體、ICT 產業實質受惠。\n\n【未來】WTO 內部曾討論 ITA-III 但尚未正式啟動；新興項目（AI 晶片、量子計算設備、無人機等）的歸類與納入為核心議題。',
       asOf: '2025-12', byTool: true,
     },
-    sourceDocs: [{ label: 'WTO — Information Technology Agreement', url: 'https://www.wto.org/english/tratop_e/inftec_e/inftec_e.htm', lang: 'en' }],
+    sourceDocs: [{ label: 'WTO — Ministerial Declaration on Trade in Information Technology Products (1996-12-13)', url: 'https://www.wto.org/english/docs_e/legal_e/itadec_e.htm', lang: 'en' }, { label: 'WTO — Information Technology Agreement', url: 'https://www.wto.org/english/tratop_e/inftec_e/inftec_e.htm', lang: 'en' }],
   },
   'wto-fin-services': {
     latestStatus: {

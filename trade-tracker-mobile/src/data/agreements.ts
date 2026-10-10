@@ -681,7 +681,7 @@ export const agreements: TradeAgreement[] = [
     parties: ['US', 'CR', 'SV', 'GT', 'HN', 'NI', 'DO'],
     partyNames: ['US', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Dominican Rep.'],
     partyNamesZh: ['美國', '哥斯大黎加', '薩爾瓦多', '瓜地馬拉', '宏都拉斯', '尼加拉瓜', '多明尼加'],
-    keyDates: { signed: '2004-05', in_force: '2006-03' },
+    keyDates: { signed: '2004-08', in_force: '2006-03' },
     tradeVolume: 60.0,
     description: 'US trade deal with five Central American countries and Dominican Republic.',
     descriptionZh: '美國與五個中美洲國家及多明尼加的自由貿易協定。',
