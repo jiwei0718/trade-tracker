@@ -11,6 +11,8 @@ import AgreementCard from '@/components/agreement-card';
 import { useData } from '@/lib/data-context';
 import { usePageWidth } from '@/hooks/use-desktop';
 import CardGrid from '@/components/card-grid';
+import GlobeLink from '@/components/globe-link';
+import { pointOf } from '@/data/geo';
 import TermText, { TermScope } from '@/components/term-text';
 
 export default function OrgProfile() {
@@ -50,6 +52,9 @@ export default function OrgProfile() {
           </View>
           <Text style={[styles.title, { color: c.text }]}>{org.nameZh}</Text>
           <Text style={[styles.subtitle, { color: c.textSecondary }]}>{org.name}（{org.abbr}）</Text>
+          {related.length > 0 && pointOf(org.code) && (
+            <View style={{ marginTop: 8 }}><GlobeLink focus={`node:${org.code}`} /></View>
+          )}
         </View>
 
         {/* Facts */}

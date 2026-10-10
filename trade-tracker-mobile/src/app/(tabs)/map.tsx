@@ -176,6 +176,14 @@ export default function MapTab() {
           ))}
         </View>
 
+        {/* Globe CTA */}
+        <Pressable
+          onPress={() => router.navigate('/globe')}
+          style={[styles.arcCta, { backgroundColor: '#0f172a' }]}>
+          <Ionicons name="earth" size={18} color="#93c5fd" />
+          <Text style={{ color: '#fff', fontWeight: '700' }}>用 3D 地球儀查看協定</Text>
+        </Pressable>
+
         {/* Arc CTA */}
         <Pressable
           onPress={() => router.push('/arc')}

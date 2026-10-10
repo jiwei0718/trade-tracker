@@ -17,6 +17,8 @@ import { countryDisplay } from '@/data/countries';
 import { isOrgCode, orgByCode } from '@/data/organizations';
 import { tagLabel } from '@/data/tags';
 import { Colors } from '@/constants/theme';
+import GlobeLink from './globe-link';
+import { pointOf } from '@/data/geo';
 import StatusBadge from '@/components/status-badge';
 import { useWatchlist } from '@/lib/watchlist';
 
@@ -104,6 +106,9 @@ export default function AgreementDetailView({ id, embedded }: Props) {
             <Text style={[styles.fullName, { color: c.textSecondary }]}>{a.fullNameZh}</Text>
           )}
           <Text style={[styles.subtitle, { color: c.textSecondary }]}>{a.name}</Text>
+          {!a.parentId && a.parties.some(p => pointOf(p)) && (
+            <View style={{ marginTop: 8 }}><GlobeLink focus={`agreement:${a.id}`} /></View>
+          )}
         </View>
 
         {/* Badges */}

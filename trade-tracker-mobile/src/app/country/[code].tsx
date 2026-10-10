@@ -13,6 +13,8 @@ import { useData } from '@/lib/data-context';
 import { countryDisplay } from '@/data/countries';
 import { usePageWidth } from '@/hooks/use-desktop';
 import CardGrid from '@/components/card-grid';
+import GlobeLink from '@/components/globe-link';
+import { pointOf } from '@/data/geo';
 
 export default function CountryProfile() {
   const page = usePageWidth(1000);
@@ -57,6 +59,9 @@ export default function CountryProfile() {
           <Text style={[styles.meta, { color: c.textSecondary }]}>
             共 {list.length} 個協定的締約方
           </Text>
+          {!!code && list.length > 0 && pointOf(code) && (
+            <View style={{ marginTop: 8 }}><GlobeLink focus={`node:${code}`} /></View>
+          )}
         </View>
 
         {/* Breakdown chips */}

@@ -1,8 +1,8 @@
-import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Component, Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch, Text, View, useColorScheme, useWindowDimensions,
 } from 'react-native';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,7 +17,7 @@ import {
 import { STATUS_COLORS, STATUS_LABELS, TYPE_LABELS, type AgreementStatus, type AgreementType } from '@/data/types';
 import { countryByCode } from '@/data/countries';
 import { orgByCode } from '@/data/organizations';
-import { placeNote } from '@/data/geo';
+import { placeNote, pointOf } from '@/data/geo';
 import StatusBadge from '@/components/status-badge';
 import YearSlider from '@/components/year-slider';
 
@@ -32,6 +32,7 @@ const PLAY_STEP_MS = 450;
 const LIST_LIMIT = 30;
 const HOME: Omit<GlobeCamera, 'seq'> = { lat: 22, lng: 121, altitude: 2.3 };
 const LEGEND: AgreementStatus[] = ['in_force', 'signed', 'concluded', 'negotiating', 'expired', 'superseded'];
+const ENDED: (AgreementStatus | undefined)[] = ['expired', 'superseded', 'cancelled'];
 
 type Palette = (typeof Colors)['light' | 'dark'];
 
@@ -97,6 +98,21 @@ export default function GlobeTab() {
 
   const onSelect = useCallback(async (f: GlobeFocus | null) => setFocus(f), []);
 
+  // Opened from a country, organization or agreement page (「在地球儀上查看」): select it and fly
+  // there, on today's picture, including ended agreements when the selection is one.
+  const params = useLocalSearchParams<{ focus?: string; t?: string }>();
+  useEffect(() => {
+    const m = /^(node|agreement):(.+)$/.exec(params.focus ?? '');
+    if (!m || !agreements.length) return;
+    const f: GlobeFocus = { kind: m[1] as GlobeFocus['kind'], id: m[2] };
+    setPlaying(false);
+    setYear(null);
+    setType(null);
+    if (f.kind === 'agreement' && ENDED.includes(model.agreements[f.id]?.status)) setHistoric(true);
+    fly(f);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.focus, params.t, agreements.length]);
+
   const types = useMemo(() => {
     const m = new Map<string, number>();
     for (const a of Object.values(model.agreements)) m.set(a.type, (m.get(a.type) ?? 0) + 1);
@@ -119,6 +135,7 @@ export default function GlobeTab() {
           {agreements.length === 0 ? (
             <Centered text={loading ? '載入協定資料…' : '沒有協定資料'} />
           ) : (
+            <GlobeErrorBoundary>
             <Suspense fallback={<Centered text="載入地球儀…" />}>
               <GlobeView
                 model={model}
@@ -131,6 +148,7 @@ export default function GlobeTab() {
                 dom={{ style: { flex: 1 } }}
               />
             </Suspense>
+            </GlobeErrorBoundary>
           )}
           <View style={styles.yearBadge}>
             <Text style={styles.yearText}>{year ?? '今天'}</Text>
@@ -226,7 +244,11 @@ export default function GlobeTab() {
 
 /** Where the camera should look for a selection. */
 function focusPoint(m: GlobeModel, f: GlobeFocus): { lat: number; lng: number } | null {
-  if (f.kind === 'node') return m.nodes[f.id] ?? null;
+  if (f.kind === 'node') {
+    // A country reached only through its blocs has no node of its own.
+    const p = m.nodes[f.id] ?? pointOf(f.id);
+    return p ? ('lat' in p ? p : { lat: p[0], lng: p[1] }) : null;
+  }
   if (f.kind === 'agreement') {
     const hub = m.hubs.find(h => h.id === f.id);
     if (hub) return hub;
@@ -495,6 +517,27 @@ function Segmented({ c, value, options, onChange }: {
       ))}
     </View>
   );
+}
+
+/** If the 3D globe fails to load or crashes, keep the page usable and say so. */
+class GlobeErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    if (!this.state.failed) return this.props.children;
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24, gap: 10 }}>
+        <Text style={{ color: '#cbd5e1', textAlign: 'center', lineHeight: 22 }}>
+          3D 地球無法顯示。旁邊的時間軸、篩選與協定清單仍可使用。
+        </Text>
+        <Pressable onPress={() => this.setState({ failed: false })}>
+          <Text style={styles.link}>重試</Text>
+        </Pressable>
+      </View>
+    );
+  }
 }
 
 function Centered({ text }: { text: string }) {

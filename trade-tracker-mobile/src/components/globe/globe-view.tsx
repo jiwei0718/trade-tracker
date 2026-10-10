@@ -73,6 +73,16 @@ function fitAltitude(w: number, h: number): number {
   return 1 / Math.sin(0.72 * Math.min(half, horizontal)) - 1;
 }
 
+/** Can this browser draw 3D at all (WebGL switched off, very old graphics driver...)? */
+function hasWebGL(): boolean {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+
 /** '#16a34a' → 'rgba(22, 163, 74, a)': the globe's shaders do not read 8-digit hex colours. */
 function rgba(hex: string, a: number): string {
   const n = parseInt(hex.slice(1), 16);
@@ -109,6 +119,7 @@ export default function GlobeView({ model, filter, focus, pulse, choropleth, cam
   const box = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [hover, setHover] = useState<string | null>(null);
+  const [webgl] = useState(hasWebGL);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
@@ -259,7 +270,9 @@ export default function GlobeView({ model, filter, focus, pulse, choropleth, cam
   const onReady = () => {
     const g = globe.current;
     if (!g) return;
-    g.pointOfView({ lat: 22, lng: 121, altitude: Math.max(2.2, fitAltitude(size.w, size.h)) });
+    // Opened with a selection (from another page): start there instead of over Taiwan.
+    const start = camera ?? { lat: 22, lng: 121, altitude: 2.2 };
+    g.pointOfView({ lat: start.lat, lng: start.lng, altitude: Math.max(start.altitude, fitAltitude(size.w, size.h)) });
     const c = g.controls() as any;
     c.autoRotateSpeed = 0.35;
     c.autoRotate = !focus;
@@ -277,7 +290,12 @@ export default function GlobeView({ model, filter, focus, pulse, choropleth, cam
 
   return (
     <div ref={box} style={{ position: 'absolute', inset: 0, background: SPACE, overflow: 'hidden' }}>
-      {size.w > 0 && (
+      {!webgl && (
+        <div style={{ color: '#cbd5e1', font: '14px/1.6 system-ui, sans-serif', padding: 24, textAlign: 'center', marginTop: '30%' }}>
+          這台電腦的瀏覽器無法顯示 3D 畫面(WebGL 未啟用)。<br />旁邊的時間軸、篩選與協定清單仍可使用。
+        </div>
+      )}
+      {webgl && size.w > 0 && (
         <Globe
           ref={globe}
           width={size.w}
