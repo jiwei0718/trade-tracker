@@ -12,6 +12,7 @@ import { usePageWidth } from '@/hooks/use-desktop';
 import TierChip from '@/components/tier-chip';
 import UpdateControls from '@/components/update-controls';
 import { controlsAvailable, listPending } from '@/lib/n8n';
+import { supabaseDashboardUrl } from '@/lib/supabase';
 
 const PIPELINE_LABELS: Record<string, string> = { database: '協定資料庫', news: '新聞動態', all: '全部' };
 
@@ -58,6 +59,13 @@ export default function Status() {
               {' · '}{agreements.length} 個協定 · {events.length} 筆事件 · 讀取於 {timeAgo(fetchedAt)}
             </Text>
             {!!error && <Text style={{ color: '#dc2626', fontSize: 12, marginTop: 2 }}>連線問題:{error}</Text>}
+            {!!error && source !== 'live' && !!supabaseDashboardUrl && (
+              <Pressable onPress={() => Linking.openURL(supabaseDashboardUrl!)} style={{ marginTop: 4 }}>
+                <Text style={{ color: '#2563eb', fontSize: 12, fontWeight: '600' }}>
+                  到 Supabase 查看專案狀態(暫停時按 Restore project 恢復,資料不會遺失) ›
+                </Text>
+              </Pressable>
+            )}
           </View>
           <Pressable onPress={refresh} style={[styles.button, { backgroundColor: c.backgroundElement }]}>
             <Ionicons name="refresh" size={14} color={c.text} />

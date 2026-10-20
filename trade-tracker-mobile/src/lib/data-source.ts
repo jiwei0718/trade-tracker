@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { AgreementDetail, SourceTier, TradeAgreement } from '@/data/types';
 import { agreements as bundledAgreements } from '@/data/agreements';
 import { taipeiDate } from './format';
-import { sbSelect, supabaseConfigured } from './supabase';
+import { explainDbError, sbSelect, supabaseConfigured } from './supabase';
 
 // Bump the version whenever the mapped snapshot shape changes, so stale caches are ignored.
 const CACHE_KEY = 'tt:snapshot-v5';
@@ -255,7 +255,7 @@ export async function loadData(opts: { force?: boolean } = {}): Promise<DataSnap
     await writeCache(live);
     return live;
   } catch (e) {
-    const error = e instanceof Error ? e.message : String(e);
+    const error = explainDbError(e);
     if (cached) return { ...cached.data, source: 'cache', fetchedAt: new Date(cached.ts).toISOString(), error };
     return bundledSnapshot(error);
   }
