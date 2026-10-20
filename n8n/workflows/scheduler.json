@@ -72,7 +72,7 @@
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "// 每小時整點檢查:開關打開、而且現在是設定的時間(臺北時間),才觸發該流程。開關都關閉時什麼都不做。\nconst FLOWS = {\"database\": [\"tt-run-wto-rta-sync\"], \"news\": [\"tt-run-jsi-ecom\", \"tt-run-global-news\"]};\nconst hour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Taipei', hour: 'numeric', hourCycle: 'h23' }).format(new Date()));\nconst due = [];\nfor (const s of $input.all().map((i) => i.json)) {\n  if (!s.auto_enabled || !FLOWS[s.pipeline]) continue;\n  const m = String(s.schedule_cron ?? '').match(/^(\\d+) (\\d+) \\* \\* \\*$/);   // 每天固定時間,例如 \"0 21 * * *\"\n  if (m && Number(m[2]) === hour) for (const path of FLOWS[s.pipeline]) due.push({ json: { pipeline: s.pipeline, path } });\n}\nreturn due;"
+        "jsCode": "// 每小時整點檢查:開關打開、而且現在是設定的時間(臺北時間),才觸發該流程。開關都關閉時什麼都不做。\nconst FLOWS = {\"database\": [\"tt-run-wto-rta-sync\"], \"news\": [\"tt-run-jsi-ecom\", \"tt-run-global-news\", \"tt-run-official-sources\"]};\nconst hour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Taipei', hour: 'numeric', hourCycle: 'h23' }).format(new Date()));\nconst due = [];\nfor (const s of $input.all().map((i) => i.json)) {\n  if (!s.auto_enabled || !FLOWS[s.pipeline]) continue;\n  const m = String(s.schedule_cron ?? '').match(/^(\\d+) (\\d+) \\* \\* \\*$/);   // 每天固定時間,例如 \"0 21 * * *\"\n  if (m && Number(m[2]) === hour) for (const path of FLOWS[s.pipeline]) due.push({ json: { pipeline: s.pipeline, path } });\n}\nreturn due;"
       },
       "notes": "開關關閉 → 到此為止",
       "notesInFlow": true

@@ -14,8 +14,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from n8n_build import (FETCH, FLOW_PATHS, GEMINI_CRED, JS_PARSE_RSS, JS_TIERS, PAD, SB, STEP, UA,
-                       Workflow, xs)
+from n8n_build import (FETCH, FLOW_PATHS, GEMINI_CRED, JS_PARSE_RSS, PAD, SB, STEP, UA, Workflow,
+                       js_news_finish, js_news_plan, js_news_validate, xs)
 
 OUT = Path(__file__).with_name("global-news.json")
 SOURCE_IDS = ["gnews-fta-en", "gnews-fta-zh"]
@@ -80,212 +80,6 @@ for (const p of parts) {
 return [{ json: { rows, stats } }];
 """
 
-JS_PLAN = r"""
-// 1) 找出每則新聞提到的國家與組織 → 候選協定  2) 沒有候選的只記為已看過  3) 組成給 AI 的提示
-const cfg = $('設定').first().json;
-const pending = $('讀取待處理項目').all().map((i) => i.json).filter((r) => r && r.id);
-const agreements = $('讀取協定清單').all().map((i) => i.json).filter((r) => r && r.id);
-const countries = $('讀取國家名稱').all().map((i) => i.json).filter((r) => r && r.code);
-const orgs = $('讀取組織名稱').all().map((i) => i.json).filter((r) => r && r.code);
-const known = $('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)
-  .map((e) => ({ id: e.id, agreement_id: e.agreement_id, date: e.event_date, summary: e.summary_zh }));
-
-// 名稱 → 代碼。中文用子字串比對;英文用整個字比對,全大寫縮寫(EU、UK、US)區分大小寫
-const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const cjk = (s) => /[㐀-鿿]/.test(s);
-const matchers = [];
-const add = (alias, code) => {
-  const a = String(alias ?? '').trim();
-  if (!a || (cjk(a) ? a.length < 2 : (a.length < 4 && !['EU', 'UK', 'US', 'USA', 'UAE', 'GCC'].includes(a)))) return;
-  const upper = a === a.toUpperCase();
-  matchers.push({ code, a, re: cjk(a) ? null : new RegExp(`(^|[^A-Za-z])${esc(a)}([^A-Za-z]|$)`, upper ? '' : 'i') });
-};
-for (const c of countries) { add(c.name_en, c.code); add(c.name_zh, c.code); (c.aliases ?? []).forEach((x) => add(x, c.code)); }
-for (const o of orgs) { add(o.name_en, o.code); add(o.abbr, o.code); add(o.name_zh, o.code); add(o.abbr_zh, o.code); }
-
-const byParty = new Map();
-for (const a of agreements) for (const p of a.parties ?? []) { if (!byParty.has(p)) byParty.set(p, []); byParty.get(p).push(a); }
-const names = agreements.map((a) => ({ a, keys: [a.short_name, (a.name_zh || '').split(/ \(|（/)[0], a.name]
-  .filter((n) => n && n.length >= 4).map((n) => n.toLowerCase()) }));
-const latest = (a) => Object.values(a.key_dates ?? {}).sort().pop() ?? '';
-
-const candidatesFor = (text) => {
-  const lower = text.toLowerCase();
-  const codes = new Set(matchers.filter((m) => (m.re ? m.re.test(text) : text.includes(m.a))).map((m) => m.code));
-  const score = new Map();
-  for (const code of codes) for (const a of byParty.get(code) ?? []) {
-    const hits = (a.parties ?? []).filter((p) => codes.has(p)).length;
-    score.set(a.id, Math.max(score.get(a.id) ?? 0, hits * 10));
-  }
-  for (const { a, keys } of names) if (keys.some((k) => lower.includes(k))) score.set(a.id, (score.get(a.id) ?? 0) + 25);
-  const byId = new Map(agreements.map((a) => [a.id, a]));
-  return [...score.entries()].map(([id, s]) => {
-    const a = byId.get(id);
-    return { a, s: s + (a.origin === 'curated' ? 3 : 0) + (a.status === 'expired' ? -5 : 0) + (latest(a) >= '2020' ? 2 : 0) };
-  }).sort((x, y) => y.s - x.s).slice(0, cfg.maxCandidates)
-    .map(({ a }) => ({ id: a.id, name: a.name_zh || a.name, status: a.status, parties: (a.parties ?? []).slice(0, 8) }));
-};
-
-const cutoff = Date.now() - cfg.lookbackDays * 86400000;
-const recent = pending.filter((r) => !r.published_at || Date.parse(r.published_at) >= cutoff)
-  .sort((a, b) => String(b.published_at ?? '').localeCompare(String(a.published_at ?? '')));
-const withCands = [], baselineIds = pending.filter((r) => r.published_at && Date.parse(r.published_at) < cutoff).map((r) => r.id);
-for (const r of recent) {
-  const cands = candidatesFor(`${r.title} ${r.raw?.description ?? ''}`);
-  if (cands.length) withCands.push({ r, cands }); else baselineIds.push(r.id);   // 沒提到任何已知國家或協定
-}
-const forLlm = withCands.slice(0, cfg.maxLlmItems);
-const summary = { pending: pending.length, baselineIds, deferred: withCands.length - forLlm.length, llmCount: forLlm.length,
-                  noCandidates: recent.length - withCands.length };
-
-const system = `你是國際貿易協定研究助理。每則輸入是一則新聞,附有「候選協定」清單(資料庫中可能相關的協定)。請判斷:
-1. relevant:這則新聞是否報導「某個特定貿易協定」的具體進展(啟動談判、完成談判、簽署、批准或生效、新成員加入、暫停)。泛論、評論、關稅措施、只是提到協定名稱的報導判 false。
-2. agreement_id:從候選協定中選出報導的那一個,填它的 id。如果是資料庫還沒有的協定(候選裡沒有),填 new;不相關填 none。只能填候選清單裡的 id、new 或 none。
-3. proposed_name_zh:agreement_id 為 new 時,寫這個協定的中文名稱(例如「阿聯–歐亞經濟聯盟經濟夥伴協定」);否則留空字串。
-4. event_type:started(啟動談判)、concluded(完成談判)、signed(簽署)、in_force(生效)、accession(新成員加入)、suspended(暫停)、ministerial(部長會議或聯合委員會)、news(其他進展)。只有原文明確寫出已簽署、已生效、已完成談判,才可用對應類型;「預計」「將於」一律用 news。
-5. event_date:事件發生日期 YYYY-MM-DD;不確定就用新聞發布日期。
-6. summary_zh:臺灣繁體中文摘要,80 字以內,只能根據提供的內容,不可推測。專有名詞第一次出現時用半形括號附英文原文。
-7. confidence:0 到 1。
-8. story:英文小寫與連字號的簡短代號,描述報導的具體事件,例如 uae-eaeu-epa-enters-into-force。同一批裡報導同一件事的新聞,story 必須完全相同。
-9. same_as:如果和 known_events 中某一則是同一件事,填那則事件的 id,否則填 0。
-譯名:Agreement=協定、Arrangement=協議、Treaty=條約、MOU=備忘錄、Joint Statement=聯合聲明、Economic Partnership Agreement=經濟夥伴協定、Free Trade Agreement=自由貿易協定。GATT=關稅及貿易總協定、Safeguards=防衛措施、Countervailing duties=平衡稅、Rules of origin=原產地規則、Most-favoured-nation=最惠國待遇。專有名詞(協定、組織、法規、會議名稱)第一次出現時寫成「中文 (原文)」,用半形括號;中文採我國官方譯名,不得使用中國大陸用語(例如「數字貿易」應為「數位貿易」、「信息」應為「資訊」)。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。
-每一則都要回傳,key 必須和輸入完全相同。`;
-
-const schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {
-  key: { type: 'STRING' }, relevant: { type: 'BOOLEAN' }, agreement_id: { type: 'STRING' },
-  proposed_name_zh: { type: 'STRING' },
-  event_type: { type: 'STRING', enum: ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended', 'ministerial', 'news'] },
-  event_date: { type: 'STRING' }, summary_zh: { type: 'STRING' }, confidence: { type: 'NUMBER' },
-  story: { type: 'STRING' }, same_as: { type: 'INTEGER' },
-}, required: ['key', 'relevant', 'agreement_id', 'proposed_name_zh', 'event_type', 'event_date', 'summary_zh', 'confidence', 'story', 'same_as'] } };
-
-if (!forLlm.length) return [{ json: { hasBatch: false, batch: [], summary } }];
-const payload = forLlm.map(({ r, cands }) => ({
-  key: String(r.id), publisher: r.raw?.publisher_domain ?? '', published_at: r.published_at,
-  title: r.title, description: r.raw?.description ?? '', candidates: cands,
-}));
-return [{ json: { hasBatch: true, batch: forLlm.map(({ r, cands }) => ({ ...r, candidateIds: cands.map((c) => c.id) })), summary, request: {
-  systemInstruction: { parts: [{ text: system }] },
-  contents: [{ role: 'user', parts: [{ text: JSON.stringify({ items: payload, known_events: known }) }] }],
-  generationConfig: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.2 },
-} } }];
-"""
-
-JS_VALIDATE = r"""
-// 品質檢查:協定代碼必須來自候選清單 → 日期 → 來源信任等級 → 決定「顯示(active)/待確認(pending)」
-const cfg = $('設定').first().json;
-const runId = $('建立執行紀錄').first().json.id;
-const plans = $('規劃 AI 批次').all().map((i) => i.json).filter((p) => p.hasBatch);
-const responses = $input.all().map((i) => i.json);
-__TIERS__
-const DATE = /^\d{4}-\d{2}(-\d{2})?$/;
-const today = new Date().toISOString().slice(0, 10);
-const okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;
-const TYPES = ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended', 'ministerial', 'news'];
-const STATE_CHANGING = ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended'];
-const fixTerms = (s) => s.replace(/台灣/g, '臺灣').replace(/中華民國（臺灣）/g, '中華民國(臺灣)');
-const known = Object.fromEntries($('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)
-  .map((e) => [e.id, { ...e, story_key: e.story_key || `event-${e.id}`, tier: e.new_value?.tier ?? 'S' }]));
-const slug = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
-
-const events = [], handledIds = [], failedIds = [], rejected = [];
-plans.forEach((plan, idx) => {
-  let out = null;
-  try { out = JSON.parse(responses[idx]?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''); } catch { out = null; }
-  if (!Array.isArray(out)) { failedIds.push(...plan.batch.map((b) => b.id)); return; }
-  const byKey = Object.fromEntries(out.map((o) => [String(o.key), o]));
-  for (const item of plan.batch) {
-    const o = byKey[String(item.id)];
-    if (!o) { failedIds.push(item.id); continue; }
-    handledIds.push(item.id);
-    if (!o.relevant || o.agreement_id === 'none') { rejected.push({ id: item.id, reason: 'not relevant' }); continue; }
-    const isNew = o.agreement_id === 'new';
-    if (!isNew && !item.candidateIds.includes(o.agreement_id)) { rejected.push({ id: item.id, reason: `id not in candidates: ${o.agreement_id}` }); continue; }
-    const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);
-    if (!summary) { rejected.push({ id: item.id, reason: 'empty summary' }); continue; }
-    const domain = item.raw?.publisher_domain || '';
-    if (isBlocked(domain)) { rejected.push({ id: item.id, reason: 'mainland Chinese source' }); continue; }
-    const tier = tierOf(domain);
-    const type = TYPES.includes(o.event_type) ? o.event_type : 'news';
-    const conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));
-    const published = String(item.published_at || '').slice(0, 10);
-    const eventDate = okDate(o.event_date) ? o.event_date : (okDate(published) ? published : null);
-    let status = 'pending';
-    if (isNew) status = 'pending';                                        // 新協定:要人工確認後才加入資料庫
-    else if (tier === 'S' && conf >= 0.7) status = 'active';
-    else if (STATE_CHANGING.includes(type)) status = 'pending';           // 非官方來源宣稱狀態改變:待交叉確認
-    else if ((tier === 'A' || tier === 'B') && conf >= 0.6) status = 'active';
-    const agreementId = isNew ? null : o.agreement_id;
-    const same = known[Number(o.same_as)];
-    const storyKey = same && (isNew || same.agreement_id === agreementId)
-      ? same.story_key
-      : `${agreementId ?? 'new'}/${(eventDate || today).slice(0, 7)}/${slug(o.story) || `item-${item.id}`}`;
-    events.push({
-      agreement_id: agreementId, event_type: type, event_date: eventDate, summary_zh: summary,
-      source_id: item.source_id, source_url: item.url, source_item_id: item.id, confidence: conf,
-      status, by_tool: cfg.model, run_id: runId, story_key: storyKey,
-      new_value: { title: item.title, publisher: domain, tier,
-                   proposed_name: isNew ? String(o.proposed_name_zh || '').slice(0, 120) || null : null },
-    });
-  }
-});
-
-// 交叉確認:(1) 同一件事已有可信來源(S/A/B)且已顯示的事件;或 (2) 這次有兩家以上不同的可信媒體(A/B)報導同一件事
-const trusted = new Set(Object.values(known).filter((e) => e.status === 'active' && e.tier !== 'C').map((e) => e.story_key));
-const outlets = {};
-for (const e of events) if (e.new_value.tier !== 'C') (outlets[e.story_key] ??= new Set()).add(e.new_value.publisher);
-for (const [k, s] of Object.entries(outlets)) if (s.size >= 2) trusted.add(k);
-for (const e of events) if (e.status === 'active' && e.new_value.tier !== 'C') trusted.add(e.story_key);
-let corroborated = 0;
-for (const e of events) {
-  if (e.status === 'pending' && e.agreement_id && trusted.has(e.story_key)) { e.status = 'active'; corroborated++; }
-}
-return [{ json: { events, handledIds, failedIds, rejected, corroborated } }];
-""".replace("__TIERS__", JS_TIERS.strip())
-
-JS_FINISH = r"""
-// 整理這次執行的結果:哪些項目標記為已處理、各來源狀態、執行紀錄
-const run = $('建立執行紀錄').first().json;
-const merged = $('合併兩個來源').first().json;
-const plan = $('規劃 AI 批次').first().json.summary;
-const fresh = $('存入新項目').all().map((i) => i.json).filter((r) => r && r.id);
-const v = $('驗證並產生事件').isExecuted
-  ? $('驗證並產生事件').first().json
-  : { events: [], handledIds: [], failedIds: [], rejected: [], corroborated: 0 };
-const writeFailed = $('寫入事件').isExecuted && !!$('寫入事件').first().json.error;
-
-const processed = [...plan.baselineIds, ...v.handledIds];
-const sourceRuns = Object.entries(merged.stats).map(([sid, s]) => ({
-  run_id: run.id, source_id: sid, status: s.status, items_fetched: s.fetched,
-  items_new: fresh.filter((r) => r.source_id === sid).length, error: s.error,
-}));
-const partial = writeFailed || v.failedIds.length > 0 || sourceRuns.some((s) => s.status === 'error');
-const written = writeFailed ? [] : v.events;
-const report = {
-  抓取: Object.fromEntries(Object.entries(merged.stats).map(([k, s]) => [k, `${s.status}:抓到 ${s.fetched} 則`])),
-  第一次見到: fresh.length,
-  沒提到已知國家或協定: plan.noCandidates,
-  只記為已看過的舊項目: plan.baselineIds.length - plan.noCandidates,
-  送給AI: plan.llmCount,
-  超過上限留待下次: plan.deferred,
-  AI處理失敗留待下次: v.failedIds.length,
-  判定不相關: v.rejected.length,
-  新事件: written.length,
-  其中直接顯示: written.filter((e) => e.status === 'active').length,
-  其中待確認: written.filter((e) => e.status === 'pending').length,
-  其中因交叉確認而顯示: writeFailed ? 0 : (v.corroborated ?? 0),
-  資料庫還沒有的協定: written.filter((e) => !e.agreement_id).map((e) => e.new_value.proposed_name),
-  事件預覽: written.slice(0, 20).map((e) => `[${e.status}] ${e.agreement_id ?? '新協定'}:${e.summary_zh}`),
-};
-return [{ json: {
-  processedFilter: processed.length ? `in.(${processed.join(',')})` : 'eq.-1',
-  sourceRuns,
-  runPatch: { status: partial ? 'partial' : 'success', finished_at: new Date().toISOString(),
-              llm_items: plan.llmCount, events_count: written.length,
-              error: writeFailed ? String($('寫入事件').first().json.error?.message ?? 'events insert failed') : null },
-  report,
-} }];
-"""
 
 # ─── Layout ───────────────────────────────────────────────────────────────
 
@@ -362,7 +156,7 @@ recent = http("讀取近期事件", [S3[6], MAIN_Y], "GET", f"{SB}/events",
                      {"name": "summary_zh", "value": "not.is.null"},
                      {"name": "order", "value": "detected_at.desc"}, {"name": "limit", "value": "150"}],
               executeOnce=True, alwaysOutputData=True, note="判斷是否同一件事用")
-plan = code("規劃 AI 批次", [S3[7], MAIN_Y], JS_PLAN, note="找候選協定、最多 30 則")
+plan = code("規劃 AI 批次", [S3[7], MAIN_Y], js_news_plan(), note="找候選協定、最多 30 則")
 gate = wf.if_true("有要給 AI 的項目?", [S3[8], MAIN_Y], "={{ $json.hasBatch }}",
                   note="上:有 → AI;下:沒有 → 收尾")
 
@@ -371,13 +165,13 @@ llm = http("AI 判斷與摘要", [S4[0], AI_Y], "POST",
            cred=GEMINI_CRED, body="={{ JSON.stringify($json.request) }}", timeout=180000,
            retryOnFail=True, maxTries=3, waitBetweenTries=5000, onError="continueRegularOutput",
            note="Gemini,失敗重試 3 次")
-validate = code("驗證並產生事件", [S4[1], AI_Y], JS_VALIDATE, note="品質檢查,決定顯示或待確認")
+validate = code("驗證並產生事件", [S4[1], AI_Y], js_news_validate(), note="品質檢查,決定顯示或待確認")
 write = http("寫入事件", [S4[2], AI_Y], "POST", f"{SB}/events",
              headers=[{"name": "Prefer", "value": "return=minimal"}],
              body="={{ JSON.stringify($json.events) }}", onError="continueRegularOutput", alwaysOutputData=True,
              note="只新增事件,不改協定")
 
-finish = code("收尾整理", [S5[0], MAIN_Y], JS_FINISH, note="統計這次的結果")
+finish = code("收尾整理", [S5[0], MAIN_Y], js_news_finish("合併兩個來源"), note="統計這次的結果")
 mark = http("標記已處理", [S5[1], MAIN_Y], "PATCH", f"{SB}/source_items",
             query=[{"name": "id", "value": "={{ $('收尾整理').first().json.processedFilter }}"}],
             headers=[{"name": "Prefer", "value": "return=minimal"}],

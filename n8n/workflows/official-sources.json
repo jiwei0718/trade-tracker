@@ -1,0 +1,1268 @@
+{
+  "id": "TtOfficialSrc001",
+  "name": "官方來源追蹤",
+  "active": false,
+  "nodes": [
+    {
+      "id": "1bca35b8-1e02-57ad-ba53-23548490f850",
+      "name": "手動執行",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        700
+      ],
+      "parameters": {},
+      "notes": "在 n8n 畫面按執行",
+      "notesInFlow": true
+    },
+    {
+      "id": "d46e7107-74ab-57b8-ac1d-7fd973d83549",
+      "name": "網頁或排程觸發",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        900
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tt-run-official-sources",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "allowedOrigins": "http://localhost:8080,http://localhost:8082"
+        }
+      },
+      "webhookId": "3b182ebd-0ecc-57e0-a64c-381c440418c1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtWebhookKey0001",
+          "name": "Webhook key (trade-tracker)"
+        }
+      },
+      "notes": "網頁按鈕或排程呼叫",
+      "notesInFlow": true
+    },
+    {
+      "id": "b2ec8e01-7b19-5667-8dd1-dceb860046dc",
+      "name": "讀取更新設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/update_settings",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "pipeline",
+              "value": "eq.news"
+            },
+            {
+              "name": "select",
+              "value": "max_llm_items,auto_enabled"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "notes": "讀「每次最多送幾則給 AI」",
+      "notesInFlow": true
+    },
+    {
+      "id": "5da5f2fb-51e5-5ccc-a964-f1f6a75c6308",
+      "name": "讀取來源設定",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/sources",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "like.off-*"
+            },
+            {
+              "name": "select",
+              "value": "id,name_zh,enabled,tier,url,config"
+            },
+            {
+              "name": "order",
+              "value": "id"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "notes": "官方來源清單(off- 開頭)",
+      "notesInFlow": true
+    },
+    {
+      "id": "e7039612-99e9-5ca4-b6aa-8b4dee608a1e",
+      "name": "設定",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 流程設定。每次最多送幾則給 AI 讀資料庫 update_settings(news),在網頁「資料狀態」頁看得到。\nconst settings = $('讀取更新設定').first().json;\nconst sources = $('讀取來源設定').all().map((i) => i.json).filter((s) => s && s.id);\nreturn [{ json: {\n  model: 'gemini-2.5-flash',\n  lookbackDays: 45,          // 第一次看到的項目,只有近 45 天內的才送 AI;更早的只記為已看過\n  maxLlmItems: settings.max_llm_items ?? 30,\n  maxCandidates: 12,         // 每則最多提供幾個候選協定給 AI\n  storyLookbackDays: 60,     // 判斷「是不是同一件事」時,參考近 60 天的已知事件\n  sources: Object.fromEntries(sources.map((s) => [s.id, s])),\n  sourceIds: sources.map((s) => s.id),\n} }];"
+      },
+      "notes": "流程參數集中在這裡",
+      "notesInFlow": true
+    },
+    {
+      "id": "99e613a8-21de-545a-b61f-38afb12faa6b",
+      "name": "建立執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ pipeline: \"news\", trigger: ($(\"網頁或排程觸發\").isExecuted && $(\"網頁或排程觸發\").first().json.body?.trigger === \"scheduled\" ? \"scheduled\" : \"manual\"), runner: \"n8n\", status: \"running\" }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "notes": "資料庫記一筆「執行中」",
+      "notesInFlow": true
+    },
+    {
+      "id": "dcfb82e9-c620-50fd-8a7c-bfb971261226",
+      "name": "列出要抓的來源",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 每個啟用的官方來源輸出一筆,下一步逐一抓取\nconst cfg = $('設定').first().json;\nreturn Object.values(cfg.sources).filter((s) => s.enabled && s.url).map((s) => ({ json: { id: s.id, url: s.url } }));"
+      },
+      "notes": "每個啟用的來源一筆",
+      "notesInFlow": true
+    },
+    {
+      "id": "6ba1116e-a66a-5178-8807-9f714615ba58",
+      "name": "抓取官方來源",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1720,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "data"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) trade-tracker"
+            }
+          ]
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput",
+      "notes": "逐一讀 RSS/Atom,失敗不中斷",
+      "notesInFlow": true
+    },
+    {
+      "id": "5c525d82-5961-5f5f-b4a2-8982fe86e697",
+      "name": "整理所有來源",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const decode = (s) => String(s ?? '')\n  .replace(/<!\\[CDATA\\[|\\]\\]>/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '\"')\n  .replace(/&#39;|&apos;/g, \"'\").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ').trim();\n\nconst parseRss = (xml) => (String(xml).match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || []).map((it) => {\n  const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n  const sourceUrl = (it.match(/<source[^>]*url=\"([^\"]+)\"/) || [])[1] || '';\n  return { title: get('title'), link: get('link'), guid: get('guid'), description: get('description'),\n           pubDate: get('pubDate'), source: get('source'), sourceUrl };\n});\nconst isoDate = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? null : new Date(t).toISOString(); };\n// RSS(<item>)或 Atom(<entry>,連結寫在 <link href=\"…\"/>)都能讀\nconst parseFeed = (xml) => {\n  const s = String(xml);\n  const blocks = s.match(/<item[\\s>][\\s\\S]*?<\\/item>/g) || s.match(/<entry[\\s>][\\s\\S]*?<\\/entry>/g) || [];\n  return blocks.map((it) => {\n    const get = (t) => { const m = it.match(new RegExp(`<${t}[^>]*>([\\\\s\\\\S]*?)</${t}>`)); return m ? decode(m[1]) : ''; };\n    const href = (it.match(/<link[^>]*rel=\"alternate\"[^>]*href=\"([^\"]+)\"/) || it.match(/<link[^>]*href=\"([^\"]+)\"/) || [])[1] || '';\n    return { title: get('title'), link: get('link') || decode(href), guid: get('guid') || get('id'),\n             description: get('description') || get('summary'),\n             pubDate: get('pubDate') || get('published') || get('updated') || get('dc:date') };\n  });\n};\n// n8n 的 Code 執行環境沒有 URL 物件,改用字串處理取網域\nconst host = (u) => String(u || '').replace(/^[a-z]+:\\/\\//i, '').split(/[/?#:]/)[0].replace(/^www\\./, '').toLowerCase();\n\n// 把每個來源的回應整理成項目;抓不到的來源記下錯誤(資料狀態頁的燈號會變色)\nconst cfg = $('設定').first().json;\nconst listed = $('列出要抓的來源').all().map((i) => i.json);\nconst strip = (s) => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nconst rows = [], stats = {};\nfor (const s of Object.values(cfg.sources)) if (!s.enabled) stats[s.id] = { status: 'skipped', fetched: 0, relevant: 0, error: null };\n$input.all().forEach((res, idx) => {\n  const src = cfg.sources[listed[res.pairedItem?.item ?? idx]?.id];\n  if (!src) return;\n  const body = res.json?.data;\n  if (res.json?.error || typeof body !== 'string') {\n    stats[src.id] = { status: 'error', fetched: 0, relevant: 0, error: String(res.json?.error?.message ?? res.json?.error ?? 'no data') };\n    return;\n  }\n  const items = parseFeed(body).filter((e) => e.title && (e.link || e.guid));\n  stats[src.id] = { status: items.length ? 'ok' : 'empty', fetched: items.length, relevant: items.length, error: null };\n  for (const e of items) {\n    rows.push({ source_id: src.id, item_key: (e.guid || e.link).slice(0, 500), title: strip(e.title).slice(0, 500),\n                url: e.link, published_at: isoDate(e.pubDate),\n                raw: { description: strip(e.description).slice(0, 800), publisher_domain: host(e.link),\n                       tier: src.tier, lang: src.config?.lang ?? null, jurisdiction: src.config?.jurisdiction ?? null } });\n  }\n});\nreturn [{ json: { rows, stats } }];"
+      },
+      "notes": "整理成項目、記下各來源狀態",
+      "notesInFlow": true
+    },
+    {
+      "id": "59198e10-bfcc-5aff-81c3-9b0bfa9589a2",
+      "name": "存入新項目",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "source_id,item_key"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=ignore-duplicates,return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "alwaysOutputData": true,
+      "notes": "看過的自動略過",
+      "notesInFlow": true
+    },
+    {
+      "id": "40a0fc57-f077-5db4-8eb2-6e7510c36703",
+      "name": "讀取待處理項目",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2660,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,source_id,item_key,title,url,published_at,raw"
+            },
+            {
+              "name": "processed_at",
+              "value": "is.null"
+            },
+            {
+              "name": "source_id",
+              "value": "like.off-*"
+            },
+            {
+              "name": "order",
+              "value": "published_at.desc.nullslast"
+            },
+            {
+              "name": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "所有還沒處理的項目",
+      "notesInFlow": true
+    },
+    {
+      "id": "1bfa06cb-2aed-5536-b322-b538f0559c41",
+      "name": "讀取協定清單",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2920,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/agreements_full",
+        "options": {
+          "timeout": 60000,
+          "pagination": {
+            "pagination": {
+              "paginationMode": "updateAParameterInEachRequest",
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "qs",
+                    "name": "offset",
+                    "value": "={{ $pageCount * 1000 }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ $response.body.length < 1000 }}",
+              "limitPagesFetched": true,
+              "maxRequests": 10
+            }
+          }
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,name,name_zh,short_name,status,origin,key_dates,parties"
+            },
+            {
+              "name": "tags",
+              "value": "not.cs.{wto-delisted}"
+            },
+            {
+              "name": "order",
+              "value": "id"
+            },
+            {
+              "name": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "比對候選協定用",
+      "notesInFlow": true
+    },
+    {
+      "id": "fbe850ce-ca62-5037-b4bc-dece68581391",
+      "name": "讀取國家名稱",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3180,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/countries",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "code,name_zh,name_en,aliases"
+            },
+            {
+              "name": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "中英文國名與別名",
+      "notesInFlow": true
+    },
+    {
+      "id": "8d1722db-eac2-519c-ab5f-5e56758386d3",
+      "name": "讀取組織名稱",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3440,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/organizations",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "code,name_zh,abbr_zh,name_en,abbr"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "東協、歐盟、南共市…",
+      "notesInFlow": true
+    },
+    {
+      "id": "6f128582-a7c3-56b2-8bf5-284a66218841",
+      "name": "讀取近期事件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3700,
+        700
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,agreement_id,event_date,summary_zh,story_key,status,source_id,new_value"
+            },
+            {
+              "name": "detected_at",
+              "value": "=gte.{{ new Date(Date.now() - $('設定').first().json.storyLookbackDays * 86400000).toISOString() }}"
+            },
+            {
+              "name": "summary_zh",
+              "value": "not.is.null"
+            },
+            {
+              "name": "order",
+              "value": "detected_at.desc"
+            },
+            {
+              "name": "limit",
+              "value": "150"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "判斷是否同一件事用",
+      "notesInFlow": true
+    },
+    {
+      "id": "e3b44417-ba1d-518e-a84f-2f5a188f4f76",
+      "name": "規劃 AI 批次",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3960,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1) 找出每則新聞提到的國家與組織 → 候選協定  2) 沒有候選的只記為已看過  3) 組成給 AI 的提示\nconst cfg = $('設定').first().json;\nconst pending = $('讀取待處理項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst agreements = $('讀取協定清單').all().map((i) => i.json).filter((r) => r && r.id);\nconst countries = $('讀取國家名稱').all().map((i) => i.json).filter((r) => r && r.code);\nconst orgs = $('讀取組織名稱').all().map((i) => i.json).filter((r) => r && r.code);\nconst known = $('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)\n  .map((e) => ({ id: e.id, agreement_id: e.agreement_id, date: e.event_date, summary: e.summary_zh }));\n\n// 名稱 → 代碼。中文用子字串比對;英文用整個字比對,全大寫縮寫(EU、UK、US)區分大小寫\nconst esc = (s) => s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\nconst cjk = (s) => /[㐀-鿿]/.test(s);\nconst matchers = [];\nconst add = (alias, code) => {\n  const a = String(alias ?? '').trim();\n  if (!a || (cjk(a) ? a.length < 2 : (a.length < 4 && !['EU', 'UK', 'US', 'USA', 'UAE', 'GCC'].includes(a)))) return;\n  const upper = a === a.toUpperCase();\n  matchers.push({ code, a, re: cjk(a) ? null : new RegExp(`(^|[^A-Za-z])${esc(a)}([^A-Za-z]|$)`, upper ? '' : 'i') });\n};\nfor (const c of countries) { add(c.name_en, c.code); add(c.name_zh, c.code); (c.aliases ?? []).forEach((x) => add(x, c.code)); }\nfor (const o of orgs) { add(o.name_en, o.code); add(o.abbr, o.code); add(o.name_zh, o.code); add(o.abbr_zh, o.code); }\n\nconst byParty = new Map();\nfor (const a of agreements) for (const p of a.parties ?? []) { if (!byParty.has(p)) byParty.set(p, []); byParty.get(p).push(a); }\nconst names = agreements.map((a) => ({ a, keys: [a.short_name, (a.name_zh || '').split(/ \\(|（/)[0], a.name]\n  .filter((n) => n && n.length >= 4).map((n) => n.toLowerCase()) }));\nconst latest = (a) => Object.values(a.key_dates ?? {}).sort().pop() ?? '';\n\nconst candidatesFor = (text) => {\n  const lower = text.toLowerCase();\n  const codes = new Set(matchers.filter((m) => (m.re ? m.re.test(text) : text.includes(m.a))).map((m) => m.code));\n  const score = new Map();\n  for (const code of codes) for (const a of byParty.get(code) ?? []) {\n    const hits = (a.parties ?? []).filter((p) => codes.has(p)).length;\n    score.set(a.id, Math.max(score.get(a.id) ?? 0, hits * 10));\n  }\n  for (const { a, keys } of names) if (keys.some((k) => lower.includes(k))) score.set(a.id, (score.get(a.id) ?? 0) + 25);\n  const byId = new Map(agreements.map((a) => [a.id, a]));\n  return [...score.entries()].map(([id, s]) => {\n    const a = byId.get(id);\n    return { a, s: s + (a.origin === 'curated' ? 3 : 0) + (a.status === 'expired' ? -5 : 0) + (latest(a) >= '2020' ? 2 : 0) };\n  }).sort((x, y) => y.s - x.s).slice(0, cfg.maxCandidates)\n    .map(({ a }) => ({ id: a.id, name: a.name_zh || a.name, status: a.status, parties: (a.parties ?? []).slice(0, 8) }));\n};\n\nconst cutoff = Date.now() - cfg.lookbackDays * 86400000;\nconst recent = pending.filter((r) => !r.published_at || Date.parse(r.published_at) >= cutoff)\n  .sort((a, b) => String(b.published_at ?? '').localeCompare(String(a.published_at ?? '')));\nconst withCands = [], baselineIds = pending.filter((r) => r.published_at && Date.parse(r.published_at) < cutoff).map((r) => r.id);\nconst onTopic = ((t) => /(agreement|\\bFTA\\b|free[- ]trade|trade (deal|pact|negotiat|talks)|partnership agreement|\\bCEPA\\b|\\bEPA\\b|accession|treaty|protocol|joint statement|reciprocal trade|digital (economy|trade)|entry into force|enters? into force|ratif|acuerdo|tratado|libre comercio|acordo|livre com[eé]rcio|協定|協議|自由貿易|經濟合作|夥伴|簽署|生效|談判|洽簽|CPTPP|ECFA|RCEP)/i.test(t));           // 與協定無關的項目(依關鍵字)不送 AI\nlet offTopic = 0;\nfor (const r of recent) {\n  if (!onTopic(`${r.title} ${r.raw?.description ?? ''}`)) { baselineIds.push(r.id); offTopic++; continue; }\n  const cands = candidatesFor(`${r.title} ${r.raw?.description ?? ''}`);\n  if (cands.length) withCands.push({ r, cands }); else baselineIds.push(r.id);   // 沒提到任何已知國家或協定\n}\nconst forLlm = withCands.slice(0, cfg.maxLlmItems);\nconst summary = { pending: pending.length, baselineIds, deferred: withCands.length - forLlm.length, llmCount: forLlm.length,\n                  noCandidates: recent.length - withCands.length - offTopic, offTopic };\n\nconst system = `你是國際貿易協定研究助理。每則輸入是一則官方新聞稿或公告,附有「候選協定」清單(資料庫中可能相關的協定)。請判斷:\n1. relevant:這則新聞是否報導「某個特定貿易協定」的具體進展(啟動談判、完成談判、簽署、批准或生效、新成員加入、暫停)。泛論、評論、關稅措施、只是提到協定名稱的報導判 false。\n2. agreement_id:從候選協定中選出報導的那一個,填它的 id。如果是資料庫還沒有的協定(候選裡沒有),填 new;不相關填 none。只能填候選清單裡的 id、new 或 none。\n3. proposed_name_zh:agreement_id 為 new 時,寫這個協定的中文名稱(例如「阿聯–歐亞經濟聯盟經濟夥伴協定」);否則留空字串。\n4. event_type:started(啟動談判)、concluded(完成談判)、signed(簽署)、in_force(生效)、accession(新成員加入)、suspended(暫停)、ministerial(部長會議或聯合委員會)、news(其他進展)。只有原文明確寫出已簽署、已生效、已完成談判,才可用對應類型;「預計」「將於」一律用 news。\n5. event_date:事件發生日期 YYYY-MM-DD;不確定就用新聞發布日期。\n6. summary_zh:臺灣繁體中文摘要,80 字以內,只能根據提供的內容,不可推測。專有名詞第一次出現時用半形括號附英文原文。\n7. confidence:0 到 1。\n8. story:英文小寫與連字號的簡短代號,描述報導的具體事件,例如 uae-eaeu-epa-enters-into-force。同一批裡報導同一件事的新聞,story 必須完全相同。\n9. same_as:如果和 known_events 中某一則是同一件事,填那則事件的 id,否則填 0。\n譯名:Agreement=協定、Arrangement=協議、Treaty=條約、MOU=備忘錄、Joint Statement=聯合聲明、Economic Partnership Agreement=經濟夥伴協定、Free Trade Agreement=自由貿易協定。GATT=關稅及貿易總協定、Safeguards=防衛措施、Countervailing duties=平衡稅、Rules of origin=原產地規則、Most-favoured-nation=最惠國待遇。專有名詞(協定、組織、法規、會議名稱)第一次出現時寫成「中文 (原文)」,用半形括號;中文採我國官方譯名,不得使用中國大陸用語(例如「數字貿易」應為「數位貿易」、「信息」應為「資訊」)。Taiwan 一律寫「中華民國(臺灣)」,「臺」不寫成「台」。\n每一則都要回傳,key 必須和輸入完全相同。`;\n\nconst schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: {\n  key: { type: 'STRING' }, relevant: { type: 'BOOLEAN' }, agreement_id: { type: 'STRING' },\n  proposed_name_zh: { type: 'STRING' },\n  event_type: { type: 'STRING', enum: ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended', 'ministerial', 'news'] },\n  event_date: { type: 'STRING' }, summary_zh: { type: 'STRING' }, confidence: { type: 'NUMBER' },\n  story: { type: 'STRING' }, same_as: { type: 'INTEGER' },\n}, required: ['key', 'relevant', 'agreement_id', 'proposed_name_zh', 'event_type', 'event_date', 'summary_zh', 'confidence', 'story', 'same_as'] } };\n\nif (!forLlm.length) return [{ json: { hasBatch: false, batch: [], summary } }];\nconst payload = forLlm.map(({ r, cands }) => ({\n  key: String(r.id), publisher: r.raw?.publisher_domain ?? '', published_at: r.published_at,\n  title: r.title, description: r.raw?.description ?? '', candidates: cands,\n}));\nreturn [{ json: { hasBatch: true, batch: forLlm.map(({ r, cands }) => ({ ...r, candidateIds: cands.map((c) => c.id) })), summary, request: {\n  systemInstruction: { parts: [{ text: system }] },\n  contents: [{ role: 'user', parts: [{ text: JSON.stringify({ items: payload, known_events: known }) }] }],\n  generationConfig: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.2 },\n} } }];"
+      },
+      "notes": "關鍵字篩選、找候選協定",
+      "notesInFlow": true
+    },
+    {
+      "id": "34c12b25-3ed2-55bb-8e37-def988223160",
+      "name": "有要給 AI 的項目?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4220,
+        700
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "455ab401-6fdd-5ac5-9754-6b4a36c970d2",
+              "leftValue": "={{ $json.hasBatch }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "notes": "上:有 → AI;下:沒有 → 收尾",
+      "notesInFlow": true
+    },
+    {
+      "id": "72ada0d2-66bf-538f-ba68-79c75f46d029",
+      "name": "AI 判斷與摘要",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4560,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('設定').first().json.model }}:generateContent",
+        "options": {
+          "timeout": 180000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtGeminiApiKey01",
+          "name": "Gemini API key"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput",
+      "notes": "Gemini,失敗重試 3 次",
+      "notesInFlow": true
+    },
+    {
+      "id": "8d91fef3-8280-51e8-a615-dd6499583889",
+      "name": "驗證並產生事件",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4820,
+        420
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 品質檢查:協定代碼必須來自候選清單 → 日期 → 來源信任等級 → 決定「顯示(active)/待確認(pending)」\nconst cfg = $('設定').first().json;\nconst runId = $('建立執行紀錄').first().json.id;\nconst plans = $('規劃 AI 批次').all().map((i) => i.json).filter((p) => p.hasBatch);\nconst responses = $input.all().map((i) => i.json);\n// 來源信任等級:S 官方、A 學術智庫、B 一線媒體;其他一律 C。比對網域尾端(例如 asia.nikkei.com → nikkei.com)\nconst TIER = {\n  // 官方:國際組織與各國貿易主管機關\n  'wto.org': 'S', 'efta.int': 'S', 'asean.org': 'S', 'mercosur.int': 'S', 'europa.eu': 'S', 'admin.ch': 'S',\n  'ustr.gov': 'S', 'commerce.gov': 'S', 'whitehouse.gov': 'S', 'gov.uk': 'S', 'international.gc.ca': 'S',\n  'dfat.gov.au': 'S', 'mfat.govt.nz': 'S', 'mti.gov.sg': 'S', 'miti.gov.my': 'S', 'meti.go.jp': 'S', 'mofa.go.jp': 'S',\n  'motie.go.kr': 'S', 'commerce.gov.in': 'S', 'pib.gov.in': 'S', 'gob.mx': 'S', 'gov.br': 'S',\n  'trade.gov.tw': 'S', 'moea.gov.tw': 'S', 'ey.gov.tw': 'S', 'mofa.gov.tw': 'S', 'president.gov.tw': 'S',\n  // 學術與智庫\n  'oecd.org': 'A', 'unctad.org': 'A', 'iisd.org': 'A', 'hinrichfoundation.com': 'A', 'piie.com': 'A',\n  'cfr.org': 'A', 'brookings.edu': 'A', 'csis.org': 'A', 'ecipe.org': 'A', 'bruegel.org': 'A', 'chathamhouse.org': 'A',\n  'carnegieendowment.org': 'A', 'lowyinstitute.org': 'A', 'eastasiaforum.org': 'A', 'digitalpolicyalert.org': 'A',\n  'wita.org': 'A', 'cier.edu.tw': 'A', 'tier.org.tw': 'A',\n  // 一線媒體與通訊社\n  'reuters.com': 'B', 'ft.com': 'B', 'bloomberg.com': 'B', 'wsj.com': 'B', 'nikkei.com': 'B', 'economist.com': 'B',\n  'apnews.com': 'B', 'afp.com': 'B', 'bbc.com': 'B', 'bbc.co.uk': 'B', 'nytimes.com': 'B', 'theguardian.com': 'B',\n  'politico.eu': 'B', 'politico.com': 'B', 'euractiv.com': 'B', 'borderlex.net': 'B', 'insidetrade.com': 'B',\n  'ip-watch.org': 'B', 'devex.com': 'B', 'dw.com': 'B', 'france24.com': 'B', 'aljazeera.com': 'B',\n  'scmp.com': 'B', 'straitstimes.com': 'B', 'kyodonews.net': 'B', 'yna.co.kr': 'B', 'koreaherald.com': 'B',\n  'bernama.com': 'B', 'antaranews.com': 'B', 'abc.net.au': 'B', 'rnz.co.nz': 'B', 'cbc.ca': 'B',\n  'theglobeandmail.com': 'B', 'mercopress.com': 'B', 'batimes.com.ar': 'B',\n  'economictimes.com': 'B', 'thehindubusinessline.com': 'B', 'thehindu.com': 'B', 'livemint.com': 'B',\n  'business-standard.com': 'B', 'financialexpress.com': 'B', 'indianexpress.com': 'B', 'hindustantimes.com': 'B',\n  'cna.com.tw': 'B', 'focustaiwan.tw': 'B', 'taipeitimes.com': 'B', 'udn.com': 'B', 'ltn.com.tw': 'B',\n  'chinatimes.com': 'B', 'cw.com.tw': 'B', 'rti.org.tw': 'B', 'pts.org.tw': 'B', 'ftvnews.com.tw': 'B',\n  'tvbs.com.tw': 'B', 'setn.com': 'B', 'ettoday.net': 'B', 'storm.mg': 'B', 'businessweekly.com.tw': 'B',\n  'wealth.com.tw': 'B', 'ctee.com.tw': 'B', 'moneydj.com': 'B', 'technews.tw': 'B',\n  'gmanetwork.com': 'B', 'inquirer.net': 'B', 'philstar.com': 'B', 'bangkokpost.com': 'B', 'nationthailand.com': 'B',\n  'vnexpress.net': 'B', 'thejakartapost.com': 'B', 'thestar.com.my': 'B', 'channelnewsasia.com': 'B',\n  'arabnews.com': 'B', 'thenationalnews.com': 'B', 'gulfnews.com': 'B', 'khaleejtimes.com': 'B', 'zawya.com': 'B',\n  'wam.ae': 'B', 'spa.gov.sa': 'B', 'japantimes.co.jp': 'B', 'asahi.com': 'B', 'mainichi.jp': 'B', 'nhk.or.jp': 'B',\n};\nconst tierOf = (d) => {\n  const p = String(d || '').split('.');\n  for (let i = 0; i < p.length - 1; i++) { const t = TIER[p.slice(i).join('.')]; if (t) return t; }\n  return 'C';\n};\n// 本工具不採用中國大陸的來源:.cn 網域、官方媒體與入口網站的報導一律不寫入\nconst BLOCKED = ['cn', 'xinhuanet.com', 'chinadaily.com.cn', 'cgtn.com', 'chinanews.com', 'huanqiu.com', 'cctv.com',\n  'caixin.com', 'yicai.com', 'sohu.com', '163.com', 'qq.com', 'ifeng.com', 'eastmoney.com', 'jiemian.com'];\nconst isBlocked = (d) => {\n  const p = String(d || '').toLowerCase().split('.');\n  for (let i = 0; i < p.length; i++) if (BLOCKED.includes(p.slice(i).join('.'))) return true;\n  return false;\n};\nconst DATE = /^\\d{4}-\\d{2}(-\\d{2})?$/;\nconst today = new Date().toISOString().slice(0, 10);\nconst okDate = (s) => typeof s === 'string' && DATE.test(s) && s >= '1990' && s <= today;\nconst TYPES = ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended', 'ministerial', 'news'];\nconst STATE_CHANGING = ['started', 'concluded', 'signed', 'in_force', 'accession', 'suspended'];\nconst fixTerms = (s) => s.replace(/台灣/g, '臺灣').replace(/中華民國（臺灣）/g, '中華民國(臺灣)');\nconst known = Object.fromEntries($('讀取近期事件').all().map((i) => i.json).filter((r) => r && r.id)\n  .map((e) => [e.id, { ...e, story_key: e.story_key || `event-${e.id}`, tier: e.new_value?.tier ?? 'S' }]));\nconst slug = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);\n\nconst events = [], handledIds = [], failedIds = [], rejected = [];\nplans.forEach((plan, idx) => {\n  let out = null;\n  try { out = JSON.parse(responses[idx]?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''); } catch { out = null; }\n  if (!Array.isArray(out)) { failedIds.push(...plan.batch.map((b) => b.id)); return; }\n  const byKey = Object.fromEntries(out.map((o) => [String(o.key), o]));\n  for (const item of plan.batch) {\n    const o = byKey[String(item.id)];\n    if (!o) { failedIds.push(item.id); continue; }\n    handledIds.push(item.id);\n    if (!o.relevant || o.agreement_id === 'none') { rejected.push({ id: item.id, reason: 'not relevant' }); continue; }\n    const isNew = o.agreement_id === 'new';\n    if (!isNew && !item.candidateIds.includes(o.agreement_id)) { rejected.push({ id: item.id, reason: `id not in candidates: ${o.agreement_id}` }); continue; }\n    const summary = fixTerms(String(o.summary_zh || '').trim()).slice(0, 200);\n    if (!summary) { rejected.push({ id: item.id, reason: 'empty summary' }); continue; }\n    const domain = item.raw?.publisher_domain || '';\n    if (isBlocked(domain)) { rejected.push({ id: item.id, reason: 'mainland Chinese source' }); continue; }\n    const tier = item.raw?.tier || tierOf(domain);\n    const type = TYPES.includes(o.event_type) ? o.event_type : 'news';\n    const conf = Math.max(0, Math.min(1, Number(o.confidence) || 0));\n    const published = String(item.published_at || '').slice(0, 10);\n    const eventDate = okDate(o.event_date) ? o.event_date : (okDate(published) ? published : null);\n    let status = 'pending';\n    if (isNew) status = 'pending';                                        // 新協定:要人工確認後才加入資料庫\n    else if (tier === 'S' && conf >= 0.7) status = 'active';\n    else if (STATE_CHANGING.includes(type)) status = 'pending';           // 非官方來源宣稱狀態改變:待交叉確認\n    else if ((tier === 'A' || tier === 'B') && conf >= 0.6) status = 'active';\n    const agreementId = isNew ? null : o.agreement_id;\n    const same = known[Number(o.same_as)];\n    const storyKey = same && (isNew || same.agreement_id === agreementId)\n      ? same.story_key\n      : `${agreementId ?? 'new'}/${(eventDate || today).slice(0, 7)}/${slug(o.story) || `item-${item.id}`}`;\n    events.push({\n      agreement_id: agreementId, event_type: type, event_date: eventDate, summary_zh: summary,\n      source_id: item.source_id, source_url: item.url, source_item_id: item.id, confidence: conf,\n      status, by_tool: cfg.model, run_id: runId, story_key: storyKey,\n      new_value: { title: item.title, publisher: domain, tier,\n                   proposed_name: isNew ? String(o.proposed_name_zh || '').slice(0, 120) || null : null },\n    });\n  }\n});\n\n// 交叉確認:(1) 同一件事已有可信來源(S/A/B)且已顯示的事件;或 (2) 這次有兩家以上不同的可信媒體(A/B)報導同一件事\nconst trusted = new Set(Object.values(known).filter((e) => e.status === 'active' && e.tier !== 'C').map((e) => e.story_key));\nconst outlets = {};\nfor (const e of events) if (e.new_value.tier !== 'C') (outlets[e.story_key] ??= new Set()).add(e.new_value.publisher);\nfor (const [k, s] of Object.entries(outlets)) if (s.size >= 2) trusted.add(k);\nfor (const e of events) if (e.status === 'active' && e.new_value.tier !== 'C') trusted.add(e.story_key);\nlet corroborated = 0;\nfor (const e of events) {\n  if (e.status === 'pending' && e.agreement_id && trusted.has(e.story_key)) { e.status = 'active'; corroborated++; }\n}\nreturn [{ json: { events, handledIds, failedIds, rejected, corroborated } }];"
+      },
+      "notes": "品質檢查,決定顯示或待確認",
+      "notesInFlow": true
+    },
+    {
+      "id": "b2da917f-4330-52ea-bebd-fea4fd6daf17",
+      "name": "寫入事件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5080,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/events",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.events) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "notes": "只新增事件,不改協定",
+      "notesInFlow": true
+    },
+    {
+      "id": "97dfb16a-ace3-53a7-9934-d65ce35deaae",
+      "name": "收尾整理",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5500,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 整理這次執行的結果:哪些項目標記為已處理、各來源狀態、執行紀錄\nconst run = $('建立執行紀錄').first().json;\nconst merged = $('整理所有來源').first().json;\nconst plan = $('規劃 AI 批次').first().json.summary;\nconst fresh = $('存入新項目').all().map((i) => i.json).filter((r) => r && r.id);\nconst v = $('驗證並產生事件').isExecuted\n  ? $('驗證並產生事件').first().json\n  : { events: [], handledIds: [], failedIds: [], rejected: [], corroborated: 0 };\nconst writeFailed = $('寫入事件').isExecuted && !!$('寫入事件').first().json.error;\n\nconst processed = [...plan.baselineIds, ...v.handledIds];\nconst sourceRuns = Object.entries(merged.stats).map(([sid, s]) => ({\n  run_id: run.id, source_id: sid, status: s.status, items_fetched: s.fetched,\n  items_new: fresh.filter((r) => r.source_id === sid).length, error: s.error,\n}));\nconst partial = writeFailed || v.failedIds.length > 0 || sourceRuns.some((s) => s.status === 'error');\nconst written = writeFailed ? [] : v.events;\nconst report = {\n  抓取: Object.fromEntries(Object.entries(merged.stats).map(([k, s]) => [k, `${s.status}:抓到 ${s.fetched} 則`])),\n  第一次見到: fresh.length,\n  與協定無關略過: plan.offTopic ?? 0,\n  沒提到已知國家或協定: plan.noCandidates,\n  只記為已看過的舊項目: plan.baselineIds.length - plan.noCandidates,\n  送給AI: plan.llmCount,\n  超過上限留待下次: plan.deferred,\n  AI處理失敗留待下次: v.failedIds.length,\n  判定不相關: v.rejected.length,\n  新事件: written.length,\n  其中直接顯示: written.filter((e) => e.status === 'active').length,\n  其中待確認: written.filter((e) => e.status === 'pending').length,\n  其中因交叉確認而顯示: writeFailed ? 0 : (v.corroborated ?? 0),\n  資料庫還沒有的協定: written.filter((e) => !e.agreement_id).map((e) => e.new_value.proposed_name),\n  事件預覽: written.slice(0, 20).map((e) => `[${e.status}] ${e.agreement_id ?? '新協定'}:${e.summary_zh}`),\n};\nreturn [{ json: {\n  processedFilter: processed.length ? `in.(${processed.join(',')})` : 'eq.-1',\n  sourceRuns,\n  runPatch: { status: partial ? 'partial' : 'success', finished_at: new Date().toISOString(),\n              llm_items: plan.llmCount, events_count: written.length,\n              error: writeFailed ? String($('寫入事件').first().json.error?.message ?? 'events insert failed') : null },\n  report,\n} }];"
+      },
+      "notes": "統計這次的結果",
+      "notesInFlow": true
+    },
+    {
+      "id": "f0af629f-d056-51fc-8aac-f1bad40cf59e",
+      "name": "標記已處理",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5760,
+        700
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_items",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('收尾整理').first().json.processedFilter }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ processed_at: new Date().toISOString() }) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "下次不再送 AI",
+      "notesInFlow": true
+    },
+    {
+      "id": "31aa6757-866c-5f98-aaf6-22517107dc15",
+      "name": "寫入來源結果",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6020,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/source_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.sourceRuns) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "健康燈號的依據",
+      "notesInFlow": true
+    },
+    {
+      "id": "c9ffd0d8-78a2-5933-a166-73bcfb7682e5",
+      "name": "完成執行紀錄",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6280,
+        700
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://tsvmouanmvhbhwwwqtdt.supabase.co/rest/v1/pipeline_runs",
+        "options": {
+          "timeout": 60000
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "=eq.{{ $('建立執行紀錄').first().json.id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('收尾整理').first().json.runPatch) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "TtSupabaseSecret",
+          "name": "Supabase secret key (trade-tracker)"
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "notes": "標記成功或部分失敗",
+      "notesInFlow": true
+    },
+    {
+      "id": "8d3b3f44-a192-5f35-a25d-dbad903e2a1d",
+      "name": "執行摘要",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6540,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{ json: $('收尾整理').first().json.report }];"
+      },
+      "notes": "點我看中文報告",
+      "notesInFlow": true
+    },
+    {
+      "id": "8116f2dd-0c66-56ee-b7af-0f37e19c7151",
+      "name": "① 讀取設定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        452
+      ],
+      "parameters": {
+        "content": "## ① 讀取設定(準備工作)\n- **手動執行**:在 n8n 畫面按下方「Execute workflow」就從這裡開始。\n- **網頁或排程觸發**:網頁「資料狀態」頁的「立即更新」(新聞動態),或自動更新排程(預設關閉)從這裡啟動。要帶金鑰,只接受這台電腦上的網頁。\n- **讀取更新設定**:讀「每次最多送幾則給 AI」(新聞動態的設定)。\n- **讀取來源設定**:讀資料庫裡所有 off- 開頭的官方來源(網址、是否停用、信任等級)。新增來源只要在資料庫加一筆,不用改這個流程。\n- **設定**:模型、回溯天數(45 天)、每則最多幾個候選協定(12 個)。\n- **建立執行紀錄**:在資料庫新增一筆「執行中」。",
+        "width": 1220,
+        "height": 638,
+        "color": 4
+      }
+    },
+    {
+      "id": "e900f0fd-60b6-5c96-957c-96739cc71d1d",
+      "name": "② 抓取官方來源",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        416
+      ],
+      "parameters": {
+        "content": "## ② 抓取官方來源\n- **列出要抓的來源**:每個啟用的官方來源輸出一筆。\n- **抓取官方來源**:逐一讀各機關的 RSS 或 Atom(貿易主管機關、WTO、區域組織秘書處)。單一來源失敗會重試 3 次,仍失敗也不會中斷流程。\n- **整理所有來源**:整理成標題、日期、連結、摘要,並記下每個來源的狀態(資料狀態頁燈號的依據)。\n\n只用官方來源,是參考 Digital Policy Alert 的做法:直接追政府原始資料,而不是跟著新聞熱度走。",
+        "width": 700,
+        "height": 474,
+        "color": 6
+      }
+    },
+    {
+      "id": "edc72048-8483-5fdd-b3ad-2f646ce6ccad",
+      "name": "③ 找出新項目與候選協定",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        452
+      ],
+      "parameters": {
+        "content": "## ③ 找出新項目與候選協定\n- **存入新項目**:存進「已看過項目」清單,已經存過的自動略過。\n- **讀取待處理項目**:所有還沒處理的官方項目。\n- **讀取協定清單**、**讀取國家名稱**、**讀取組織名稱**:用來比對項目提到哪些國家、組織或協定。\n- **讀取近期事件**:近 60 天的事件,讓 AI 判斷是不是同一件事(例如新聞已報過)。\n- **規劃 AI 批次**:先用關鍵字(協定、自由貿易、簽署、生效、談判…,含英、西、葡、中文)排除部長出訪、人事等與協定無關的項目;再找出提到的國家與組織,挑出最多 12 個候選協定。每次最多送 30 則。\n- **有要給 AI 的項目?**:有 → 往上到 ④;沒有 → 直接到 ⑤。",
+        "width": 2000,
+        "height": 438,
+        "color": 5
+      }
+    },
+    {
+      "id": "e38898b8-cbd7-5e86-9ca7-09e451fe0437",
+      "name": "④ AI 判斷與品質檢查",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        100
+      ],
+      "parameters": {
+        "content": "## ④ AI 判斷與品質檢查\n- **AI 判斷與摘要**:Gemini 從候選協定中選出報導的那一個(或標記為資料庫還沒有的新協定),判斷事件類型與日期,寫繁體中文摘要。\n- **驗證並產生事件**:\n  - 協定代碼必須來自候選清單,否則丟棄\n  - 中國大陸的來源(.cn 網域、官方媒體)不採用,直接丟棄\n  - 官方來源(信任等級 S)且 AI 有把握 → 直接顯示;新協定 → 一律待確認,人工確認後才加入資料庫\n  - 同一件事已有可信來源報導 → 串成同一個「故事」\n- **寫入事件**:只新增事件,不改協定本身。",
+        "width": 700,
+        "height": 510,
+        "color": 3
+      }
+    },
+    {
+      "id": "c372394b-2631-5432-bdfe-a98263a2a39b",
+      "name": "⑤ 收尾與紀錄",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5460,
+        476
+      ],
+      "parameters": {
+        "content": "## ⑤ 收尾與紀錄\n- **收尾整理**:統計結果,列出「資料庫還沒有的協定」。\n- **標記已處理**:處理完的項目做記號;AI 失敗的下次重試。\n- **寫入來源結果**:每個官方來源各一筆,資料狀態頁健康燈號的依據。\n- **完成執行紀錄**:標記成功或部分失敗。\n- **執行摘要**:點開看這次的中文報告。",
+        "width": 1220,
+        "height": 414,
+        "color": 7
+      }
+    },
+    {
+      "id": "df5695a8-8692-548d-9f80-2bbfbe63e028",
+      "name": "說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -380
+      ],
+      "parameters": {
+        "content": "## 官方來源追蹤\n**怎麼執行**:按畫面下方「Execute workflow」,或在網頁「資料狀態」頁按新聞動態的「立即更新」。自動更新預設關閉。\n\n**流程**:① 讀取設定 → ② 抓取官方來源 → ③ 找出新項目與候選協定 → ④ AI 判斷與品質檢查 → ⑤ 收尾與紀錄\n\n**和「全球協定新聞追蹤」的差別**:那條用 Google 新聞搜尋;這條只讀各國政府與國際組織自己發布的新聞稿,來源可信度最高,也較適合日後商業使用(政府資料多半可重複使用)。\n\n**新增或停用來源**:在資料庫 sources 表新增一筆 id 為 off- 開頭的資料(kind = rss,tier = S),或把 enabled 改為 false。\n\n**注意**:這個流程由程式檔 n8n/workflows/build_official_sources.py 產生。如果在畫面上修改,請告訴我,我會同步回程式檔。",
+        "width": 1240,
+        "height": 440,
+        "color": 1
+      }
+    }
+  ],
+  "connections": {
+    "網頁或排程觸發": {
+      "main": [
+        [
+          {
+            "node": "讀取更新設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "手動執行": {
+      "main": [
+        [
+          {
+            "node": "讀取更新設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取更新設定": {
+      "main": [
+        [
+          {
+            "node": "讀取來源設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取來源設定": {
+      "main": [
+        [
+          {
+            "node": "設定",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "設定": {
+      "main": [
+        [
+          {
+            "node": "建立執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "建立執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "列出要抓的來源",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "列出要抓的來源": {
+      "main": [
+        [
+          {
+            "node": "抓取官方來源",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "抓取官方來源": {
+      "main": [
+        [
+          {
+            "node": "整理所有來源",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "整理所有來源": {
+      "main": [
+        [
+          {
+            "node": "存入新項目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "存入新項目": {
+      "main": [
+        [
+          {
+            "node": "讀取待處理項目",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取待處理項目": {
+      "main": [
+        [
+          {
+            "node": "讀取協定清單",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取協定清單": {
+      "main": [
+        [
+          {
+            "node": "讀取國家名稱",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取國家名稱": {
+      "main": [
+        [
+          {
+            "node": "讀取組織名稱",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取組織名稱": {
+      "main": [
+        [
+          {
+            "node": "讀取近期事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取近期事件": {
+      "main": [
+        [
+          {
+            "node": "規劃 AI 批次",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "規劃 AI 批次": {
+      "main": [
+        [
+          {
+            "node": "有要給 AI 的項目?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI 判斷與摘要": {
+      "main": [
+        [
+          {
+            "node": "驗證並產生事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "驗證並產生事件": {
+      "main": [
+        [
+          {
+            "node": "寫入事件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入事件": {
+      "main": [
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "收尾整理": {
+      "main": [
+        [
+          {
+            "node": "標記已處理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "標記已處理": {
+      "main": [
+        [
+          {
+            "node": "寫入來源結果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入來源結果": {
+      "main": [
+        [
+          {
+            "node": "完成執行紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "完成執行紀錄": {
+      "main": [
+        [
+          {
+            "node": "執行摘要",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "有要給 AI 的項目?": {
+      "main": [
+        [
+          {
+            "node": "AI 判斷與摘要",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "收尾整理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Taipei",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

@@ -9,10 +9,11 @@ import { Platform } from 'react-native';
 const N8N_URL = process.env.EXPO_PUBLIC_N8N_URL;
 const RUN_KEY = process.env.EXPO_PUBLIC_N8N_RUN_KEY;
 
-// 「立即更新」starts every flow of the pipeline (news = e-commerce JSI tracking + global agreement news).
+// 「立即更新」starts every flow of the pipeline (news = e-commerce JSI tracking, global agreement news
+// and official sources). Keep in step with RUN_PATHS in n8n/workflows/n8n_build.py.
 const RUN_PATHS: Record<string, string[]> = {
   database: ['tt-run-wto-rta-sync'],
-  news: ['tt-run-jsi-ecom', 'tt-run-global-news'],
+  news: ['tt-run-jsi-ecom', 'tt-run-global-news', 'tt-run-official-sources'],
 };
 
 export const controlsAvailable =
