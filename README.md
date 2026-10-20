@@ -151,6 +151,8 @@ App 的「名詞資料庫」(名詞頁 `/glossary`、說明頁 `/term/<id>`):
 - 協定資料庫同步有熔斷:一次變動太多筆(例如狀態變更超過 35 筆)就整批不寫入,資料狀態頁亮黃燈。
 - WTO 不再列出的協定(多半是改名前的舊名稱)只加 `wto-delisted` 標記,網頁隱藏,資料不刪除。
 - 網頁版只在本機執行,不放到公開網路。
+- 每個資料來源、套件與服務能否商用,整理在 `docs/licences.md`;新增來源前先確認授權。
+- 資料庫備份:`python backend/backup_db.py`(存到 `%LOCALAPPDATA%	rade-trackerackups`)。GitHub Actions「保持資料庫連線」每週一、四讀一筆資料,避免免費專案因 7 天未使用而暫停。
 
 ---
 
