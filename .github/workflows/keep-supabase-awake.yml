@@ -1,0 +1,36 @@
+# 保持 Supabase 資料庫不被暫停
+#
+# Supabase 免費方案的專案超過 7 天沒有存取就會自動暫停(暫停超過 90 天可能無法再恢復)。
+# 這個排程每週一、四(臺北時間 11:00)讀一筆協定資料,讓資料庫維持「有在使用」。
+#
+# - 只讀不寫:用網頁也在用的公開金鑰(publishable key,資料庫權限只能讀)。
+# - 不抓新資料、不呼叫 AI,跟「自動更新」無關;自動更新仍由網頁「資料狀態」頁的開關決定(預設關閉)。
+# - 在 GitHub 的雲端執行,電腦關機也有效。可在 GitHub 的 Actions 頁手動執行(Run workflow)。
+# - 需要兩個 repo secrets:SUPABASE_URL、SUPABASE_PUBLISHABLE_KEY(與 .env 相同)。
+name: 保持資料庫連線
+
+on:
+  schedule:
+    - cron: "0 3 * * 1,4"   # UTC 03:00 = 臺北 11:00;兩次之間最多 4 天
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 讀一筆協定資料
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
+            "$SUPABASE_URL/rest/v1/agreements?select=id&limit=1" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
+          echo "Supabase 回應:$code"
+          if [ "$code" != "200" ]; then
+            echo "::error::資料庫沒有回應(可能已被暫停),請到 Supabase 網站按 Restore project。"
+            exit 1
+          fi
