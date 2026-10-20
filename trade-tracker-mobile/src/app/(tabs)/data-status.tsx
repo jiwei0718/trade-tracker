@@ -62,7 +62,7 @@ export default function Status() {
             {!!error && source !== 'live' && !!supabaseDashboardUrl && (
               <Pressable onPress={() => Linking.openURL(supabaseDashboardUrl!)} style={{ marginTop: 4 }}>
                 <Text style={{ color: '#2563eb', fontSize: 12, fontWeight: '600' }}>
-                  到 Supabase 查看專案狀態(暫停時按 Restore project 恢復,資料不會遺失) ›
+                  到 Supabase 查看專案狀態(暫停時按 Resume project 恢復,資料不會遺失) ›
                 </Text>
               </Pressable>
             )}

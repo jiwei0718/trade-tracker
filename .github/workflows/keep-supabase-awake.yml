@@ -31,6 +31,6 @@ jobs:
             -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
           echo "Supabase 回應:$code"
           if [ "$code" != "200" ]; then
-            echo "::error::資料庫沒有回應(可能已被暫停),請到 Supabase 網站按 Restore project。"
+            echo "::error::資料庫沒有回應(可能已被暫停),請到 Supabase 網站按 Resume project。"
             exit 1
           fi
